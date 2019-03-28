@@ -11,6 +11,8 @@ namespace GravitonClient
     class Game
     {
         public event EventHandler<int> BoardUpdatedEvent;
+        public bool isCheat;
+        public int ticks;
         public int wasdDepressed;
         public DispatcherTimer timer;
         public List<Well> wells;
@@ -47,14 +49,13 @@ namespace GravitonClient
         {
 
         }
-        public void OnOrb()
+        public void SpawnWell()
         {
 
         }
-        public void OnWell()
+        public void SpawnOrb()
         {
 
         }
-
     }
 }
