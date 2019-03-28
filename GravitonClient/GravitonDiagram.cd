@@ -3,7 +3,7 @@
   <Class Name="GravitonClient.Game">
     <Position X="0.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAoKAAAAAgEABAAAAAAAAAQQAAQAAAIAAAAAAAASA=</HashCode>
+      <HashCode>AAQAoIAAAAAgEAJAAAAAAAAIwQAAAAAAIAAAAAAAASA=</HashCode>
       <FileName>Game.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -17,15 +17,29 @@
   <Class Name="GravitonClient.Ship">
     <Position X="2.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEEAAAACAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>CAAAAAAAAAAAEEAAEACAAAAAACBAAQAIAAAAAAAQAAA=</HashCode>
       <FileName>Ship.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GravitonClient.Well">
     <Position X="6.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEEAAAACABAAAACBAAAAAQAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAEAAAACAAAAAACBAAAAAQAAAAAAAAAA=</HashCode>
       <FileName>Well.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.StableWell">
+    <Position X="4.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAEAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>StableWell.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.UnstableWell">
+    <Position X="6.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>UnstableWell.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
