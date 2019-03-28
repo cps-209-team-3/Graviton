@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GravitonClient.Game">
+    <Position X="0.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAoKAAAAAgEABAAAAAAAAAQQAAQAAAIAAAAAAAASA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.Orb">
+    <Position X="4.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAACAAAAAACBAAACAAAAAAAAAAAA=</HashCode>
+      <FileName>Orb.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.Ship">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEEAAAACAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ship.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.Well">
+    <Position X="6.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEEAAAACABAAAACBAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Well.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
