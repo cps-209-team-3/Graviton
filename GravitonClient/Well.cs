@@ -6,14 +6,12 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    abstract class Well : IPosition
+    abstract class Well : GameObject
     {
         public double Strength { get; set; }
         public double Xcoor { get; set; }
         public double Ycoor { get; set; }
 
-        public abstract string Serialize();
-
-        public abstract Well Deserialize(string info);
+        public override abstract string Serialize();
     }
 }

@@ -6,9 +6,16 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    interface IPosition
+    abstract class GameObject
     {
         double Xcoor { get; set; }
         double Ycoor { get; set; }
+        string Type { get; set; }
+        public abstract string Serialize();
+
+        public static GameObject Deserialize(string info)
+        {
+            return null;
+        }
     }
 }

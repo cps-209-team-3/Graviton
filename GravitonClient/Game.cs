@@ -12,6 +12,7 @@ namespace GravitonClient
     {
         public event EventHandler<int> GameUpdatedEvent;
         public bool IsCheat { get; set; }
+        public Camera ViewCamera { get; set; }
         public bool Points { get; set; }
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }

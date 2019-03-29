@@ -6,22 +6,17 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Orb : IPosition
+    class Orb : GameObject
     {
         public int Color { get; set; }
         public double Xcoor { get; set; }
         public double Ycoor { get; set; }
         public Orb(double xcoor, double ycoor, int color)
         {
-
+             
         }
 
-        public string Serialize()
-        {
-            return null;
-        }
-
-        public Orb Deserialize(string info)
+        public override string Serialize()
         {
             return null;
         }
