@@ -14,9 +14,6 @@ namespace GravitonClient
 
         public abstract string Serialize();
 
-        public static Well Deserialize(string info)
-        {
-            return null;
-        }
+        public abstract Well Deserialize(string info);
     }
 }
