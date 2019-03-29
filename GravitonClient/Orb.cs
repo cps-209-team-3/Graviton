@@ -9,8 +9,6 @@ namespace GravitonClient
     class Orb : GameObject
     {
         public int Color { get; set; }
-        public double Xcoor { get; set; }
-        public double Ycoor { get; set; }
         public Orb(double xcoor, double ycoor, int color)
         {
              

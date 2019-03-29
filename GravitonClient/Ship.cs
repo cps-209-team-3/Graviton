@@ -10,8 +10,6 @@ namespace GravitonClient
     {
         public Game ParentGame { get; set; }
         public double Speed { get; set; }
-        public double Xcoor { get; set; }
-        public double Ycoor { get; set; }
         public List<Orb> Orbs { get; set; }
         public Ship(double xcoor, double ycoor, Game game)
         {
