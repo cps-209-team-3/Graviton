@@ -8,9 +8,9 @@ namespace GravitonClient
 {
     abstract class GameObject
     {
-        double Xcoor { get; set; }
-        double Ycoor { get; set; }
-        string Type { get; set; }
+        public double Xcoor { get; set; }
+        public double Ycoor { get; set; }
+        public string Type { get; set; }
         public abstract string Serialize();
 
         public static GameObject Deserialize(string info)
