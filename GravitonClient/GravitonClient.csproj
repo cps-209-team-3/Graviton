@@ -58,6 +58,7 @@
     <Compile Include="AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Camera.cs" />
     <Compile Include="GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
@@ -68,7 +69,7 @@
     <Compile Include="HighScoreWindow.xaml.cs">
       <DependentUpon>HighScoreWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IPosition.cs" />
+    <Compile Include="GameObject.cs" />
     <Compile Include="Orb.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="StableWell.cs" />

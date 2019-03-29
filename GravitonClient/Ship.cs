@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Ship : IPosition
+    class Ship : GameObject
     {
         public Game ParentGame { get; set; }
         public double Speed { get; set; }
@@ -15,7 +15,7 @@ namespace GravitonClient
         public List<Orb> Orbs { get; set; }
         public Ship(double xcoor, double ycoor, Game game)
         {
-
+             
         }
 
         public Orb OrbOver()
@@ -32,14 +32,10 @@ namespace GravitonClient
             return false;
         }
 
-        public string Serialize()
+        public override string Serialize()
         {
             return null;
         }
 
-        public static Ship Deserialize(string info)
-        {
-            return null;
-        }
     }
 }
