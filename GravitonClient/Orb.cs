@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Orb
+    class Orb : IPosition
     {
-        public int color;
-        public double xcoor;
-        public double ycoor;
+        public int Color { get; set; }
+        public double Xcoor { get; set; }
+        public double Ycoor { get; set; }
         public Orb(double xcoor, double ycoor, int color)
         {
 
