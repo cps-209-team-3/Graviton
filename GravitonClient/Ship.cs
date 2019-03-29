@@ -31,6 +31,11 @@ namespace GravitonClient
         {
             return false;
         }
+
+        public void AutoMove()
+        {
+
+        }
         public string Serialize()
         {
             return null;

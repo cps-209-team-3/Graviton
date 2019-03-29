@@ -8,7 +8,7 @@ namespace GravitonClient
 {
     class StableWell : Well
     {
-        int ticksLeft;
+        public int ticksLeft;
         public int orbs;
         public StableWell()
         {
