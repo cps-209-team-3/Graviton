@@ -19,5 +19,9 @@ namespace GravitonClient
         {
             return null;
         }
+        public override Well Deserialize(string info)
+        {
+            return null;
+        }
     }
 }
