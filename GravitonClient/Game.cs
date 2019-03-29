@@ -10,18 +10,16 @@ namespace GravitonClient
 {
     class Game
     {
-        public event EventHandler<int> BoardUpdatedEvent;
-        public bool isCheat;
-        public int powerups;
-        public bool points;
-        public int ticks;
-        public int horizontalInput;
-        public int verticalInput;
-        public DispatcherTimer timer;
-        public List<Well> wells;
-        public List<Ship> aiShips;
-        public Ship user;
-        public List<Orb> orbs;
+        public event EventHandler<int> GameUpdatedEvent;
+        public bool IsCheat { get; set; }
+        public bool Points { get; set; }
+        public int Ticks { get; set; }
+        public int HorizontalInput { get; set; }
+        public int VerticalInput { get; set; }
+        public DispatcherTimer Timer { get; set; }
+        public List<Well> Wells { get; set; }
+        public Ship User { get; set; }
+        public List<Orb> Orbs { get; set; }
         public Game()
         {
 

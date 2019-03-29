@@ -68,6 +68,7 @@
     <Compile Include="HighScoreWindow.xaml.cs">
       <DependentUpon>HighScoreWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="IPosition.cs" />
     <Compile Include="Orb.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="StableWell.cs" />

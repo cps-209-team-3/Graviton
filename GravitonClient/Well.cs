@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    abstract class Well
+    abstract class Well : IPosition
     {
-        public double strength;
-        public double xcoor;
-        public double ycoor;
+        public double Strength { get; set; }
+        public double Xcoor { get; set; }
+        public double Ycoor { get; set; }
 
         public abstract string Serialize();
 

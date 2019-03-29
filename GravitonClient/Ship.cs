@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Ship
+    class Ship : IPosition
     {
-        public Game game;
-        public double speed;
-        public double xcoor;
-        public double ycoor;
-        public List<Orb> orbs;
+        public Game ParentGame { get; set; }
+        public double Speed { get; set; }
+        public double Xcoor { get; set; }
+        public double Ycoor { get; set; }
+        public List<Orb> Orbs { get; set; }
         public Ship(double xcoor, double ycoor, Game game)
         {
 
@@ -32,10 +32,6 @@ namespace GravitonClient
             return false;
         }
 
-        public void AutoMove()
-        {
-
-        }
         public string Serialize()
         {
             return null;
