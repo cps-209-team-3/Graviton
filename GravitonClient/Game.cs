@@ -12,10 +12,13 @@ namespace GravitonClient
     {
         public event EventHandler<int> BoardUpdatedEvent;
         public bool isCheat;
+        public int powerups;
         public int ticks;
-        public int wasdDepressed;
+        public int horizontalInput;
+        public int verticalInput;
         public DispatcherTimer timer;
         public List<Well> wells;
+        public List<Ship> aiShips;
         public Ship user;
         public List<Orb> orbs;
         public Game()
@@ -33,7 +36,12 @@ namespace GravitonClient
         {
 
         }
-        public void WASDPressed(int key)
+        public void KeyPressed(char c)
+        {
+
+        }
+
+        public void KeyReleased(char c)
         {
 
         }
