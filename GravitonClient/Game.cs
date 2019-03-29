@@ -13,6 +13,7 @@ namespace GravitonClient
         public event EventHandler<int> BoardUpdatedEvent;
         public bool isCheat;
         public int powerups;
+        public bool points;
         public int ticks;
         public int horizontalInput;
         public int verticalInput;
