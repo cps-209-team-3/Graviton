@@ -10,7 +10,7 @@ namespace GravitonClient
     {
         public int TicksLeft { get; set; }
         public int Orbs { get; set; }
-        public StableWell()
+        public StableWell(double xcoor, double ycoor)
         {
 
         }
