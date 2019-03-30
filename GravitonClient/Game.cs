@@ -26,7 +26,6 @@ namespace GravitonClient
 
         }
 
-
         public void Load(string filename)
         {
             
