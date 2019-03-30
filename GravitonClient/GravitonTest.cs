@@ -13,15 +13,15 @@ namespace GravitonClient
         [Test]
         public void Test_SpawnWell()
         {
-            Game myGame = new Game();
-            int num = myGame.Wells.Count;
+            Game myGame = new Game(false);
+            int num = myGame.StableWells.Count;
             myGame.SpawnWell();
-            Assert.IsTrue(myGame.Wells.Count == num + 1);
+            Assert.IsTrue(myGame.StableWells.Count == num + 1);
         }
         [Test]
         public void Test_SpawnOrb()
         {
-            Game myGame = new Game();
+            Game myGame = new Game(false);
             int num = myGame.Orbs.Count;
             myGame.SpawnOrb();
             Assert.IsTrue(myGame.Orbs.Count == num + 1);
@@ -29,14 +29,14 @@ namespace GravitonClient
         [Test]
         public void Test_Load_Save()
         {
-            Game game1 = new Game();
+            Game game1 = new Game(false);
             List<int> colors = new List<int>();
             foreach (Orb orb in game1.Orbs)
             {
                 colors.Add(orb.Color);
             }
             game1.Save("temp.txt");
-            Game game2 = new Game();
+            Game game2 = new Game(false);
             game2.Load("temp.txt");
             for (int i = 0; i < game2.Orbs.Count; i++)
             {
@@ -46,7 +46,7 @@ namespace GravitonClient
         [Test]
         public void Test_KeyPressed()
         {
-            Game myGame = new Game();
+            Game myGame = new Game(false);
             myGame.KeyPressed('w');
             Assert.IsTrue(myGame.VerticalInput == 1);
             myGame.KeyPressed('s');
@@ -57,7 +57,7 @@ namespace GravitonClient
         [Test]
         public void Test_UpdateUser()
         {
-            Game myGame = new Game();
+            Game myGame = new Game(false);
             double num = myGame.User.Xcoor;
             myGame.KeyPressed('d');
             myGame.UpdateUser();
