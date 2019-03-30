@@ -8,5 +8,26 @@ namespace GravitonClient
 {
     class HighScores
     {
+        private Dictionary<string, int> hiScores;
+        public Dictionary<string, int> HiScores
+        {
+            get{return hiScores;}
+            set{hiScores = value;}
+        }
+        
+        public void CheckNewScores(Game game)
+        {
+            
+        }
+        
+        public void Serialize()
+        {
+            
+        }
+        
+        public void Deserialize()
+        {
+            
+        }
     }
 }
