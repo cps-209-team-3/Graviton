@@ -20,6 +20,11 @@ namespace GravitonClient
             
         }
         
+        public void AddNewScore(string username, int score)
+        {
+            
+        }
+        
         public void Serialize()
         {
             
