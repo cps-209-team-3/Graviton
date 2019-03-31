@@ -24,6 +24,10 @@ namespace GravitonClient
         {
             return null;
         }
+        public void SortOrbs()
+        {
+            Orbs.Sort((orb1, orb2) => orb1.Color < orb2.Color ? -1 : orb1.Color == orb2.Color ? 0 : 1);
+        }
 
         public bool DepositOrbs(StableWell well)
         {
