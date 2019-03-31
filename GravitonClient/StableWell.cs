@@ -12,12 +12,18 @@ namespace GravitonClient
         public int Orbs { get; set; }
         public StableWell(double xcoor, double ycoor)
         {
-
+            Xcoor = xcoor;
+            Ycoor = ycoor;
+            Orbs = 0;
         }
 
         public override string Serialize()
         {
             return null;
+        }
+        public override void Deserialize(string info)
+        {
+            // change the properties
         }
     }
 }

@@ -17,5 +17,9 @@ namespace GravitonClient
         {
             return null;
         }
+        public override void Deserialize(string info)
+        {
+            // change the properties
+        }
     }
 }

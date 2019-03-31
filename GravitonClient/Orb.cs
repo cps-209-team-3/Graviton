@@ -11,12 +11,18 @@ namespace GravitonClient
         public int Color { get; set; }
         public Orb(double xcoor, double ycoor, int color)
         {
-             
+            Xcoor = xcoor;
+            Ycoor = ycoor;
+            Color = color;
         }
 
         public override string Serialize()
         {
             return null;
+        }
+        public override void Deserialize(string info)
+        {
+            // change the properties
         }
     }
 }

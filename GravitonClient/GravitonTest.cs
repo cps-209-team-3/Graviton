@@ -58,10 +58,10 @@ namespace GravitonClient
         public void Test_UpdateUser()
         {
             Game myGame = new Game(false);
-            double num = myGame.User.Xcoor;
+            double num = myGame.Player.Xcoor;
             myGame.KeyPressed('d');
-            myGame.UpdateUser();
-            Assert.IsTrue(myGame.User.Xcoor != num);
+            myGame.UpdatePlayer();
+            Assert.IsTrue(myGame.Player.Xcoor != num);
         }
     }
 }
