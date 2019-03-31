@@ -12,6 +12,7 @@ namespace GravitonClient
     {
         public event EventHandler<int> GameUpdatedEvent;
         public bool IsCheat { get; set; }
+        public bool IsOver { get; set; }
         public Camera ViewCamera { get; set; }
         public int Points { get; set; }
         public int Ticks { get; set; }
@@ -25,6 +26,7 @@ namespace GravitonClient
         public Game(bool isCheat)
         {
             IsCheat = isCheat;
+            IsOver = false;
             ViewCamera = new Camera(this);
             Points = 0;
             Ticks = 0;
@@ -104,22 +106,40 @@ namespace GravitonClient
             if (Ticks % 120 == 0)
                 SpawnOrb();
             GameUpdatedEvent(this, Ticks / 60);
-
         }
         public void UpdateWells()
         {
-            for (int i = 0; i < StableWells.Count; i++)
+            foreach (StableWell well in StableWells)
             {
-                StableWell well = StableWells[i];
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
                 {
                     UnstableWells.Add(new UnstableWell(well.Xcoor, well.Ycoor));
-                    StableWells.RemoveAt(i);
+                    StableWells.Remove(well);
                 }
             }
         }
         public void UpdateUser()
+        {
+            UpdateUserPosition();
+            Well well = User.WellOver();
+            if (well != null)
+            {
+                StableWell sWell = well as StableWell;
+                if (sWell == null)
+                    IsOver = true;
+                else if (User.DepositOrbs(sWell))
+                    StableWells.Remove(sWell);
+            }
+            Orb orb = User.OrbOver();
+            if (orb != null)
+            {
+                Orbs.Remove(orb);
+                User.Orbs.Add(orb);
+                User.SortOrbs();
+            }
+        }
+        public void UpdateUserPosition()
         {
             User.Xcoor += HorizontalInput;
             User.Ycoor += VerticalInput;
