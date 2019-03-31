@@ -9,7 +9,7 @@ namespace GravitonClient
     abstract class Well : GameObject
     {
         public double Strength { get; set; }
-
-        public override abstract string Serialize();
+        // public override abstract string Serialize();
+        // public override abstract void Deserialize(string info);
     }
 }

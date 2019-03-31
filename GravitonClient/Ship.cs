@@ -13,16 +13,45 @@ namespace GravitonClient
         public List<Orb> Orbs { get; set; }
         public Ship(double xcoor, double ycoor, Game game)
         {
-             
+            ParentGame = game;
+            Xcoor = xcoor;
+            Ycoor = ycoor;
+            Speed = 2.0;
+            Orbs = new List<Orb>();
         }
 
         public Orb OrbOver()
         {
+            foreach (Orb orb in ParentGame.Orbs)
+            {
+                double deltaX = orb.Xcoor - this.Xcoor;
+                double deltaY = orb.Ycoor - this.Ycoor;
+                if (deltaX * deltaX + deltaY * deltaY < 20)
+                    return orb;
+            }
             return null;
         }
-        public Well WellOver()
+        public StableWell StableWellOver()
         {
+            foreach (StableWell well in ParentGame.StableWells)
+            {
+                double deltaX = well.Xcoor - this.Xcoor;
+                double deltaY = well.Ycoor - this.Ycoor;
+                if (deltaX * deltaX + deltaY * deltaY < 20)
+                    return well;
+            }
             return null;
+        }
+        public bool IsOverUnstable()
+        {
+            foreach (UnstableWell well in ParentGame.UnstableWells)
+            {
+                double deltaX = well.Xcoor - this.Xcoor;
+                double deltaY = well.Ycoor - this.Ycoor;
+                if (deltaX * deltaX + deltaY * deltaY < 20)
+                    return true;
+            }
+            return false;
         }
         public void SortOrbs()
         {
@@ -31,12 +60,24 @@ namespace GravitonClient
 
         public bool DepositOrbs(StableWell well)
         {
-            return false;
+            foreach (Orb orb in Orbs)
+            {
+                if (orb.Color == well.Orbs)
+                {
+                    well.Orbs++;
+                    Orbs.Remove(orb);
+                } 
+            }
+            return well.Orbs == 6;
         }
 
         public override string Serialize()
         {
             return null;
+        }
+        public override void Deserialize(string info)
+        {
+            // change the properties
         }
 
     }

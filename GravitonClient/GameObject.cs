@@ -12,10 +12,6 @@ namespace GravitonClient
         public double Ycoor { get; set; }
         public string Type { get; set; }
         public abstract string Serialize();
-
-        public static GameObject Deserialize(string info)
-        {
-            return null;
-        }
+        public abstract void Deserialize(string info);
     }
 }

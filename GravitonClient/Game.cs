@@ -21,7 +21,7 @@ namespace GravitonClient
         public DispatcherTimer Timer { get; set; }
         public List<StableWell> StableWells { get; set; }
         public List<UnstableWell> UnstableWells { get; set; }
-        public Ship User { get; set; }
+        public Ship Player { get; set; }
         public List<Orb> Orbs { get; set; }
         public Game(bool isCheat)
         {
@@ -35,7 +35,7 @@ namespace GravitonClient
             StableWells = new List<StableWell>();
             UnstableWells = new List<UnstableWell>();
             Orbs = new List<Orb>();
-            User = new Ship(100.0, 100.0, this);
+            Player = new Ship(100.0, 100.0, this);
             Initialize();
         }
 
@@ -72,7 +72,7 @@ namespace GravitonClient
                     HorizontalInput++;
                     break;
                 case ' ':
-                    User.Speed += 2;
+                    Player.Speed += 2;
                     break;
             }
         }
@@ -99,12 +99,14 @@ namespace GravitonClient
         public void Timer_Tick()
         {
             Ticks++;
-            UpdateUser();
+            UpdatePlayer();
             UpdateWells();
             if (Ticks % 480 == 0)
                 SpawnWell();
             if (Ticks % 120 == 0)
                 SpawnOrb();
+            if (Player.IsOverUnstable())
+                IsOver = true;
             GameUpdatedEvent(this, Ticks / 60);
         }
         public void UpdateWells()
@@ -119,30 +121,24 @@ namespace GravitonClient
                 }
             }
         }
-        public void UpdateUser()
+        public void UpdatePlayer()
         {
-            UpdateUserPosition();
-            Well well = User.WellOver();
-            if (well != null)
-            {
-                StableWell sWell = well as StableWell;
-                if (sWell == null)
-                    IsOver = true;
-                else if (User.DepositOrbs(sWell))
-                    StableWells.Remove(sWell);
-            }
-            Orb orb = User.OrbOver();
+            UpdatePlayerPosition();
+            StableWell well = Player.StableWellOver();
+            if (well != null && Player.DepositOrbs(well))
+                StableWells.Remove(well);
+            Orb orb = Player.OrbOver();
             if (orb != null)
             {
                 Orbs.Remove(orb);
-                User.Orbs.Add(orb);
-                User.SortOrbs();
+                Player.Orbs.Add(orb);
+                Player.SortOrbs();
             }
         }
-        public void UpdateUserPosition()
+        public void UpdatePlayerPosition()
         {
-            User.Xcoor += HorizontalInput;
-            User.Ycoor += VerticalInput;
+            Player.Xcoor += HorizontalInput;
+            Player.Ycoor += VerticalInput;
             // Gravity
         }
         public void SpawnWell()
