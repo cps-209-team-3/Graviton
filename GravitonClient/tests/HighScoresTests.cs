@@ -8,23 +8,23 @@ using NUnit.Framework;
 namespace GravitonClient
 {
     [TestFixture]
-    public class HighScoresTest
+    public class HighScoresTests
     {
       [Test]
         public void CheckNewScores_HigherScore_AddsHighscore()
         {
             Game myGame = new Game(false);
             HighScores hiScore = new HighScores(new Dictionary<string, int>());
-            hiScore.HiScores.Add(ben, 123);
-            hiScore.HiScores.Add(act, 234);
-            hiScore.HiScores.Add(deb, 345);
-            hiScore.HiScores.Add(hess, 456);
-            hiScore.HiScores.Add(dark, 567);
-            hiScore.HiScores.Add(bluff, 678);
-            hiScore.HiScores.Add(schaub, 789);
-            hiScore.HiScores.Add(mcgee, 890);
-            hiScore.HiScores.Add(knisely, 903);
-            hiScore.HiScores.Add(watson, 1);
+            hiScore.HiScores.Add("ben", 123);
+            hiScore.HiScores.Add("act", 234);
+            hiScore.HiScores.Add("deb", 345);
+            hiScore.HiScores.Add("hess", 456);
+            hiScore.HiScores.Add("dark", 567);
+            hiScore.HiScores.Add("bluff", 678);
+            hiScore.HiScores.Add("schaub", 789);
+            hiScore.HiScores.Add("mcgee", 890);
+            hiScore.HiScores.Add("knisely", 903);
+            hiScore.HiScores.Add("watson", 1);
             myGame.Username = "Evisserate";
             myGame.Points = 1000;
             hiScore.CheckNewScores(myGame);
@@ -36,16 +36,16 @@ namespace GravitonClient
         {
             Game myGame = new Game(false);
             HighScores hiScore = new HighScores(new Dictionary<string, int>());
-            hiScore.HiScores.Add(ben, 123);
-            hiScore.HiScores.Add(act, 234);
-            hiScore.HiScores.Add(deb, 345);
-            hiScore.HiScores.Add(hess, 456);
-            hiScore.HiScores.Add(dark, 567);
-            hiScore.HiScores.Add(bluff, 678);
-            hiScore.HiScores.Add(schaub, 789);
-            hiScore.HiScores.Add(mcgee, 890);
-            hiScore.HiScores.Add(knisely, 903);
-            hiScore.HiScores.Add(watson, 1);
+            hiScore.HiScores.Add("ben", 123);
+            hiScore.HiScores.Add("act", 234);
+            hiScore.HiScores.Add("deb", 345);
+            hiScore.HiScores.Add("hess", 456);
+            hiScore.HiScores.Add("dark", 567);
+            hiScore.HiScores.Add("bluff", 678);
+            hiScore.HiScores.Add("schaub", 789);
+            hiScore.HiScores.Add("mcgee", 890);
+            hiScore.HiScores.Add("knisely", 903);
+            hiScore.HiScores.Add("watson", 1);
             myGame.Username = "Evisserate";
             myGame.Points = 0;
             hiScore.CheckNewScores(myGame);
@@ -57,16 +57,16 @@ namespace GravitonClient
         {
             Game myGame = new Game(false);
             HighScores hiScore = new HighScores(new Dictionary<string, int>());
-            hiScore.HiScores.Add(ben, 123);
-            hiScore.HiScores.Add(act, 234);
-            hiScore.HiScores.Add(deb, 345);
-            hiScore.HiScores.Add(hess, 456);
-            hiScore.HiScores.Add(dark, 567);
-            hiScore.HiScores.Add(bluff, 678);
-            hiScore.HiScores.Add(schaub, 789);
-            hiScore.HiScores.Add(mcgee, 890);
-            hiScore.HiScores.Add(knisely, 903);
-            hiScore.HiScores.Add(watson, 1);
+            hiScore.HiScores.Add("ben", 123);
+            hiScore.HiScores.Add("act", 234);
+            hiScore.HiScores.Add("deb", 345);
+            hiScore.HiScores.Add("hess", 456);
+            hiScore.HiScores.Add("dark", 567);
+            hiScore.HiScores.Add("bluff", 678);
+            hiScore.HiScores.Add("schaub", 789);
+            hiScore.HiScores.Add("mcgee", 890);
+            hiScore.HiScores.Add("knisely", 903);
+            hiScore.HiScores.Add("watson", 1);
             myGame.Username = "Evisserate";
             myGame.Points = 0;
             hiScore.AddNewScore(myGame.Username, myGame.Points);
@@ -99,16 +99,16 @@ namespace GravitonClient
         public void Serialize_InitializedObject_StringNotEmpty()
         {
             HighScores hiScore = new HighScores(new Dictionary<string, int>());
-            hiScore.HiScores.Add(ben, 123);
-            hiScore.HiScores.Add(act, 234);
-            hiScore.HiScores.Add(deb, 345);
-            hiScore.HiScores.Add(hess, 456);
-            hiScore.HiScores.Add(dark, 567);
-            hiScore.HiScores.Add(bluff, 678);
-            hiScore.HiScores.Add(schaub, 789);
-            hiScore.HiScores.Add(mcgee, 890);
-            hiScore.HiScores.Add(knisely, 903);
-            hiScore.HiScores.Add(watson, 1);
+            hiScore.HiScores.Add("ben", 123);
+            hiScore.HiScores.Add("act", 234);
+            hiScore.HiScores.Add("deb", 345);
+            hiScore.HiScores.Add("hess", 456);
+            hiScore.HiScores.Add("dark", 567);
+            hiScore.HiScores.Add("bluff", 678);
+            hiScore.HiScores.Add("schaub", 789);
+            hiScore.HiScores.Add("mcgee", 890);
+            hiScore.HiScores.Add("knisely", 903);
+            hiScore.HiScores.Add("watson", 1);
             string serialized = hiScore.Serialize();
             Assert.IsFalse(serialized == "");
         }
