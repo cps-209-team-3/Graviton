@@ -69,12 +69,10 @@
     <Compile Include="GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GravitonTest.cs" />
     <Compile Include="HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="HighScores.cs" />
-    <Compile Include="HighScoresTest.cs" />
     <Compile Include="HighScoreWindow.xaml.cs">
       <DependentUpon>HighScoreWindow.xaml</DependentUpon>
     </Compile>
@@ -82,6 +80,9 @@
     <Compile Include="Orb.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="StableWell.cs" />
+    <Compile Include="tests\GameEngineTests.cs" />
+    <Compile Include="tests\HighScoresTests.cs" />
+    <Compile Include="tests\SerializeTests.cs" />
     <Compile Include="UnstableWell.cs" />
     <Compile Include="Well.cs" />
     <Page Include="AboutWindow.xaml">
@@ -142,6 +143,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
