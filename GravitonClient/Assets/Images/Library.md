@@ -1,6 +1,7 @@
 ### Destabilized
-* destabilized.png
 * destabilized1.png
 ### Ship
-* Ship.png
 * Ship1.png
+### Templates (for creating animations)
+* destabilized.png
+* Ship.png
