@@ -62,6 +62,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="model\JsonUtils.cs" />
     <Compile Include="model\Powerup.cs" />
     <Compile Include="view\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>

@@ -16,14 +16,35 @@ namespace GravitonClient
             {
                 colors.Add(orb.Color);
             }
-            game1.Save("temp.txt");
+
+            game1.Save("temp.json");
             Game game2 = new Game(false);
-            game2.Load("temp.txt");
+            game2.Load("temp.json");
             for (int i = 0; i < game2.Orbs.Count; i++)
             {
                 Assert.IsTrue(colors[i] == game2.Orbs[i].Color);
             }
         }
+        [Test]
+        public void Test_OrbSerialize()
+        {
+            var orb1 = new Orb(1, 2, 3);
+            string s = orb1.Serialize();
+            var orb2 = GameObject.FromJsonFactory<Orb>(s);
+            Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
+            Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
+            Assert.AreEqual(orb1.Color, orb2.Color);
+        }
 
+        [Test]
+        public void Test_StableWellSerialize()
+        {
+            var orb1 = new Orb(1, 2, 3);
+            string s = orb1.Serialize();
+            var orb2 = GameObject.FromJsonFactory<Orb>(s);
+            Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
+            Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
+            Assert.AreEqual(orb1.Color, orb2.Color);
+        }
     }
 }

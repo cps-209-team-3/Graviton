@@ -41,7 +41,7 @@ namespace GravitonClient
         // Returns a HighScores object.
         public static HighScores Load(string path)
         {
-            return null;
+            return null;//TODO
         }
         
         // Writes the current HighScores object to a file.
@@ -57,7 +57,7 @@ namespace GravitonClient
         // Returns a string.
         public string Serialize()
         {
-            return null;
+            return null; //TODO
         }
         
         // Deserializes a HighScores object from a string.
@@ -65,7 +65,7 @@ namespace GravitonClient
         // Returns a HighScores object.
         public static HighScores Deserialize(string serialized)
         {
-            return null;
+            return null; //TODO
         }
     }
 }

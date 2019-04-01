@@ -10,7 +10,7 @@ namespace GravitonClient
     [TestFixture]
     public class HighScoresTests
     {
-        [Test]
+      [Test]
         public void CheckNewScores_HigherScore_AddsHighscore()
         {
             Game myGame = new Game(false);
@@ -118,7 +118,7 @@ namespace GravitonClient
         public void Deserialize_InputSerializedString_ReturnsHighScoresObject()
         {
             string serialized = "IAMSERIALIZED";
-            HighScores score = HighScores.Deserialize(serialized);
+            HighScores score = HighScores.Deserialize(serialized); 
             Assert.IsFalse(score == null);
         }
     }
