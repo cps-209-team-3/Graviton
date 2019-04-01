@@ -17,7 +17,7 @@ namespace GravitonClient
         
         public HighScores(Dictionary<string, int> scoreDict)
         {
-            
+            hiScores = scoreDict;
         }
         
         // Checks a game to see if any scores should be included in the list of highscores.
