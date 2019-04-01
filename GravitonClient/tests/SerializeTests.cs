@@ -17,9 +17,8 @@ namespace GravitonClient
                 colors.Add(orb.Color);
             }
 
-            game1.Save("temp.json");
-            Game game2 = new Game(false);
-            game2.Load("temp.json");
+            GameLoader.Save(game1,"temp.json");
+            Game game2 = GameLoader.Load("temp.json");
             for (int i = 0; i < game2.Orbs.Count; i++)
             {
                 Assert.IsTrue(colors[i] == game2.Orbs[i].Color);
@@ -39,7 +38,7 @@ namespace GravitonClient
         [Test]
         public void Test_StableWellSerialize()
         {
-            var orb1 = new Orb(1, 2, 3);
+            var orb1 = new (1, 2, 3);
             string s = orb1.Serialize();
             var orb2 = GameObject.FromJsonFactory<Orb>(s);
             Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
