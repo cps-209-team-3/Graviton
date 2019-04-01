@@ -24,6 +24,8 @@ namespace GravitonClient
             Orbs = new List<Orb>();
         }
 
+        public Ship() : base() { }
+
         public void Move(int xInput, int yInput)
         {
             Xcoor += xInput * BoostFactor;

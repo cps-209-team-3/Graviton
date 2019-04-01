@@ -13,6 +13,8 @@ namespace GravitonClient
             
         }
 
+        public UnstableWell() : base() { }
+
         public override string Serialize()
         {
             return null;

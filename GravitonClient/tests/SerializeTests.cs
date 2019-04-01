@@ -38,12 +38,31 @@ namespace GravitonClient
         [Test]
         public void Test_StableWellSerialize()
         {
-            var orb1 = new (1, 2, 3);
+            var orb1 = new StableWell(1, 2);
             string s = orb1.Serialize();
-            var orb2 = GameObject.FromJsonFactory<Orb>(s);
+            var orb2 = GameObject.FromJsonFactory<StableWell>(s);
             Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
             Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
-            Assert.AreEqual(orb1.Color, orb2.Color);
+        }
+
+        [Test]
+        public void Test_UnstableWellSerialize()
+        {
+            var orb1 = new UnstableWell(1, 2);
+            string s = orb1.Serialize();
+            var orb2 = GameObject.FromJsonFactory<UnstableWell>(s);
+            Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
+            Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
+        }
+
+        [Test]
+        public void Test_ShipSerialize()
+        {
+            var orb1 = new UnstableWell(1, 2);
+            string s = orb1.Serialize();
+            var orb2 = GameObject.FromJsonFactory<UnstableWell>(s);
+            Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
+            Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
         }
     }
 }
