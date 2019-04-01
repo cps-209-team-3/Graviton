@@ -9,15 +9,36 @@ namespace GravitonClient
     class Ship : GameObject
     {
         public Game ParentGame { get; set; }
-        public double Speed { get; set; }
+        public double BoostFactor { get; set; }
+        public double SpeedX { get; set; }
+        public double SpeedY { get; set; }
         public List<Orb> Orbs { get; set; }
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
             Xcoor = xcoor;
             Ycoor = ycoor;
-            Speed = 2.0;
+            SpeedX = 0.0;
+            SpeedY = 0.0;
+            BoostFactor = 1.0;
             Orbs = new List<Orb>();
+        }
+
+        public void Move(int xInput, int yInput)
+        {
+            Xcoor += xInput * BoostFactor;
+            Ycoor += yInput * BoostFactor;
+            if (BoostFactor > 1.0)
+                BoostFactor -= 0.02;
+        }
+
+        public void SpeedBoost()
+        {
+            if (Orbs.Count > 0)
+            {
+                Orbs.RemoveAt(0);
+                BoostFactor += 1.6;
+            }
         }
 
         public Orb OrbOver()
