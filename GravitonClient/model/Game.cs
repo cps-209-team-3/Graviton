@@ -14,6 +14,7 @@ namespace GravitonClient
         public bool IsCheat { get; set; }
         public bool IsOver { get; set; }
         public Camera ViewCamera { get; set; }
+        public Powerup GamePowerup { get; set; }
         public int Points { get; set; }
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }
@@ -74,7 +75,16 @@ namespace GravitonClient
                     HorizontalInput++;
                     break;
                 case ' ':
-                    Player.Speed += 2;
+                    Player.SpeedBoost();
+                    break;
+                case 'q':
+                    GamePowerup.Neutralize();
+                    break;
+                case 'f':
+                    GamePowerup.Destabilize();
+                    break;
+                case 'e':
+                    GamePowerup.Ghost();
                     break;
             }
         }
@@ -98,6 +108,7 @@ namespace GravitonClient
             }
 
         }
+
         public void Timer_Tick()
         {
             Ticks++;
@@ -139,8 +150,7 @@ namespace GravitonClient
         }
         public void UpdatePlayerPosition()
         {
-            Player.Xcoor += HorizontalInput;
-            Player.Ycoor += VerticalInput;
+            Player.Move(HorizontalInput, VerticalInput);
             // Gravity
         }
         public void SpawnWell()
