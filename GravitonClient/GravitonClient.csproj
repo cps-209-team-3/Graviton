@@ -62,46 +62,46 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="AboutWindow.xaml.cs">
+    <Compile Include="view\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Camera.cs" />
-    <Compile Include="GameWindow.xaml.cs">
+    <Compile Include="model\Camera.cs" />
+    <Compile Include="view\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HelpWindow.xaml.cs">
+    <Compile Include="view\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="HighScores.cs" />
-    <Compile Include="HighScoreWindow.xaml.cs">
+    <Compile Include="model\HighScores.cs" />
+    <Compile Include="view\HighScoreWindow.xaml.cs">
       <DependentUpon>HighScoreWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GameObject.cs" />
-    <Compile Include="Orb.cs" />
-    <Compile Include="Ship.cs" />
-    <Compile Include="StableWell.cs" />
+    <Compile Include="model\GameObject.cs" />
+    <Compile Include="model\Orb.cs" />
+    <Compile Include="model\Ship.cs" />
+    <Compile Include="model\StableWell.cs" />
     <Compile Include="tests\GameEngineTests.cs" />
     <Compile Include="tests\HighScoresTests.cs" />
     <Compile Include="tests\SerializeTests.cs" />
-    <Compile Include="UnstableWell.cs" />
-    <Compile Include="Well.cs" />
-    <Page Include="AboutWindow.xaml">
+    <Compile Include="model\UnstableWell.cs" />
+    <Compile Include="model\Well.cs" />
+    <Page Include="view\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GameWindow.xaml">
+    <Page Include="view\GameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HelpWindow.xaml">
+    <Page Include="view\HelpWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HighScoreWindow.xaml">
+    <Page Include="view\HighScoreWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="view\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -109,8 +109,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Game.cs" />
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="model\Game.cs" />
+    <Compile Include="view\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
