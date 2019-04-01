@@ -150,8 +150,8 @@ namespace GravitonClient
         }
         public void UpdatePlayerPosition()
         {
+            // Gravity - change Player speeds
             Player.Move(HorizontalInput, VerticalInput);
-            // Gravity
         }
         public void SpawnWell()
         {
