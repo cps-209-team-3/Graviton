@@ -23,6 +23,8 @@ namespace GravitonClient
         public List<UnstableWell> UnstableWells { get; set; }
         public Ship Player { get; set; }
         public List<Orb> Orbs { get; set; }
+        public string Username { get; internal set; }
+
         public Game(bool isCheat)
         {
             IsCheat = isCheat;

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace GravitonClient
 {
     [TestFixture]
-    public class GravitonTest
+    public class GameEngineTests
     {
         [Test]
         public void Test_SpawnWell()
@@ -25,23 +21,6 @@ namespace GravitonClient
             int num = myGame.Orbs.Count;
             myGame.SpawnOrb();
             Assert.IsTrue(myGame.Orbs.Count == num + 1);
-        }
-        [Test]
-        public void Test_Load_Save()
-        {
-            Game game1 = new Game(false);
-            List<int> colors = new List<int>();
-            foreach (Orb orb in game1.Orbs)
-            {
-                colors.Add(orb.Color);
-            }
-            game1.Save("temp.txt");
-            Game game2 = new Game(false);
-            game2.Load("temp.txt");
-            for (int i = 0; i < game2.Orbs.Count; i++)
-            {
-                Assert.IsTrue(colors[i] == game2.Orbs[i].Color);
-            }
         }
         [Test]
         public void Test_KeyPressed()
@@ -65,3 +44,4 @@ namespace GravitonClient
         }
     }
 }
+
