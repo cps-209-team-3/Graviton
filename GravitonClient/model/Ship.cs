@@ -56,9 +56,9 @@ namespace GravitonClient
             }
             return null;
         }
-        public Well StableWellOver()
+        public Well WellOver()
         {
-            foreach (Well well in ParentGame.StableWells)
+            foreach (Well well in ParentGame.StableWells.Concat(ParentGame.UnstableWells))
             {
                 double deltaX = well.Xcoor - this.Xcoor;
                 double deltaY = well.Ycoor - this.Ycoor;
@@ -67,17 +67,7 @@ namespace GravitonClient
             }
             return null;
         }
-        public bool IsOverUnstable()
-        {
-            foreach (Well well in ParentGame.UnstableWells)
-            {
-                double deltaX = well.Xcoor - this.Xcoor;
-                double deltaY = well.Ycoor - this.Ycoor;
-                if (deltaX * deltaX + deltaY * deltaY < 20)
-                    return true;
-            }
-            return false;
-        }
+
         public void SortOrbs()
         {
             Orbs.Sort((orb1, orb2) => orb1.Color < orb2.Color ? -1 : orb1.Color == orb2.Color ? 0 : 1);

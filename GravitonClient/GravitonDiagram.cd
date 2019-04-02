@@ -3,50 +3,36 @@
   <Class Name="GravitonClient.GameObject">
     <Position X="4.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAQAAAAIAAAAAAAAAAACBAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAQAAAAIAAAAAAAAAAACBAAAACAQAAAAAAAAA=</HashCode>
       <FileName>model\GameObject.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GravitonClient.Orb">
-    <Position X="4.5" Y="6" Width="1.5" />
+    <Position X="4.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACBAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>model\Orb.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GravitonClient.Well">
-    <Position X="6.5" Y="6" Width="1.5" />
+    <Position X="6.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAADBAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>model\Well.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="GravitonClient.UnstableWell">
-    <Position X="6.75" Y="8.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACBAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>model\UnstableWell.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="GravitonClient.Ship">
-    <Position X="2.5" Y="6" Width="1.5" />
+    <Position X="2.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAAQAAAAAAAAEAAEAAABACBAAJAAAAAAAAAAAAA=</HashCode>
+      <HashCode>CAAAAAAQAIAAAAAAEAAEAAABACBAAJBAAAAAAAAAAAg=</HashCode>
       <FileName>model\Ship.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GravitonClient.Game">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gEAAgIAwAgAAgQBAAQQAAAAAgQACCAAAAAAACRFEACQ=</HashCode>
+      <HashCode>gEAAAAAwAgAAgQBAAQQAAAAAgSACCAAAAAAACRFEACQ=</HashCode>
       <FileName>model\Game.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="GravitonClient.StableWell">
-    <Position X="4.5" Y="8.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAADBAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>model\StableWell.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />
