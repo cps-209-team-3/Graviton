@@ -13,6 +13,7 @@ namespace GravitonClient
         public event EventHandler<int> GameUpdatedEvent;
         public bool IsCheat { get; set; }
         public bool IsOver { get; set; }
+        public Random Random { get; set; }
         public Camera ViewCamera { get; set; }
         public Powerup GamePowerup { get; set; }
         public int Points { get; set; }
@@ -30,6 +31,7 @@ namespace GravitonClient
         {
             IsCheat = isCheat;
             IsOver = false;
+            Random = new Random();
             ViewCamera = new Camera(this);
             Points = 0;
             Ticks = 0;
@@ -56,13 +58,13 @@ namespace GravitonClient
             switch (c)
             {
                 case 'w':
-                    VerticalInput++;
+                    VerticalInput--;
                     break;
                 case 'a':
                     HorizontalInput--;
                     break;
                 case 's':
-                    VerticalInput--;
+                    VerticalInput++;
                     break;
                 case 'd':
                     HorizontalInput++;
@@ -87,13 +89,13 @@ namespace GravitonClient
             switch (c)
             {
                 case 'w':
-                    VerticalInput--;
+                    VerticalInput++;
                     break;
                 case 'a':
                     HorizontalInput++;
                     break;
                 case 's':
-                    VerticalInput++;
+                    VerticalInput--;
                     break;
                 case 'd':
                     HorizontalInput--;
@@ -111,7 +113,8 @@ namespace GravitonClient
                 SpawnWell();
             if (Ticks % 120 == 0)
                 SpawnOrb();
-            GameUpdatedEvent(this, Ticks / 60);
+            ViewCamera.Render();
+            GameUpdatedEvent(this, 0);
         }
         public void UpdateWells()
         {
