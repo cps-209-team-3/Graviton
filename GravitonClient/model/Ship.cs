@@ -28,8 +28,10 @@ namespace GravitonClient
 
         public void Move(int xInput, int yInput)
         {
-            Xcoor += xInput * BoostFactor;
-            Ycoor += yInput * BoostFactor;
+            SpeedX += xInput * BoostFactor;
+            SpeedY += yInput * BoostFactor;
+            Xcoor += SpeedX;
+            Ycoor += SpeedY;
             if (BoostFactor > 1.0)
                 BoostFactor -= 0.02;
         }
