@@ -111,8 +111,6 @@ namespace GravitonClient
                 SpawnWell();
             if (Ticks % 120 == 0)
                 SpawnOrb();
-            if (Player.IsOverUnstable())
-                IsOver = true;
             GameUpdatedEvent(this, Ticks / 60);
         }
         public void UpdateWells()
@@ -131,9 +129,14 @@ namespace GravitonClient
         public void UpdatePlayer()
         {
             UpdatePlayerPosition();
-            Well well = Player.StableWellOver();
-            if (well != null && Player.DepositOrbs(well))
-                StableWells.Remove(well);
+            Well well = Player.WellOver();
+            if (well != null)
+            {
+                if (!well.IsStable)
+                    IsOver = true;
+                else if (Player.DepositOrbs(well))
+                    StableWells.Remove(well);
+            }
             Orb orb = Player.OrbOver();
             if (orb != null)
             {
