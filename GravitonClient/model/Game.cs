@@ -20,8 +20,8 @@ namespace GravitonClient
         public int HorizontalInput { get; set; }
         public int VerticalInput { get; set; }
         public DispatcherTimer Timer { get; set; }
-        public List<StableWell> StableWells { get; set; }
-        public List<UnstableWell> UnstableWells { get; set; }
+        public List<Well> StableWells { get; set; }
+        public List<Well> UnstableWells { get; set; }
         public Ship Player { get; set; }
         public List<Orb> Orbs { get; set; }
         public string Username { get; internal set; }
@@ -35,8 +35,8 @@ namespace GravitonClient
             Ticks = 0;
             HorizontalInput = 0;
             VerticalInput = 0;
-            StableWells = new List<StableWell>();
-            UnstableWells = new List<UnstableWell>();
+            StableWells = new List<Well>();
+            UnstableWells = new List<Well>();
             Orbs = new List<Orb>();
             Player = new Ship(100.0, 100.0, this);
             Initialize();
@@ -117,12 +117,13 @@ namespace GravitonClient
         }
         public void UpdateWells()
         {
-            foreach (StableWell well in StableWells)
+            foreach (Well well in StableWells)
             {
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
                 {
-                    UnstableWells.Add(new UnstableWell(well.Xcoor, well.Ycoor));
+                    well.IsStable = false;
+                    UnstableWells.Add(well);
                     StableWells.Remove(well);
                 }
             }
@@ -130,7 +131,7 @@ namespace GravitonClient
         public void UpdatePlayer()
         {
             UpdatePlayerPosition();
-            StableWell well = Player.StableWellOver();
+            Well well = Player.StableWellOver();
             if (well != null && Player.DepositOrbs(well))
                 StableWells.Remove(well);
             Orb orb = Player.OrbOver();
@@ -151,7 +152,7 @@ namespace GravitonClient
             double xc = 100.0;
             double yc = 100.0;
             // TODO check if it is too near anything else 
-            StableWells.Add(new StableWell(xc, yc));
+            StableWells.Add(new Well(xc, yc));
         }
         public void SpawnOrb()
         {

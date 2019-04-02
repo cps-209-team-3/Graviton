@@ -82,12 +82,10 @@
     <Compile Include="model\GameObject.cs" />
     <Compile Include="model\Orb.cs" />
     <Compile Include="model\Ship.cs" />
-    <Compile Include="model\StableWell.cs" />
+    <Compile Include="model\Well.cs" />
     <Compile Include="tests\GameEngineTests.cs" />
     <Compile Include="tests\HighScoresTests.cs" />
     <Compile Include="tests\SerializeTests.cs" />
-    <Compile Include="model\UnstableWell.cs" />
-    <Compile Include="model\Well.cs" />
     <Page Include="view\AboutWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

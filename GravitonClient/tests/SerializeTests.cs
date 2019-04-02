@@ -38,9 +38,9 @@ namespace GravitonClient
         [Test]
         public void Test_StableWellSerialize()
         {
-            var orb1 = new StableWell(1, 2);
+            var orb1 = new Well(1, 2);
             string s = orb1.Serialize();
-            var orb2 = GameObject.FromJsonFactory<StableWell>(s);
+            var orb2 = GameObject.FromJsonFactory<Well>(s);
             Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
             Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
         }
@@ -48,9 +48,9 @@ namespace GravitonClient
         [Test]
         public void Test_UnstableWellSerialize()
         {
-            var orb1 = new UnstableWell(1, 2);
+            var orb1 = new Well(1, 2);
             string s = orb1.Serialize();
-            var orb2 = GameObject.FromJsonFactory<UnstableWell>(s);
+            var orb2 = GameObject.FromJsonFactory<Well>(s);
             Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
             Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
         }
@@ -58,9 +58,9 @@ namespace GravitonClient
         [Test]
         public void Test_ShipSerialize()
         {
-            var orb1 = new UnstableWell(1, 2);
+            var orb1 = new Well(1, 2);
             string s = orb1.Serialize();
-            var orb2 = GameObject.FromJsonFactory<UnstableWell>(s);
+            var orb2 = GameObject.FromJsonFactory<Well>(s);
             Assert.AreEqual(orb1.Xcoor, orb2.Xcoor);
             Assert.AreEqual(orb1.Ycoor, orb2.Ycoor);
         }

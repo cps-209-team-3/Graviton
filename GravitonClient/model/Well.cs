@@ -6,12 +6,35 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    abstract class Well : GameObject
+    class Well : GameObject
     {
-        public Well(double xcoor, double ycoor) : base(xcoor, ycoor) { }
-        public Well() : base() { }
-        public double Strength { get; set; }
-        // public override abstract string Serialize();
-        // public override abstract void Deserialize(string info);
+        public bool IsStable { get; set; }
+        public int TicksLeft { get; set; }
+        public int Orbs { get; set; }
+        public Well(double xcoor, double ycoor) : base(xcoor, ycoor)
+        {
+            IsStable = true;
+            Orbs = 0;
+        }
+
+        public Well() { }
+
+        public override string Serialize()
+        {
+            return String.Format(@"
+            {{
+                ""xcoor"":{0},
+                ""ycoor"":{1},
+                ""currentcolor"":{2},
+                ""ticksleft"":{3}
+            }}
+            ", Xcoor, Ycoor, Orbs, TicksLeft); /* Colors are zero-based, 
+            so the number of orbs it has is the color number it is seeking.*/
+        }
+        public override void Deserialize(string info)
+        {
+            // change the properties
+            
+        }
     }
 }
