@@ -10,7 +10,7 @@ namespace GravitonClient
     [TestFixture]
     public class HighScoresTests
     {
-      [Test]
+        [Test]
         public void CheckNewScores_HigherScore_AddsHighscore()
         {
             Game myGame = new Game(false);
@@ -87,7 +87,8 @@ namespace GravitonClient
             string path = "PATH";
             try
             {
-                HighScores score = HighScores.Save(path);
+                //HighScores score = HighScores.Save(path);
+                //HighScores score = HighScores.Save(path);
             }
             catch (Exception e)
             {

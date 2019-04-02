@@ -10,20 +10,29 @@ namespace GravitonClient
     {
         public int TicksLeft { get; set; }
         public int Orbs { get; set; }
-        public StableWell(double xcoor, double ycoor)
+        public StableWell(double xcoor, double ycoor) : base(xcoor, ycoor)
         {
-            Xcoor = xcoor;
-            Ycoor = ycoor;
             Orbs = 0;
         }
 
+        public StableWell() { }
+
         public override string Serialize()
         {
-            return null;
+            return String.Format(@"
+            {{
+                ""xcoor"":{0},
+                ""ycoor"":{1},
+                ""currentcolor"":{2},
+                ""ticksleft"":{3}
+            }}
+            ", Xcoor, Ycoor, Orbs, TicksLeft); /* Colors are zero-based, 
+            so the number of orbs it has is the color number it is seeking.*/
         }
         public override void Deserialize(string info)
         {
             // change the properties
+            
         }
     }
 }

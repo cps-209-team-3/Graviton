@@ -44,20 +44,13 @@ namespace GravitonClient
 
         public void Initialize()
         {
+            // TODO
             //pseudorandom orbs
             //pseudorandom wells
             //Timer initialization
         }
 
-        public void Load(string filename)
-        {
-            
-        }
 
-        public void Save(string filename)
-        {
-
-        }
         public void KeyPressed(char c)
         {
             switch (c)
@@ -157,15 +150,20 @@ namespace GravitonClient
         {
             double xc = 100.0;
             double yc = 100.0;
-            // check if it is too near anything else
+            // TODO check if it is too near anything else 
             StableWells.Add(new StableWell(xc, yc));
         }
         public void SpawnOrb()
         {
             double xc = 100.0;
             double yc = 100.0;
-            // check if it is too near anything else
+            // TODO check if it is too near anything else
             Orbs.Add(new Orb(xc, yc, 0));
+        }
+
+        public string Serialize()
+        {
+            return null; //TODO
         }
     }
 }

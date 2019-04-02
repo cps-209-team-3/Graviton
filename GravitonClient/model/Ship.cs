@@ -24,6 +24,8 @@ namespace GravitonClient
             Orbs = new List<Orb>();
         }
 
+        public Ship() : base() { }
+
         public void Move(int xInput, int yInput)
         {
             SpeedX += xInput * BoostFactor;
@@ -89,7 +91,7 @@ namespace GravitonClient
                 {
                     well.Orbs++;
                     Orbs.Remove(orb);
-                } 
+                }
             }
             return well.Orbs == 6;
         }
