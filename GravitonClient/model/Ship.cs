@@ -28,8 +28,8 @@ namespace GravitonClient
 
         public void Move(int xInput, int yInput)
         {
-            SpeedX += xInput * BoostFactor;
-            SpeedY += yInput * BoostFactor;
+            SpeedX += 2.0 * xInput * BoostFactor;
+            SpeedY += 2.0 * yInput * BoostFactor;
             if (BoostFactor > 1.0)
                 BoostFactor -= 0.02;
 
@@ -72,7 +72,7 @@ namespace GravitonClient
             {
                 double deltaX = orb.Xcoor - this.Xcoor;
                 double deltaY = orb.Ycoor - this.Ycoor;
-                if (deltaX * deltaX + deltaY * deltaY < 20)
+                if (deltaX * deltaX + deltaY * deltaY < 1600)
                     return orb;
             }
             return null;
@@ -83,7 +83,7 @@ namespace GravitonClient
             {
                 double deltaX = well.Xcoor - this.Xcoor;
                 double deltaY = well.Ycoor - this.Ycoor;
-                if (deltaX * deltaX + deltaY * deltaY < 20)
+                if (deltaX * deltaX + deltaY * deltaY < 1600)
                     return well;
             }
             return null;

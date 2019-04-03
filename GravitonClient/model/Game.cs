@@ -164,34 +164,47 @@ namespace GravitonClient
         }
         public void UpdatePlayerPosition()
         {
-            // TODO - Gravity - change Player speeds
+            foreach (Well well in StableWells.Concat(UnstableWells))
+            {
+                double deltaX = well.Xcoor - Player.Xcoor;
+                double deltaY = well.Ycoor - Player.Ycoor;
+                double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
+                double force = well.Strength / Math.Max(31.0, dist);
+                Player.SpeedX += deltaX / dist * force;
+                Player.SpeedY += deltaY / dist * force;
+            }
             Player.Move(HorizontalInput, VerticalInput);
         }
         public void SpawnWell()
         {
             double xc = Random.NextDouble() * 5000.0;
             double yc = Random.NextDouble() * 5000.0;
-            foreach (GameObject obj in GameObjects)
+            if (!NearOtherObject(xc, yc))
             {
-                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 100000)
-                    return;
+                Well well = new Well(xc, yc);
+                StableWells.Add(well);
+                GameObjects.Add(well);
             }
-            Well well = new Well(xc, yc);
-            StableWells.Add(well);
-            GameObjects.Add(well);
         }
         public void SpawnOrb()
         {
             double xc = Random.NextDouble() * 5000.0;
             double yc = Random.NextDouble() * 5000.0;
+            if (!NearOtherObject(xc, yc))
+            {
+                Orb orb = new Orb(xc, yc, Random.Next(6));
+                Orbs.Add(orb);
+                GameObjects.Add(orb);
+            }    
+        }
+        public bool NearOtherObject(double xc, double yc)
+        {
             foreach (GameObject obj in GameObjects)
             {
-                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 100000)
-                    return;
+                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 400000)
+                    return true;
             }
-            Orb orb = new Orb(xc, yc, Random.Next(6));
-            Orbs.Add(orb);
-            GameObjects.Add(orb);
+            return false;
         }
 
         public string Serialize()
