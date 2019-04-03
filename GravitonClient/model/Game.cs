@@ -123,9 +123,9 @@ namespace GravitonClient
             Ticks++;
             UpdatePlayer();
             UpdateWells();
-            if (Ticks % 480 == 0)
+            if (Ticks % 400 == 0)
                 SpawnWell();
-            if (Ticks % 120 == 0)
+            if (Ticks % 100 == 0)
                 SpawnOrb();
             ViewCamera.Render();
             GameUpdatedEvent(this, 0);
