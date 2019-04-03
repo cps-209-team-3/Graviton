@@ -57,9 +57,13 @@ namespace GravitonClient
             {
                 SpawnWell();
             }
-            
+
 
             //TODO Timer initialization
+            Timer = new DispatcherTimer();
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
         }
 
 
@@ -114,7 +118,7 @@ namespace GravitonClient
 
         }
 
-        public void Timer_Tick()
+        public void Timer_Tick(object sender, EventArgs e)
         {
             Ticks++;
             UpdatePlayer();
