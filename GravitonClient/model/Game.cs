@@ -189,10 +189,5 @@ namespace GravitonClient
             Orbs.Add(orb);
             GameObjects.Add(orb);
         }
-
-        public string Serialize()
-        {
-            return null; //TODO
-        }
     }
 }
