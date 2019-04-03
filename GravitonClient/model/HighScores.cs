@@ -8,16 +8,16 @@ namespace GravitonClient
 {
     class HighScores
     {
-        private List<HiScore> highScores;
-        public List<HiScore> HighScores
+        private List<HiScore> hiScores;
+        public List<HiScore> HiScores
         {
-            get{return highScores;}
-            set{highScores = value;}
+            get{return hiScores;}
+            set{hiScores = value;}
         }
         
         public HighScores(List<HiScore> scoreList)
         {
-            highScores = scoreList;
+            hiScores = scoreList;
         }
         
         // Checks a game to see if any scores should be included in the list of highscores.
@@ -49,7 +49,7 @@ namespace GravitonClient
         // Returns nothing.
         public void Save(string path)
         {
-            return null;
+            
         }
         
         // Serializes the HighScores object to string.
@@ -89,6 +89,11 @@ namespace GravitonClient
         {
             get{return score;}
             set{score = value;}
+        }
+
+        public HiScore (string username, int score)
+        {
+
         }
     }
 }
