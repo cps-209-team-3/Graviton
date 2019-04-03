@@ -8,16 +8,16 @@ namespace GravitonClient
 {
     class HighScores
     {
-        private Dictionary<string, int> hiScores;
-        public Dictionary<string, int> HiScores
+        private List<HiScore> highScores;
+        public List<HiScore> HighScores
         {
-            get{return hiScores;}
-            set{hiScores = value;}
+            get{return highScores;}
+            set{highScores = value;}
         }
         
-        public HighScores(Dictionary<string, int> scoreDict)
+        public HighScores(List<HiScore> scoreList)
         {
-            hiScores = scoreDict;
+            highScores = scoreList;
         }
         
         // Checks a game to see if any scores should be included in the list of highscores.
@@ -66,6 +66,29 @@ namespace GravitonClient
         public static HighScores Deserialize(string serialized)
         {
             return null; //TODO
+        }
+        
+        // Compares two high scores based on the score value. Used to sort the list of HiScore objects.
+        // Accepts two HiScore objects to compare.
+        // Returns an int denoting the order.
+        public int CompareHighScores (HiScore a, HiScore b) {
+            return 0; //TODO
+        }
+    }
+    
+    public class HiScore {
+        private string user;
+        public string User
+        {
+            get{return user;}
+            set{user = value;}
+        }
+        
+        private int score;
+        public int Score
+        {
+            get{return score;}
+            set{score = value;}
         }
     }
 }
