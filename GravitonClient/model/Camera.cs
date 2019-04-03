@@ -10,7 +10,8 @@ namespace GravitonClient
     {
         public Game ParentGame { get; set; }
         public double ScreenX { get; set; }
-        public double ScreenY { get; set; } 
+        public double ScreenY { get; set; }
+
         public List<Tuple<double, double, int>> StableWells { get; set; }
         public List<Tuple<double, double>> UnstableWells { get; set; }
         public List<Tuple<double, double, int>> Orbs { get; set; }
@@ -69,25 +70,25 @@ namespace GravitonClient
         {
             double xc = ParentGame.Player.Xcoor - ScreenX;
             double yc = ParentGame.Player.Ycoor - ScreenY;
-            if (xc < 50.0)
+            if (xc < 100.0)
             {
-                ScreenX += xc - 50.0;
-                xc = 50.0;
+                ScreenX += xc - 100.0;
+                xc = 100.0;
             }
-            else if (xc > 1390.0)
+            else if (xc > 1340.0)
             {
-                ScreenX += xc - 1390.0;
-                xc = 1390.0;
+                ScreenX += xc - 1340.0;
+                xc = 1340.0;
             }
-            if (yc < 50.0)
+            if (yc < 100.0)
             {
-                ScreenY += yc - 50.0;
-                yc = 50.0;
+                ScreenY += yc - 100.0;
+                yc = 100.0;
             }
-            else if (yc > 850.0)
+            else if (yc > 800.0)
             {
-                ScreenY += yc - 850.0;
-                yc = 850.0;
+                ScreenY += yc - 800.0;
+                yc = 800.0;
             }
             PlayerShip = Tuple.Create(xc - 45, yc - 45);
         }

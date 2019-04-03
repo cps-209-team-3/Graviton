@@ -15,7 +15,7 @@ namespace GravitonClient
         public Well(double xcoor, double ycoor) : base(xcoor, ycoor)
         {
             IsStable = true;
-            Strength = 5000.0;
+            Strength = 600.0;
             TicksLeft = 4000;
             Orbs = 0;
         }
