@@ -16,6 +16,7 @@ namespace GravitonClient
         {
             IsStable = true;
             Strength = 1;
+            TicksLeft = 4000;
             Orbs = 0;
         }
 

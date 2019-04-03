@@ -25,6 +25,7 @@ namespace GravitonClient
         public List<Well> UnstableWells { get; set; }
         public Ship Player { get; set; }
         public List<Orb> Orbs { get; set; }
+        public List<GameObject> GameObjects { get; set; }
         public string Username { get; internal set; }
 
         public Game(bool isCheat)
@@ -40,16 +41,25 @@ namespace GravitonClient
             StableWells = new List<Well>();
             UnstableWells = new List<Well>();
             Orbs = new List<Orb>();
-            Player = new Ship(100.0, 100.0, this);
+            GameObjects = new List<GameObject>();
             Initialize();
         }
 
         public void Initialize()
         {
-            // TODO
-            //pseudorandom orbs
-            //pseudorandom wells
-            //Timer initialization
+            Player = new Ship(2500.0, 2500.0, this);
+            GameObjects.Add(Player);
+            while (Orbs.Count < 40)
+            {
+                SpawnOrb();
+            }
+            while (StableWells.Count < 20)
+            {
+                SpawnWell();
+            }
+            
+
+            //TODO Timer initialization
         }
 
 
@@ -150,22 +160,34 @@ namespace GravitonClient
         }
         public void UpdatePlayerPosition()
         {
-            // Gravity - change Player speeds
+            // TODO - Gravity - change Player speeds
             Player.Move(HorizontalInput, VerticalInput);
         }
         public void SpawnWell()
         {
-            double xc = 100.0;
-            double yc = 100.0;
-            // TODO check if it is too near anything else 
-            StableWells.Add(new Well(xc, yc));
+            double xc = Random.NextDouble() * 5000.0;
+            double yc = Random.NextDouble() * 5000.0;
+            foreach (GameObject obj in GameObjects)
+            {
+                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 100000)
+                    return;
+            }
+            Well well = new Well(xc, yc);
+            StableWells.Add(well);
+            GameObjects.Add(well);
         }
         public void SpawnOrb()
         {
-            double xc = 100.0;
-            double yc = 100.0;
-            // TODO check if it is too near anything else
-            Orbs.Add(new Orb(xc, yc, 0));
+            double xc = Random.NextDouble() * 5000.0;
+            double yc = Random.NextDouble() * 5000.0;
+            foreach (GameObject obj in GameObjects)
+            {
+                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 100000)
+                    return;
+            }
+            Orb orb = new Orb(xc, yc, Random.Next(6));
+            Orbs.Add(orb);
+            GameObjects.Add(orb);
         }
 
         public string Serialize()
