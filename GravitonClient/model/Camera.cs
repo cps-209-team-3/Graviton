@@ -26,7 +26,7 @@ namespace GravitonClient
             ScreenX = 1780.0;
             ScreenY = 2050.0;
         }
-        public void Render() //TODO adjust everything for image width and height
+        public void Render() //TODO adjust orbs
         {
             Seconds = ParentGame.Ticks / 50; //ai, ship 90x90   well 120x120   dswell 250x250
             Score = ParentGame.Points;
