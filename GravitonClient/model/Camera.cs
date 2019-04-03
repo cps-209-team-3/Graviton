@@ -28,7 +28,7 @@ namespace GravitonClient
         }
         public void Render() //TODO adjust everything for image width and height
         {
-            Seconds = ParentGame.Ticks / 60;
+            Seconds = ParentGame.Ticks / 50; //ai, ship 90x90   well 120x120   dswell 250x250
             Score = ParentGame.Points;
             AdjustScreenForPlayer();
             double xc, yc;
@@ -36,19 +36,19 @@ namespace GravitonClient
             SecondsLeft = 600;
             foreach (Well well in ParentGame.StableWells)
             {
-                SecondsLeft = Math.Min(well.TicksLeft / 60, SecondsLeft);
+                SecondsLeft = Math.Min(well.TicksLeft / 50, SecondsLeft);
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
-                if (xc > 0 && xc < 1440 && yc > 0 && yc < 900)
-                    StableWells.Add(Tuple.Create(xc, yc, well.Orbs));
+                if (xc > -60 && xc < 1500 && yc > -60 && yc < 960)
+                    StableWells.Add(Tuple.Create(xc - 60, yc - 60, well.Orbs));
             }
             UnstableWells = new List<Tuple<double, double>>();
             foreach (Well well in ParentGame.UnstableWells)
             {
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
-                if (xc > 0 && xc < 1440 && yc > 0 && yc < 900)
-                    UnstableWells.Add(Tuple.Create(xc, yc));
+                if (xc > -125 && xc < 1565 && yc > -125 && yc < 1025)
+                    UnstableWells.Add(Tuple.Create(xc - 125, yc - 125));
             }
             Orbs = new List<Tuple<double, double, int>>();
             foreach (Orb orb in ParentGame.Orbs)
@@ -89,7 +89,7 @@ namespace GravitonClient
                 ScreenY += yc - 850.0;
                 yc = 850.0;
             }
-            PlayerShip = Tuple.Create(xc, yc);
+            PlayerShip = Tuple.Create(xc - 45, yc - 45);
         }
 
     }
