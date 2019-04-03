@@ -22,7 +22,9 @@ namespace GravitonClient
 
         public Camera(Game game)
         {
-            ParentGame = game; 
+            ParentGame = game;
+            ScreenX = 1780.0;
+            ScreenY = 2050.0;
         }
         public void Render() //TODO adjust everything for image width and height
         {

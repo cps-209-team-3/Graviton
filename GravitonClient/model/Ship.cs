@@ -30,10 +30,31 @@ namespace GravitonClient
         {
             SpeedX += xInput * BoostFactor;
             SpeedY += yInput * BoostFactor;
-            Xcoor += SpeedX;
-            Ycoor += SpeedY;
             if (BoostFactor > 1.0)
                 BoostFactor -= 0.02;
+
+            Xcoor += SpeedX;
+            Ycoor += SpeedY;
+            if (Xcoor < 0.0)
+            {
+                Xcoor = 0.0;
+                SpeedX = 0.0;
+            }
+            else if (Xcoor > 5000.0)
+            {
+                Xcoor = 5000.0;
+                SpeedX = 0.0;
+            }
+            if (Ycoor < 0.0)
+            {
+                Ycoor = 0.0;
+                SpeedY = 0.0;
+            }
+            else if (Ycoor > 5000.0)
+            {
+                Ycoor = 5000.0;
+                SpeedY = 0.0;
+            }
         }
 
         public void SpeedBoost()
