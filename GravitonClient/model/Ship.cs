@@ -12,7 +12,7 @@ namespace GravitonClient
         public double BoostFactor { get; set; }
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
-        public List<Orb> Orbs { get; set; }
+        public List<int> Orbs { get; set; }
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
@@ -21,7 +21,7 @@ namespace GravitonClient
             SpeedX = 0.0;
             SpeedY = 0.0;
             BoostFactor = 1.0;
-            Orbs = new List<Orb>();
+            Orbs = new List<int>();
         }
 
         public Ship() : base() { }
@@ -89,16 +89,16 @@ namespace GravitonClient
             return null;
         }
 
-        public void SortOrbs()
-        {
-            Orbs.Sort((orb1, orb2) => orb1.Color < orb2.Color ? -1 : orb1.Color == orb2.Color ? 0 : 1);
-        }
+        //public void SortOrbs()
+        //{
+        //    Orbs.Sort((orb1, orb2) => orb1.Color < orb2.Color ? -1 : orb1.Color == orb2.Color ? 0 : 1);
+        //}
 
         public bool DepositOrbs(Well well)
         {
-            foreach (Orb orb in Orbs)
+            foreach (int orb in Orbs)
             {
-                if (orb.Color == well.Orbs)
+                if (orb == well.Orbs)
                 {
                     well.Orbs++;
                     Orbs.Remove(orb);

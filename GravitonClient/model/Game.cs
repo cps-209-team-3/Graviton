@@ -158,8 +158,8 @@ namespace GravitonClient
             if (orb != null)
             {
                 Orbs.Remove(orb);
-                Player.Orbs.Add(orb);
-                Player.SortOrbs();
+                Player.Orbs.Add(orb.Color);
+                Player.Orbs.Sort();
             }
         }
         public void UpdatePlayerPosition()
