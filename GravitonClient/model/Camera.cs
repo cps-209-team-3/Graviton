@@ -29,7 +29,7 @@ namespace GravitonClient
         }
         public void Render() //TODO adjust orbs
         {
-            Seconds = ParentGame.Ticks / 50; //ai, ship 90x90   well 120x120   dswell 250x250
+            Seconds = ParentGame.Ticks / 50; //ai, ship 90x90   well 120x120   dswell 250x250    orbs 14x14
             Score = ParentGame.Points;
             AdjustScreenForPlayer();
             double xc, yc;
@@ -56,8 +56,8 @@ namespace GravitonClient
             {
                 xc = orb.Xcoor - ScreenX;
                 yc = orb.Ycoor - ScreenY;
-                if (xc > 0 && xc < 1440 && yc > 0 && yc < 900)
-                    StableWells.Add(Tuple.Create(xc, yc, orb.Color));
+                if (xc > -7 && xc < 1447 && yc > -7 && yc < 907)
+                    StableWells.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
             }
             PlayerOrbs = new List<int>();
             foreach (Orb orb in ParentGame.Player.Orbs)
