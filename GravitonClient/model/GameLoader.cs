@@ -14,7 +14,12 @@ namespace GravitonClient
 
         public static Game Load(string filename, bool isCheatMode)
         {
-            string json = new StreamReader(File.OpenRead(filename)).ReadToEnd();
+            string json;
+            using(StreamReader sr = new StreamReader(File.OpenRead(filename)))
+            {
+                json = sr.ReadToEnd();
+            }
+
             string version = JsonUtils.ExtractValue(json, "version");
             if (version != '"' + Version + '"')
                 throw new FormatException("Wrong version of saved game file: "+ version);
@@ -38,20 +43,28 @@ namespace GravitonClient
 
         public static void Save(Game game, string filename)
         {
-            using (var sr = new StreamWriter(File.OpenWrite(filename)))
+            if (!File.Exists(filename))
             {
-                sr.Write(String.Format(@"
+                File.CreateText(filename).Close();
+
+                using (var sr = new StreamWriter(File.OpenWrite(filename)))
+                {
+                    sr.Write($@"
 {{
-    ""version"":""{0}"",
-    ""username"":{1},
-    ""ticks"":{2},
-    ""humanplayer"":{3}
-    ""stablegravitywells"":{4},
-    ""unstablegravitywells"":{5},      
-    ""orbs"":{6}
-}}",Version, game.Username, game.Ticks, game.Player.Serialize(), 
-                JsonUtils.ToJsonList(game.StableWells), JsonUtils.ToJsonList(game.UnstableWells),
-                JsonUtils.ToJsonList(game.Orbs)));
+    ""version"":""{Version}"",
+    ""username"":{game.Username},
+    ""ticks"":{game.Ticks},
+    ""humanplayer"":{game.Player.Serialize()},
+    ""stablegravitywells"":"+JsonUtils.GameObjectsToJsonList(game.StableWells)+$@",
+    ""unstablegravitywells"":{JsonUtils.GameObjectsToJsonList(game.UnstableWells)},      
+    ""orbs"":{JsonUtils.GameObjectsToJsonList(game.Orbs)}
+}}");
+                }
+            }
+            else
+            {
+                File.Delete(filename);
+                Save(game, filename);
             }
         }
     }

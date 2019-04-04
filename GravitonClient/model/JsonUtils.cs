@@ -91,6 +91,8 @@ namespace GravitonClient
             return length;
         }
 
+       
+
         public static List<string> GetObjectsInArray(string json)
         {
             var list = new List<string>();
@@ -120,5 +122,35 @@ namespace GravitonClient
             return result;
         }
 
+        public static string ToJsonList(IEnumerable<int> ints)
+        {
+            string result = "[\r\n";
+            foreach (int go in ints)
+                result += "    " + go + ",\r\n";
+            result += "]";
+
+            return result;
+        }
+
+        public static string ToJsonList(IEnumerable<PowerUp> ints)
+        {
+            string result = "[\r\n";
+            foreach (PowerUp go in ints)
+                if (go != null)
+                    result += "    " + go.ToString() + ",\r\n";
+            result += "]";
+
+            return result;
+        }
+
+        internal static object GameObjectsToJsonList(IEnumerable<GameObject> gameObjects)
+        {
+            string result = "[\r\n";
+            foreach (GameObject go in gameObjects)
+                result += "    " + go.Serialize() + ",\r\n";
+            result += "]";
+
+            return result;
+        }
     }
 }

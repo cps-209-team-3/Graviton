@@ -8,11 +8,13 @@ namespace GravitonClient
 {
     class Ship : GameObject
     {
+        public int Points { get; set; }
+        public PowerUp[] PowerUps = new PowerUp[3];
         public Game ParentGame { get; set; }
         public double BoostFactor { get; set; }
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
-        public List<Orb> Orbs { get; set; }
+        public List<int> Orbs { get; set; }
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
@@ -21,10 +23,15 @@ namespace GravitonClient
             SpeedX = 0.0;
             SpeedY = 0.0;
             BoostFactor = 1.0;
-            Orbs = new List<Orb>();
+            Orbs = new List<int>();
         }
 
-        public Ship() : base() { }
+        public Ship() : base() {
+            SpeedX = 0.0;
+            SpeedY = 0.0;
+            BoostFactor = 1.0;
+            Orbs = new List<int>();
+        }
 
         public void Move(int xInput, int yInput)
         {
@@ -91,14 +98,14 @@ namespace GravitonClient
 
         public void SortOrbs()
         {
-            Orbs.Sort((orb1, orb2) => orb1.Color < orb2.Color ? -1 : orb1.Color == orb2.Color ? 0 : 1);
+            Orbs.Sort();
         }
 
         public bool DepositOrbs(Well well)
         {
-            foreach (Orb orb in Orbs)
+            foreach (int orb in Orbs)
             {
-                if (orb.Color == well.Orbs)
+                if (orb == well.Orbs)
                 {
                     well.Orbs++;
                     Orbs.Remove(orb);
@@ -107,14 +114,60 @@ namespace GravitonClient
             return well.Orbs == 6;
         }
 
-        public override string Serialize()
+        public bool TryPowerUp<T>() where T : PowerUp
         {
-            return null;
-        }
-        public override void Deserialize(string info)
-        {
-            // change the properties
+            
+            for(int i = 0; i < 3; i++)
+            {
+                if(PowerUps[i] is T)
+                {
+                    PowerUps[i].Execute();
+                    return true;
+                }
+            }
+            return false;
         }
 
+        public override string Serialize()
+        {
+            return $@"{{
+    ""xcoor"":{Xcoor},
+    ""ycoor"":{Ycoor},
+    ""points"":{Points},
+    ""orblist"":{JsonUtils.ToJsonList(Orbs)},
+    ""powerups"":{JsonUtils.ToJsonList(PowerUps)}
+}}";
+
+        }
+
+        public void AddPowerUp()
+        {
+            if (PowerUps.Length < 3)
+                PowerUps[PowerUps.Length] = PowerUp.GetRandomPowerUpFactory(this);
+        }
+
+
+
+        public override void Deserialize(string info)
+        {
+            base.Deserialize(info);
+            Points = Convert.ToInt32(JsonUtils.ExtractValue(info, "points"));
+
+            foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(info, "orblist")))
+            {
+                Orbs.Add(Convert.ToInt32(s));
+            }
+
+            var strs = JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(info, "powerups"));
+            for (int i = 0; i < Math.Min(strs.Count, 3); ++i)
+            {
+                switch (strs[i])
+                {
+                    case "ghost": PowerUps[i] = new GhostingPowerUp(this); break;
+                    case "destabilize": PowerUps[i] = new DestabilizePowerUp(this); break;
+                    case "neutralize": PowerUps[i] = new NeutralizePowerUp(this); break;
+                }
+            }
+        }
     }
 }

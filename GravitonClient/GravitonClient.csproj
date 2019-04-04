@@ -64,7 +64,8 @@
     </ApplicationDefinition>
     <Compile Include="model\GameLoader.cs" />
     <Compile Include="model\JsonUtils.cs" />
-    <Compile Include="model\Powerup.cs" />
+    <Compile Include="model\PowerUp.cs" />
+    <Compile Include="tests\JsonTests.cs" />
     <Compile Include="view\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -134,6 +135,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="GravitonDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

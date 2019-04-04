@@ -15,7 +15,6 @@ namespace GravitonClient
         public bool IsOver { get; set; }
         public Random Random { get; set; }
         public Camera ViewCamera { get; set; }
-        public Powerup GamePowerup { get; set; }
         public int Points { get; set; }
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }
@@ -87,13 +86,13 @@ namespace GravitonClient
                     Player.SpeedBoost();
                     break;
                 case 'q':
-                    GamePowerup.Neutralize();
+                    Player.TryPowerUp<NeutralizePowerUp>();
                     break;
                 case 'f':
-                    GamePowerup.Destabilize();
+                    Player.TryPowerUp<DestabilizePowerUp>();
                     break;
                 case 'e':
-                    GamePowerup.Ghost();
+                    Player.TryPowerUp<GhostingPowerUp>();
                     break;
             }
         }
@@ -158,7 +157,7 @@ namespace GravitonClient
             if (orb != null)
             {
                 Orbs.Remove(orb);
-                Player.Orbs.Add(orb);
+                Player.Orbs.Add(orb.Color);
                 Player.SortOrbs();
             }
         }
@@ -201,7 +200,7 @@ namespace GravitonClient
         {
             foreach (GameObject obj in GameObjects)
             {
-                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 400000)
+                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 40)
                     return true;
             }
             return false;
