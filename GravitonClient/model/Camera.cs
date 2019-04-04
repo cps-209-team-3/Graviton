@@ -60,9 +60,9 @@ namespace GravitonClient
                     StableWells.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
             }
             PlayerOrbs = new List<int>();
-            foreach (Orb orb in ParentGame.Player.Orbs)
+            foreach (int orb in ParentGame.Player.Orbs)
             {
-                PlayerOrbs.Add(orb.Color);
+                PlayerOrbs.Add(orb);
             }
         }
 
