@@ -9,6 +9,7 @@ namespace GravitonClient
     class Ship : GameObject
     {
         public Game ParentGame { get; set; }
+        public Powerup GamePowerup { get; set; }
         public double BoostFactor { get; set; }
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
@@ -16,6 +17,7 @@ namespace GravitonClient
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
+            GamePowerup = new Powerup(game);
             Xcoor = xcoor;
             Ycoor = ycoor;
             SpeedX = 0.0;
@@ -88,11 +90,6 @@ namespace GravitonClient
             }
             return null;
         }
-
-        //public void SortOrbs()
-        //{
-        //    Orbs.Sort((orb1, orb2) => orb1.Color < orb2.Color ? -1 : orb1.Color == orb2.Color ? 0 : 1);
-        //}
 
         public bool DepositOrbs(Well well)
         {
