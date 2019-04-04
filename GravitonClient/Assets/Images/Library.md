@@ -11,6 +11,13 @@
 * WellOrange.png
 ### AI
 * AI1.png
+### Orbs
+* OrbRed.png
+* OrbYellow.png
+* OrbOrange.png
+* OrbBlue.png
+* OrbGreen.png
+* OrbPurple.png
 ### Templates (for creating animations)
 * destabilized.png
 * Ship.png

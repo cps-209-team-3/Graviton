@@ -10,14 +10,15 @@ namespace GravitonClient
     {
         private List<HiScore> highScores;
         public List<HiScore> HighScoresList
+
         {
-            get{return highScores;}
-            set{highScores = value;}
+            get;
+            set;
         }
         
         public HighScores(List<HiScore> scoreList)
         {
-            highScores = scoreList;
+            HighScoresList = scoreList;
         }
 
         public HighScores() { }
@@ -55,15 +56,15 @@ namespace GravitonClient
         private string user;
         public string User
         {
-            get{return user;}
-            set{user = value;}
+            get;
+            set;
         }
         
         private int score;
         public int Score
         {
-            get{return score;}
-            set{score = value;}
+            get;
+            set;
         }
     }
 }

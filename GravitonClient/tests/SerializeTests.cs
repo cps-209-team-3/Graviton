@@ -14,6 +14,7 @@ namespace GravitonClient
             Game game1 = new Game(false);
             GameLoader.Save(game1,"\\temp\\temp.json");
             Game game2 = GameLoader.Load("\\temp\\temp.json", false);
+
             for (int i = 0; i < game2.Orbs.Count; i++)
             {
                 Assert.AreEqual(game1.Orbs[i].Color, game2.Orbs[i].Color);

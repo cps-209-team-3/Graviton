@@ -19,6 +19,11 @@ namespace GravitonClient
             if (version != '"' + Version + '"')
                 throw new FormatException("Wrong version of saved game file: "+ version);
             var game = new Game(isCheatMode);
+            game.StableWells = new List<Well>();
+            game.UnstableWells = new List<Well>();
+            game.Orbs = new List<Orb>();
+
+
             game.Username = JsonUtils.ExtractValue(json, "username");
             game.Ticks = Convert.ToInt32(JsonUtils.ExtractValue(json, "ticks"));
             game.Player = GameObject.FromJsonFactory<Ship>(JsonUtils.ExtractValue(json, "humanplayer"));
