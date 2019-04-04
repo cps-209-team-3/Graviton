@@ -137,9 +137,21 @@ namespace GravitonClient
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
                 {
+                    well.TicksLeft = 3000;
                     well.IsStable = false;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
+                }
+            }
+            foreach (Well well in UnstableWells)
+            {
+                well.TicksLeft--;
+                // do a shock wave every so often????
+                if (well.TicksLeft == 0)
+                {
+                    // any explosions or something????
+                    UnstableWells.Remove(well);
+                    GameObjects.Remove(well);
                 }
             }
         }
@@ -152,12 +164,18 @@ namespace GravitonClient
                 if (!well.IsStable)
                     IsOver = true;
                 else if (Player.DepositOrbs(well))
+                {
                     StableWells.Remove(well);
+                    GameObjects.Remove(well);
+                }
+                    
+                    
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
             {
                 Orbs.Remove(orb);
+                GameObjects.Remove(orb);
                 Player.Orbs.Add(orb.Color);
                 Player.Orbs.Sort();
             }
