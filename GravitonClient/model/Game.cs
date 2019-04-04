@@ -49,11 +49,11 @@ namespace GravitonClient
         {
             Player = new Ship(2500.0, 2500.0, this);
             GameObjects.Add(Player);
-            while (Orbs.Count < 40)
+            while (Orbs.Count < 30)
             {
                 SpawnOrb();
             }
-            while (StableWells.Count < 20)
+            while (StableWells.Count < 15)
             {
                 SpawnWell();
             }
@@ -201,7 +201,7 @@ namespace GravitonClient
         {
             foreach (GameObject obj in GameObjects)
             {
-                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 400000)
+                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 40000)
                     return true;
             }
             return false;
