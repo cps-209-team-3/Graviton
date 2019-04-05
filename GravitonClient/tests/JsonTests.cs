@@ -26,7 +26,7 @@ namespace GravitonClient
             var orbs = new Game(false).Orbs;
             string st = JsonUtils.ToJsonList(orbs);
             var s = JsonUtils.GetObjectsInArray(st);
-            Assert.AreEqual(s.Count, 40);
+            Assert.AreEqual(s.Count, 30);
             for(int i = 0; i < orbs.Count; i++)
             {
                 Orb other = GameObject.FromJsonFactory<Orb>(s[i]);

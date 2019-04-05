@@ -39,7 +39,7 @@ namespace GravitonClient
                 Assert.AreEqual(game1.UnstableWells[i].TicksLeft, game2.UnstableWells[i].TicksLeft);
             }
             Assert.IsTrue(Enumerable.SequenceEqual(game1.Player.Orbs, game2.Player.Orbs));
-            Assert.AreEqual(game1.Player.Points, game1.Player.Points);
+            Assert.AreEqual(game1.Player.Points, game2.Player.Points);
             
 
             File.Delete("\\temp\\temp.json");
@@ -59,6 +59,7 @@ namespace GravitonClient
         public void Test_StableWellSerialize()
         {
             var orb1 = new Well(1, 2);
+            orb1.IsStable = true;
             orb1.Orbs = 2;
             string s = orb1.Serialize();
             var orb2 = GameObject.FromJsonFactory<Well>(s);
@@ -85,7 +86,6 @@ namespace GravitonClient
         {
             var ship1 = new Ship(1, 2, new Game(false));
             ship1.Orbs = new List<int>() { 5, 3, 4 };
-            ship1.PowerUps = new PowerUp[3] { new GhostingPowerUp(ship1), null, null };
             string s = ship1.Serialize();
             var orb2 = GameObject.FromJsonFactory<Ship>(s);
             Assert.AreEqual(ship1.Xcoor, orb2.Xcoor);

@@ -64,7 +64,7 @@
     </ApplicationDefinition>
     <Compile Include="model\GameLoader.cs" />
     <Compile Include="model\JsonUtils.cs" />
-    <Compile Include="model\PowerUp.cs" />
+    <Compile Include="model\Powerup.cs" />
     <Compile Include="tests\JsonTests.cs" />
     <Compile Include="view\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
