@@ -8,17 +8,20 @@ namespace GravitonClient
 {
     class HighScores
     {
-        private List<HiScore> hiScores;
-        public List<HiScore> HiScores
+        private List<HiScore> highScores;
+        public List<HiScore> HighScoresList
+
         {
-            get{return hiScores;}
-            set{hiScores = value;}
+            get;
+            set;
         }
         
         public HighScores(List<HiScore> scoreList)
         {
-            hiScores = scoreList;
+            HighScoresList = scoreList;
         }
+
+        public HighScores() { }
         
         // Checks a game to see if any scores should be included in the list of highscores.
         // Accepts a reference to a Game instance.
@@ -35,39 +38,6 @@ namespace GravitonClient
         {
             
         }
-        
-        // Creates a HighScores object from a file.
-        // Accepts a path to the file as a string.
-        // Returns a HighScores object.
-        public static HighScores Load(string path)
-        {
-            return null;//TODO
-        }
-        
-        // Writes the current HighScores object to a file.
-        // Accepts a path to the file as a string.
-        // Returns nothing.
-        public void Save(string path)
-        {
-            
-        }
-        
-        // Serializes the HighScores object to string.
-        // Accepts nothing.
-        // Returns a string.
-        public string Serialize()
-        {
-            return null; //TODO
-        }
-        
-        // Deserializes a HighScores object from a string.
-        // Accepts a serialized object as a string.
-        // Returns a HighScores object.
-        public static HighScores Deserialize(string serialized)
-        {
-            return null; //TODO
-        }
-        
         // Compares two high scores based on the score value. Used to sort the list of HiScore objects.
         // Accepts two HiScore objects to compare.
         // Returns an int denoting the order.
@@ -77,23 +47,24 @@ namespace GravitonClient
     }
     
     public class HiScore {
+        public HiScore(string name, int score)
+        {
+            User = name;
+            Score = score;
+        }
+
         private string user;
         public string User
         {
-            get{return user;}
-            set{user = value;}
+            get;
+            set;
         }
         
         private int score;
         public int Score
         {
-            get{return score;}
-            set{score = value;}
-        }
-
-        public HiScore (string username, int score)
-        {
-
+            get;
+            set;
         }
     }
 }
