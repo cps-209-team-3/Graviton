@@ -6,7 +6,7 @@ using System.Windows.Threading;
 
 namespace GravitonClient
 {
-    class Game
+    public class Game
     {
         public event EventHandler<int> GameUpdatedEvent;
         public bool IsCheat { get; set; }

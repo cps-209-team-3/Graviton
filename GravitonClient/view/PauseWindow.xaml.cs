@@ -19,22 +19,23 @@ namespace GravitonClient.view
     /// </summary>
     public partial class PauseWindow : Window
     {
-        //private Game Game { get; set; } ?
+        private Game Game { get; set; }
 
-        public PauseWindow()
+        public PauseWindow(Game game)
         {
+            Game = game;
             InitializeComponent();
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
         {
-            //Game.Timer.Start();
+            Game.Timer.Start();
             Close();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            //save the game
+            GameLoader.Save(Game, "C:\temp\\game.json");
             //close game window and return to main menu
             Close();
         }

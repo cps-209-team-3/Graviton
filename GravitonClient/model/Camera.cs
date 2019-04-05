@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Camera
+    public class Camera
     {
         public Game ParentGame { get; set; }
         public double ScreenX { get; set; }
