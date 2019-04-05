@@ -7,8 +7,8 @@ using System.IO;
 
 namespace GravitonClient
 {
-    
-    class GameLoader
+    public class GameLoader
+
     {
         private static string Version = "0.0.1";
 
