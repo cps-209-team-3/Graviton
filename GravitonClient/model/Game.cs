@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 
@@ -15,7 +13,6 @@ namespace GravitonClient
         public bool IsOver { get; set; }
         public Random Random { get; set; }
         public Camera ViewCamera { get; set; }
-        public Powerup GamePowerup { get; set; }
         public int Points { get; set; }
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }
@@ -49,17 +46,19 @@ namespace GravitonClient
         {
             Player = new Ship(2500.0, 2500.0, this);
             GameObjects.Add(Player);
-            while (Orbs.Count < 40)
+            while (Orbs.Count < 30)
             {
                 SpawnOrb();
             }
-            while (StableWells.Count < 20)
+            while (StableWells.Count < 15)
             {
                 SpawnWell();
             }
-            
 
-            //TODO Timer initialization
+            Timer = new DispatcherTimer();
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
+            Timer.Tick += Timer_Tick;
+            Timer.Start();
         }
 
 
@@ -83,13 +82,14 @@ namespace GravitonClient
                     Player.SpeedBoost();
                     break;
                 case 'q':
-                    GamePowerup.Neutralize();
+
+                    Player.GamePowerup.Neutralize();
                     break;
                 case 'f':
-                    GamePowerup.Destabilize();
+                    Player.GamePowerup.Destabilize();
                     break;
                 case 'e':
-                    GamePowerup.Ghost();
+                    Player.GamePowerup.Ghost();
                     break;
             }
         }
@@ -114,14 +114,14 @@ namespace GravitonClient
 
         }
 
-        public void Timer_Tick()
+        public void Timer_Tick(object sender, EventArgs e)
         {
             Ticks++;
             UpdatePlayer();
             UpdateWells();
-            if (Ticks % 480 == 0)
+            if (Ticks % 400 == 0)
                 SpawnWell();
-            if (Ticks % 120 == 0)
+            if (Ticks % 100 == 0)
                 SpawnOrb();
             ViewCamera.Render();
             GameUpdatedEvent(this, 0);
@@ -133,9 +133,21 @@ namespace GravitonClient
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
                 {
+                    well.TicksLeft = 3000;
                     well.IsStable = false;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
+                }
+            }
+            foreach (Well well in UnstableWells)
+            {
+                well.TicksLeft--;
+                // do a shock wave every so often????
+                if (well.TicksLeft == 0)
+                {
+                    // any explosions or something????
+                    UnstableWells.Remove(well);
+                    GameObjects.Remove(well);
                 }
             }
         }
@@ -148,51 +160,66 @@ namespace GravitonClient
                 if (!well.IsStable)
                     IsOver = true;
                 else if (Player.DepositOrbs(well))
+                {
                     StableWells.Remove(well);
+                    GameObjects.Remove(well);
+                }
+                    
+                    
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
             {
                 Orbs.Remove(orb);
-                Player.Orbs.Add(orb);
-                Player.SortOrbs();
+
+                GameObjects.Remove(orb);
+                Player.Orbs.Add(orb.Color);
+                Player.Orbs.Sort();
             }
         }
         public void UpdatePlayerPosition()
         {
-            // TODO - Gravity - change Player speeds
+            foreach (Well well in StableWells.Concat(UnstableWells))
+            {
+                double deltaX = well.Xcoor - Player.Xcoor;
+                double deltaY = well.Ycoor - Player.Ycoor;
+                double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
+                double force = well.Strength / Math.Max(31.0, dist);
+                Player.SpeedX += deltaX / dist * force;
+                Player.SpeedY += deltaY / dist * force;
+            }
             Player.Move(HorizontalInput, VerticalInput);
         }
         public void SpawnWell()
         {
             double xc = Random.NextDouble() * 5000.0;
             double yc = Random.NextDouble() * 5000.0;
-            foreach (GameObject obj in GameObjects)
+            if (!NearOtherObject(xc, yc))
             {
-                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 100000)
-                    return;
+                Well well = new Well(xc, yc);
+                StableWells.Add(well);
+                GameObjects.Add(well);
             }
-            Well well = new Well(xc, yc);
-            StableWells.Add(well);
-            GameObjects.Add(well);
         }
         public void SpawnOrb()
         {
             double xc = Random.NextDouble() * 5000.0;
             double yc = Random.NextDouble() * 5000.0;
+            if (!NearOtherObject(xc, yc))
+            {
+                Orb orb = new Orb(xc, yc, Random.Next(6));
+                Orbs.Add(orb);
+                GameObjects.Add(orb);
+            }    
+        }
+        public bool NearOtherObject(double xc, double yc)
+        {
             foreach (GameObject obj in GameObjects)
             {
-                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 100000)
-                    return;
+                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 40000)
+                    return true;
             }
-            Orb orb = new Orb(xc, yc, Random.Next(6));
-            Orbs.Add(orb);
-            GameObjects.Add(orb);
-        }
-
-        public string Serialize()
-        {
-            return null; //TODO
+            return false;
         }
     }
 }

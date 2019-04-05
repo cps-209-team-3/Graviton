@@ -8,17 +8,22 @@ namespace GravitonClient
 {
     class HighScores
     {
+
         private List<HiScore> hiScores;
         public List<HiScore> HiScores
         {
             get{return hiScores;}
             set{hiScores = value;}
+
         }
         
         public HighScores(List<HiScore> scoreList)
         {
+
             hiScores = scoreList;
         }
+
+        public HighScores() { }
         
         // Checks a game to see if any scores should be included in the list of highscores.
         // Accepts a reference to a Game instance.
@@ -77,23 +82,25 @@ namespace GravitonClient
     }
     
     public class HiScore {
+        public HiScore(string name, int score)
+        {
+            User = name;
+            Score = score;
+        }
+
         private string user;
         public string User
         {
-            get{return user;}
-            set{user = value;}
+            get;
+            set;
         }
         
         private int score;
         public int Score
         {
-            get{return score;}
-            set{score = value;}
+            get;
+            set;
         }
-
-        public HiScore (string username, int score)
-        {
-
-        }
+        
     }
 }

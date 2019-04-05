@@ -74,6 +74,7 @@ namespace GravitonClient
             Assert.IsTrue(hiScore.HiScores.Contains(new HiScore("Evisserate", 10)));
         }
 
+
         [Test]
         public void Load_InputFile_ReturnsHighScoresObject()
         {
