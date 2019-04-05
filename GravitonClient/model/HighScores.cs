@@ -8,17 +8,19 @@ namespace GravitonClient
 {
     class HighScores
     {
-        private List<HiScore> highScores;
-        public List<HiScore> HighScoresList
 
+        private List<HiScore> hiScores;
+        public List<HiScore> HiScores
         {
-            get;
-            set;
+            get{return hiScores;}
+            set{hiScores = value;}
+
         }
         
         public HighScores(List<HiScore> scoreList)
         {
-            HighScoresList = scoreList;
+
+            hiScores = scoreList;
         }
 
         public HighScores() { }
@@ -38,6 +40,39 @@ namespace GravitonClient
         {
             
         }
+        
+        // Creates a HighScores object from a file.
+        // Accepts a path to the file as a string.
+        // Returns a HighScores object.
+        public static HighScores Load(string path)
+        {
+            return null;//TODO
+        }
+        
+        // Writes the current HighScores object to a file.
+        // Accepts a path to the file as a string.
+        // Returns nothing.
+        public void Save(string path)
+        {
+            
+        }
+        
+        // Serializes the HighScores object to string.
+        // Accepts nothing.
+        // Returns a string.
+        public string Serialize()
+        {
+            return null; //TODO
+        }
+        
+        // Deserializes a HighScores object from a string.
+        // Accepts a serialized object as a string.
+        // Returns a HighScores object.
+        public static HighScores Deserialize(string serialized)
+        {
+            return null; //TODO
+        }
+        
         // Compares two high scores based on the score value. Used to sort the list of HiScore objects.
         // Accepts two HiScore objects to compare.
         // Returns an int denoting the order.
@@ -66,5 +101,6 @@ namespace GravitonClient
             get;
             set;
         }
+        
     }
 }
