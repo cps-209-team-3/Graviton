@@ -8,16 +8,18 @@ namespace GravitonClient
 {
     class Ship : GameObject
     {
-        public int Points { get; set; }
-        public PowerUp[] PowerUps = new PowerUp[3];
         public Game ParentGame { get; set; }
+        public Powerup GamePowerup { get; set; }
         public double BoostFactor { get; set; }
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
         public List<int> Orbs { get; set; }
+        public int Points{ get; set; }
+
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
+            GamePowerup = new Powerup(game);
             Xcoor = xcoor;
             Ycoor = ycoor;
             SpeedX = 0.0;
@@ -96,11 +98,6 @@ namespace GravitonClient
             return null;
         }
 
-        public void SortOrbs()
-        {
-            Orbs.Sort();
-        }
-
         public bool DepositOrbs(Well well)
         {
             foreach (int orb in Orbs)
@@ -114,19 +111,7 @@ namespace GravitonClient
             return well.Orbs == 6;
         }
 
-        public bool TryPowerUp<T>() where T : PowerUp
-        {
-            
-            for(int i = 0; i < 3; i++)
-            {
-                if(PowerUps[i] is T)
-                {
-                    PowerUps[i].Execute();
-                    return true;
-                }
-            }
-            return false;
-        }
+
 
         public override string Serialize()
         {
@@ -135,24 +120,19 @@ namespace GravitonClient
     ""ycoor"":{Ycoor},
     ""points"":{Points},
     ""orblist"":{JsonUtils.ToJsonList(Orbs)},
-    ""powerups"":{JsonUtils.ToJsonList(PowerUps)}
+    ""powerups"":{JsonUtils.ToJsonList( GamePowerup.CurrentPowerups)}
 }}";
 
-        }
-
-        public void AddPowerUp()
-        {
-            if (PowerUps.Length < 3)
-                PowerUps[PowerUps.Length] = PowerUp.GetRandomPowerUpFactory(this);
         }
 
 
 
         public override void Deserialize(string info)
         {
+            
             base.Deserialize(info);
             Points = Convert.ToInt32(JsonUtils.ExtractValue(info, "points"));
-
+            
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(info, "orblist")))
             {
                 Orbs.Add(Convert.ToInt32(s));
@@ -163,9 +143,9 @@ namespace GravitonClient
             {
                 switch (strs[i])
                 {
-                    case "ghost": PowerUps[i] = new GhostingPowerUp(this); break;
-                    case "destabilize": PowerUps[i] = new DestabilizePowerUp(this); break;
-                    case "neutralize": PowerUps[i] = new NeutralizePowerUp(this); break;
+                    case "ghost": GamePowerup.CurrentPowerups.Add(Powerup.powerups.ghost); break;
+                    case "destabilize": GamePowerup.CurrentPowerups.Add(Powerup.powerups.destabilize); break;
+                    case "neutralize": GamePowerup.CurrentPowerups.Add(Powerup.powerups.neutralize); break;
                 }
             }
         }

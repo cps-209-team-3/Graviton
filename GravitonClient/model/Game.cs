@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 
@@ -48,17 +46,15 @@ namespace GravitonClient
         {
             Player = new Ship(2500.0, 2500.0, this);
             GameObjects.Add(Player);
-            while (Orbs.Count < 40)
+            while (Orbs.Count < 30)
             {
                 SpawnOrb();
             }
-            while (StableWells.Count < 20)
+            while (StableWells.Count < 15)
             {
                 SpawnWell();
             }
 
-
-            //TODO Timer initialization
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             Timer.Tick += Timer_Tick;
@@ -86,13 +82,14 @@ namespace GravitonClient
                     Player.SpeedBoost();
                     break;
                 case 'q':
-                    Player.TryPowerUp<NeutralizePowerUp>();
+
+                    Player.GamePowerup.Neutralize();
                     break;
                 case 'f':
-                    Player.TryPowerUp<DestabilizePowerUp>();
+                    Player.GamePowerup.Destabilize();
                     break;
                 case 'e':
-                    Player.TryPowerUp<GhostingPowerUp>();
+                    Player.GamePowerup.Ghost();
                     break;
             }
         }
@@ -136,9 +133,21 @@ namespace GravitonClient
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
                 {
+                    well.TicksLeft = 3000;
                     well.IsStable = false;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
+                }
+            }
+            foreach (Well well in UnstableWells)
+            {
+                well.TicksLeft--;
+                // do a shock wave every so often????
+                if (well.TicksLeft == 0)
+                {
+                    // any explosions or something????
+                    UnstableWells.Remove(well);
+                    GameObjects.Remove(well);
                 }
             }
         }
@@ -151,14 +160,21 @@ namespace GravitonClient
                 if (!well.IsStable)
                     IsOver = true;
                 else if (Player.DepositOrbs(well))
+                {
                     StableWells.Remove(well);
+                    GameObjects.Remove(well);
+                }
+                    
+                    
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
             {
                 Orbs.Remove(orb);
+
+                GameObjects.Remove(orb);
                 Player.Orbs.Add(orb.Color);
-                Player.SortOrbs();
+                Player.Orbs.Sort();
             }
         }
         public void UpdatePlayerPosition()
@@ -200,7 +216,7 @@ namespace GravitonClient
         {
             foreach (GameObject obj in GameObjects)
             {
-                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 40)
+                if (Math.Pow(xc - obj.Xcoor, 2) + Math.Pow(yc - obj.Ycoor, 2) < 40000)
                     return true;
             }
             return false;

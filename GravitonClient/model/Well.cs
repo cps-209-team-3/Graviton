@@ -28,7 +28,7 @@ namespace GravitonClient
     ""strength"":{Strength}
     ""xcoor"":{Xcoor},
     ""ycoor"":{Ycoor},
-    {(IsStable? $"currentcolor:{ Orbs }," : "" )}
+    {(IsStable? $"\"currentcolor\":{ Orbs }," : "" )}
     ""ticksleft"":{TicksLeft}
 }}"; /* Colors are zero-based, 
             so the number of orbs it has is the color number it is seeking.*/
@@ -41,7 +41,7 @@ namespace GravitonClient
             Strength = Convert.ToInt32(JsonUtils.ExtractValue(info, "strength"));
             try
             {
-                Orbs = Convert.ToInt32(JsonUtils.ExtractValue(info, "ticksleft"));
+                Orbs = Convert.ToInt32(JsonUtils.ExtractValue(info, "currentcolor"));
             }
             catch
             {

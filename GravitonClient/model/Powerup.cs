@@ -2,75 +2,49 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    internal abstract class PowerUp
+    class Powerup
     {
-        internal static PowerUp GetRandomPowerUpFactory(Ship ship)
+        public enum powerups { neutralize, destabilize, ghost };
+        public List<powerups> CurrentPowerups;
+        public Game ParentGame;
+
+        public Powerup(Game game)
         {
-            throw new System.NotImplementedException();
+            ParentGame = game;
+            CurrentPowerups = new List<powerups>();
         }
 
-        internal abstract void Execute();
-    }
-
-    internal class GhostingPowerUp : PowerUp
-    {
-
-        public override string ToString()
+        public void AddNew()
         {
-            return "ghost";
+            // add a random powerup to CurrentPowerups
         }
 
-        public GhostingPowerUp(Ship ship)
+        public void Neutralize()
         {
-
+            if (!CurrentPowerups.Contains(powerups.neutralize))
+                return;
+            CurrentPowerups.Remove(powerups.neutralize);
+            // Do neutralization
         }
 
-        internal override void Execute()
+        public void Destabilize()
         {
-
-            throw new NotImplementedException();
-        }
-    }
-
-    internal class NeutralizePowerUp : PowerUp
-    {
-        public NeutralizePowerUp(Ship ship)
-        {
-
+            if (!CurrentPowerups.Contains(powerups.destabilize))
+                return;
+            CurrentPowerups.Remove(powerups.destabilize);
+            // Do destabilization logic
         }
 
-
-        internal override void Execute()
+        public void Ghost()
         {
-            throw new NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            return "neutralize";
-        }
-    }
-
-    internal class DestabilizePowerUp : PowerUp
-    {
-
-        public DestabilizePowerUp(Ship ship)
-        {
-
-        }
-
-
-        internal override void Execute()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string ToString()
-        {
-            return "destabilize";
+            if (!CurrentPowerups.Contains(powerups.ghost))
+                return;
+            CurrentPowerups.Remove(powerups.ghost);
+            // Do ghost logic
         }
     }
 }

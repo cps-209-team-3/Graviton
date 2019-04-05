@@ -112,6 +112,18 @@ namespace GravitonClient
             return list;
         }
 
+        internal static object ToJsonList(List<Powerup.powerups> currentPowerups)
+        {
+            string result = "[\r\n";
+            foreach (Powerup.powerups go in currentPowerups)
+            {
+                result += "    " + go.ToString() + ",\r\n";
+            }
+            result += "]";
+
+            return result;
+        }
+
         public static string ToJsonList(IEnumerable<GameObject> gameObjects)
         {
             string result = "[\r\n";
@@ -132,18 +144,8 @@ namespace GravitonClient
             return result;
         }
 
-        public static string ToJsonList(IEnumerable<PowerUp> ints)
-        {
-            string result = "[\r\n";
-            foreach (PowerUp go in ints)
-                if (go != null)
-                    result += "    " + go.ToString() + ",\r\n";
-            result += "]";
 
-            return result;
-        }
-
-        internal static object GameObjectsToJsonList(IEnumerable<GameObject> gameObjects)
+        internal static string GameObjectsToJsonList(IEnumerable<GameObject> gameObjects)
         {
             string result = "[\r\n";
             foreach (GameObject go in gameObjects)
