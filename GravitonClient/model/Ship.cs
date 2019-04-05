@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Ship : GameObject
+    public class Ship : GameObject
     {
         public Game ParentGame { get; set; }
         public double BoostFactor { get; set; }

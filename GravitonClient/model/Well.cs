@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Well : GameObject
+    public class Well : GameObject
     {
         public bool IsStable { get; set; }
         public int TicksLeft { get; set; }

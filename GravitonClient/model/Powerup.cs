@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class Powerup
+    public class Powerup
     {
         public enum powerups { neutralize, destabilize, ghost };
         public List<powerups> CurrentPowerups;

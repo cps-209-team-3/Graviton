@@ -7,7 +7,7 @@ using System.IO;
 
 namespace GravitonClient
 {
-    class GameLoader
+    public class GameLoader
     {
         public static Game Load(string filename)
         {
