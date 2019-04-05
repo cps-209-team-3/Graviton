@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 
 
@@ -15,7 +13,6 @@ namespace GravitonClient
         public bool IsOver { get; set; }
         public Random Random { get; set; }
         public Camera ViewCamera { get; set; }
-        public Powerup GamePowerup { get; set; }
         public int Points { get; set; }
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }
@@ -85,13 +82,14 @@ namespace GravitonClient
                     Player.SpeedBoost();
                     break;
                 case 'q':
-                    GamePowerup.Neutralize();
+
+                    Player.GamePowerup.Neutralize();
                     break;
                 case 'f':
-                    GamePowerup.Destabilize();
+                    Player.GamePowerup.Destabilize();
                     break;
                 case 'e':
-                    GamePowerup.Ghost();
+                    Player.GamePowerup.Ghost();
                     break;
             }
         }
@@ -173,6 +171,7 @@ namespace GravitonClient
             if (orb != null)
             {
                 Orbs.Remove(orb);
+
                 GameObjects.Remove(orb);
                 Player.Orbs.Add(orb.Color);
                 Player.Orbs.Sort();
@@ -221,11 +220,6 @@ namespace GravitonClient
                     return true;
             }
             return false;
-        }
-
-        public string Serialize()
-        {
-            return null; //TODO
         }
     }
 }

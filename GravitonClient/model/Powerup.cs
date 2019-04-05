@@ -11,7 +11,7 @@ namespace GravitonClient
         public enum powerups { neutralize, destabilize, ghost };
         public List<powerups> CurrentPowerups;
         public Game ParentGame;
-        
+
         public Powerup(Game game)
         {
             ParentGame = game;
@@ -30,7 +30,7 @@ namespace GravitonClient
             CurrentPowerups.Remove(powerups.neutralize);
             // Do neutralization
         }
-         
+
         public void Destabilize()
         {
             if (!CurrentPowerups.Contains(powerups.destabilize))

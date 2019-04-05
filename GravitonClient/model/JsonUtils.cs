@@ -6,43 +6,59 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
+
+    
     class JsonUtils
     {
-        public static string ExtractValue(string json, string key)
+
+        private static int LengthOfJsonObject(string json, int startchar)
         {
-            int i = json.IndexOf(String.Format("\"{0}\":", key));
-            if (i == -1)
-                throw new Exception("Key was not in string given.");
-            i += key.Length + 3; //putting it at the first char of value
-            switch (json[i]) 
+            switch (json[startchar])
             {
                 case '[':
-                    return JsonUtils.LoopTillNextChar(json, i, '[', ']');
+                    return JsonUtils.LoopTillNextChar(json, startchar, '[', ']');
                 case '{':
-                    return JsonUtils.LoopTillNextChar(json, i, '{', '}');
+                    return JsonUtils.LoopTillNextChar(json, startchar, '{', '}');
                 case '\"':
                     int length = 1;
-                    foreach(char c in json.Substring(i + 1)){
+                    foreach (char c in json.Substring(startchar + 1))
+                    {
                         length++;
                         if (c == '\\')
                             continue;
                         if (c == '"')
                             break;
                     }
-                    return json.Substring(i, length);
+                    return length;
                 default:
-                    int length2 = 1;
-                    foreach (char c in json.Substring(i + 1)){
-                        
+                    int length2 = 0;
+                    foreach (char c in json.Substring(startchar + 1))
+                    {
+
                         length2++;
-                        if (c == ']' || c == '}' || c == ','|| Char.IsWhiteSpace(c))
+                        if (c == ']' || c == '}' || c == ',' || Char.IsWhiteSpace(c))
                             break;
                     }
-                    return json.Substring(i, length2);
+                    return  length2;
             }
         }
 
-        private static string LoopTillNextChar(string json, int start, char front, char back)
+
+        public static string ExtractValue(string json, string key)
+        {
+            int i = json.IndexOf(String.Format("\"{0}\":", key));
+            if (i == -1)
+                throw new Exception("Key was not in string given.");
+            i += key.Length + 3; //putting it at the first char of value
+            return GetObject(json, i);
+        }
+
+        private static string GetObject(string json, int start)
+        {
+            return json.Substring(start, LengthOfJsonObject(json, start));
+        }
+
+        private static int LoopTillNextChar(string json, int start, char front, char back)
         {
             int numOfUnclosed = 0;
             int length = 0;
@@ -72,8 +88,71 @@ namespace GravitonClient
                 if (numOfUnclosed == 0)
                     break;
             }
-            return json.Substring(start, length);
+            return length;
         }
 
+       
+
+        public static List<string> GetObjectsInArray(string json)
+        {
+            var list = new List<string>();
+            if (json[0] != '[')
+                throw new FormatException("string is  not a json array");
+            for(int i = 1; i < json.Length; i++)
+            {
+                char currentChar = json[i];
+                if (Char.IsWhiteSpace(currentChar) || currentChar == ',')
+                    continue;
+                if (currentChar == ']')
+                    break;
+                string result = GetObject(json, i);
+                i += result.Length - 1;
+                list.Add(result);
+            }
+            return list;
+        }
+
+        internal static object ToJsonList(List<Powerup.powerups> currentPowerups)
+        {
+            string result = "[\r\n";
+            foreach (Powerup.powerups go in currentPowerups)
+            {
+                result += "    " + go.ToString() + ",\r\n";
+            }
+            result += "]";
+
+            return result;
+        }
+
+        public static string ToJsonList(IEnumerable<GameObject> gameObjects)
+        {
+            string result = "[\r\n";
+            foreach(GameObject go in gameObjects) 
+                result += "    " + go.Serialize() + ",\r\n";
+            result += "]";
+
+            return result;
+        }
+
+        public static string ToJsonList(IEnumerable<int> ints)
+        {
+            string result = "[\r\n";
+            foreach (int go in ints)
+                result += "    " + go + ",\r\n";
+            result += "]";
+
+            return result;
+        }
+
+
+        internal static string GameObjectsToJsonList(IEnumerable<GameObject> gameObjects)
+        {
+            string result = "[\r\n";
+            foreach (GameObject go in gameObjects)
+                result += "    " + go.Serialize() + ",\r\n";
+            result += "]";
+
+            return result;
+        }
     }
 }

@@ -36,13 +36,13 @@ namespace GravitonClient.view
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             GameLoader.Save(Game, "C:\temp\\game.json");
-            //end game--return to main menu.
+            //close game window and return to main menu
             Close();
         }
 
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
-            GameLoader.Load("C:\temp\\game.json");
+            Game = GameLoader.Load("C:\temp\\game.json", true);
             Close();
         }
     }

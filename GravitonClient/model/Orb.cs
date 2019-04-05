@@ -12,6 +12,7 @@ namespace GravitonClient
         public Orb(double xcoor, double ycoor, int color) : base(xcoor, ycoor)
         { 
             Color = color;
+            Type = "Orb";
         }
         public Orb() { }
         public override string Serialize()
@@ -21,8 +22,7 @@ namespace GravitonClient
                  ""xcoor"":{0},
                  ""ycoor"":{1},
                  ""color"":{2}
-            }}
-            ", Xcoor, Ycoor, Color);
+            }}", Xcoor, Ycoor, Color);
         }
         public override void Deserialize(string info)
         {
