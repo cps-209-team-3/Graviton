@@ -22,11 +22,18 @@ namespace GravitonClient
         public GameWindow()
         {
             InitializeComponent();
+            // this.KeyDown += Window_KeyDown;
+            // this.KeyUp += Window_KeyUp;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
 
         }
+
+        //private void Window_KeyUp(object sender, KeyEventArgs e)
+        //{
+
+        //}
     }
 }
