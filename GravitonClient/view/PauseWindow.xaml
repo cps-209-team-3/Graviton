@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="PauseWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="btnResume" Content="Resume" Click="Resume_Click"/>
-        <Button x:Name="btnLoad" Content="Load" Click="BtnLoad_Click"/>
-        <Button x:Name="Exit" Content="Save and Exit" Click="Exit_Click"/>
+        <Button x:Name="btnResume" Content="Resume" Click="Resume_Click" Height="20" Width="100" Margin="347,107,346.6,293"/>
+        <Button x:Name="btnLoad" Content="Load" Click="BtnLoad_Click" Height="20" Width="100" Margin="347,159,346.6,241"/>
+        <Button x:Name="Exit" Content="Save and Exit" Click="Exit_Click" Height="20" Width="100" Margin="347,218,346.6,182"/>
     </Grid>
 </Window>
