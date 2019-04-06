@@ -158,7 +158,7 @@ namespace GravitonClient
             if (well != null)
             {
                 if (!well.IsStable)
-                    IsOver = true;
+                    GameOver();
                 else if (Player.DepositOrbs(well))
                 {
                     StableWells.Remove(well);
@@ -220,6 +220,12 @@ namespace GravitonClient
                     return true;
             }
             return false;
+        }
+        public void GameOver()
+        {
+            IsOver = true;
+            Timer.Stop();
+            GameLoader.Save(this, "temp.txt"); //Change this filename
         }
     }
 }

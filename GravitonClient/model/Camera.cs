@@ -20,6 +20,7 @@ namespace GravitonClient
         public int SecondsLeft { get; set; }
         public int Seconds { get; set; }
         public int Score { get; set; }
+        public bool IsOver { get; set; }
 
         public Camera(Game game)
         {
@@ -27,10 +28,11 @@ namespace GravitonClient
             ScreenX = 1780.0;
             ScreenY = 2050.0;
         }
-        public void Render() //TODO adjust orbs
+        public void Render() 
         {
             Seconds = ParentGame.Ticks / 50; //ai, ship 90x90   well 120x120   dswell 250x250    orbs 14x14
             Score = ParentGame.Points;
+            IsOver = ParentGame.IsOver;
             AdjustScreenForPlayer();
             double xc, yc;
             StableWells = new List<Tuple<double, double, int>>();
