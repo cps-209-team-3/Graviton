@@ -25,6 +25,8 @@ namespace GravitonClient
         {
             Game = game;
             InitializeComponent();
+            // this.KeyDown += Window_KeyDown;
+            // this.KeyUp += Window_KeyUp;
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -36,5 +38,10 @@ namespace GravitonClient
                 pauseWin.Show();
             }
         }
+
+        //private void Window_KeyUp(object sender, KeyEventArgs e)
+        //{
+
+        //}
     }
 }
