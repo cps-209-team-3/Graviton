@@ -79,9 +79,25 @@ namespace GravitonClient
         public int CompareHighScores (HiScore a, HiScore b) {
             return 0; //TODO
         }
+
+        public override bool Equals(object obj)
+        {
+            HighScores newScore = obj as HighScores;
+            if (obj == null)
+                return false;
+
+            else
+            {
+                if (hiScores.Except<HiScore>(newScore.hiScores).Any())
+                    return true;
+
+                else
+                    return false;
+            }
+        }
     }
     
-    public class HiScore {
+    public class HiScore : IEquatable<HiScore> {
         public HiScore(string name, int score)
         {
             User = name;
@@ -101,6 +117,19 @@ namespace GravitonClient
             get;
             set;
         }
-        
+
+        public bool Equals(HiScore score)
+        {
+            if (score == null)
+                return false;
+
+            else
+            {
+                if (this.score == score.Score && this.user.Equals(score.User))
+                    return true;
+                else
+                    return false;
+            }
+        }
     }
 }

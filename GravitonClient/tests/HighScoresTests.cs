@@ -93,7 +93,7 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("watson", 1));
             
             HighScores score = HighScores.Load(path);
-            Assert.IsTrue(score == hiScore);
+            Assert.IsTrue(score.Equals(hiScore));
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace GravitonClient
             }
             
             HighScores score = HighScores.Load(path);
-            Assert.IsTrue(score == hiScore);
+            Assert.IsTrue(score.Equals(hiScore));
         }
 
         [Test]
@@ -142,7 +142,7 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("watson", 1));
             
             string serialized = hiScore.Serialize();
-            Assert.IsTrue(serialized == testval);
+            Assert.IsTrue(serialized.Equals(testval));
         }
 
         [Test]
@@ -163,7 +163,7 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("watson", 1));
             
             HighScores score = HighScores.Deserialize(serialized);
-            Assert.IsTrue(score == hiScore);
+            Assert.IsTrue(score.Equals(hiScore));
         }
     }
 }
