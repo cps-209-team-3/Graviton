@@ -19,14 +19,22 @@ namespace GravitonClient
     /// </summary>
     public partial class GameWindow : Window
     {
-        public GameWindow()
+        private Game Game { get; set; }
+
+        public GameWindow(Game game)
         {
+            Game = game;
             InitializeComponent();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-
+            if (e.Key == Key.Escape)
+            {
+                Game.Timer.Stop();
+                PauseWindow pauseWin = new PauseWindow(Game);
+                pauseWin.Show();
+            }
         }
     }
 }

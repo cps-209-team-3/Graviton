@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace GravitonClient.view
+namespace GravitonClient
 {
     /// <summary>
     /// Interaction logic for PauseWindow.xaml
@@ -24,7 +24,6 @@ namespace GravitonClient.view
         public PauseWindow(Game game)
         {
             Game = game;
-            InitializeComponent();
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
