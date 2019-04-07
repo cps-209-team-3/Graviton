@@ -34,8 +34,7 @@ namespace GravitonClient
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            GameLoader.Save(Game, "C:\temp\\game.json");
-            //close game window and return to main menu
+            Game.GameOver();
             Close();
         }
 
