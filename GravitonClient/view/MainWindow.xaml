@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
         Title="MainWindow" WindowState="Maximized">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Button Content="Start Game" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </StackPanel>
 </Window>
