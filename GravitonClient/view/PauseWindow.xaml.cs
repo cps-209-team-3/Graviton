@@ -20,10 +20,12 @@ namespace GravitonClient
     public partial class PauseWindow : Window
     {
         private Game Game { get; set; }
+        private GameWindow GameWindow { get; set; }
 
-        public PauseWindow(Game game)
+        public PauseWindow(Game game, GameWindow gameWindow)
         {
             Game = game;
+            GameWindow = gameWindow;
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
@@ -42,6 +44,7 @@ namespace GravitonClient
         {
             Game = GameLoader.Load("C:\temp\\game.json", true);
             GameWindow newWindow = new GameWindow(Game);
+            GameWindow.Close();
             newWindow.Show();
             Close();
         }

@@ -34,7 +34,7 @@ namespace GravitonClient
             if (e.Key == Key.Escape)
             {
                 Game.Timer.Stop();
-                PauseWindow pauseWin = new PauseWindow(Game);
+                PauseWindow pauseWin = new PauseWindow(Game, this);
                 pauseWin.Show();
             }
         }
