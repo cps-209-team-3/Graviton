@@ -35,6 +35,7 @@ namespace GravitonClient
             Orbs = new List<int>();
         }
 
+        //This method moves the ship according to its inputs and speeds.
         public void Move(int xInput, int yInput)
         {
             SpeedX += 2.0 * xInput * BoostFactor;
@@ -66,6 +67,7 @@ namespace GravitonClient
             }
         }
 
+        //This method gives the ship a speed boost.
         public void SpeedBoost()
         {
             if (Orbs.Count > 0)
@@ -75,6 +77,7 @@ namespace GravitonClient
             }
         }
 
+        //This method returns the Orb that the ship is over (or null if it is not over any).
         public Orb OrbOver()
         {
             foreach (Orb orb in ParentGame.Orbs)
@@ -86,6 +89,8 @@ namespace GravitonClient
             }
             return null;
         }
+
+        //This method returns the Well that the ship is over (or null if it is not over any).
         public Well WellOver()
         {
             foreach (Well well in ParentGame.StableWells.Concat(ParentGame.UnstableWells))
@@ -98,6 +103,8 @@ namespace GravitonClient
             return null;
         }
 
+
+        //This method deposits all of the orbs it can into a given well.
         public bool DepositOrbs(Well well)
         {
             foreach (int orb in Orbs)

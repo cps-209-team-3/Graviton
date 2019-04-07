@@ -28,9 +28,11 @@ namespace GravitonClient
             ScreenX = 1780.0;
             ScreenY = 2050.0;
         }
-        public void Render() 
+
+        //This method updates all of its properties to represent where everything should be on the screen.
+        public void Render() //ai, ship 90x90   well 120x120   dswell 250x250    orbs 14x14
         {
-            Seconds = ParentGame.Ticks / 50; //ai, ship 90x90   well 120x120   dswell 250x250    orbs 14x14
+            Seconds = ParentGame.Ticks / 50; 
             Score = ParentGame.Points;
             IsOver = ParentGame.IsOver;
             AdjustScreenForPlayer();
@@ -68,6 +70,7 @@ namespace GravitonClient
             }
         }
 
+        //This method adjusts the screen so the player is never within 100 pixels of the edge.
         public void AdjustScreenForPlayer()
         {
             double xc = ParentGame.Player.Xcoor - ScreenX;
