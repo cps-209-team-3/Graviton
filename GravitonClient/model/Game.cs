@@ -42,6 +42,7 @@ namespace GravitonClient
             Initialize();
         }
 
+        //This method initializes the ship, all of the wells, all of the orbs, and the timer.
         public void Initialize()
         {
             Player = new Ship(2500.0, 2500.0, this);
@@ -62,6 +63,7 @@ namespace GravitonClient
         }
 
 
+        //This method deals with a keypress. It either updates the user directional input, does a speed boost, or uses a powerup.
         public void KeyPressed(char c)
         {
             switch (c)
@@ -82,7 +84,6 @@ namespace GravitonClient
                     Player.SpeedBoost();
                     break;
                 case 'q':
-
                     Player.GamePowerup.Neutralize();
                     break;
                 case 'f':
@@ -94,6 +95,7 @@ namespace GravitonClient
             }
         }
 
+        //This method deals with a key release. It updates the user directional input.
         public void KeyReleased(char c)
         {
             switch (c)
@@ -114,6 +116,7 @@ namespace GravitonClient
 
         }
 
+        //This method is called every frame and updates everything in the game, then notifies the view.
         public void Timer_Tick(object sender, EventArgs e)
         {
             Ticks++;
@@ -126,6 +129,8 @@ namespace GravitonClient
             ViewCamera.Render();
             GameUpdatedEvent(this, 0);
         }
+
+        // This method updates all the wells in the game.
         public void UpdateWells()
         {
             foreach (Well well in StableWells)
@@ -135,6 +140,7 @@ namespace GravitonClient
                 {
                     well.TicksLeft = 3000;
                     well.IsStable = false;
+                    well.Strength = 2000;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
                 }
@@ -151,6 +157,8 @@ namespace GravitonClient
                 }
             }
         }
+
+        //This method updates the player's position and what orbs it has.
         public void UpdatePlayer()
         {
             UpdatePlayerPosition();
@@ -163,20 +171,19 @@ namespace GravitonClient
                 {
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
-                }
-                    
-                    
+                }                  
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
             {
                 Orbs.Remove(orb);
-
                 GameObjects.Remove(orb);
                 Player.Orbs.Add(orb.Color);
                 Player.Orbs.Sort();
             }
         }
+
+        //This method updates the player's position.
         public void UpdatePlayerPosition()
         {
             foreach (Well well in StableWells.Concat(UnstableWells))
@@ -190,6 +197,10 @@ namespace GravitonClient
             }
             Player.Move(HorizontalInput, VerticalInput);
         }
+
+        //This method usually spawns a well. It sometimes not spawning a well has 2 reasons:
+        //#1: To add a little bit of randomness to the game.
+        //#2: So the game screen doesn't get too cluttered. (If it doesn't find an empty space, it doesn't spawn)
         public void SpawnWell()
         {
             double xc = Random.NextDouble() * 5000.0;
@@ -201,6 +212,8 @@ namespace GravitonClient
                 GameObjects.Add(well);
             }
         }
+
+        //This method usually spawns an orb.
         public void SpawnOrb()
         {
             double xc = Random.NextDouble() * 5000.0;
@@ -212,6 +225,8 @@ namespace GravitonClient
                 GameObjects.Add(orb);
             }    
         }
+
+        //This method is used by the spawn methods to tell whether a given location is too neat another object.
         public bool NearOtherObject(double xc, double yc)
         {
             foreach (GameObject obj in GameObjects)
@@ -221,6 +236,8 @@ namespace GravitonClient
             }
             return false;
         }
+
+        //This method is called when the game ends.
         public void GameOver()
         {
             IsOver = true;
