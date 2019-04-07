@@ -142,6 +142,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Assets\Fonts\Azonix.otf" />
+    <None Include="Assets\Images\Library.md" />
+    <None Include="Assets\Sound\Music\Library.md" />
+    <None Include="Assets\Sound\SFX\Library.md" />
     <None Include="GravitonDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -151,6 +155,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\AI.png" />
+    <Resource Include="Assets\Images\AI1.png" />
+    <Resource Include="Assets\Images\destabilized.png" />
+    <Resource Include="Assets\Images\destabilized1.png" />
+    <Resource Include="Assets\Images\OrbBlue.png" />
+    <Resource Include="Assets\Images\OrbGreen.png" />
+    <Resource Include="Assets\Images\OrbOrange.png" />
+    <Resource Include="Assets\Images\OrbPurple.png" />
+    <Resource Include="Assets\Images\OrbRed.png" />
+    <Resource Include="Assets\Images\OrbYellow.png" />
+    <Resource Include="Assets\Images\Ship.png" />
+    <Resource Include="Assets\Images\Ship1.png" />
+    <Resource Include="Assets\Images\Well.png" />
+    <Resource Include="Assets\Images\WellBasic1.png" />
+    <Resource Include="Assets\Images\WellBlue.png" />
+    <Resource Include="Assets\Images\WellGreen.png" />
+    <Resource Include="Assets\Images\WellOrange.png" />
+    <Resource Include="Assets\Images\WellPurple.png" />
+    <Resource Include="Assets\Images\WellYellow.png" />
+    <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3" />
+    <Content Include="Assets\Sound\SFX\glitchedtones_Spacecraft+Shutter+Open+01 %28destabilize%29.mp3" />
+    <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3" />
+    <Content Include="Assets\Sound\SFX\SFX1.mp3" />
+    <Content Include="Assets\Sound\SFX\SFX2.mp3" />
+    <Content Include="Assets\Sound\SFX\Space entity%28deposit%29.wav" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

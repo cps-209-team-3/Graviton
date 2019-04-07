@@ -6,7 +6,11 @@
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
         Title="MainWindow" WindowState="Maximized">
-    <StackPanel>
-        <Button Content="Start Game" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <StackPanel Orientation="Vertical" Background="Black">
+        <TextBlock Text="Graviton" FontSize="80" HorizontalAlignment="Center" Margin="10" FontFamily="{StaticResource Azonix}" Foreground="Aqua"/>
+        <Button Content="Start Game" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black"/>
+        <Button Content="High Scores" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black"/>
+        <Button Content="Help" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black"/>
+        <Button Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black"/>
     </StackPanel>
 </Window>

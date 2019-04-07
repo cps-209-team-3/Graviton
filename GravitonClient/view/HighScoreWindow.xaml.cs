@@ -23,5 +23,10 @@ namespace GravitonClient
         {
             InitializeComponent();
         }
+
+        private void HighScoresWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

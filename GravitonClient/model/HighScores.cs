@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,12 +15,10 @@ namespace GravitonClient
         {
             get{return hiScores;}
             set{hiScores = value;}
-
         }
         
         public HighScores(List<HiScore> scoreList)
         {
-
             hiScores = scoreList;
         }
 
@@ -30,7 +29,8 @@ namespace GravitonClient
         // Returns nothing.
         public void CheckNewScores(Game game)
         {
-            
+            if (game.Points > hiScores[0].Score)
+                AddNewScore(game.Username, game.Points);
         }
         
         // Adds a new score to the high score list (also deletes lowest one).
@@ -38,7 +38,17 @@ namespace GravitonClient
         // Returns nothing.
         public void AddNewScore(string username, int score)
         {
-            
+            if (hiScores.Count >= 10)
+            {
+                hiScores.RemoveAt(0);
+                hiScores.Add(new HiScore(username, score));
+                hiScores.Sort(CompareHighScores);
+            }
+            else
+            {
+                hiScores.Add(new HiScore(username, score));
+                hiScores.Sort(CompareHighScores);
+            }
         }
         
         // Creates a HighScores object from a file.
@@ -46,7 +56,12 @@ namespace GravitonClient
         // Returns a HighScores object.
         public static HighScores Load(string path)
         {
-            return null;//TODO
+            HighScores loadScores;
+            using (StreamReader rd = new StreamReader(path))
+            {
+                loadScores = Deserialize(rd.ReadLine());
+            }
+            return loadScores;
         }
         
         // Writes the current HighScores object to a file.
@@ -54,7 +69,10 @@ namespace GravitonClient
         // Returns nothing.
         public void Save(string path)
         {
-            
+            using (StreamWriter writer = new StreamWriter(path, false))
+            {
+                writer.WriteLine(Serialize());
+            }
         }
         
         // Serializes the HighScores object to string.
@@ -62,7 +80,12 @@ namespace GravitonClient
         // Returns a string.
         public string Serialize()
         {
-            return null; //TODO
+            string serialized = "";
+            for (int i = 0; i < hiScores.Count; ++i)
+            {
+                serialized += string.Format("{0}%{1}%", hiScores[i].User + hiScores[i].Score);
+            }
+            return serialized;
         }
         
         // Deserializes a HighScores object from a string.
@@ -70,14 +93,25 @@ namespace GravitonClient
         // Returns a HighScores object.
         public static HighScores Deserialize(string serialized)
         {
-            return null; //TODO
+            List<HiScore> loadScores = new List<HiScore>();
+            string[] split = serialized.Split(new char[] {'%'});
+            for (int i = 0; i < split.Length/2; ++i)
+            {
+                loadScores.Add(new HiScore(split[i * 2], Convert.ToInt32(split[i * 2 + 1])));
+            }
+            return new HighScores(loadScores);
         }
         
         // Compares two high scores based on the score value. Used to sort the list of HiScore objects.
         // Accepts two HiScore objects to compare.
         // Returns an int denoting the order.
         public int CompareHighScores (HiScore a, HiScore b) {
-            return 0; //TODO
+            if (a.Score > b.Score)
+                return 1;
+            else if (a.Score < b.Score)
+                return -1;
+            else
+                return 0;
         }
 
         public override bool Equals(object obj)
@@ -101,7 +135,7 @@ namespace GravitonClient
         public HiScore(string name, int score)
         {
             User = name;
-            Score = score;
+            this.score = score;
         }
 
         private string user;

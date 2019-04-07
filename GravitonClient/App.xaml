@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:GravitonClient"
              StartupUri="view/MainWindow.xaml">
     <Application.Resources>
-         
+        <FontFamily x:Key="Azonix">pack://application:,,,/Assets/Fonts/#Azonix</FontFamily>
     </Application.Resources>
 </Application>
