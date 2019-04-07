@@ -126,6 +126,10 @@ namespace GravitonClient
                 SpawnWell();
             if (Ticks % 100 == 0)
                 SpawnOrb();
+            if (Ticks == 15000)
+            {
+                GameOver();
+            }
             ViewCamera.Render();
             GameUpdatedEvent(this, 0);
         }

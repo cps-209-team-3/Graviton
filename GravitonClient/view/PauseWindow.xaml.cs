@@ -41,6 +41,8 @@ namespace GravitonClient
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
             Game = GameLoader.Load("C:\temp\\game.json", true);
+            GameWindow newWindow = new GameWindow(Game);
+            newWindow.Show();
             Close();
         }
     }
