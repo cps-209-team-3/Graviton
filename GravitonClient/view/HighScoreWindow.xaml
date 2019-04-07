@@ -65,6 +65,6 @@
             <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
         </Grid>
         <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Button Content="Return to Menu" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" HorizontalAlignment="Center" Padding="5" Background="#101010" Foreground="Red"/>
+        <Button Content="Return to Menu" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" HorizontalAlignment="Center" Padding="5" Background="#101010" Foreground="Red" Click="ExitButton_Click"/>
     </StackPanel>
 </Window>

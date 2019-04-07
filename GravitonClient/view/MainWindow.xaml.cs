@@ -24,5 +24,17 @@ namespace GravitonClient
         {
             InitializeComponent();
         }
+
+        private void BtnHighScores_Click(object sender, RoutedEventArgs e)
+        {
+            HighScoreWindow hs = new HighScoreWindow(this);
+            hs.Show();
+            Hide();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
     }
 }

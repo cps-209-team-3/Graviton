@@ -83,7 +83,7 @@ namespace GravitonClient
             string serialized = "";
             for (int i = 0; i < hiScores.Count; ++i)
             {
-                serialized += string.Format("{0}%{1}%", hiScores[i].User + hiScores[i].Score);
+                serialized += string.Format("{0}%{1}%", hiScores[i].User, hiScores[i].Score);
             }
             return serialized;
         }
@@ -97,7 +97,11 @@ namespace GravitonClient
             string[] split = serialized.Split(new char[] {'%'});
             for (int i = 0; i < split.Length/2; ++i)
             {
-                loadScores.Add(new HiScore(split[i * 2], Convert.ToInt32(split[i * 2 + 1])));
+                if (split[i * 2] != "")
+                    loadScores.Add(new HiScore(split[i * 2], Convert.ToInt32(split[i * 2 + 1])));
+
+                else
+                    break;
             }
             return new HighScores(loadScores);
         }
@@ -105,7 +109,7 @@ namespace GravitonClient
         // Compares two high scores based on the score value. Used to sort the list of HiScore objects.
         // Accepts two HiScore objects to compare.
         // Returns an int denoting the order.
-        public int CompareHighScores (HiScore a, HiScore b) {
+        public static int CompareHighScores (HiScore a, HiScore b) {
             if (a.Score > b.Score)
                 return 1;
             else if (a.Score < b.Score)
@@ -132,24 +136,24 @@ namespace GravitonClient
     }
     
     public class HiScore : IEquatable<HiScore> {
-        public HiScore(string name, int score)
-        {
-            User = name;
-            this.score = score;
-        }
-
         private string user;
         public string User
         {
-            get;
-            set;
+            get { return user; }
+            set { user = value; }
         }
-        
+
         private int score;
         public int Score
         {
-            get;
-            set;
+            get { return score; }
+            set { score = value; }
+        }
+
+        public HiScore(string name, int score)
+        {
+            user = name;
+            this.score = score;
         }
 
         public bool Equals(HiScore score)

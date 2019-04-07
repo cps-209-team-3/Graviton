@@ -19,14 +19,25 @@ namespace GravitonClient
     /// </summary>
     public partial class HighScoreWindow : Window
     {
-        public HighScoreWindow()
+        Window parentWindow;
+        HighScores hs;
+
+        public HighScoreWindow(Window window)
         {
             InitializeComponent();
+            parentWindow = window;
+            //hs = HighScores.Load();
         }
 
         private void HighScoresWindow_Loaded(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            parentWindow.Show();
+            Close();
         }
     }
 }
