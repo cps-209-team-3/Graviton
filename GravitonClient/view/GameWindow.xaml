@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
-        Title="GameWindow" Height="450" Width="800" Keyboard.KeyDown="Window_KeyDown">
+        Title="GameWindow" Height="450" Width="800">
     <Grid>
         
     </Grid>
