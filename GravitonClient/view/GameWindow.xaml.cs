@@ -25,7 +25,7 @@ namespace GravitonClient
         {
             Game = game;
             InitializeComponent();
-            // this.KeyDown += Window_KeyDown;
+            this.KeyDown += Window_KeyDown;
             // this.KeyUp += Window_KeyUp;
         }
 
