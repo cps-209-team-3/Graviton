@@ -44,7 +44,7 @@ namespace GravitonClient
                 SecondsLeft = Math.Min(well.TicksLeft / 50, SecondsLeft);
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
-                if (xc > -60 && xc < 1500 && yc > -60 && yc < 960)
+                if (xc > -60 && xc < 1500 && yc > -60 && yc < 760)
                     StableWells.Add(Tuple.Create(xc - 60, yc - 60, well.Orbs));
             }
             UnstableWells = new List<Tuple<double, double>>();
@@ -52,7 +52,7 @@ namespace GravitonClient
             {
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
-                if (xc > -125 && xc < 1565 && yc > -125 && yc < 1025)
+                if (xc > -125 && xc < 1565 && yc > -125 && yc < 625)
                     UnstableWells.Add(Tuple.Create(xc - 125, yc - 125));
             }
             Orbs = new List<Tuple<double, double, int>>();
@@ -60,7 +60,7 @@ namespace GravitonClient
             {
                 xc = orb.Xcoor - ScreenX;
                 yc = orb.Ycoor - ScreenY;
-                if (xc > -7 && xc < 1447 && yc > -7 && yc < 907)
+                if (xc > -7 && xc < 1447 && yc > -7 && yc < 707)
                     StableWells.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
             }
             PlayerOrbs = new List<int>();
@@ -90,10 +90,10 @@ namespace GravitonClient
                 ScreenY += yc - 100.0;
                 yc = 100.0;
             }
-            else if (yc > 800.0)
+            else if (yc > 600.0)
             {
-                ScreenY += yc - 800.0;
-                yc = 800.0;
+                ScreenY += yc - 600.0;
+                yc = 600.0;
             }
             PlayerShip = Tuple.Create(xc - 45, yc - 45);
         }

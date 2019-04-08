@@ -25,6 +25,7 @@ namespace GravitonClient
         List<Image> orbDict;
         Image ship;
 
+
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
@@ -40,6 +41,10 @@ namespace GravitonClient
             destableDict = new List<Image>();
             orbDict = new List<Image>();
             ship = new Image();
+
+
+
+
 
             string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
 
@@ -75,6 +80,13 @@ namespace GravitonClient
             shipImage.UriSource = new Uri(System.IO.Path.Combine(parentDir, "Assets\\Images/Ship1.png"));
             shipImage.EndInit();
 
+            //----------------------------------
+            ship.Source = shipImage;
+            ship.Width = 20;
+            //----------------------------------
+
+
+
             InitializeComponent();
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
@@ -90,6 +102,9 @@ namespace GravitonClient
             destableDict = new List<Image>();
             orbDict = new List<Image>();
             ship = new Image();
+
+
+
 
             string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
 
@@ -124,6 +139,11 @@ namespace GravitonClient
             shipImage.BeginInit();
             shipImage.UriSource = new Uri(System.IO.Path.Combine(parentDir, "Assets\\Images/Ship1.png"));
             shipImage.EndInit();
+
+            //----------------------------------
+            ship.Source = shipImage;
+            ship.Width = 20;
+            //----------------------------------
 
             this.parentWindow = parentWindow;
             InitializeComponent();
@@ -172,6 +192,22 @@ namespace GravitonClient
             }
 
             //TODO: Render the player ship
+
+            Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
+            Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
+            try
+            {
+                DrawCanvas.Children.Add(ship);
+            }
+            catch { }
+
+
+
+            
+            //Button b = new Button();
+            //b.Margin = new Thickness(Game.ViewCamera.PlayerShip.Item1, Game.ViewCamera.PlayerShip.Item2, 0.0, 0.0);
+            //DrawCanvas.Children.Add(b);
+
 
             //to be implemented with AI
             /*

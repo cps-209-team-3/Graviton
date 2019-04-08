@@ -40,8 +40,8 @@ namespace GravitonClient
         //This method moves the ship according to its inputs and speeds.
         public void Move(int xInput, int yInput)
         {
-            SpeedX += 2.0 * xInput * BoostFactor;
-            SpeedY += 2.0 * yInput * BoostFactor;
+            SpeedX += 0.3 * xInput * BoostFactor;
+            SpeedY += 0.3 * yInput * BoostFactor;
             if (BoostFactor > 1.0)
                 BoostFactor -= 0.02;
 
