@@ -209,7 +209,7 @@ namespace GravitonClient
 
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
-            txtScore.Text = Game.Player.SpeedX.ToString() + ' ' + Game.VerticalInput.ToString();
+            //txtScore.Text = Game.Player.SpeedX.ToString() + ' ' + Game.VerticalInput.ToString();
 
 
             //to be implemented with AI
