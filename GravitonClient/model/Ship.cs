@@ -26,31 +26,29 @@ namespace GravitonClient
             Ycoor = ycoor;
             SpeedX = 0.0;
             SpeedY = 0.0;
-            MaxSpeed = 0.5;
+            MaxSpeed = 7.0;
             Orbs = new List<int>();
         }
 
         public Ship() : base() {
             SpeedX = 0.0;
             SpeedY = 0.0;
-            MaxSpeed = 0.5;
+            MaxSpeed = 7.0;
             Orbs = new List<int>();
         }
 
         //This method moves the ship according to its inputs and speeds.
         public void Move(int xInput, int yInput)
         {
-            SpeedX += 0.03 * xInput;
-            SpeedY += 0.03 * yInput;
-            if (MaxSpeed > 0.5)
-                MaxSpeed -= 0.005;
-            SpeedX = Math.Min(MaxSpeed, SpeedX);
-            SpeedX = Math.Min(MaxSpeed, SpeedY);
+            SpeedX += 0.3 * xInput;
+            SpeedY += 0.3 * yInput;
+            if (MaxSpeed > 7.0)
+                MaxSpeed -= 0.05;
+            SpeedX = Math.Min(MaxSpeed, Math.Abs(SpeedX)) * Math.Sign(SpeedX);
+            SpeedY = Math.Min(MaxSpeed, Math.Abs(SpeedY)) * Math.Sign(SpeedY);
 
-            // Xcoor += SpeedX;
-            // Ycoor += SpeedY;
-            Xcoor += xInput * 10.0;
-            Ycoor += yInput * 10.0;
+            Xcoor += SpeedX;
+            Ycoor += SpeedY;
             if (Xcoor < 0.0)
             {
                 Xcoor = 0.0;
