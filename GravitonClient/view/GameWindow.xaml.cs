@@ -214,5 +214,10 @@ namespace GravitonClient
                 gameObjs.RemoveAt(0);
             }
         }
+
+        private void GameWindow_Closed(object sender, EventArgs e)
+        {
+            parentWindow.Show();
+        }
     }
 }
