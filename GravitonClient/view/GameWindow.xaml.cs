@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,8 +41,14 @@ namespace GravitonClient
             orbDict = new List<Image>();
             ship = new Image();
 
+            string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
+
             wellImages = new List<BitmapImage>();
             destabilizedImage = new BitmapImage();
+            destabilizedImage.BeginInit();
+            destabilizedImage.UriSource = new Uri(System.IO.Path.Combine(parentDir, "Assets\\Images/destabilized1.png"));
+            destabilizedImage.EndInit();
+            
             orbImages = new List<BitmapImage>();
             shipImage = new BitmapImage();
             
