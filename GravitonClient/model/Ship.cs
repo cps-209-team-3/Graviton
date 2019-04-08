@@ -47,8 +47,10 @@ namespace GravitonClient
             SpeedX = Math.Min(MaxSpeed, SpeedX);
             SpeedX = Math.Min(MaxSpeed, SpeedY);
 
-            Xcoor += SpeedX;
-            Ycoor += SpeedY;
+            // Xcoor += SpeedX;
+            // Ycoor += SpeedY;
+            Xcoor += xInput;
+            Ycoor += yInput;
             if (Xcoor < 0.0)
             {
                 Xcoor = 0.0;
