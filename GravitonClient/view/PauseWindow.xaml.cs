@@ -38,6 +38,7 @@ namespace GravitonClient
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Game.GameOver();
+            GameWindow.Close();
             Close();
         }
 
