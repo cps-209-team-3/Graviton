@@ -113,7 +113,7 @@ namespace GravitonClient
         //This method deposits all of the orbs it can into a given well.
         public bool DepositOrbs(Well well)
         {
-            foreach (int orb in Orbs)
+            foreach (int orb in Orbs.ToList())
             {
                 if (orb == well.Orbs)
                 {

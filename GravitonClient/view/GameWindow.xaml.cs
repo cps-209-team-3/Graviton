@@ -161,11 +161,14 @@ namespace GravitonClient
             if (wellDiff > 0)
                 RemoveGameObjects(wellDict, wellDiff);
             if (wellDiff < 0)
-                AddGameObjects(wellDict, wellDiff);
+                AddGameObjects(wellDict, -wellDiff);
             
             for (int i = 0; i < wellDict.Count; ++i)
             {
-                
+                int color = Game.ViewCamera.StableWells[i].Item3;
+                wellDict[i].Source = wellImages[color];
+                Canvas.SetLeft(wellDict[i], Game.ViewCamera.StableWells[i].Item1);
+                Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
                 //display the correct well image at the right place
             }
 
@@ -177,17 +180,24 @@ namespace GravitonClient
 
             for (int i = 0; i < destableDict.Count; ++i)
             {
+                destableDict[i].Source = destabilizedImage;
+                Canvas.SetLeft(destableDict[i], Game.ViewCamera.UnstableWells[i].Item1);
+                Canvas.SetTop(destableDict[i], Game.ViewCamera.UnstableWells[i].Item2);
                 //display the correct destabilized image at the right place
             }
 
-            int orbDiff = orbDict.Count - Game.ViewCamera.Orbs.Count;
+            int orbDiff =  orbDict.Count - Game.ViewCamera.Orbs.Count;
             if (orbDiff > 0)
                 RemoveGameObjects(orbDict, orbDiff);
             if (orbDiff < 0)
-                AddGameObjects(orbDict, orbDiff);
+                AddGameObjects(orbDict, -orbDiff);
 
             for (int i = 0; i < orbDict.Count; ++i)
             {
+                int color = Game.ViewCamera.Orbs[i].Item3;
+                orbDict[i].Source = orbImages[color];
+                Canvas.SetLeft(orbDict[i], Game.ViewCamera.Orbs[i].Item1);
+                Canvas.SetTop(orbDict[i], Game.ViewCamera.Orbs[i].Item2);
                 //display the correct orb image at the right place
             }
 
