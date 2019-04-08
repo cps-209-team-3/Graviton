@@ -57,8 +57,8 @@ namespace GravitonClient
 
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
-            Timer.Tick += Timer_Tick;
             Timer.Start();
+            Timer.Tick += Timer_Tick;
         }
 
 
