@@ -61,7 +61,8 @@ namespace GravitonClient
                 xc = orb.Xcoor - ScreenX;
                 yc = orb.Ycoor - ScreenY;
                 if (xc > -7 && xc < 1447 && yc > -7 && yc < 707)
-                    StableWells.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
+                    Orbs.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
+                
             }
             PlayerOrbs = new List<int>();
             foreach (int orb in ParentGame.Player.Orbs)
