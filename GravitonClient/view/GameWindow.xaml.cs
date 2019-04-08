@@ -209,12 +209,7 @@ namespace GravitonClient
 
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
-            try
-            {
-                // DrawCanvas.Children.Add(ship);
-            }
-            catch { }
-
+            //txtScore.Text = Game.HorizontalInput.ToString() + ' ' + Game.VerticalInput.ToString();
 
 
             //to be implemented with AI
