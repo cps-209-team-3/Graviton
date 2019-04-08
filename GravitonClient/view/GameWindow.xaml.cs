@@ -20,6 +20,7 @@ namespace GravitonClient
     /// </summary>
     public partial class GameWindow : Window
     {
+
         List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
@@ -37,6 +38,7 @@ namespace GravitonClient
 
         public GameWindow(bool cheat)
         {
+            InitializeComponent();
             wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
@@ -82,12 +84,12 @@ namespace GravitonClient
 
             //----------------------------------
             ship.Source = shipImage;
-            ship.Width = 20;
+            ship.Width = 50;
+            DrawCanvas.Children.Add(ship);
             //----------------------------------
 
 
 
-            InitializeComponent();
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
 
@@ -98,6 +100,7 @@ namespace GravitonClient
 
         public GameWindow(bool cheat, Window parentWindow)
         {
+            InitializeComponent();
             wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
@@ -142,11 +145,12 @@ namespace GravitonClient
 
             //----------------------------------
             ship.Source = shipImage;
-            ship.Width = 20;
+            ship.Width = 50;
+            DrawCanvas.Children.Add(ship);
             //----------------------------------
 
             this.parentWindow = parentWindow;
-            InitializeComponent();
+            
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
 
@@ -197,16 +201,10 @@ namespace GravitonClient
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
             try
             {
-                DrawCanvas.Children.Add(ship);
+                // DrawCanvas.Children.Add(ship);
             }
             catch { }
 
-
-
-            
-            //Button b = new Button();
-            //b.Margin = new Thickness(Game.ViewCamera.PlayerShip.Item1, Game.ViewCamera.PlayerShip.Item2, 0.0, 0.0);
-            //DrawCanvas.Children.Add(b);
 
 
             //to be implemented with AI

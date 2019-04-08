@@ -13,6 +13,7 @@ namespace GravitonClient
         public double BoostFactor { get; set; }
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
+        public double MaxSpeed { get; set; }
         public List<int> Orbs { get; set; }
         public int Points{ get; set; }
 
