@@ -13,6 +13,7 @@ namespace GravitonClient
         public double BoostFactor { get; set; }
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
+        public double MaxSpeed { get; set; }
         public List<int> Orbs { get; set; }
         public int Points{ get; set; }
 
@@ -40,8 +41,8 @@ namespace GravitonClient
         //This method moves the ship according to its inputs and speeds.
         public void Move(int xInput, int yInput)
         {
-            SpeedX += 2.0 * xInput * BoostFactor;
-            SpeedY += 2.0 * yInput * BoostFactor;
+            SpeedX += 0.3 * xInput * BoostFactor;
+            SpeedY += 0.3 * yInput * BoostFactor;
             if (BoostFactor > 1.0)
                 BoostFactor -= 0.02;
 
@@ -113,7 +114,7 @@ namespace GravitonClient
         //This method deposits all of the orbs it can into a given well.
         public bool DepositOrbs(Well well)
         {
-            foreach (int orb in Orbs)
+            foreach (int orb in Orbs.ToList())
             {
                 if (orb == well.Orbs)
                 {

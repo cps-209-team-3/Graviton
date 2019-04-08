@@ -136,7 +136,7 @@ namespace GravitonClient
         // This method updates all the wells in the game.
         public void UpdateWells()
         {
-            foreach (Well well in StableWells)
+            foreach (Well well in StableWells.ToList())
             {
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
