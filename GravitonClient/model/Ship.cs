@@ -10,7 +10,6 @@ namespace GravitonClient
     {
         public Game ParentGame { get; set; }
         public Powerup GamePowerup { get; set; }
-        public double BoostFactor { get; set; }
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
         public double MaxSpeed { get; set; }
@@ -27,24 +26,26 @@ namespace GravitonClient
             Ycoor = ycoor;
             SpeedX = 0.0;
             SpeedY = 0.0;
-            BoostFactor = 1.0;
+            MaxSpeed = 0.5;
             Orbs = new List<int>();
         }
 
         public Ship() : base() {
             SpeedX = 0.0;
             SpeedY = 0.0;
-            BoostFactor = 1.0;
+            MaxSpeed = 0.5;
             Orbs = new List<int>();
         }
 
         //This method moves the ship according to its inputs and speeds.
         public void Move(int xInput, int yInput)
         {
-            SpeedX += 0.3 * xInput * BoostFactor;
-            SpeedY += 0.3 * yInput * BoostFactor;
-            if (BoostFactor > 1.0)
-                BoostFactor -= 0.02;
+            SpeedX += 0.03 * xInput;
+            SpeedY += 0.03 * yInput;
+            if (MaxSpeed > 0.5)
+                MaxSpeed -= 0.005;
+            SpeedX = Math.Min(MaxSpeed, SpeedX);
+            SpeedX = Math.Min(MaxSpeed, SpeedY);
 
             Xcoor += SpeedX;
             Ycoor += SpeedY;
@@ -80,7 +81,7 @@ namespace GravitonClient
                     int orbIndex = rand.Next(Orbs.Count);
                     Orbs.RemoveAt(orbIndex);
                 }
-                BoostFactor += 1.6;
+                MaxSpeed += 0.8;
             }
         }
 
