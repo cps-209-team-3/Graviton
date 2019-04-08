@@ -6,9 +6,16 @@
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
         Title="PauseWindow" Height="450" Width="800">
-    <Grid>
-        <Button x:Name="btnResume" Content="Resume" Click="Resume_Click" Height="20" Width="100" Margin="347,107,346.6,293"/>
-        <Button x:Name="btnLoad" Content="Load" Click="BtnLoad_Click" Height="20" Width="100" Margin="347,159,346.6,241"/>
-        <Button x:Name="Exit" Content="Save and Exit" Click="Exit_Click" Height="20" Width="100" Margin="347,218,346.6,182"/>
-    </Grid>
+    <StackPanel Orientation="Vertical" Background="Black">
+        <TextBlock Margin="20"/>
+        <Button x:Name="btnResume" Content="Resume" Click="Resume_Click" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" 
+                Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black"/>
+        <Button x:Name="btnLoad" Content="Load Last Save" Click="BtnLoad_Click" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" 
+                Foreground="Red" Background="Black"/>
+        <Button x:Name="Exit" Content="Save and Exit" Click="Exit_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" 
+                Foreground="Red" Background="Black"/>
+    </StackPanel>
 </Window>
