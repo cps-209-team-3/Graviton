@@ -49,8 +49,8 @@ namespace GravitonClient
 
             // Xcoor += SpeedX;
             // Ycoor += SpeedY;
-            Xcoor += xInput;
-            Ycoor += yInput;
+            Xcoor += xInput * 10.0;
+            Ycoor += yInput * 10.0;
             if (Xcoor < 0.0)
             {
                 Xcoor = 0.0;
