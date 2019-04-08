@@ -15,11 +15,17 @@ namespace GravitonClient
         public static Game Load(string filename, bool isCheatMode)
         {
             string json;
-            using(StreamReader sr = new StreamReader(File.OpenRead(filename)))
+            try
             {
-                json = sr.ReadToEnd();
+                using (StreamReader sr = new StreamReader(File.OpenRead(filename)))
+                {
+                    json = sr.ReadToEnd();
+                }
             }
-
+            catch
+            {
+                throw new ArgumentException("The file does not exist");
+            }
             string version = JsonUtils.ExtractValue(json, "version");
             if (version != '"' + Version + '"')
                 throw new FormatException("Wrong version of saved game file: "+ version);
