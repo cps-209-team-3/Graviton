@@ -68,16 +68,16 @@ namespace GravitonClient
             switch (c)
             {
                 case 'w':
-                    VerticalInput--;
+                    VerticalInput = -1;
                     break;
                 case 'a':
-                    HorizontalInput--;
+                    HorizontalInput = -1;
                     break;
                 case 's':
-                    VerticalInput++;
+                    VerticalInput = 1;
                     break;
                 case 'd':
-                    HorizontalInput++;
+                    HorizontalInput = 1;
                     break;
                 case ' ':
                     Player.SpeedBoost();
@@ -100,16 +100,16 @@ namespace GravitonClient
             switch (c)
             {
                 case 'w':
-                    VerticalInput++;
+                    VerticalInput = 0;
                     break;
                 case 'a':
-                    HorizontalInput++;
+                    HorizontalInput = 0;
                     break;
                 case 's':
-                    VerticalInput--;
+                    VerticalInput = 0;
                     break;
                 case 'd':
-                    HorizontalInput--;
+                    HorizontalInput = 0;
                     break;
             }
 
