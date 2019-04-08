@@ -12,6 +12,8 @@ namespace GravitonClient
         public List<powerups> CurrentPowerups;
         public Game ParentGame;
 
+        private Random rand;
+
         public Powerup(Game game)
         {
             ParentGame = game;
@@ -21,7 +23,19 @@ namespace GravitonClient
         //This method adds a random powerup to the powerup list.
         public void AddNew()
         {
-            // TODO: add a random powerup to CurrentPowerups
+            int powerup = rand.Next(3);
+            switch (powerup)
+            {
+                case 0:
+                    CurrentPowerups.Add(powerups.neutralize);
+                    break;
+                case 1:
+                    CurrentPowerups.Add(powerups.destabilize);
+                    break;
+                case 2:
+                    CurrentPowerups.Add(powerups.ghost);
+                    break;
+            }
         }
 
 
@@ -32,6 +46,11 @@ namespace GravitonClient
                 return;
             CurrentPowerups.Remove(powerups.neutralize);
             // TODO: neutralization
+            Well well = ParentGame.Player.WellOver();
+            if(well != null)
+            {
+                //execute neutralize
+            }
         }
 
         //This method does a destabilize powerup
@@ -41,6 +60,11 @@ namespace GravitonClient
                 return;
             CurrentPowerups.Remove(powerups.destabilize);
             // TODO: destabilization logic
+            Well well = ParentGame.Player.WellOver();
+            if (well != null)
+            {
+                //execute destabilize
+            }
         }
 
         //This method does a ghost powerup
@@ -50,6 +74,11 @@ namespace GravitonClient
                 return;
             CurrentPowerups.Remove(powerups.ghost);
             // TODO: ghost logic
+            Well well = ParentGame.Player.WellOver();
+            if (well != null)
+            {
+                //execute ghost
+            }
         }
     }
 }

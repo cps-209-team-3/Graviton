@@ -16,6 +16,8 @@ namespace GravitonClient
         public List<int> Orbs { get; set; }
         public int Points{ get; set; }
 
+        private Random rand;
+
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
@@ -70,9 +72,13 @@ namespace GravitonClient
         //This method gives the ship a speed boost.
         public void SpeedBoost()
         {
-            if (Orbs.Count > 0)
+            if (Orbs.Count >= 3)
             {
-                Orbs.RemoveAt(0);
+                for(int i = 0; i < 3; ++i)
+                {
+                    int orbIndex = rand.Next(Orbs.Count);
+                    Orbs.RemoveAt(orbIndex);
+                }
                 BoostFactor += 1.6;
             }
         }
