@@ -169,7 +169,7 @@ namespace GravitonClient
             Well well = Player.WellOver();
             if (well != null)
             {
-                if (!well.IsStable)
+                if (!well.IsStable && !IsCheat)
                     GameOver();
                 else if (Player.DepositOrbs(well))
                 {
