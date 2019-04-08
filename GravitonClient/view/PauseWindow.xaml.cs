@@ -26,6 +26,7 @@ namespace GravitonClient
         {
             Game = game;
             GameWindow = gameWindow;
+            InitializeComponent();
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
