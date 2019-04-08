@@ -44,10 +44,6 @@ namespace GravitonClient
             orbDict = new List<Image>();
             ship = new Image();
 
-
-
-
-
             string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
 
             wellImages = new List<BitmapImage>();
@@ -105,9 +101,6 @@ namespace GravitonClient
             destableDict = new List<Image>();
             orbDict = new List<Image>();
             ship = new Image();
-
-
-
 
             string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
 
