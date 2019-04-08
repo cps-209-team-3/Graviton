@@ -143,7 +143,7 @@ namespace GravitonClient
                 {
                     well.TicksLeft = 3000;
                     well.IsStable = false;
-                    well.Strength = 2000;
+                    well.Strength = 200;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
                 }
