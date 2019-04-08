@@ -39,7 +39,6 @@ namespace GravitonClient
             UnstableWells = new List<Well>();
             Orbs = new List<Orb>();
             GameObjects = new List<GameObject>();
-            Initialize();
         }
 
         //This method initializes the ship, all of the wells, all of the orbs, and the timer.

@@ -69,10 +69,11 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("knisely", 903));
             hiScore.HiScores.Add(new HiScore("watson", 1));
             hiScore.HiScores.Sort(HighScores.CompareHighScores);
+
             myGame.Username = "Evisserate";
             myGame.Points = 10;
             hiScore.AddNewScore(myGame.Username, myGame.Points);
-            Assert.IsTrue(hiScore.HiScores[0].User == "Evisserate");
+            Assert.IsTrue(hiScore.HiScores[9].User == "Evisserate");
         }
 
 
@@ -92,6 +93,7 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("mcgee", 890));
             hiScore.HiScores.Add(new HiScore("knisely", 903));
             hiScore.HiScores.Add(new HiScore("watson", 1));
+            hiScore.HiScores.Sort(HighScores.CompareHighScores);
             
             HighScores score = HighScores.Load(path);
             Assert.IsTrue(score.Equals(hiScore));
@@ -113,6 +115,8 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("mcgee", 890));
             hiScore.HiScores.Add(new HiScore("knisely", 903));
             hiScore.HiScores.Add(new HiScore("watson", 1));
+            hiScore.HiScores.Sort(HighScores.CompareHighScores);
+
             try
             {
                 hiScore.Save(path);
@@ -129,7 +133,7 @@ namespace GravitonClient
         [Test]
         public void Serialize_InitializedObject_StringNotEmpty()
         {
-            string testval = "ben%123%act%234%deb%345%hess%456%dark%567%bluff%678%schaub%789%mcgee%890%knisely%903%watson%1%"; //TODO
+            string testval = "knisely%903%mcgee%890%schaub%789%bluff%678%dark%567%hess%456%deb%345%act%234%ben%123%watson%1%";
             HighScores hiScore = new HighScores(new List<HiScore>());
             hiScore.HiScores.Add(new HiScore("ben", 123));
             hiScore.HiScores.Add(new HiScore("act", 234));
@@ -141,6 +145,7 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("mcgee", 890));
             hiScore.HiScores.Add(new HiScore("knisely", 903));
             hiScore.HiScores.Add(new HiScore("watson", 1));
+            hiScore.HiScores.Sort(HighScores.CompareHighScores);
             
             string serialized = hiScore.Serialize();
             Assert.IsTrue(serialized.Equals(testval));
@@ -149,7 +154,7 @@ namespace GravitonClient
         [Test]
         public void Deserialize_InputSerializedString_ReturnsHighScoresObject()
         {
-            string serialized = "ben%123%act%234%deb%345%hess%456%dark%567%bluff%678%schaub%789%mcgee%890%knisely%903%watson%1%"; //TODO
+            string serialized = "knisely%903%mcgee%890%schaub%789%bluff%678%dark%567%hess%456%deb%345%act%234%ben%123%watson%1%";
             
             HighScores hiScore = new HighScores(new List<HiScore>());
             hiScore.HiScores.Add(new HiScore("ben", 123));
@@ -162,7 +167,8 @@ namespace GravitonClient
             hiScore.HiScores.Add(new HiScore("mcgee", 890));
             hiScore.HiScores.Add(new HiScore("knisely", 903));
             hiScore.HiScores.Add(new HiScore("watson", 1));
-            
+            hiScore.HiScores.Sort(HighScores.CompareHighScores);
+
             HighScores score = HighScores.Deserialize(serialized);
             Assert.IsTrue(score.Equals(hiScore));
         }

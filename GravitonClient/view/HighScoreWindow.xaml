@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
         Loaded="HighScoresWindow_Loaded"
+        Closed="HSWindow_Closed"
         Title="High Scores" WindowState="Maximized">
-    <StackPanel Orientation="Vertical" Background="Black">
+    <StackPanel x:Name="pnlMain" Orientation="Vertical" Background="Black">
         <TextBlock Text="HighScores" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="60" Margin="5" Foreground="Aqua"/>
         <TextBlock Text="Top Ten" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Aqua"/>
         <Grid x:Name="header">
@@ -15,56 +16,8 @@
             <TextBlock Grid.Column="2" Text="Score" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="0, 5, 150, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
         </Grid>
         <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr1">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr2">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr3">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr4">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr5">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr6">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr7">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr8">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr9">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
-        <Grid x:Name="scr10">
-            <TextBlock Grid.Column="0" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="75, 5, 0, 5" Width="300" HorizontalAlignment="Left" Foreground="Aqua"/>
-            <TextBlock Grid.Column="2" Text="---" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="0, 5, 125, 5" Width="200" HorizontalAlignment="Right" Foreground="Aqua"/>
-        </Grid>
-        <Line Stretch="Fill" Stroke="Aqua" X2="1" StrokeThickness="2"/>
+        <StackPanel x:Name="pnlScores">
+        </StackPanel>
         <Button Content="Return to Menu" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" HorizontalAlignment="Center" Padding="5" Background="#101010" Foreground="Red" Click="ExitButton_Click"/>
     </StackPanel>
 </Window>

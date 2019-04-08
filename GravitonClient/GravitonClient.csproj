@@ -157,6 +157,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Saves\HighScoreSave.txt" />
+    <Resource Include="tests\HSLoad.txt" />
+    <Resource Include="tests\HSSave.txt" />
     <Resource Include="Assets\Images\AI.png" />
     <Resource Include="Assets\Images\AI1.png" />
     <Resource Include="Assets\Images\destabilized.png" />

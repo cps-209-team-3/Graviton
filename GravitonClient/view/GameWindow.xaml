@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
-        Title="GameWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="GameWindow" WindowState="Maximized" Background="#000020">
+    <Canvas x:Name="DrawCanvas">
+        <TextBlock Canvas.Right="75" Canvas.Top="10" Canvas.ZIndex="1000" Text="Score: 0" FontFamily="{StaticResource Azonix}" Foreground="Aqua" FontSize="20"/>
+    </Canvas>
 </Window>

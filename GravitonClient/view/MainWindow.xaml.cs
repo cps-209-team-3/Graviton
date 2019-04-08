@@ -20,9 +20,12 @@ namespace GravitonClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        bool cheat;
+
         public MainWindow()
         {
             InitializeComponent();
+            cheat = false;
         }
 
         private void BtnHighScores_Click(object sender, RoutedEventArgs e)
@@ -35,6 +38,19 @@ namespace GravitonClient
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void CheatButton_Click(object sender, RoutedEventArgs e)
+        {
+            cheat = !cheat;
+            CheatBtn.Content = cheat ? "Cheatmode: On" : "Cheatmode: Off";
+        }
+
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            GameWindow g = new GameWindow(cheat, this);
+            g.Show();
+            Hide();
         }
     }
 }

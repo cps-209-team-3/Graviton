@@ -29,7 +29,7 @@ namespace GravitonClient
         // Returns nothing.
         public void CheckNewScores(Game game)
         {
-            if (game.Points > hiScores[0].Score)
+            if (game.Points > hiScores[9].Score)
                 AddNewScore(game.Username, game.Points);
         }
         
@@ -40,7 +40,7 @@ namespace GravitonClient
         {
             if (hiScores.Count >= 10)
             {
-                hiScores.RemoveAt(0);
+                hiScores.RemoveAt(9);
                 hiScores.Add(new HiScore(username, score));
                 hiScores.Sort(CompareHighScores);
             }
@@ -60,6 +60,7 @@ namespace GravitonClient
             using (StreamReader rd = new StreamReader(path))
             {
                 loadScores = Deserialize(rd.ReadLine());
+                loadScores.hiScores.Sort(CompareHighScores);
             }
             return loadScores;
         }
@@ -69,6 +70,7 @@ namespace GravitonClient
         // Returns nothing.
         public void Save(string path)
         {
+            hiScores.Sort(CompareHighScores);
             using (StreamWriter writer = new StreamWriter(path, false))
             {
                 writer.WriteLine(Serialize());
@@ -94,14 +96,17 @@ namespace GravitonClient
         public static HighScores Deserialize(string serialized)
         {
             List<HiScore> loadScores = new List<HiScore>();
-            string[] split = serialized.Split(new char[] {'%'});
-            for (int i = 0; i < split.Length/2; ++i)
+            if (serialized != "" && serialized != null)
             {
-                if (split[i * 2] != "")
-                    loadScores.Add(new HiScore(split[i * 2], Convert.ToInt32(split[i * 2 + 1])));
+                string[] split = serialized.Split(new char[] { '%' });
+                for (int i = 0; i < split.Length / 2; ++i)
+                {
+                    if (split[i * 2] != "")
+                        loadScores.Add(new HiScore(split[i * 2], Convert.ToInt32(split[i * 2 + 1])));
 
-                else
-                    break;
+                    else
+                        break;
+                }
             }
             return new HighScores(loadScores);
         }
@@ -111,9 +116,9 @@ namespace GravitonClient
         // Returns an int denoting the order.
         public static int CompareHighScores (HiScore a, HiScore b) {
             if (a.Score > b.Score)
-                return 1;
-            else if (a.Score < b.Score)
                 return -1;
+            else if (a.Score < b.Score)
+                return 1;
             else
                 return 0;
         }
@@ -121,16 +126,17 @@ namespace GravitonClient
         public override bool Equals(object obj)
         {
             HighScores newScore = obj as HighScores;
-            if (obj == null)
+            if (newScore == null || newScore.hiScores.Count != hiScores.Count)
                 return false;
 
             else
             {
-                if (hiScores.Except<HiScore>(newScore.hiScores).Any())
-                    return true;
-
-                else
-                    return false;
+                for (int i = 0; i < 10; ++i)
+                {
+                    if (!hiScores[i].Equals(newScore.hiScores[i]))
+                        return false;
+                }
+                return true;
             }
         }
     }
@@ -163,7 +169,7 @@ namespace GravitonClient
 
             else
             {
-                if (this.score == score.Score && this.user.Equals(score.User))
+                if (this.score == score.score && this.user.Equals(score.user))
                     return true;
                 else
                     return false;
