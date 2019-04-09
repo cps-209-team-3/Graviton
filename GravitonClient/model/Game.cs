@@ -46,7 +46,7 @@ namespace GravitonClient
         {
             Player = new Ship(2500.0, 2500.0, this);
             GameObjects.Add(Player);
-            while (Orbs.Count < 30)
+            while (Orbs.Count < 100)
             {
                 SpawnOrb();
             }
@@ -194,7 +194,7 @@ namespace GravitonClient
                 double deltaX = well.Xcoor - Player.Xcoor;
                 double deltaY = well.Ycoor - Player.Ycoor;
                 double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
-                double force = well.Strength / Math.Max(31.0, dist);
+                double force = well.Strength / Math.Max(30, dist);
                 Player.SpeedX += deltaX / dist * force;
                 Player.SpeedY += deltaY / dist * force;
             }
