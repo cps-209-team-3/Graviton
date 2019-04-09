@@ -19,7 +19,7 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 ### Known Issues
 * Because of a missing file the game cannot load from a previous save (via the pause screen)
 * The save button may or may not actually be saving things at this stage.
-### (Recording)[https://youtu.be/3i9FIn4d9u4]
+### [Recording](https://youtu.be/3i9FIn4d9u4)
 ### Expenses
 Team Member | Used Hours | Remaining Hours | Journal
 ------------ | ---- | --------- | ------
