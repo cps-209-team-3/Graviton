@@ -28,6 +28,7 @@ namespace GravitonClient
             SpeedY = 0.0;
             MaxSpeed = 7.0;
             Orbs = new List<int>();
+            rand = new Random();
         }
 
         public Ship() : base() {
@@ -40,8 +41,8 @@ namespace GravitonClient
         //This method moves the ship according to its inputs and speeds.
         public void Move(int xInput, int yInput)
         {
-            SpeedX += 0.3 * xInput;
-            SpeedY += 0.3 * yInput;
+            SpeedX += 0.04 * xInput * MaxSpeed;
+            SpeedY += 0.04 * yInput * MaxSpeed;
             if (MaxSpeed > 7.0)
                 MaxSpeed -= 0.05;
             SpeedX = Math.Min(MaxSpeed, Math.Abs(SpeedX)) * Math.Sign(SpeedX);
@@ -81,7 +82,8 @@ namespace GravitonClient
                     int orbIndex = rand.Next(Orbs.Count);
                     Orbs.RemoveAt(orbIndex);
                 }
-                MaxSpeed += 0.8;
+                MaxSpeed += 10.0;
+
             }
         }
 
