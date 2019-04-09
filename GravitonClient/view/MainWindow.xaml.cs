@@ -50,6 +50,7 @@ namespace GravitonClient
         {
             GameWindow g = new GameWindow(cheat, this);
             g.Show();
+            g.Game.Username = txtBxUser.Text;
             Hide();
         }
     }

@@ -32,7 +32,12 @@ namespace GravitonClient
         List<BitmapImage> orbImages;
         BitmapImage shipImage;
 
-        private Game Game { get; set; }
+        private Game game;
+        public Game Game
+        {
+            get { return game; }
+            set { game = value; }
+        }
 
         Window parentWindow;
 
@@ -202,7 +207,7 @@ namespace GravitonClient
 
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
-            txtScore.Text = Game.Player.SpeedX.ToString() + ' ' + Game.VerticalInput.ToString();
+            txtScore.Text = "Score: " + Game.Points;
 
 
             //to be implemented with AI
