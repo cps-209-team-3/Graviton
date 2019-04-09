@@ -19,20 +19,11 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 ### Known Issues
 * Because of a missing file the game cannot load from a previous save (via the pause screen)
 * The save button may or may not actually be saving things at this stage.
-### (Recording)[https://youtu.be/3i9FIn4d9u4]
+### [Recording](https://youtu.be/3i9FIn4d9u4)
 ### Expenses
 Team Member | Used Hours | Remaining Hours | Journal
------------- | ---- | --------- | ------
-Title Screen | Required | Visser | Finished
-Basic Game Screen | Required | Visser | Finished
-High Scores + Page | Required | Visser | Finished
-Spawning (orbs/wells) | Required | Ross | Finished
-Basic movement | Required | Ross | Finished
-Gravity Well interaction | Required | Ross | Finished
-Pick up orbs | Required | Ross | Finished
-Pause Screen | Required | Lane | Finished
-Game Timer | Required | Lane, Ross | Finished
-Serialization | Required | Labadorf | Finished
-Save | Required | Labadorf | Finished
-Load | Required | Labadorf | Finished
-Expenses: Provide a table showing how many hours each team member has invested to this point, how many hours they have remaining out of their individual time budget, and link to each team member’s journal.
+----------- | ---------- | --------------- | ------
+Visser | 24:40 | 35:20 | [VisserJournal](https://github.com/cps-209-team-3/Graviton/wiki/VisserJournal)
+Ross | 35:25 | 24:35 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
+Lane | 13:00 | 47:00 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
+Labadorf | 16:30 | [LabadorfJournal](https://github.com/cps-209-team-3/Graviton/wiki/LabadorfJournal)
