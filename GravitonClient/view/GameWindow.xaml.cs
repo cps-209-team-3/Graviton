@@ -312,6 +312,7 @@ namespace GravitonClient
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
+            GameLoader.Save(game, "C:\\temp\\temp\\json");
             parentWindow.Show();
         }
     }

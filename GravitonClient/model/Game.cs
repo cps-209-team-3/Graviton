@@ -123,7 +123,7 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % 400 == 0)
                 SpawnWell();
-            if (Ticks % 100 == 0)
+            if (Ticks % 30 == 0)
                 SpawnOrb();
             if (Ticks == 15000)
             {
@@ -179,10 +179,13 @@ namespace GravitonClient
             Orb orb = Player.OrbOver();
             if (orb != null)
             {
-                Orbs.Remove(orb);
-                GameObjects.Remove(orb);
-                Player.Orbs.Add(orb.Color);
-                Player.Orbs.Sort();
+                if (Player.Orbs.Count < 5)
+                {
+                    Orbs.Remove(orb);
+                    GameObjects.Remove(orb);
+                    Player.Orbs.Add(orb.Color);
+                    Player.Orbs.Sort();
+                }
             }
         }
 
