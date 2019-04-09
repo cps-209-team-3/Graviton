@@ -13,6 +13,10 @@ namespace GravitonClient
         public void Test_Load_Save()
         {
             Game game1 = new Game(false);
+            game1.Initialize();
+            game1.Player.Xcoor = 23.17;
+            game1.Player.Ycoor = 23.17;
+
             GameLoader.Save(game1,"\\temp\\temp.json");
             Game game2 = GameLoader.Load("\\temp\\temp.json", false);
             Assert.AreEqual(game1.Orbs.Count, game2.Orbs.Count);
@@ -40,7 +44,8 @@ namespace GravitonClient
             }
             Assert.IsTrue(Enumerable.SequenceEqual(game1.Player.Orbs, game2.Player.Orbs));
             Assert.AreEqual(game1.Player.Points, game2.Player.Points);
-            
+            Assert.AreEqual(game1.Player.Xcoor, game2.Player.Xcoor, 0.5);
+            Assert.AreEqual(game1.Player.Ycoor, game2.Player.Ycoor, 0.5);
 
             File.Delete("\\temp\\temp.json");
         }

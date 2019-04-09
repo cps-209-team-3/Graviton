@@ -44,11 +44,19 @@ namespace GravitonClient
 
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
-            Game = GameLoader.Load("C:\temp\\game.json", true);
-            GameWindow newWindow = new GameWindow(Game.IsCheat);
-            GameWindow.Close();
-            newWindow.Show();
-            Close();
+            try
+            {
+                Game = GameLoader.Load("C:\\temp\\temp.json", true);
+                GameWindow newWindow = new GameWindow(Game.IsCheat, GameWindow.GetParent(), Game);
+                GameWindow.Close();
+                newWindow.Show();
+                Close();
+            }
+            catch
+            {
+                MessageBox.Show("Cannot find file.");
+            }
+            
         }
     }
 }

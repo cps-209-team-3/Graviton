@@ -61,6 +61,24 @@ namespace GravitonClient
             Timer.Tick += Timer_Tick;
         }
 
+        public void InitializeWithShipCreated()
+        {
+            GameObjects.Add(Player);
+            while (Orbs.Count < 100)
+            {
+                SpawnOrb();
+            }
+            while (StableWells.Count < 20)
+            {
+                SpawnWell();
+            }
+
+            Timer = new DispatcherTimer();
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
+            Timer.Start();
+            Timer.Tick += Timer_Tick;
+        }
+
 
         //This method deals with a keypress. It either updates the user directional input, does a speed boost, or uses a powerup.
         public void KeyPressed(char c)
@@ -245,7 +263,7 @@ namespace GravitonClient
         {
             IsOver = true;
             Timer.Stop();
-            GameLoader.Save(this, "temp.txt"); //Change this filename
+            GameLoader.Save(this, "C:\\temp\\temp.json"); //Change this filename
         }
     }
 }
