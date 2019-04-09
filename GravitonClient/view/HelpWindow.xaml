@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
-        Title="HelpWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Title="HelpWindow" WindowState="Maximized">
+    <StackPanel Background="Black">
+        <TextBlock Text="Help" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="60" Margin="5" Foreground="Aqua"/>
+    </StackPanel>
 </Window>
