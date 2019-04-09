@@ -37,14 +37,15 @@ namespace GravitonClient
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Game.GameOver();
+            Game.IsOver = true;
+            GameLoader.Save(Game, "C:\\temp\\temp\\json");
             GameWindow.Close();
             Close();
         }
 
         private void BtnLoad_Click(object sender, RoutedEventArgs e)
         {
-            Game = GameLoader.Load("C:\temp\\game.json", true);
+            Game = GameLoader.Load("C:\\temp\\temp\\json", true);
             GameWindow newWindow = new GameWindow(Game.IsCheat);
             GameWindow.Close();
             newWindow.Show();
