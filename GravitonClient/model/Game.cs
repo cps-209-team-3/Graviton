@@ -50,7 +50,7 @@ namespace GravitonClient
             {
                 SpawnOrb();
             }
-            while (StableWells.Count < 15)
+            while (StableWells.Count < 20)
             {
                 SpawnWell();
             }

@@ -223,6 +223,10 @@ namespace GravitonClient
                 //display the correct destabilized image at the right place
             }
             */
+
+            Game.ViewCamera.Width = DrawCanvas.ActualWidth;
+            Game.ViewCamera.Height = DrawCanvas.ActualHeight;
+
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
