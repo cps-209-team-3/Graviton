@@ -56,7 +56,9 @@ namespace GravitonClient
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-
+            HelpWindow h = new HelpWindow(this);
+            h.Show();
+            Hide();
         }
     }
 }
