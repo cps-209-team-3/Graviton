@@ -9,6 +9,8 @@ namespace GravitonClient
     public class Camera
     {
         public Game ParentGame { get; set; }
+        public double Width { get; set; }
+        public double Height { get; set; }
         public double ScreenX { get; set; }
         public double ScreenY { get; set; }
 
@@ -25,6 +27,8 @@ namespace GravitonClient
         public Camera(Game game)
         {
             ParentGame = game;
+            Width = 1440;
+            Height = 900;
             ScreenX = 1780.0;
             ScreenY = 2050.0;
         }
@@ -44,7 +48,7 @@ namespace GravitonClient
                 SecondsLeft = Math.Min(well.TicksLeft / 50, SecondsLeft);
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
-                if (xc > -60 && xc < 1500 && yc > -60 && yc < 760)
+                if (xc > -60 && xc < Width + 60 && yc > -60 && yc < Height + 60)
                     StableWells.Add(Tuple.Create(xc - 60, yc - 60, well.Orbs));
             }
             UnstableWells = new List<Tuple<double, double>>();
@@ -52,7 +56,7 @@ namespace GravitonClient
             {
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
-                if (xc > -125 && xc < 1565 && yc > -125 && yc < 625)
+                if (xc > -125 && xc < Width + 125 && yc > -125 && yc < Height + 125)
                     UnstableWells.Add(Tuple.Create(xc - 125, yc - 125));
             }
             Orbs = new List<Tuple<double, double, int>>();
@@ -60,7 +64,7 @@ namespace GravitonClient
             {
                 xc = orb.Xcoor - ScreenX;
                 yc = orb.Ycoor - ScreenY;
-                if (xc > -7 && xc < 1447 && yc > -7 && yc < 707)
+                if (xc > -7 && xc < Width + 7 && yc > -7 && yc < Height + 7)
                     Orbs.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
                 
             }
@@ -81,22 +85,22 @@ namespace GravitonClient
                 ScreenX += xc - 100.0;
                 xc = 100.0;
             }
-            else if (xc > 1340.0)
+            else if (xc > Width - 100)
             {
-                ScreenX += xc - 1340.0;
-                xc = 1340.0;
+                ScreenX += xc - (Width - 100);
+                xc = Width - 100;
             }
             if (yc < 100.0)
             {
                 ScreenY += yc - 100.0;
                 yc = 100.0;
             }
-            else if (yc > 600.0)
+            else if (yc > Height - 100)
             {
-                ScreenY += yc - 600.0;
-                yc = 600.0;
+                ScreenY += yc - (Height - 100);
+                yc = Height - 100;
             }
-            PlayerShip = Tuple.Create(xc - 45, yc - 45);
+            PlayerShip = Tuple.Create(xc - 25, yc - 25);
         }
 
     }
