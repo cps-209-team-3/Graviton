@@ -23,5 +23,16 @@ namespace GravitonClient
         {
             InitializeComponent();
         }
+
+        private void AboutWindow_Closed(object sender, EventArgs e)
+        {
+            App.Current.MainWindow.Show();
+        }
+
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            App.Current.MainWindow.Show();
+            Close();
+        }
     }
 }
