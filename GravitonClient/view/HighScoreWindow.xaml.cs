@@ -21,13 +21,11 @@ namespace GravitonClient
     /// </summary>
     public partial class HighScoreWindow : Window
     {
-        Window parentWindow;
         HighScores hs;
 
-        public HighScoreWindow(Window window)
+        public HighScoreWindow()
         {
             InitializeComponent();
-            parentWindow = window;
             string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
             hs = HighScores.Load(System.IO.Path.Combine(parentDir, "Saves/HighScoreSave.txt"));
         }
@@ -93,13 +91,13 @@ namespace GravitonClient
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            parentWindow.Show();
+            App.Current.MainWindow.Show();
             Close();
         }
 
         private void HSWindow_Closed(object sender, EventArgs e)
         {
-            parentWindow.Show();
+            App.Current.MainWindow.Show();
         }
     }
 }

@@ -78,9 +78,6 @@
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\HighScores.cs" />
-    <Compile Include="view\HighScorePage.xaml.cs">
-      <DependentUpon>HighScorePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\HighScoreWindow.xaml.cs">
       <DependentUpon>HighScoreWindow.xaml</DependentUpon>
     </Compile>
@@ -91,8 +88,14 @@
     <Compile Include="tests\GameEngineTests.cs" />
     <Compile Include="tests\HighScoresTests.cs" />
     <Compile Include="tests\SerializeTests.cs" />
+    <Compile Include="view\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\PauseWindow.xaml.cs">
       <DependentUpon>PauseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\PlayPage.xaml.cs">
+      <DependentUpon>PlayPage.xaml</DependentUpon>
     </Compile>
     <Page Include="view\AboutWindow.xaml">
       <SubType>Designer</SubType>
@@ -106,11 +109,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\HighScorePage.xaml">
+    <Page Include="view\HighScoreWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="view\HighScoreWindow.xaml">
+    <Page Include="view\HomePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -128,6 +131,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="view\PauseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\PlayPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
