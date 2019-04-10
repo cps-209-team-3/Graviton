@@ -29,7 +29,7 @@ namespace GravitonClient
         //Sets TargetWell to the nearest well
         public void TargetNearestWell()
         {
-            Well closestWell;
+            Well closestWell = null;
             double xDist = ParentGame.StableWells[0].Xcoor - this.Xcoor;
             double yDist = ParentGame.StableWells[0].Ycoor - this.Ycoor;
             double dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
@@ -45,12 +45,13 @@ namespace GravitonClient
                     closestWell = well;
                 }
             }
+            TargetWell = closestWell;
         }
 
         //Sets TargetOrb to the nearest orb
         public void TargetNearestOrb()
         {
-            Orb closestOrb;
+            Orb closestOrb = null;
             double xDist = ParentGame.Orbs[0].Xcoor - this.Xcoor;
             double yDist = ParentGame.Orbs[0].Ycoor - this.Ycoor;
             double dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
@@ -66,6 +67,7 @@ namespace GravitonClient
                     closestOrb = orb;
                 }
             }
+            TargetOrb = closestOrb;
         }
 
         //Sets TargetDist to dist from current target
