@@ -214,18 +214,24 @@ namespace GravitonClient
             }
         }
 
-        //This method updates the player's position.
-        public void UpdatePlayerPosition()
+        //updates gravity effects on parameter ship
+        public void UpdateGravity(Ship ship)
         {
             foreach (Well well in StableWells.Concat(UnstableWells))
             {
-                double deltaX = well.Xcoor - Player.Xcoor;
-                double deltaY = well.Ycoor - Player.Ycoor;
+                double deltaX = well.Xcoor - ship.Xcoor;
+                double deltaY = well.Ycoor - ship.Ycoor;
                 double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
                 double force = well.Strength / Math.Max(30, dist);
-                Player.SpeedX += deltaX / dist * force;
-                Player.SpeedY += deltaY / dist * force;
+                ship.SpeedX += deltaX / dist * force;
+                ship.SpeedY += deltaY / dist * force;
             }
+        }
+
+        //This method updates the player's position.
+        public void UpdatePlayerPosition()
+        {
+            UpdateGravity(Player);
             Player.Move(HorizontalInput, VerticalInput);
         }
 
@@ -268,15 +274,7 @@ namespace GravitonClient
         //updates AI position
         public void UpdateAIPosition(AIShip aI)
         {
-            foreach (Well well in StableWells.Concat(UnstableWells))
-            {
-                double deltaX = well.Xcoor - aI.Xcoor;
-                double deltaY = well.Ycoor - aI.Ycoor;
-                double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
-                double force = well.Strength / Math.Max(30, dist);
-                aI.SpeedX += deltaX / dist * force;
-                aI.SpeedY += deltaY / dist * force;
-            }
+            UpdateGravity(aI);
             aI.AIMove();
         }
 
