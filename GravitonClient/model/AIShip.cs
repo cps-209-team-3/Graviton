@@ -15,7 +15,6 @@ namespace GravitonClient
         public double TargetDist { get; set; }
         public int XMove { get; set; }
         public int YMove { get; set; }
-        private Random rand;
 
         //Constructor
         public AIShip(double xc, double yc, Game game) : base(xc, yc, game)
@@ -32,14 +31,14 @@ namespace GravitonClient
         {
             Well closestWell;
             double xDist = ParentGame.StableWells[0].Xcoor - this.Xcoor;
-            double yDist = ParentGame.StableWells[0].Ycoor - this.Xcoor;
+            double yDist = ParentGame.StableWells[0].Ycoor - this.Ycoor;
             double dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
             double compareDist = dist;
 
             foreach (Well well in ParentGame.StableWells)
             {
                 xDist = well.Xcoor - this.Xcoor;
-                yDist = well.Ycoor - this.Xcoor;
+                yDist = well.Ycoor - this.Ycoor;
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
                 if(dist < compareDist)
                 {
@@ -53,14 +52,14 @@ namespace GravitonClient
         {
             Orb closestOrb;
             double xDist = ParentGame.Orbs[0].Xcoor - this.Xcoor;
-            double yDist = ParentGame.Orbs[0].Ycoor - this.Xcoor;
+            double yDist = ParentGame.Orbs[0].Ycoor - this.Ycoor;
             double dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
             double compareDist = dist;
 
             foreach (Orb orb in ParentGame.Orbs)
             {
                 xDist = orb.Xcoor - this.Xcoor;
-                yDist = orb.Ycoor - this.Xcoor;
+                yDist = orb.Ycoor - this.Ycoor;
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
                 if (dist < compareDist)
                 {
@@ -109,64 +108,15 @@ namespace GravitonClient
         //Sets XMove and YMove to determine movement direction
         public void SetMoveDir()
         {
-            if (Xcoor < TargetX)
-            {
-                XMove = 1;
-            }
-            else if (Xcoor > TargetX)
-            {
-                XMove = -1;
-            }
-            else if (Xcoor == TargetX)
-            {
-                XMove = 0;
-            }
-
-            if (Ycoor < TargetY)
-            {
-                YMove = 1;
-            }
-            else if (Ycoor > TargetY)
-            {
-                YMove = -1;
-            }
-            else if (Ycoor == TargetY)
-            {
-                YMove = 0;
-            }
+            XMove = Math.Sign(TargetX - Xcoor);
+            YMove = Math.Sign(TargetY - Ycoor);
         }
 
         //Moves the AI, setting Xcoor and Ycoor
         public void AIMove()
         {
             SetMoveDir();
-            SpeedX += 0.3 * XMove * BoostFactor;
-            SpeedY += 0.3 * YMove * BoostFactor;
-            if (BoostFactor > 1.0)
-                BoostFactor -= 0.01;
-
-            Xcoor += SpeedX;
-            Ycoor += SpeedY;
-            if (Xcoor < 0.0)
-            {
-                Xcoor = 0.0;
-                SpeedX = 0.0;
-            }
-            else if (Xcoor > 5000.0)
-            {
-                Xcoor = 5000.0;
-                SpeedX = 0.0;
-            }
-            if (Ycoor < 0.0)
-            {
-                Ycoor = 0.0;
-                SpeedY = 0.0;
-            }
-            else if (Ycoor > 5000.0)
-            {
-                Ycoor = 5000.0;
-                SpeedY = 0.0;
-            }
-        }
+            Move(XMove, YMove);
+        }    
     }
 }
