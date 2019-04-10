@@ -245,7 +245,10 @@ namespace GravitonClient
                 if (well != null)
                 {
                     if (!well.IsStable)
+                    {
                         AIShips.Remove(aI);
+                        GameObjects.Remove(aI);
+                    }
                     else if (aI.DepositOrbs(well))
                     {
                         StableWells.Remove(well);
