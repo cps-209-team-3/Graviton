@@ -178,7 +178,7 @@ namespace GravitonClient
             if (destableDiff > 0)
                 RemoveGameObjects(destableDict, destableDiff);
             if (destableDiff < 0)
-                AddGameObjects(destableDict, destableDiff);
+                AddGameObjects(destableDict, -destableDiff);
 
             for (int i = 0; i < destableDict.Count; ++i)
             {
@@ -224,6 +224,7 @@ namespace GravitonClient
                 //display the correct destabilized image at the right place
             }
             */
+
 
             Game.ViewCamera.Width = DrawCanvas.ActualWidth;
             Game.ViewCamera.Height = DrawCanvas.ActualHeight;
