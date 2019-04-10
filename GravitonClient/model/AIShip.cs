@@ -33,7 +33,7 @@ namespace GravitonClient
             double xDist;
             double yDist;
             double dist;
-            double compareDist = 5000;
+            double compareDist = 5000 * Math.Sqrt(2);
 
             foreach (Well well in ParentGame.StableWells)
             {
@@ -55,7 +55,7 @@ namespace GravitonClient
             double xDist;
             double yDist;
             double dist;
-            double compareDist = 5000;
+            double compareDist = 5000 * Math.Sqrt(2);
 
             foreach (Orb orb in ParentGame.Orbs)
             {
