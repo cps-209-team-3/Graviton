@@ -38,6 +38,7 @@ namespace GravitonClient
             game.Username = JsonUtils.ExtractValue(json, "username");
             game.Ticks = Convert.ToInt32(JsonUtils.ExtractValue(json, "ticks"));
             game.Player = GameObject.FromJsonFactory<Ship>(JsonUtils.ExtractValue(json, "humanplayer"));
+            game.Player.ParentGame = game;
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(json, "stablegravitywells")))
                 game.StableWells.Add(GameObject.FromJsonFactory<Well>(s));
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(json, "unstablegravitywells")))

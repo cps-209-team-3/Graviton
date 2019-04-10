@@ -62,6 +62,15 @@ namespace GravitonClient
             Timer.Tick += Timer_Tick;
         }
 
+        public void InitializeWithShipCreated()
+        {
+            GameObjects.Add(Player);
+            Timer = new DispatcherTimer();
+            Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
+            Timer.Start();
+            Timer.Tick += Timer_Tick;
+        }
+
 
         //This method deals with a keypress. It either updates the user directional input, does a speed boost, or uses a powerup.
         public void KeyPressed(char c)
@@ -149,7 +158,7 @@ namespace GravitonClient
                     StableWells.Remove(well);
                 }
             }
-            foreach (Well well in UnstableWells)
+            foreach (Well well in UnstableWells.ToList())
             {
                 well.TicksLeft--;
                 // do a shock wave every so often????
@@ -267,7 +276,7 @@ namespace GravitonClient
         {
             IsOver = true;
             Timer.Stop();
-            GameLoader.Save(this, "temp.txt"); //Change this filename
+            GameLoader.Save(this, "C:\\temp\\temp.json"); //Change this filename
         }
     }
 }

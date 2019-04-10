@@ -16,7 +16,7 @@ namespace GravitonClient
         public List<int> Orbs { get; set; }
         public int Points{ get; set; }
 
-        private Random rand;
+        private Random rand = new Random();
 
         public Ship(double xcoor, double ycoor, Game game)
         {
@@ -28,7 +28,6 @@ namespace GravitonClient
             SpeedY = 0.0;
             BoostFactor = 1.0;
             Orbs = new List<int>();
-            rand = new Random();
         }
 
         public Ship() : base() {
@@ -149,7 +148,7 @@ namespace GravitonClient
             
             base.Deserialize(info);
             Points = Convert.ToInt32(JsonUtils.ExtractValue(info, "points"));
-            
+            GamePowerup = new Powerup(ParentGame);
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(info, "orblist")))
             {
                 Orbs.Add(Convert.ToInt32(s));

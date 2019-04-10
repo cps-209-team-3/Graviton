@@ -28,7 +28,7 @@ namespace GravitonClient
         public override string Serialize()
         {
             return $@"{{
-    ""strength"":{Strength}
+    ""strength"":{Strength},
     ""xcoor"":{Xcoor},
     ""ycoor"":{Ycoor},
     {(IsStable? $"\"currentcolor\":{ Orbs }," : "" )}

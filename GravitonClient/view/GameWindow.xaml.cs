@@ -41,7 +41,12 @@ namespace GravitonClient
 
         Window parentWindow;
 
-        public GameWindow(bool cheat)
+        public Window GetParent()
+        {
+            return parentWindow;
+        }
+
+        private void SetupGameWindow()
         {
             InitializeComponent();
             wellDict = new List<Image>();
@@ -64,7 +69,7 @@ namespace GravitonClient
             destabilizedImage.BeginInit();
             destabilizedImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/destabilized1.png");
             destabilizedImage.EndInit();
-            
+
             orbImages = new List<BitmapImage>();
             imagePaths = new string[6] { "Assets/Images/OrbRed.png", "Assets/Images/OrbOrange.png", "Assets/Images/OrbYellow.png", "Assets/Images/OrbGreen.png", "Assets/Images/OrbBlue.png", "Assets/Images/OrbPurple.png" };
             for (int i = 0; i < 6; ++i)
@@ -91,7 +96,11 @@ namespace GravitonClient
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
+        }
+        public GameWindow(bool cheat)
+        {
 
+            SetupGameWindow();
             Game = new Game(cheat);
             Game.GameUpdatedEvent += Render;
             Game.Initialize();
@@ -99,60 +108,23 @@ namespace GravitonClient
 
         public GameWindow(bool cheat, Window parentWindow)
         {
-            InitializeComponent();
-            wellDict = new List<Image>();
-            destableDict = new List<Image>();
-            orbDict = new List<Image>();
-            ship = new Image();
-
-            string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
-
-            wellImages = new List<BitmapImage>();
-            string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
-            for (int i = 0; i < 6; ++i)
-            {
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
-                img.EndInit();
-                wellImages.Add(img);
-            }
-
-            destabilizedImage = new BitmapImage();
-            destabilizedImage.BeginInit();
-            destabilizedImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/destabilized1.png");
-            destabilizedImage.EndInit();
-
-            orbImages = new List<BitmapImage>();
-            imagePaths = new string[6] { "Assets/Images/OrbRed.png", "Assets/Images/OrbOrange.png", "Assets/Images/OrbYellow.png", "Assets/Images/OrbGreen.png", "Assets/Images/OrbBlue.png", "Assets/Images/OrbPurple.png" };
-            for (int i = 0; i < 6; ++i)
-            {
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
-                img.EndInit();
-                orbImages.Add(img);
-            }
-
-            shipImage = new BitmapImage();
-            shipImage.BeginInit();
-            shipImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship1.png");
-            shipImage.EndInit();
-
-            //----------------------------------
-            ship.Source = shipImage;
-            ship.Width = 50;
-            DrawCanvas.Children.Add(ship);
-            //----------------------------------
-
+            SetupGameWindow();
             this.parentWindow = parentWindow;
             
-            this.KeyDown += Window_KeyDown;
-            this.KeyUp += Window_KeyUp;
-
             Game = new Game(cheat);
             Game.GameUpdatedEvent += Render;
             Game.Initialize();
+        }
+
+        public GameWindow(bool cheat, Window parentWindow, Game game)
+        {
+            SetupGameWindow();
+
+            this.parentWindow = parentWindow;
+
+            Game = game;
+            Game.GameUpdatedEvent += Render;
+            Game.InitializeWithShipCreated();
         }
 
         public void Render(object sender, int e)
@@ -312,7 +284,6 @@ namespace GravitonClient
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-            GameLoader.Save(game, "C:\\temp\\temp\\json");
             parentWindow.Show();
         }
     }
