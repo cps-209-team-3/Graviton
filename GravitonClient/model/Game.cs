@@ -21,6 +21,7 @@ namespace GravitonClient
         public List<Well> StableWells { get; set; }
         public List<Well> UnstableWells { get; set; }
         public Ship Player { get; set; }
+        public List<AIShip> AIShips { get; set; }
         public List<Orb> Orbs { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public string Username { get; internal set; }
@@ -202,6 +203,24 @@ namespace GravitonClient
                 Player.SpeedY += deltaY / dist * force;
             }
             Player.Move(HorizontalInput, VerticalInput);
+        }
+
+        //updates AI position
+        public void UpdateAIPosition()
+        {
+            foreach (AIShip aI in AIShips)
+            {
+                foreach (Well well in StableWells.Concat(UnstableWells))
+                {
+                    double deltaX = well.Xcoor - aI.Xcoor;
+                    double deltaY = well.Ycoor - aI.Ycoor;
+                    double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
+                    double force = well.Strength / Math.Max(30, dist);
+                    aI.SpeedX += deltaX / dist * force;
+                    aI.SpeedY += deltaY / dist * force;
+                }
+                aI.AIMove();
+            }
         }
 
         //This method usually spawns a well. It sometimes not spawning a well has 2 reasons:
