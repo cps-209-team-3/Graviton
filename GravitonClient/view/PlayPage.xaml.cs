@@ -23,6 +23,8 @@ namespace GravitonClient.view
         bool cheat;
         Page prevPage;
 
+        public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
+
         public PlayPage(Page p)
         {
             prevPage = p;
@@ -47,6 +49,21 @@ namespace GravitonClient.view
             g.Show();
             g.Game.Username = txtBxUser.Text;
             App.Current.MainWindow.Hide();
+        }
+
+        private void LoadButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Game g = GameLoader.Load(SaveFileName, true);
+                GameWindow newWindow = new GameWindow(g.IsCheat, g);
+                newWindow.Show();
+                App.Current.MainWindow.Hide();
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Cannot find file.");
+            }
         }
     }
 }
