@@ -39,13 +39,6 @@ namespace GravitonClient
             set { game = value; }
         }
 
-        Window parentWindow;
-
-        public Window GetParent()
-        {
-            return parentWindow;
-        }
-
         private void SetupGameWindow()
         {
             InitializeComponent();
@@ -106,21 +99,9 @@ namespace GravitonClient
             Game.Initialize();
         }
 
-        public GameWindow(bool cheat, Window parentWindow)
+        public GameWindow(bool cheat, Game game)
         {
             SetupGameWindow();
-            this.parentWindow = parentWindow;
-            
-            Game = new Game(cheat);
-            Game.GameUpdatedEvent += Render;
-            Game.Initialize();
-        }
-
-        public GameWindow(bool cheat, Window parentWindow, Game game)
-        {
-            SetupGameWindow();
-
-            this.parentWindow = parentWindow;
 
             Game = game;
             Game.GameUpdatedEvent += Render;
@@ -284,7 +265,7 @@ namespace GravitonClient
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-            parentWindow.Show();
+            App.Current.MainWindow.Show();
         }
     }
 }
