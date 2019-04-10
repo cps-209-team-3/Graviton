@@ -30,10 +30,10 @@ namespace GravitonClient
         public void TargetNearestWell()
         {
             Well closestWell = ParentGame.StableWells[0];
-            double xDist = ParentGame.StableWells[0].Xcoor - this.Xcoor;
-            double yDist = ParentGame.StableWells[0].Ycoor - this.Ycoor;
-            double dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
-            double compareDist = dist;
+            double xDist;
+            double yDist;
+            double dist;
+            double compareDist = 5000;
 
             foreach (Well well in ParentGame.StableWells)
             {
@@ -52,10 +52,10 @@ namespace GravitonClient
         public void TargetNearestOrb()
         {
             Orb closestOrb = ParentGame.Orbs[0];
-            double xDist = ParentGame.Orbs[0].Xcoor - this.Xcoor;
-            double yDist = ParentGame.Orbs[0].Ycoor - this.Ycoor;
-            double dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
-            double compareDist = dist;
+            double xDist;
+            double yDist;
+            double dist;
+            double compareDist = 5000;
 
             foreach (Orb orb in ParentGame.Orbs)
             {
