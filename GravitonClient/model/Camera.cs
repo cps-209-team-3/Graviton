@@ -80,25 +80,25 @@ namespace GravitonClient
         {
             double xc = ParentGame.Player.Xcoor - ScreenX;
             double yc = ParentGame.Player.Ycoor - ScreenY;
-            if (xc < 200.0)
+            if (xc < 250)
             {
-                ScreenX += xc - 200.0;
-                xc = 200.0;
+                ScreenX += xc - 250;
+                xc = 250;
             }
-            else if (xc > Width - 200)
+            else if (xc > Width - 250)
             {
-                ScreenX += xc - (Width - 200);
-                xc = Width - 200;
+                ScreenX += xc - (Width - 250);
+                xc = Width - 250;
             }
-            if (yc < 200.0)
+            if (yc < 250)
             {
-                ScreenY += yc - 200.0;
-                yc = 200.0;
+                ScreenY += yc - 250;
+                yc = 250;
             }
-            else if (yc > Height - 200)
+            else if (yc > Height - 250)
             {
-                ScreenY += yc - (Height - 200);
-                yc = Height - 200;
+                ScreenY += yc - (Height - 250);
+                yc = Height - 250;
             }
             PlayerShip = Tuple.Create(xc - 25, yc - 25);
         }

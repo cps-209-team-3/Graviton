@@ -43,6 +43,8 @@ namespace GravitonClient
         {
             SpeedX += 0.3 * xInput * BoostFactor;
             SpeedY += 0.3 * yInput * BoostFactor;
+            SpeedX *= 0.998;
+            SpeedY *= 0.998;
             if (BoostFactor > 1.0)
                 BoostFactor -= 0.01;
 
