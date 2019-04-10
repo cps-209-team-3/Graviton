@@ -21,6 +21,7 @@ namespace GravitonClient
         public List<Well> StableWells { get; set; }
         public List<Well> UnstableWells { get; set; }
         public Ship Player { get; set; }
+        public List<AIShip> AIShips { get; set; }
         public List<Orb> Orbs { get; set; }
         public List<GameObject> GameObjects { get; set; }
         public string Username { get; internal set; }
@@ -64,15 +65,6 @@ namespace GravitonClient
         public void InitializeWithShipCreated()
         {
             GameObjects.Add(Player);
-            while (Orbs.Count < 100)
-            {
-                SpawnOrb();
-            }
-            while (StableWells.Count < 20)
-            {
-                SpawnWell();
-            }
-
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
             Timer.Start();
@@ -141,7 +133,7 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % 400 == 0)
                 SpawnWell();
-            if (Ticks % 100 == 0)
+            if (Ticks % 30 == 0)
                 SpawnOrb();
             if (Ticks == 15000)
             {
@@ -161,12 +153,12 @@ namespace GravitonClient
                 {
                     well.TicksLeft = 3000;
                     well.IsStable = false;
-                    well.Strength = 200;
+                    well.Strength = 50;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
                 }
             }
-            foreach (Well well in UnstableWells)
+            foreach (Well well in UnstableWells.ToList())
             {
                 well.TicksLeft--;
                 // do a shock wave every so often????
@@ -197,10 +189,13 @@ namespace GravitonClient
             Orb orb = Player.OrbOver();
             if (orb != null)
             {
-                Orbs.Remove(orb);
-                GameObjects.Remove(orb);
-                Player.Orbs.Add(orb.Color);
-                Player.Orbs.Sort();
+                if (Player.Orbs.Count < 5)
+                {
+                    Orbs.Remove(orb);
+                    GameObjects.Remove(orb);
+                    Player.Orbs.Add(orb.Color);
+                    Player.Orbs.Sort();
+                }
             }
         }
 
@@ -217,6 +212,24 @@ namespace GravitonClient
                 Player.SpeedY += deltaY / dist * force;
             }
             Player.Move(HorizontalInput, VerticalInput);
+        }
+
+        //updates AI position
+        public void UpdateAIPosition()
+        {
+            foreach (AIShip aI in AIShips)
+            {
+                foreach (Well well in StableWells.Concat(UnstableWells))
+                {
+                    double deltaX = well.Xcoor - aI.Xcoor;
+                    double deltaY = well.Ycoor - aI.Ycoor;
+                    double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
+                    double force = well.Strength / Math.Max(30, dist);
+                    aI.SpeedX += deltaX / dist * force;
+                    aI.SpeedY += deltaY / dist * force;
+                }
+                aI.AIMove();
+            }
         }
 
         //This method usually spawns a well. It sometimes not spawning a well has 2 reasons:

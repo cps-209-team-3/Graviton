@@ -5,8 +5,81 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
-        Title="HelpWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+        Closed="HelpWindow_Closed"
+        Title="HelpWindow" WindowState="Maximized">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel Background="Black" ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <TextBlock Text="Help" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="60" Margin="5" Foreground="Aqua"/>
+            <TextBlock Text="Story" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
+            <TextBlock x:Name="StoryTxt" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="16" Margin="100, 10" Foreground="Red" TextWrapping="Wrap" TextAlignment="Center"/>
+            <TextBlock Text="Gameplay" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="20" Foreground="Aqua"/>
+            <TextBlock x:Name="InstructTxt" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="16" Margin="200, 10" Foreground="Aqua" TextWrapping="Wrap" TextAlignment="Center"/>
+            <StackPanel x:Name="Images" Orientation="Horizontal" HorizontalAlignment="Center">
+                <StackPanel Margin="5">
+                    <TextBlock Text="Your Ship" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
+                    <Image Source="../../Assets/Images/Ship1.png" Margin="0, 10"/>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <TextBlock Text="Orbs" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
+                    <StackPanel HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../Assets/Images/OrbRed.png" Margin="3, 10"/>
+                            <Image Source="../../Assets/Images/OrbOrange.png" Margin="3, 10"/>
+                            <Image Source="../../Assets/Images/OrbYellow.png" Margin="3, 10"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="../../Assets/Images/OrbGreen.png" Margin="3, 10"/>
+                            <Image Source="../../Assets/Images/OrbBlue.png" Margin="3, 10"/>
+                            <Image Source="../../Assets/Images/OrbPurple.png" Margin="3, 10"/>
+                        </StackPanel>
+                    </StackPanel>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <TextBlock Text="Well" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
+                    <Image Source="../../Assets/Images/WellBasic1.png" Margin="0, 10"/>
+                </StackPanel>
+                <StackPanel Margin="2">
+                    <TextBlock Text="Black Hole" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
+                    <Image Source="../../Assets/Images/destabilized1.png" Width="200" Margin="-15"/>
+                </StackPanel>
+                <StackPanel Margin="5">
+                    <TextBlock Text="AI" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
+                    <Image Source="../../Assets/Images/AI1.png" Margin="0, 10"/>
+                </StackPanel>
+            </StackPanel>
+            <TextBlock Text="Powerup Descriptions" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="20" Foreground="Aqua"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Border BorderThickness="2" BorderBrush="Aqua">
+                    <TextBlock Text="Neutralize: Instantly neutralizes a black hole" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="12" Margin="10" Foreground="Red"/>
+                </Border>
+                <Border BorderThickness="2" BorderBrush="Aqua">
+                    <TextBlock Text="Destabilize: Instantly destabilizes a gravity well" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="12" Margin="10" Foreground="Red"/>
+                </Border>
+                <Border BorderThickness="2" BorderBrush="Aqua">
+                    <TextBlock Text="Ghost: Prevents other ships from depositing orbs in a well" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="12" Margin="10" Foreground="Red"/>
+                </Border>
+            </StackPanel>
+            <StackPanel x:Name="Controls">
+                <TextBlock Text="Controls" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="20" Foreground="Aqua"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Border BorderThickness="2" BorderBrush="Aqua">
+                        <TextBlock Text="Move: W, A, S, D" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+                    </Border>
+                    <Border BorderThickness="2" BorderBrush="Aqua">
+                        <TextBlock Text="Boost: Space" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+                    </Border>
+                    <Border BorderThickness="2" BorderBrush="Aqua">
+                        <TextBlock Text="Neutralize: Q" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+                    </Border>
+                    <Border BorderThickness="2" BorderBrush="Aqua">
+                        <TextBlock Text="Ghost: E" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+                    </Border>
+                    <Border BorderThickness="2" BorderBrush="Aqua">
+                        <TextBlock Text="Destabilize: F" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+            <Button Content="Return to Menu" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="15" HorizontalAlignment="Center" Padding="5" Background="#101010" Foreground="Red" Click="ExitButton_Click"/>
+        </StackPanel>
+    </ScrollViewer>
 </Window>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,15 +11,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+
 
 namespace GravitonClient
 {
     /// <summary>
     /// Interaction logic for PauseWindow.xaml
     /// </summary>
+    /// 
+    
     public partial class PauseWindow : Window
     {
+        public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
+
         private Game Game { get; set; }
         private GameWindow GameWindow { get; set; }
 
@@ -37,7 +42,9 @@ namespace GravitonClient
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            Game.GameOver();
+            Game.IsOver = true;
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(Directory.GetCurrentDirectory(), SaveFileName )));
+            GameLoader.Save(Game, SaveFileName);
             GameWindow.Close();
             Close();
         }
@@ -46,13 +53,14 @@ namespace GravitonClient
         {
             try
             {
-                Game = GameLoader.Load("C:\\temp\\temp.json", true);
+                
+                Game = GameLoader.Load(SaveFileName, true);
                 GameWindow newWindow = new GameWindow(Game.IsCheat, GameWindow.GetParent(), Game);
                 GameWindow.Close();
                 newWindow.Show();
                 Close();
             }
-            catch
+            catch (ArgumentException)
             {
                 MessageBox.Show("Cannot find file.");
             }

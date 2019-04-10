@@ -53,5 +53,12 @@ namespace GravitonClient
             g.Game.Username = txtBxUser.Text;
             Hide();
         }
+
+        private void HelpButton_Click(object sender, RoutedEventArgs e)
+        {
+            HelpWindow h = new HelpWindow(this);
+            h.Show();
+            Hide();
+        }
     }
 }

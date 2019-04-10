@@ -6,14 +6,16 @@
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
         Title="MainWindow" WindowState="Maximized">
-    <StackPanel Orientation="Vertical" Background="Black">
-        <TextBlock Text="Graviton" FontSize="80" HorizontalAlignment="Center" Margin="10" FontFamily="{StaticResource Azonix}" Foreground="Aqua"/>
-        <TextBox x:Name="txtBxUser" Text="Enter Username" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="DarkGray" BorderBrush="Red" BorderThickness="2"/>
-        <Button Content="Start Game" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="StartButton_Click"/>
-        <Button Content="High Scores" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="BtnHighScores_Click"/>
-        <Button Content="Help" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2"/>
-        <Button Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2"/>
-        <Button x:Name="CheatBtn"  Content="Cheatmode: Off" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="50" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="CheatButton_Click"/>
-        <Button Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="50" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="ExitButton_Click"/>
-    </StackPanel>
+    <Page>
+        <StackPanel Orientation="Vertical" Background="Black">
+            <TextBlock Text="Graviton" FontSize="80" HorizontalAlignment="Center" Margin="10" FontFamily="{StaticResource Azonix}" Foreground="Aqua"/>
+            <TextBox Style="{StaticResource txtPlaceHolder}" Tag="Enter Username" x:Name="txtBxUser" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="DarkGray" BorderBrush="Red" BorderThickness="2"/>
+            <Button Content="Start Game" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="StartButton_Click"/>
+            <Button Content="High Scores" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="BtnHighScores_Click"/>
+            <Button Content="Help" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="HelpButton_Click"/>
+            <Button Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2"/>
+            <Button x:Name="CheatBtn"  Content="Cheatmode: Off" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="50" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="CheatButton_Click"/>
+            <Button Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="50" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="ExitButton_Click"/>
+        </StackPanel>
+    </Page>
 </Window>

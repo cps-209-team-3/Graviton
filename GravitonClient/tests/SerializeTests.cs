@@ -16,7 +16,7 @@ namespace GravitonClient
             game1.Initialize();
             game1.Player.Xcoor = 23.17;
             game1.Player.Ycoor = 23.17;
-
+            game1.StableWells[3].Orbs = 4;
             GameLoader.Save(game1,"\\temp\\temp.json");
             Game game2 = GameLoader.Load("\\temp\\temp.json", false);
             Assert.AreEqual(game1.Orbs.Count, game2.Orbs.Count);
@@ -33,6 +33,7 @@ namespace GravitonClient
                 Assert.AreEqual(game1.StableWells[i].Xcoor, game2.StableWells[i].Xcoor, 0.5);
                 Assert.AreEqual(game1.StableWells[i].Ycoor, game2.StableWells[i].Ycoor, 0.5);
                 Assert.AreEqual(game1.StableWells[i].TicksLeft, game2.StableWells[i].TicksLeft);
+                Assert.AreEqual(game1.StableWells[i].Orbs, game2.StableWells[i].Orbs);
             }
             for (int i = 0; i < game2.UnstableWells.Count; i++)
             {
