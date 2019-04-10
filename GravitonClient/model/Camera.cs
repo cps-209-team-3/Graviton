@@ -18,6 +18,7 @@ namespace GravitonClient
         public List<Tuple<double, double>> UnstableWells { get; set; }
         public List<Tuple<double, double, int>> Orbs { get; set; }
         public List<int> PlayerOrbs { get; set; }
+        public List<Tuple<double, double>> AIShips { get; set; }
         public Tuple<double, double> PlayerShip { get; set; }
         public int SecondsLeft { get; set; }
         public int Seconds { get; set; }
@@ -43,6 +44,16 @@ namespace GravitonClient
             double xc, yc;
             StableWells = new List<Tuple<double, double, int>>();
             SecondsLeft = 600;
+
+            AIShips = new List<Tuple<double, double>>();
+            foreach (AIShip ship in ParentGame.AIShips)
+            {
+                xc = ship.Xcoor - ScreenX;
+                yc = ship.Ycoor - ScreenY;
+                if (xc > -25 && xc < Width + 25 && yc > -25 && yc < Height + 25)
+                    AIShips.Add(Tuple.Create(xc - 25, yc - 25));
+            }
+
             foreach (Well well in ParentGame.StableWells)
             {
                 SecondsLeft = Math.Min(well.TicksLeft / 50, SecondsLeft);
