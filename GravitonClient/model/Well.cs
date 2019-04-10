@@ -12,11 +12,14 @@ namespace GravitonClient
         public int TicksLeft { get; set; }
         public double Strength { get; set; }
         public int Orbs { get; set; }
+        private Random rand;
+
         public Well(double xcoor, double ycoor) : base(xcoor, ycoor)
         {
+            rand = new Random();
             IsStable = true;
             Strength = 15;
-            TicksLeft = 4000;
+            TicksLeft = rand.Next(1500,4001);
             Orbs = 0;
         }
 
