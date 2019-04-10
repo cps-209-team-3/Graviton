@@ -55,6 +55,10 @@ namespace GravitonClient
             {
                 SpawnWell();
             }
+            while (AIShips.Count < 7)
+            {
+                SpawnAI();
+            }
 
             Timer = new DispatcherTimer();
             Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
@@ -130,11 +134,22 @@ namespace GravitonClient
         {
             Ticks++;
             UpdatePlayer();
+            UpdateAI();
             UpdateWells();
             if (Ticks % 400 == 0)
                 SpawnWell();
             if (Ticks % 30 == 0)
                 SpawnOrb();
+            if (Ticks % 200 == 0)
+            {
+                foreach (AIShip aI in AIShips)
+                {
+                    if (!aI.IsCloser())
+                    {
+                        aI.SetTargetPos();
+                    }
+                }
+            }
             if (Ticks == 15000)
             {
                 GameOver();
@@ -214,22 +229,55 @@ namespace GravitonClient
             Player.Move(HorizontalInput, VerticalInput);
         }
 
-        //updates AI position
-        public void UpdateAIPosition()
+        //Updates AI position and collected orbs
+        public void UpdateAI()
         {
             foreach (AIShip aI in AIShips)
             {
-                foreach (Well well in StableWells.Concat(UnstableWells))
+                UpdateAIPosition(aI);
+                Well well = aI.WellOver();
+                if (well != null)
                 {
-                    double deltaX = well.Xcoor - aI.Xcoor;
-                    double deltaY = well.Ycoor - aI.Ycoor;
-                    double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
-                    double force = well.Strength / Math.Max(30, dist);
-                    aI.SpeedX += deltaX / dist * force;
-                    aI.SpeedY += deltaY / dist * force;
+                    if (!well.IsStable)
+                        AIShips.Remove(aI);
+                    else if (aI.DepositOrbs(well))
+                    {
+                        StableWells.Remove(well);
+                        GameObjects.Remove(well);
+                        aI.SetTargetPos();
+                    }
                 }
-                aI.AIMove();
+                Orb orb = aI.OrbOver();
+                if (orb != null)
+                {
+                    if (aI.Orbs.Count < 5)
+                    {
+                        Orbs.Remove(orb);
+                        GameObjects.Remove(orb);
+                        aI.Orbs.Add(orb.Color);
+                        aI.Orbs.Sort();
+                        if (aI.Orbs.Count >= 3)
+                        {
+                            aI.SetTargetPos();
+                        }
+                    }
+                }
             }
+        }
+
+        //updates AI position
+        public void UpdateAIPosition(AIShip aI)
+        {
+            foreach (Well well in StableWells.Concat(UnstableWells))
+            {
+                double deltaX = well.Xcoor - aI.Xcoor;
+                double deltaY = well.Ycoor - aI.Ycoor;
+                double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
+                double force = well.Strength / Math.Max(30, dist);
+                aI.SpeedX += deltaX / dist * force;
+                aI.SpeedY += deltaY / dist * force;
+            }
+            aI.AIMove();
         }
 
         //This method usually spawns a well. It sometimes not spawning a well has 2 reasons:
@@ -258,6 +306,19 @@ namespace GravitonClient
                 Orbs.Add(orb);
                 GameObjects.Add(orb);
             }    
+        }
+
+        //Spawns an AIShip object in a random position
+        public void SpawnAI()
+        {
+            double xc = Random.NextDouble() * 5000.0;
+            double yc = Random.NextDouble() * 5000.0;
+            if (!NearOtherObject(xc, yc))
+            {
+                AIShip aI = new AIShip(xc, yc, this);
+                AIShips.Add(aI);
+                GameObjects.Add(aI);
+            }
         }
 
         //This method is used by the spawn methods to tell whether a given location is too neat another object.

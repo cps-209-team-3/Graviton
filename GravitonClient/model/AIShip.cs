@@ -15,10 +15,13 @@ namespace GravitonClient
         public double TargetDist { get; set; }
         public int XMove { get; set; }
         public int YMove { get; set; }
+        private Random rand;
 
         //Constructor
-        public AIShip() : base()
+        public AIShip(double xc, double yc, Game game) : base(xc, yc, game)
         {
+            XMove = 0;
+            YMove = 0;
             TargetNearestOrb();
             TargetNearestWell();
             SetTargetPos();
@@ -79,21 +82,58 @@ namespace GravitonClient
         {
             if(Orbs.Count < 3)
             {
+                TargetNearestOrb();
                 TargetX = TargetOrb.Xcoor;
                 TargetY = TargetOrb.Ycoor;
             }
             else
             {
+                TargetNearestWell();
                 TargetX = TargetWell.Xcoor;
                 TargetY = TargetWell.Ycoor;
             }
             FindTargetDist();
         }
 
+        public bool IsCloser()
+        {
+            double xDist = TargetX - this.Xcoor;
+            double yDist = TargetX - this.Ycoor;
+            double currentDist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
+            if (currentDist < TargetDist)
+                return true;
+            else
+                return false;
+        }
+
         //Sets XMove and YMove to determine movement direction
         public void SetMoveDir()
         {
+            if (Xcoor < TargetX)
+            {
+                XMove = 1;
+            }
+            else if (Xcoor > TargetX)
+            {
+                XMove = -1;
+            }
+            else if (Xcoor == TargetX)
+            {
+                XMove = 0;
+            }
 
+            if (Ycoor < TargetY)
+            {
+                YMove = 1;
+            }
+            else if (Ycoor > TargetY)
+            {
+                YMove = -1;
+            }
+            else if (Ycoor == TargetY)
+            {
+                YMove = 0;
+            }
         }
 
         //Moves the AI, setting Xcoor and Ycoor
