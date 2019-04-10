@@ -38,6 +38,7 @@ namespace GravitonClient
             VerticalInput = 0;
             StableWells = new List<Well>();
             UnstableWells = new List<Well>();
+            AIShips = new List<AIShip>();
             Orbs = new List<Orb>();
             GameObjects = new List<GameObject>();
         }
