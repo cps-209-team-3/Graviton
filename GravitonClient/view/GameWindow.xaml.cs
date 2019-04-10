@@ -49,38 +49,36 @@ namespace GravitonClient
             orbDict = new List<Image>();
             ship = new Image();
 
-            string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
-
             wellImages = new List<BitmapImage>();
-            string[] imagePaths = new string[6] { "Assets\\Images/WellBasic1.png", "Assets\\Images/WellOrange.png", "Assets\\Images/WellYellow.png", "Assets\\Images/WellGreen.png", "Assets\\Images/WellBlue.png", "Assets\\Images/WellPurple.png" };
+            string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
             for (int i = 0; i < 6; ++i)
             {
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
-                img.UriSource = new Uri(System.IO.Path.Combine(parentDir, imagePaths[i]));
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
                 img.EndInit();
                 wellImages.Add(img);
             }
 
             destabilizedImage = new BitmapImage();
             destabilizedImage.BeginInit();
-            destabilizedImage.UriSource = new Uri(System.IO.Path.Combine(parentDir, "Assets\\Images/destabilized1.png"));
+            destabilizedImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/destabilized1.png");
             destabilizedImage.EndInit();
             
             orbImages = new List<BitmapImage>();
-            imagePaths = new string[6] { "Assets\\Images/OrbRed.png", "Assets\\Images/OrbOrange.png", "Assets\\Images/OrbYellow.png", "Assets\\Images/OrbGreen.png", "Assets\\Images/OrbBlue.png", "Assets\\Images/OrbPurple.png" };
+            imagePaths = new string[6] { "Assets/Images/OrbRed.png", "Assets/Images/OrbOrange.png", "Assets/Images/OrbYellow.png", "Assets/Images/OrbGreen.png", "Assets/Images/OrbBlue.png", "Assets/Images/OrbPurple.png" };
             for (int i = 0; i < 6; ++i)
             {
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
-                img.UriSource = new Uri(System.IO.Path.Combine(parentDir, imagePaths[i]));
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
                 img.EndInit();
                 orbImages.Add(img);
             }
 
             shipImage = new BitmapImage();
             shipImage.BeginInit();
-            shipImage.UriSource = new Uri(System.IO.Path.Combine(parentDir, "Assets\\Images/Ship1.png"));
+            shipImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship1.png");
             shipImage.EndInit();
 
             //----------------------------------
@@ -110,35 +108,35 @@ namespace GravitonClient
             string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
 
             wellImages = new List<BitmapImage>();
-            string[] imagePaths = new string[6] { "Assets\\Images/WellBasic1.png", "Assets\\Images/WellOrange.png", "Assets\\Images/WellYellow.png", "Assets\\Images/WellGreen.png", "Assets\\Images/WellBlue.png", "Assets\\Images/WellPurple.png" };
+            string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
             for (int i = 0; i < 6; ++i)
             {
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
-                img.UriSource = new Uri(System.IO.Path.Combine(parentDir, imagePaths[i]));
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
                 img.EndInit();
                 wellImages.Add(img);
             }
 
             destabilizedImage = new BitmapImage();
             destabilizedImage.BeginInit();
-            destabilizedImage.UriSource = new Uri(System.IO.Path.Combine(parentDir, "Assets\\Images/destabilized1.png"));
+            destabilizedImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/destabilized1.png");
             destabilizedImage.EndInit();
 
             orbImages = new List<BitmapImage>();
-            imagePaths = new string[6] { "Assets\\Images/OrbRed.png", "Assets\\Images/OrbOrange.png", "Assets\\Images/OrbYellow.png", "Assets\\Images/OrbGreen.png", "Assets\\Images/OrbBlue.png", "Assets\\Images/OrbPurple.png" };
+            imagePaths = new string[6] { "Assets/Images/OrbRed.png", "Assets/Images/OrbOrange.png", "Assets/Images/OrbYellow.png", "Assets/Images/OrbGreen.png", "Assets/Images/OrbBlue.png", "Assets/Images/OrbPurple.png" };
             for (int i = 0; i < 6; ++i)
             {
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
-                img.UriSource = new Uri(System.IO.Path.Combine(parentDir, imagePaths[i]));
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
                 img.EndInit();
                 orbImages.Add(img);
             }
 
             shipImage = new BitmapImage();
             shipImage.BeginInit();
-            shipImage.UriSource = new Uri(System.IO.Path.Combine(parentDir, "Assets\\Images/Ship1.png"));
+            shipImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship1.png");
             shipImage.EndInit();
 
             //----------------------------------
