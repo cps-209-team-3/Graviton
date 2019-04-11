@@ -17,6 +17,8 @@ namespace GravitonClient
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }
         public int VerticalInput { get; set; }
+        public int WellSpawnFreq { get; set; }
+        public int WellDestabFreq { get; set; }
         public DispatcherTimer Timer { get; set; }
         public List<Well> StableWells { get; set; }
         public List<Well> UnstableWells { get; set; }
@@ -36,6 +38,8 @@ namespace GravitonClient
             Ticks = 0;
             HorizontalInput = 0;
             VerticalInput = 0;
+            WellSpawnFreq = 400;
+            WellDestabFreq = 4000;
             StableWells = new List<Well>();
             UnstableWells = new List<Well>();
             AIShips = new List<AIShip>();
@@ -137,7 +141,7 @@ namespace GravitonClient
             UpdatePlayer();
             UpdateAI();
             UpdateWells();
-            if (Ticks % 400 == 0)
+            if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
             if (Ticks % 30 == 0)
                 SpawnOrb();
