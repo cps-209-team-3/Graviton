@@ -242,6 +242,7 @@ namespace GravitonClient
         //Updates AI position and collected orbs
         public void UpdateAI()
         {
+            List<AIShip> toRemove = new List<AIShip>();
             foreach (AIShip aI in AIShips)
             {
                 UpdateAIPosition(aI);
@@ -250,7 +251,7 @@ namespace GravitonClient
                 {
                     if (!well.IsStable)
                     {
-                        AIShips.Remove(aI);
+                        toRemove.Add(aI);
                         GameObjects.Remove(aI);
                     }
                     else if (aI.DepositOrbs(well))
@@ -275,6 +276,10 @@ namespace GravitonClient
                         }
                     }
                 }
+            }
+            foreach (AIShip aI in toRemove)
+            {
+                AIShips.Remove(aI);
             }
         }
 
