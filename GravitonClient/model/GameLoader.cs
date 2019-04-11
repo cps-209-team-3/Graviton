@@ -45,6 +45,10 @@ namespace GravitonClient
                 game.UnstableWells.Add(GameObject.FromJsonFactory<Well>(s));
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(json, "orbs")))
                 game.Orbs.Add(GameObject.FromJsonFactory<Orb>(s));
+            game.GameObjects.AddRange(game.Orbs);
+            game.GameObjects.AddRange(game.UnstableWells);
+            game.GameObjects.AddRange(game.StableWells);
+            game.GameObjects.Add(game.Player);
             return game;
         }
 
