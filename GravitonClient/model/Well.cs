@@ -45,6 +45,7 @@ namespace GravitonClient
             try
             {
                 Orbs = Convert.ToInt32(JsonUtils.ExtractValue(info, "currentcolor"));
+                IsStable = true;
             }
             catch
             {
