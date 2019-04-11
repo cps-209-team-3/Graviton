@@ -13,7 +13,7 @@
         <Button Content="Play" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="PlayButton_Click"/>
         <Button Content="High Scores" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="BtnHighScores_Click"/>
         <Button Content="Help" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="HelpButton_Click"/>
-        <Button Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2"/>
+        <Button Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="AboutButton_Click"/>
         <Button Content="Exit" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="50" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="ExitButton_Click"/>
     </StackPanel>
 </Page>

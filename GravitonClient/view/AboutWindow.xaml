@@ -5,6 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
-        Title="AboutWindow" Height="450" Width="800">
-    
+        Closed="AboutWindow_Closed"
+        Title="AboutWindow" WindowState="Maximized">
+    <StackPanel Background="Black" ScrollViewer.VerticalScrollBarVisibility="Visible">
+        <TextBlock Text="Credits" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="60" Margin="5" Foreground="Aqua"/>
+        <TextBlock Text="Peter Labadorf" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
+        <TextBlock Text="Ethan Lane" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
+        <TextBlock Text="Erick Ross" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
+        <TextBlock Text="Brandton Visser" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
+        <Button Content="Return to Menu" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="15" HorizontalAlignment="Center" Padding="5" Background="#101010" Foreground="Aqua" Click="ExitButton_Click"/>
+    </StackPanel>
 </Window>

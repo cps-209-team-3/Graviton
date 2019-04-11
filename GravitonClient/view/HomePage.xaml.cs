@@ -51,5 +51,12 @@ namespace GravitonClient.view
             h.Show();
             App.Current.MainWindow.Hide();
         }
+
+        private void AboutButton_Click(object sender, RoutedEventArgs e)
+        {
+            AboutWindow a = new AboutWindow();
+            a.Show();
+            App.Current.MainWindow.Hide();
+        }
     }
 }
