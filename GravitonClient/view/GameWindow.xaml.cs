@@ -161,6 +161,8 @@ namespace GravitonClient
             Canvas.SetZIndex(ship, 50);
             txtScore.Text = "Score: " + Game.Points;
 
+            
+
 
             //to be implemented with AI
             /*

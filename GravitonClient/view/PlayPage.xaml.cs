@@ -55,7 +55,7 @@ namespace GravitonClient.view
         {
             try
             {
-                Game g = GameLoader.Load(SaveFileName, true);
+                Game g = GameLoader.Load(SaveFileName, false);
                 GameWindow newWindow = new GameWindow(g.IsCheat, g);
                 newWindow.Show();
                 App.Current.MainWindow.Hide();
