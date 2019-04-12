@@ -24,6 +24,7 @@ namespace GravitonClient
         List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
+        List<Image> AiImages;
         Image ship;
 
 
@@ -31,6 +32,8 @@ namespace GravitonClient
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
         BitmapImage shipImage;
+        BitmapImage AiImage;
+        Image[] HudOrbs = new Image[6];
 
         private Game game;
         public Game Game
@@ -45,6 +48,7 @@ namespace GravitonClient
             wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
+            AiImages = new List<Image>();
             ship = new Image();
 
             wellImages = new List<BitmapImage>();
@@ -79,13 +83,27 @@ namespace GravitonClient
             shipImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship1.png");
             shipImage.EndInit();
 
+            AiImage = new BitmapImage();
+            AiImage.BeginInit();
+            AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
+            AiImage.EndInit();
+
+
+            AiImages = new List<Image>();
             //----------------------------------
             ship.Source = shipImage;
             ship.Width = 50;
             DrawCanvas.Children.Add(ship);
             //----------------------------------
 
-
+            
+            for (int i = 0; i < HudOrbs.Length; i++) {
+                HudOrbs[i] = new Image();
+                HudOrbs[i].Source = orbImages[i];
+                HudOrbs[i].Opacity = 0.80;
+                
+                
+            }
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
@@ -154,8 +172,6 @@ namespace GravitonClient
                 //display the correct orb image at the right place
             }
 
-            //TODO: Render the player ship
-
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
             Canvas.SetZIndex(ship, 50);
@@ -165,22 +181,40 @@ namespace GravitonClient
 
 
             //to be implemented with AI
-            /*
-            int shipDiff = shipDict.Count - Game.ViewCamera.PlayerShip.Count;
-            if (destableDiff > 0)
-                RemoveGameObjects(destableDict, destableDiff);
-            if (destableDiff < 0)
-                AddGameObjects(destableDict, destableDiff);
+            
 
-            for (int i = 0; i < destableDict.Count; ++i)
+
+            int shipDiff = AiImages.Count - Game.ViewCamera.AIShips.Count;
+
+            if (shipDiff > 0)
+                RemoveGameObjects(AiImages, shipDiff);
+            if (shipDiff < 0)
+                AddGameObjects(AiImages, -shipDiff);
+            
+            for (int i = 0; i < AiImages.Count; ++i)
             {
+                AiImages[i].Source = AiImage;
+                AiImages[i].Width = 50;
+                Canvas.SetLeft(AiImages[i], Game.ViewCamera.AIShips[i].Item1);
+                Canvas.SetTop(AiImages[i], Game.ViewCamera.AIShips[i].Item2);
                 //display the correct destabilized image at the right place
             }
-            */
+            
 
 
             Game.ViewCamera.Width = DrawCanvas.ActualWidth;
             Game.ViewCamera.Height = DrawCanvas.ActualHeight;
+
+
+
+            //==========================
+            //HUD
+            //==========================
+            foreach(int i in Game.Player.Orbs)
+            {
+                
+                //DrawCanvas.Children.Add((Image) HudOrbs[i]);
+            }
 
         }
 
