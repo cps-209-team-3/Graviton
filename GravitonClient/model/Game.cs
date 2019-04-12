@@ -145,7 +145,7 @@ namespace GravitonClient
                 SpawnWell();
             if (Ticks % 10 == 0)
                 SpawnOrb();
-            if (Ticks % 200 == 0)
+            if (Ticks % 400 == 0)
             {
                 foreach (AIShip aI in AIShips)
                 {
