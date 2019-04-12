@@ -9,6 +9,7 @@
         Title="AboutWindow" WindowState="Maximized">
     <StackPanel Background="Black" ScrollViewer.VerticalScrollBarVisibility="Visible">
         <TextBlock Text="Credits" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="60" Margin="5" Foreground="Aqua"/>
+        <TextBlock Text="The people who did everything" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="24" Margin="5" Foreground="Aqua"/>
         <TextBlock Text="Peter Labadorf" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
         <TextBlock Text="Ethan Lane" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
         <TextBlock Text="Erick Ross" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
