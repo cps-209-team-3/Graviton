@@ -143,7 +143,7 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 30 == 0)
+            if (Ticks % 10 == 0)
                 SpawnOrb();
             if (Ticks % 200 == 0)
             {
@@ -299,6 +299,7 @@ namespace GravitonClient
             if (!NearOtherObject(xc, yc))
             {
                 Well well = new Well(xc, yc);
+                well.TicksLeft = WellDestabFreq + Random.Next(1001);
                 StableWells.Add(well);
                 GameObjects.Add(well);
             }

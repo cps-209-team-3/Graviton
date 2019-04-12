@@ -122,6 +122,7 @@ namespace GravitonClient
                 {
                     well.Orbs++;
                     Orbs.Remove(orb);
+                    well.TicksLeft = ParentGame.WellDestabFreq;
                 }
             }
             return well.Orbs == 6;

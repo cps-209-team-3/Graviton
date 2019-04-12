@@ -10,8 +10,8 @@
 
     <StackPanel Orientation="Vertical" Background="Black">
         <TextBlock Text="Game Options" FontSize="80" HorizontalAlignment="Center" Margin="10" FontFamily="{StaticResource Azonix}" Foreground="Aqua"/>
-        <TextBox Style="{StaticResource txtPlaceHolder}" Tag="Enter Username" x:Name="DifficultyBx" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="DarkGray" BorderBrush="Red" BorderThickness="2"/>
-        <ComboBox x:Name="txtBxUser" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="DarkGray" BorderBrush="Red" BorderThickness="2" SelectedIndex="0">
+        <TextBox Style="{StaticResource txtPlaceHolder}" Tag="Enter Username" x:Name="txtBxUser" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="DarkGray" BorderBrush="Red" BorderThickness="2"/>
+        <ComboBox x:Name="DifficultyBx" Width="450" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="DarkGray" BorderBrush="Red" BorderThickness="2" SelectedIndex="0">
             <ComboBoxItem x:Name="EasyItem" Background="Black" BorderBrush="Aqua" Foreground="Aqua">Easy</ComboBoxItem>
             <ComboBoxItem x:Name="NormalItem" Background="Black" BorderBrush="Aqua" Foreground="Aqua">Normal</ComboBoxItem>
             <ComboBoxItem x:Name="HardItem" Background="Black" BorderBrush="Aqua" Foreground="Aqua">Hard</ComboBoxItem>
