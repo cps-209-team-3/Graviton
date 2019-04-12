@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,13 +21,6 @@ namespace GravitonClient
     /// </summary>
     public partial class GameWindow : Window
     {
-        private MediaPlayer mplayer;
-        public MediaPlayer Mplayer
-        {
-            get { return mplayer; }
-            set { mplayer = value; }
-        }
-
         List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
@@ -154,8 +148,10 @@ namespace GravitonClient
             if (destableDiff < 0)
             {
                 AddGameObjects(destableDict, -destableDiff);
-                mplayer.Open(new Uri(@"pack://application:,,,/Assets/Sound/SFX/destabilize.mp3"));
-                mplayer.Play();
+                Task.Run(() => {
+                    SoundPlayer s = new SoundPlayer("../../Assets/Sound/SFX/destabilize.wav");
+                    s.PlaySync();
+                });
             }
 
             for (int i = 0; i < destableDict.Count; ++i)
