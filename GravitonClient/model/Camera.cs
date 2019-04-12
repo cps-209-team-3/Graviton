@@ -51,7 +51,7 @@ namespace GravitonClient
                 xc = ship.Xcoor - ScreenX;
                 yc = ship.Ycoor - ScreenY;
                 if (xc > -25 && xc < Width + 25 && yc > -25 && yc < Height + 25)
-                    AIShips.Add(Tuple.Create(xc - 25, yc - 25));
+                        AIShips.Add(Tuple.Create(xc - 25, yc - 25));
             }
 
             foreach (Well well in ParentGame.StableWells)

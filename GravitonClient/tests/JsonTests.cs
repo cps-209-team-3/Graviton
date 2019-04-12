@@ -26,14 +26,13 @@ namespace GravitonClient
             var orbs = new Game(false).Orbs;
             string st = JsonUtils.ToJsonList(orbs);
             var s = JsonUtils.GetObjectsInArray(st);
-            Assert.AreEqual(s.Count, 30);
+            Assert.AreEqual(s.Count, orbs.Count);
             for(int i = 0; i < orbs.Count; i++)
             {
                 Orb other = GameObject.FromJsonFactory<Orb>(s[i]);
-                Assert.AreEqual((int)other.Xcoor, (int) orbs[i].Xcoor);
-                Assert.AreEqual((int)other.Ycoor, (int)orbs[i].Ycoor);
-                Assert.AreEqual((int)other.Color, (int)orbs[i].Color);
-                
+                Assert.AreEqual(other.Xcoor, orbs[i].Xcoor, 0.5);
+                Assert.AreEqual((int)other.Ycoor, (int)orbs[i].Ycoor, 0.5);
+                Assert.AreEqual(other.Color, orbs[i].Color);
             }
         }
 
