@@ -195,7 +195,7 @@
     <Resource Include="Assets\Images\WellPurple.png" />
     <Resource Include="Assets\Images\WellYellow.png" />
     <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3" />
-    <Content Include="Assets\Sound\SFX\glitchedtones_Spacecraft+Shutter+Open+01 %28destabilize%29.mp3" />
+    <Content Include="Assets\Sound\SFX\destabilize.mp3" />
     <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3" />
     <Content Include="Assets\Sound\SFX\SFX1.mp3" />
     <Content Include="Assets\Sound\SFX\SFX2.mp3" />

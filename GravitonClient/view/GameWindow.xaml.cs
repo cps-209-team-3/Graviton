@@ -20,6 +20,12 @@ namespace GravitonClient
     /// </summary>
     public partial class GameWindow : Window
     {
+        private MediaPlayer mplayer;
+        public MediaPlayer Mplayer
+        {
+            get { return mplayer; }
+            set { mplayer = value; }
+        }
 
         List<Image> wellDict;
         List<Image> destableDict;
@@ -122,21 +128,23 @@ namespace GravitonClient
                 wellDict[i].Source = wellImages[color];
                 Canvas.SetLeft(wellDict[i], Game.ViewCamera.StableWells[i].Item1);
                 Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
-                //display the correct well image at the right place
             }
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
             if (destableDiff > 0)
                 RemoveGameObjects(destableDict, destableDiff);
             if (destableDiff < 0)
+            {
                 AddGameObjects(destableDict, -destableDiff);
+                mplayer.Open(new Uri(@"pack://application:,,,/Assets/Sound/SFX/destabilize.mp3"));
+                mplayer.Play();
+            }
 
             for (int i = 0; i < destableDict.Count; ++i)
             {
                 destableDict[i].Source = destabilizedImage;
                 Canvas.SetLeft(destableDict[i], Game.ViewCamera.UnstableWells[i].Item1);
                 Canvas.SetTop(destableDict[i], Game.ViewCamera.UnstableWells[i].Item2);
-                //display the correct destabilized image at the right place
             }
 
             int orbDiff =  orbDict.Count - Game.ViewCamera.Orbs.Count;
