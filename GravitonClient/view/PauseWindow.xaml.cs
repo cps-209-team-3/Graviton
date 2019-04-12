@@ -34,6 +34,15 @@ namespace GravitonClient
             InitializeComponent();
         }
 
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                Game.Timer.Start();
+                Close();
+            }
+        }
+
         private void Resume_Click(object sender, RoutedEventArgs e)
         {
             Game.Timer.Start();
