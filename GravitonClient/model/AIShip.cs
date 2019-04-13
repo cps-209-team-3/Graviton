@@ -42,7 +42,11 @@ namespace GravitonClient
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
                 if(dist < compareDist)
                 {
-                    closestWell = well;
+                    if (well != TargetWell)
+                    {
+                        closestWell = well;
+                        compareDist = dist;
+                    }
                 }
             }
             TargetWell = closestWell;
@@ -64,7 +68,11 @@ namespace GravitonClient
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
                 if (dist < compareDist)
                 {
-                    closestOrb = orb;
+                    if (orb != TargetOrb)
+                    {
+                        closestOrb = orb;
+                        compareDist = dist;
+                    }
                 }
             }
             TargetOrb = closestOrb;
@@ -87,11 +95,15 @@ namespace GravitonClient
                 TargetX = TargetOrb.Xcoor;
                 TargetY = TargetOrb.Ycoor;
             }
-            else
+            else if (Orbs.Count > 3 && Orbs.Count < 5)
             {
                 TargetNearestWell();
                 TargetX = TargetWell.Xcoor;
                 TargetY = TargetWell.Ycoor;
+            }
+            else if (Orbs.Count == 5)
+            {
+                SpeedBoost();
             }
             FindTargetDist();
         }
