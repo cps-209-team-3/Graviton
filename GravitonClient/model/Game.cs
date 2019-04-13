@@ -240,7 +240,8 @@ namespace GravitonClient
         //This method updates the player's position.
         public void UpdatePlayerPosition()
         {
-            UpdateGravity(Player);
+            if (!IsCheat)
+                UpdateGravity(Player);
             Player.Move(HorizontalInput, VerticalInput);
         }
 
