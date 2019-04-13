@@ -220,6 +220,27 @@ namespace GravitonClient
                 //DrawCanvas.Children.Add((Image) HudOrbs[i]);
             }
 
+            if (Game.IsOver)
+            {
+                Button b = new Button();
+                b.Content = "Return to Menu";
+                b.FontSize = 40;
+                b.FontFamily = (FontFamily)this.FindResource("Azonix");
+                b.Margin = new Thickness(20);
+                b.Padding = new Thickness(10, 5, 10, 0);
+                b.Background = Brushes.Black;
+                b.Foreground = Brushes.Red;
+                b.Click += GameOver_Click;
+                b.Width = 450;
+                Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
+                Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
+                DrawCanvas.Children.Add(b);
+            }
+        }
+
+        private void GameOver_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)

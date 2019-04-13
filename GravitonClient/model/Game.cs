@@ -207,6 +207,7 @@ namespace GravitonClient
                 {
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
+                    Points += 100;
                 }                  
             }
             Orb orb = Player.OrbOver();
