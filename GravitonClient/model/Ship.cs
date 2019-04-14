@@ -121,11 +121,17 @@ namespace GravitonClient
                 if (orb == well.Orbs)
                 {
                     well.Orbs++;
+                    IncrementScore();
                     Orbs.Remove(orb);
                     well.TicksLeft = ParentGame.WellDestabFreq;
                 }
             }
             return well.Orbs == 6;
+        }
+
+        public virtual void IncrementScore()
+        {
+            ParentGame.Points += 10;
         }
 
 

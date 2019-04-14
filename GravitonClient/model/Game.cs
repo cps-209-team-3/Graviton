@@ -145,14 +145,11 @@ namespace GravitonClient
                 SpawnWell();
             if (Ticks % 10 == 0)
                 SpawnOrb();
-            if (Ticks % 400 == 0)
+            if (Ticks % 1000 == 0)
             {
                 foreach (AIShip aI in AIShips)
                 {
-                    if (!aI.IsCloser())
-                    {
-                        aI.SetTargetPos();
-                    }
+                    aI.SetTargetPos();
                 }
             }
             if (Ticks == 15000)
@@ -275,10 +272,7 @@ namespace GravitonClient
                         GameObjects.Remove(orb);
                         aI.Orbs.Add(orb.Color);
                         aI.Orbs.Sort();
-                        if (aI.Orbs.Count >= 3)
-                        {
-                            aI.SetTargetPos();
-                        }
+                        aI.SetTargetPos();
                     }
                 }
             }
