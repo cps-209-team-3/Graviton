@@ -153,6 +153,10 @@ namespace GravitonClient
                 Canvas.SetTop(HudPowerups[i], 20);
             }
 
+            collapse.Play();
+            neutralize.Play();
+            deposit.Play();
+            orbGrab.Play();
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
@@ -191,6 +195,7 @@ namespace GravitonClient
                 wellDict[i].Source = wellImages[color];
                 Canvas.SetLeft(wellDict[i], Game.ViewCamera.StableWells[i].Item1);
                 Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
+                Canvas.SetZIndex(wellDict[i], 2);
             }
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
@@ -206,6 +211,7 @@ namespace GravitonClient
                 destableDict[i].Source = destabilizedImage;
                 Canvas.SetLeft(destableDict[i], Game.ViewCamera.UnstableWells[i].Item1);
                 Canvas.SetTop(destableDict[i], Game.ViewCamera.UnstableWells[i].Item2);
+                Canvas.SetZIndex(destableDict[i], 3);
             }
 
             int orbDiff =  orbDict.Count - Game.ViewCamera.Orbs.Count;
@@ -220,7 +226,7 @@ namespace GravitonClient
                 orbDict[i].Source = orbImages[color];
                 Canvas.SetLeft(orbDict[i], Game.ViewCamera.Orbs[i].Item1);
                 Canvas.SetTop(orbDict[i], Game.ViewCamera.Orbs[i].Item2);
-                //display the correct orb image at the right place
+                Canvas.SetZIndex(orbDict[i], 2);
             }
 
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
@@ -247,6 +253,7 @@ namespace GravitonClient
                 AiImages[i].Width = 50;
                 Canvas.SetLeft(AiImages[i], Game.ViewCamera.AIShips[i].Item1);
                 Canvas.SetTop(AiImages[i], Game.ViewCamera.AIShips[i].Item2);
+                Canvas.SetZIndex(AiImages[i], 4);
                 //display the correct destabilized image at the right place
             }
             

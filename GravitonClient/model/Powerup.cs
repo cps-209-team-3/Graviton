@@ -69,6 +69,7 @@ namespace GravitonClient
                     well.TicksLeft = 3000;
                     well.IsStable = false;
                     well.Strength = 50;
+                    well.IsTrap = true;
                     ParentGame.UnstableWells.Add(well);
                     ParentGame.StableWells.Remove(well);
                 }

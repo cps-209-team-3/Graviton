@@ -33,7 +33,7 @@ namespace GravitonClient
         //Sets TargetWell to the nearest well
         public void TargetNearestWell()
         {
-            Well closestWell = ParentGame.StableWells[0];
+            Well closestWell = null;
             double xDist;
             double yDist;
             double dist;
@@ -44,16 +44,24 @@ namespace GravitonClient
                 xDist = well.Xcoor - this.Xcoor;
                 yDist = well.Ycoor - this.Ycoor;
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
-                if(dist < compareDist)
+                if (dist < compareDist)
                 {
-                    if (well != TargetWell)
+                    bool isCompatible = false;
+                    if (Orbs.Contains(well.Orbs))
+                    {
+                        isCompatible = true;
+                    }
+                    if (isCompatible == true)
                     {
                         closestWell = well;
                         compareDist = dist;
-                    }
+                    }     
                 }
             }
-            TargetWell = closestWell;
+            if (closestWell == null)
+                Orbs.Clear();
+            else
+                TargetWell = closestWell;
         }
 
         //Sets TargetOrb to the nearest orb
@@ -72,11 +80,8 @@ namespace GravitonClient
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
                 if (dist < compareDist)
                 {
-                    if (orb != TargetOrb)
-                    {
-                        closestOrb = orb;
-                        compareDist = dist;
-                    }
+                    closestOrb = orb;
+                    compareDist = dist;
                 }
             }
             TargetOrb = closestOrb;
@@ -93,15 +98,15 @@ namespace GravitonClient
         //Sets TargetX and TargetY to Xcoor and Ycoor of target well or orb
         public void SetTargetPos()
         {
-            TargetNearestOrb();
-            TargetNearestWell();
             if (Orbs.Count < 3)
             {
+                TargetNearestOrb();
                 TargetX = TargetOrb.Xcoor;
                 TargetY = TargetOrb.Ycoor;
             }
             else if (Orbs.Count < 5)
             {
+                TargetNearestWell();
                 TargetX = TargetWell.Xcoor;
                 TargetY = TargetWell.Ycoor;
             }
