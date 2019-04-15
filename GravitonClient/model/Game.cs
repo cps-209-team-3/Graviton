@@ -150,8 +150,10 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 5 == 0)
+            if (Ticks % 5 == 0 && Orbs.Count < 170)
                 SpawnOrb();
+            if (AIShips.Count < 3)
+                SpawnAI();
             if (Ticks == 15000)
             {
                 GameOver();
