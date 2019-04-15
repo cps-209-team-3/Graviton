@@ -226,7 +226,7 @@ namespace GravitonClient
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
             Canvas.SetZIndex(ship, 50);
-            txtScore.Text = "Score: " + game.Player.Points;
+            txtScore.Text = "Score: " + game.Points;
 
 
 
