@@ -21,6 +21,8 @@ namespace GravitonClient
         {
             XMove = 0;
             YMove = 0;
+            TargetOrb = ParentGame.Orbs[0];
+            TargetWell = ParentGame.StableWells[0];
             TargetNearestOrb();
             TargetNearestWell();
             SetTargetPos();
@@ -82,22 +84,22 @@ namespace GravitonClient
         public void FindTargetDist()
         {
             double xDist = TargetX - this.Xcoor;
-            double yDist = TargetX - this.Ycoor;
+            double yDist = TargetY - this.Ycoor;
             TargetDist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
         }
 
         //Sets TargetX and TargetY to Xcoor and Ycoor of target well or orb
         public void SetTargetPos()
         {
-            if(Orbs.Count < 3)
+            TargetNearestOrb();
+            TargetNearestWell();
+            if (Orbs.Count < 3)
             {
-                TargetNearestOrb();
                 TargetX = TargetOrb.Xcoor;
                 TargetY = TargetOrb.Ycoor;
             }
             else if (Orbs.Count > 3 && Orbs.Count < 5)
             {
-                TargetNearestWell();
                 TargetX = TargetWell.Xcoor;
                 TargetY = TargetWell.Ycoor;
             }
@@ -131,6 +133,10 @@ namespace GravitonClient
         {
             SetMoveDir();
             Move(XMove, YMove);
-        }    
+        }
+
+        public override void IncrementScore()
+        {
+        }
     }
 }
