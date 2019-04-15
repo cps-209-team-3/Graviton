@@ -67,7 +67,7 @@ namespace GravitonClient
             {
                 SpawnWell();
             }
-            while (AIShips.Count < 7)
+            while (AIShips.Count < 10)
             {
                 SpawnAI();
             }
@@ -150,15 +150,8 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 10 == 0)
+            if (Ticks % 5 == 0)
                 SpawnOrb();
-            if (Ticks % 1000 == 0)
-            {
-                foreach (AIShip aI in AIShips)
-                {
-                    aI.SetTargetPos();
-                }
-            }
             if (Ticks == 15000)
             {
                 GameOver();
@@ -267,6 +260,8 @@ namespace GravitonClient
                 {
                     if (!well.IsStable)
                     {
+                        if (well.IsTrap)
+                            Points += 200;
                         AIShips.Remove(aI);
                         GameObjects.Remove(aI);
                     }

@@ -52,18 +52,18 @@ namespace GravitonClient.view
                 g.Game.Username = txtBxUser.Text;
                 if (DifficultyBx.Text == "Easy")
                 {
-                    g.Game.WellSpawnFreq = 600;
-                    g.Game.WellDestabFreq = 6000;
+                    g.Game.WellSpawnFreq = 400;
+                    g.Game.WellDestabFreq = 3000;
                 }
                 else if (DifficultyBx.Text == "Normal")
                 {
-                    g.Game.WellSpawnFreq = 400;
-                    g.Game.WellDestabFreq = 4000;
+                    g.Game.WellSpawnFreq = 300;
+                    g.Game.WellDestabFreq = 2000;
                 }
                 else if (DifficultyBx.Text == "Hard")
                 {
-                    g.Game.WellSpawnFreq = 300;
-                    g.Game.WellDestabFreq = 2000;
+                    g.Game.WellSpawnFreq = 200;
+                    g.Game.WellDestabFreq = 1000;
                 }
                 App.Current.MainWindow.Hide();
             }
