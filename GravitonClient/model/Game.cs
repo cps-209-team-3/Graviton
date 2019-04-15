@@ -144,7 +144,6 @@ namespace GravitonClient
         //This method is called every frame and updates everything in the game, then notifies the view.
         public void Timer_Tick(object sender, EventArgs e)
         {
-            Points = 1000000 * Orbs.Count; 
             Ticks++;
             UpdatePlayer();
             UpdateAI();
