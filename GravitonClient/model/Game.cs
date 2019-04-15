@@ -360,7 +360,6 @@ namespace GravitonClient
             Timer.Stop();
             highScores.CheckNewScores(this);
             highScores.Save(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
-            GameLoader.Save(this, PauseWindow.SaveFileName); 
         }
     }
 }

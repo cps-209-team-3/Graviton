@@ -28,6 +28,8 @@ namespace GravitonClient
             SetTargetPos();
         }
 
+        public AIShip() { }
+
         //Sets TargetWell to the nearest well
         public void TargetNearestWell()
         {

@@ -138,10 +138,16 @@ namespace GravitonClient
             NeutralizeImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Neutralize.png");
             NeutralizeImage.EndInit();
 
-            for(int i = 0; i < HudPowerups.Length; i++)
-            {
 
+            GhostImage = new BitmapImage();
+            GhostImage.BeginInit();
+            GhostImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ghosting.png");
+            GhostImage.EndInit();
+
+            for (int i = 0; i < HudPowerups.Length; i++)
+            {
                 HudPowerups[i] = new Image();
+                Canvas.SetZIndex(HudPowerups[i], 10);
                 HudPowerups[i].Width = 70;
                 DrawCanvas.Children.Add(HudPowerups[i]);
                 Canvas.SetTop(HudPowerups[i], 20);
@@ -220,7 +226,7 @@ namespace GravitonClient
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
             Canvas.SetZIndex(ship, 50);
-            txtScore.Text = "Score: " + Game.Points;
+            txtScore.Text = "Score: " + game.Player.Points;
 
 
 
@@ -430,6 +436,9 @@ namespace GravitonClient
                 {
                     case Powerup.powerups.neutralize:
                         HudPowerups[i].Source = NeutralizeImage;
+                        break;
+                    case Powerup.powerups.ghost:
+                        HudPowerups[i].Source = GhostImage;
                         break;
                 }
 
