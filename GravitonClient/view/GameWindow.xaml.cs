@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 
 namespace GravitonClient
 {
+    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop };
+
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
@@ -34,6 +36,11 @@ namespace GravitonClient
         BitmapImage shipImage;
         BitmapImage AiImage;
         Image[] HudOrbs = new Image[6];
+
+        SoundPlayer collapse;
+        SoundPlayer orbGrab;
+        SoundPlayer neutralize;
+        SoundPlayer deposit;
 
         private Game game;
         public Game Game
@@ -88,6 +95,14 @@ namespace GravitonClient
             AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
             AiImage.EndInit();
 
+            collapse = new SoundPlayer("../../Assets/Sound/SFX/destabilize.wav");
+            collapse.Load();
+            orbGrab = new SoundPlayer("../../Assets/Sound/SFX/SFX2.wav");
+            orbGrab.Load();
+            neutralize = new SoundPlayer("../../Assets/Sound/SFX/SFX1.wav");
+            neutralize.Load();
+            deposit = new SoundPlayer("../../Assets/Sound/SFX/Space entity(deposit).wav");
+            deposit.Load();
 
             AiImages = new List<Image>();
             //----------------------------------
@@ -114,7 +129,9 @@ namespace GravitonClient
             SetupGameWindow();
             Game = new Game(cheat);
             Game.GameUpdatedEvent += Render;
+            Game.GameInvokeSoundEvent += PlaySound;
             Game.Initialize();
+            Game.Player.GameInvokeSoundEvent += PlaySound;
         }
 
         public GameWindow(bool cheat, Game game)
@@ -123,7 +140,9 @@ namespace GravitonClient
 
             Game = game;
             Game.GameUpdatedEvent += Render;
+            Game.GameInvokeSoundEvent += PlaySound;
             Game.InitializeWithShipCreated();
+            Game.Player.GameInvokeSoundEvent += PlaySound;
         }
 
         public void Render(object sender, int e)
@@ -148,10 +167,6 @@ namespace GravitonClient
             if (destableDiff < 0)
             {
                 AddGameObjects(destableDict, -destableDiff);
-                Task.Run(() => {
-                    SoundPlayer s = new SoundPlayer("../../Assets/Sound/SFX/destabilize.wav");
-                    s.PlaySync();
-                });
             }
 
             for (int i = 0; i < destableDict.Count; ++i)
@@ -327,6 +342,28 @@ namespace GravitonClient
         private void GameWindow_Closed(object sender, EventArgs e)
         {
             App.Current.MainWindow.Show();
+        }
+
+        //"../../Assets/Sound/SFX/destabilize.wav"
+        void PlaySound(object sender, SoundEffect value)
+        {
+            switch (value)
+            {
+                case SoundEffect.Destabilize:
+                    Task.Run(() => collapse.Play());
+                    break;
+                case SoundEffect.Neutralize:
+                    Task.Run(() => neutralize.Play());
+                    break;
+                case SoundEffect.OrbDrop:
+                    Task.Run(() => deposit.Play());
+                    break;
+                case SoundEffect.OrbGrab:
+                    Task.Run(() => orbGrab.Play());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }

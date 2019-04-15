@@ -28,6 +28,8 @@ namespace GravitonClient
         public List<GameObject> GameObjects { get; set; }
         public string Username { get; internal set; }
 
+        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
+
         public Game(bool isCheat)
         {
             IsCheat = isCheat;
@@ -176,6 +178,7 @@ namespace GravitonClient
                     well.Strength = 50;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
+                    GameInvokeSoundEvent(this, SoundEffect.Destabilize);
                 }
             }
             foreach (Well well in UnstableWells.ToList())
@@ -207,6 +210,7 @@ namespace GravitonClient
                 {
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
+                    GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     Points += 100;
                 }                  
             }
@@ -219,6 +223,7 @@ namespace GravitonClient
                     GameObjects.Remove(orb);
                     Player.Orbs.Add(orb.Color);
                     Player.Orbs.Sort();
+                    GameInvokeSoundEvent(this, SoundEffect.OrbGrab);
                 }
             }
         }
