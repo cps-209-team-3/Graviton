@@ -9,6 +9,7 @@ namespace GravitonClient
     public class Well : GameObject
     {
         public bool IsStable { get; set; }
+        public bool IsTrap { get; set; }
         public int TicksLeft { get; set; }
         public double Strength { get; set; }
         public int Orbs { get; set; }
@@ -18,6 +19,7 @@ namespace GravitonClient
         {
             rand = new Random();
             IsStable = true;
+            IsTrap = false;
             Strength = 15;
             TicksLeft = rand.Next(1500,4001);
             Orbs = 0;
