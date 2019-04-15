@@ -194,6 +194,7 @@
     <Resource Include="Assets\Images\WellOrange.png" />
     <Resource Include="Assets\Images\WellPurple.png" />
     <Resource Include="Assets\Images\WellYellow.png" />
+    <Resource Include="Assets\Images\Neutralize.png" />
     <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3" />
     <Content Include="Assets\Sound\SFX\destabilize.mp3" />
     <Content Include="Assets\Sound\SFX\destabilize.wav" />

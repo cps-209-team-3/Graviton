@@ -12,7 +12,7 @@ namespace GravitonClient
         public List<powerups> CurrentPowerups;
         public Game ParentGame;
 
-        private Random rand;
+        private Random rand = new Random();
 
         public Powerup(Game game)
         {

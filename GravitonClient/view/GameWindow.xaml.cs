@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -35,7 +36,16 @@ namespace GravitonClient
         List<BitmapImage> orbImages;
         BitmapImage shipImage;
         BitmapImage AiImage;
+        BitmapImage NeutralizeImage;
+        BitmapImage DestabilizeImage;
+        BitmapImage GhostImage;
+
         Image[] HudOrbs = new Image[6];
+        Image[] HudPowerups = new Image[3];
+
+        private List<int> currentOrbs = new List<int>();
+        private List<Powerup.powerups> DisplayedPowerups = new List<Powerup.powerups>();
+
 
         SoundPlayer collapse;
         SoundPlayer orbGrab;
@@ -48,6 +58,8 @@ namespace GravitonClient
             get { return game; }
             set { game = value; }
         }
+
+        
 
         private void SetupGameWindow()
         {
@@ -112,13 +124,29 @@ namespace GravitonClient
             //----------------------------------
 
             
+            
             for (int i = 0; i < HudOrbs.Length; i++) {
                 HudOrbs[i] = new Image();
-                HudOrbs[i].Source = orbImages[i];
                 HudOrbs[i].Opacity = 0.80;
-                
-                
+                HudOrbs[i].Width = 30;
+                Canvas.SetZIndex(HudOrbs[i], 10);
+                DrawCanvas.Children.Add(HudOrbs[i]);
             }
+
+            NeutralizeImage = new BitmapImage();
+            NeutralizeImage.BeginInit();
+            NeutralizeImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Neutralize.png");
+            NeutralizeImage.EndInit();
+
+            for(int i = 0; i < HudPowerups.Length; i++)
+            {
+
+                HudPowerups[i] = new Image();
+                HudPowerups[i].Width = 70;
+                DrawCanvas.Children.Add(HudPowerups[i]);
+                Canvas.SetTop(HudPowerups[i], 20);
+            }
+
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
@@ -226,11 +254,22 @@ namespace GravitonClient
             //==========================
             //HUD
             //==========================
-            foreach(int i in Game.Player.Orbs)
+            
+            
+            if(!Enumerable.SequenceEqual(currentOrbs, game.Player.Orbs))
             {
-                
-                //DrawCanvas.Children.Add((Image) HudOrbs[i]);
+                UpdateHudOrbs();
+                currentOrbs = game.Player.Orbs.ToList();
             }
+
+
+            if (!Enumerable.SequenceEqual(DisplayedPowerups, game.Player.GamePowerup.CurrentPowerups))
+            {
+                DisplayedPowerups = game.Player.GamePowerup.CurrentPowerups.ToList();
+                UpdateHudPowerups();
+            }
+            
+
 
             if (Game.IsOver)
             {
@@ -360,6 +399,42 @@ namespace GravitonClient
                     break;
                 default:
                     break;
+            }
+        }
+
+        private void UpdateHudOrbs()
+        {
+
+            
+            for( int i = 0; i < HudOrbs.Length; i++)
+            {
+                try
+                {
+                    HudOrbs[i].Source = orbImages[game.Player.Orbs[i]];
+                    Canvas.SetTop(HudOrbs[i], 30);
+                    Canvas.SetLeft(HudOrbs[i], 50 * i + 30);
+                }
+                catch
+                {
+                    HudOrbs[i].Source = null;
+                }
+            }
+        }
+
+        private void UpdateHudPowerups()
+        {
+            
+            for (int i = 0; i < DisplayedPowerups.Count; i ++)
+            {
+                switch (DisplayedPowerups[i])
+                {
+                    case Powerup.powerups.neutralize:
+                        HudPowerups[i].Source = NeutralizeImage;
+                        break;
+                }
+
+                Debug.Print(DisplayedPowerups[i].ToString());
+                Canvas.SetLeft(HudPowerups[i], 500 + 70 * i);
             }
         }
     }
