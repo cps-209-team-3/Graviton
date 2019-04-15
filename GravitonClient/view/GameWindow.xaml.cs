@@ -194,8 +194,14 @@ namespace GravitonClient
             Canvas.SetZIndex(ship, 50);
             txtScore.Text = "Score: " + Game.Points;
 
-            
 
+            try
+            {
+                txtScore.Text = Game.AIShips[0].Xcoor.ToString() + '\n' + Game.AIShips[0].Ycoor.ToString() + '\n' + Game.AIShips[0].Orbs.Count.ToString() + '\n' + Game.StableWells[0].Xcoor.ToString() + '\n' + Game.StableWells[0].Ycoor.ToString() + '\n' + Game.StableWells.Count.ToString();
+                //txtScore.Text = Game.AIShips[0].TargetDist.ToString() + '/' + Game.AIShips[0].Orbs.Count.ToString();
+                //txtScore.Text = Game.Orbs.Count.ToString();
+            }
+            catch { }
 
             //to be implemented with AI
             
