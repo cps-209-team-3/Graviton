@@ -46,10 +46,12 @@ namespace GravitonClient
                 return;
             CurrentPowerups.Remove(powerups.neutralize);
             // TODO: neutralization
-            Well well = ParentGame.Player.WellOver();
-            if(well != null)
+            foreach (Well well in ParentGame.UnstableWells.ToList())
             {
-                //execute neutralize
+                if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
+                {
+                    ParentGame.UnstableWells.Remove(well);
+                }
             }
         }
 
@@ -60,11 +62,18 @@ namespace GravitonClient
                 return;
             CurrentPowerups.Remove(powerups.destabilize);
             // TODO: destabilization logic
-            Well well = ParentGame.Player.WellOver();
-            if (well != null)
+            foreach (Well well in ParentGame.StableWells.ToList())
             {
-                //execute destabilize
+                if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
+                {
+                    well.TicksLeft = 3000;
+                    well.IsStable = false;
+                    well.Strength = 50;
+                    ParentGame.UnstableWells.Add(well);
+                    ParentGame.StableWells.Remove(well);
+                }
             }
+            //execute destabilize
         }
 
         //This method does a ghost powerup

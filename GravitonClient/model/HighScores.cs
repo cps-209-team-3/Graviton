@@ -22,15 +22,26 @@ namespace GravitonClient
             hiScores = scoreList;
         }
 
-        public HighScores() { }
+        public HighScores()
+        {
+
+        }
+
         
         // Checks a game to see if any scores should be included in the list of highscores.
         // Accepts a reference to a Game instance.
         // Returns nothing.
         public void CheckNewScores(Game game)
         {
-            if (game.Points > hiScores[9].Score)
+            if (hiScores.Count == 10)
+            {
+                if (game.Points > hiScores[9].Score)
+                    AddNewScore(game.Username, game.Points);
+            }
+            else
+            {
                 AddNewScore(game.Username, game.Points);
+            }
         }
         
         // Adds a new score to the high score list (also deletes lowest one).
