@@ -67,7 +67,7 @@ namespace GravitonClient
             {
                 SpawnWell();
             }
-            while (AIShips.Count < 7)
+            while (AIShips.Count < 10)
             {
                 SpawnAI();
             }
@@ -150,7 +150,7 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 10 == 0)
+            if (Ticks % 5 == 0)
                 SpawnOrb();
             if (Ticks == 15000)
             {
