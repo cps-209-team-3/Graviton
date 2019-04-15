@@ -113,7 +113,7 @@ namespace GravitonClient
         public bool IsCloser()
         {
             double xDist = TargetX - this.Xcoor;
-            double yDist = TargetX - this.Ycoor;
+            double yDist = TargetY - this.Ycoor;
             double currentDist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
             if (currentDist < TargetDist)
                 return true;
@@ -131,6 +131,7 @@ namespace GravitonClient
         //Moves the AI, setting Xcoor and Ycoor
         public void AIMove()
         {
+            SetTargetPos();
             SetMoveDir();
             Move(XMove, YMove);
         }
