@@ -163,7 +163,8 @@ namespace GravitonClient
             {
                 GameOver();
             }
-            ViewCamera.Render();
+            ViewCamera.Render();           
+            
             GameUpdatedEvent(this, 0);
         }
 

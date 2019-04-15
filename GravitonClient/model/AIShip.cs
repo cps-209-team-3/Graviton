@@ -98,7 +98,7 @@ namespace GravitonClient
                 TargetX = TargetOrb.Xcoor;
                 TargetY = TargetOrb.Ycoor;
             }
-            else if (Orbs.Count > 3 && Orbs.Count < 5)
+            else if (Orbs.Count < 5)
             {
                 TargetX = TargetWell.Xcoor;
                 TargetY = TargetWell.Ycoor;
