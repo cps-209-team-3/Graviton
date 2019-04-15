@@ -144,14 +144,17 @@ namespace GravitonClient
         //This method is called every frame and updates everything in the game, then notifies the view.
         public void Timer_Tick(object sender, EventArgs e)
         {
+            Points = 1000000 * Orbs.Count; 
             Ticks++;
             UpdatePlayer();
             UpdateAI();
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 5 == 0)
+            if (Ticks % 5 == 0 && Orbs.Count < 170)
                 SpawnOrb();
+            if (AIShips.Count < 3)
+                SpawnAI();
             if (Ticks == 15000)
             {
                 GameOver();
