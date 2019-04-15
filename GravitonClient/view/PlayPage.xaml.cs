@@ -45,39 +45,55 @@ namespace GravitonClient.view
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            GameWindow g = new GameWindow(cheat);
-            g.Show();
-            g.Game.Username = txtBxUser.Text;
-            if (DifficultyBx.Text == "Easy")
+            if (txtBxUser.Text != "" && txtBxUser.Text != null)
             {
-                g.Game.WellSpawnFreq = 600;
-                g.Game.WellDestabFreq = 6000;
+                GameWindow g = new GameWindow(cheat);
+                g.Show();
+                g.Game.Username = txtBxUser.Text;
+                if (DifficultyBx.Text == "Easy")
+                {
+                    g.Game.WellSpawnFreq = 600;
+                    g.Game.WellDestabFreq = 6000;
+                }
+                else if (DifficultyBx.Text == "Normal")
+                {
+                    g.Game.WellSpawnFreq = 400;
+                    g.Game.WellDestabFreq = 4000;
+                }
+                else if (DifficultyBx.Text == "Hard")
+                {
+                    g.Game.WellSpawnFreq = 300;
+                    g.Game.WellDestabFreq = 2000;
+                }
+                App.Current.MainWindow.Hide();
             }
-            else if (DifficultyBx.Text == "Normal")
+
+            else
             {
-                g.Game.WellSpawnFreq = 400;
-                g.Game.WellDestabFreq = 4000;
+                MessageBox.Show("You must enter a username!");
             }
-            else if (DifficultyBx.Text == "Hard")
-            {
-                g.Game.WellSpawnFreq = 300;
-                g.Game.WellDestabFreq = 2000;
-            }
-            App.Current.MainWindow.Hide();
         }
 
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (txtBxUser.Text != "" && txtBxUser.Text != null)
             {
-                Game g = GameLoader.Load(SaveFileName, false);
-                GameWindow newWindow = new GameWindow(g.IsCheat, g);
-                newWindow.Show();
-                App.Current.MainWindow.Hide();
+                try
+                {
+                    Game g = GameLoader.Load(SaveFileName, false);
+                    GameWindow newWindow = new GameWindow(g.IsCheat, g);
+                    newWindow.Show();
+                    App.Current.MainWindow.Hide();
+                }
+                catch (ArgumentException)
+                {
+                    MessageBox.Show("Cannot find file.");
+                }
             }
-            catch (ArgumentException)
+
+            else
             {
-                MessageBox.Show("Cannot find file.");
+                MessageBox.Show("You must enter a username!");
             }
         }
     }

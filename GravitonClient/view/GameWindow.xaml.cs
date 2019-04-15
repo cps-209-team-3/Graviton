@@ -131,7 +131,6 @@ namespace GravitonClient
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.Initialize();
-            Game.Player.GameInvokeSoundEvent += PlaySound;
         }
 
         public GameWindow(bool cheat, Game game)
@@ -142,7 +141,6 @@ namespace GravitonClient
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.InitializeWithShipCreated();
-            Game.Player.GameInvokeSoundEvent += PlaySound;
         }
 
         public void Render(object sender, int e)

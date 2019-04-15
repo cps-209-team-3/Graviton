@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Windows.Threading;
 
@@ -28,6 +29,8 @@ namespace GravitonClient
         public List<GameObject> GameObjects { get; set; }
         public string Username { get; internal set; }
 
+        private HighScores highScores;
+
         public event EventHandler<SoundEffect> GameInvokeSoundEvent;
 
         public Game(bool isCheat)
@@ -47,6 +50,8 @@ namespace GravitonClient
             AIShips = new List<AIShip>();
             Orbs = new List<Orb>();
             GameObjects = new List<GameObject>();
+
+            highScores = HighScores.Load(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
         }
 
         //This method initializes the ship, all of the wells, all of the orbs, and the timer.
@@ -198,6 +203,7 @@ namespace GravitonClient
             Well well = Player.WellOver();
             if (well != null)
             {
+                int originalColor = well.Orbs;
                 if (!well.IsStable)
                 {
                     if (!IsCheat)
@@ -209,7 +215,9 @@ namespace GravitonClient
                     GameObjects.Remove(well);
                     GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     Points += 100;
-                }                  
+                }
+                else if (well.Orbs != originalColor)
+                    GameInvokeSoundEvent(this, SoundEffect.OrbDrop);
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
@@ -348,6 +356,8 @@ namespace GravitonClient
         {
             IsOver = true;
             Timer.Stop();
+            highScores.CheckNewScores(this);
+            highScores.Save(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
             GameLoader.Save(this, "C:\\temp\\temp.json"); //Change this filename
         }
     }

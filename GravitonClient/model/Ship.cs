@@ -18,8 +18,6 @@ namespace GravitonClient
 
         private Random rand = new Random();
 
-        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
-
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
@@ -126,7 +124,6 @@ namespace GravitonClient
                     IncrementScore();
                     Orbs.Remove(orb);
                     well.TicksLeft = ParentGame.WellDestabFreq;
-                    GameInvokeSoundEvent(this, SoundEffect.OrbDrop);
                 }
             }
             return well.Orbs == 6;
