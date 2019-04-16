@@ -20,6 +20,7 @@ namespace GravitonClient
         public List<int> PlayerOrbs { get; set; }
         public List<Tuple<double, double>> AIShips { get; set; }
         public Tuple<double, double> PlayerShip { get; set; }
+        public double PlayerAngle { get; set; }
         public int SecondsLeft { get; set; }
         public int Seconds { get; set; }
         public int Score { get; set; }
@@ -41,6 +42,7 @@ namespace GravitonClient
             Score = ParentGame.Points;
             IsOver = ParentGame.IsOver;
             AdjustScreenForPlayer();
+            PlayerAngle = Math.Atan2(ParentGame.Player.SpeedY, ParentGame.Player.SpeedX) * 180 / Math.PI;
             double xc, yc;
             StableWells = new List<Tuple<double, double, int>>();
             SecondsLeft = 600;
@@ -86,7 +88,7 @@ namespace GravitonClient
             }
         }
 
-        //This method adjusts the screen so the player is never within 100 pixels of the edge.
+        //This method adjusts the screen so the player is never within 250 pixels of the edge.
         public void AdjustScreenForPlayer()
         {
             double xc = ParentGame.Player.Xcoor - ScreenX;
