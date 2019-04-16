@@ -150,8 +150,6 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % WellDestabFreq / 20 == 0)
-                ShockWave();
             if (Ticks % 5 == 0 && Orbs.Count < 170)
                 SpawnOrb();
             if (AIShips.Count < 3)
@@ -200,7 +198,8 @@ namespace GravitonClient
             foreach (Well well in UnstableWells.ToList())
             {
                 well.TicksLeft--;
-                // do a shock wave every so often????
+                if (well.TicksLeft % WellDestabFreq / 20 == 0)
+                    ShockWave();
                 if (well.TicksLeft == 0)
                 {
                     // any explosions or something????
