@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
-        Title="PauseWindow" Height="450" Width="800" KeyDown="Window_KeyDown">
+        Title="PauseWindow" Height="450" Width="800" KeyDown="Window_KeyDown" Closed="Window_Closed">
     <StackPanel Orientation="Vertical" Background="Black">
         <TextBlock Margin="20"/>
         <Button x:Name="btnResume" Content="Resume" Click="Resume_Click" 
