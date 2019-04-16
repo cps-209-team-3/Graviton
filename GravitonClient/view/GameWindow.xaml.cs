@@ -31,6 +31,7 @@ namespace GravitonClient
         Image ship;
 
 
+        private DateTime startTime; 
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
@@ -69,7 +70,7 @@ namespace GravitonClient
             orbDict = new List<Image>();
             AiImages = new List<Image>();
             ship = new Image();
-
+            startTime = DateTime.Now;
             wellImages = new List<BitmapImage>();
             string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
             for (int i = 0; i < 6; ++i)
@@ -155,7 +156,7 @@ namespace GravitonClient
                 Canvas.SetZIndex(HudPowerups[i], 10);
                 HudPowerups[i].Width = 70;
                 DrawCanvas.Children.Add(HudPowerups[i]);
-                Canvas.SetTop(HudPowerups[i], 20);
+                Canvas.SetRight(HudPowerups[i], 75);
             }
 
             collapse.Play();
@@ -202,6 +203,12 @@ namespace GravitonClient
                 Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
                 Canvas.SetZIndex(wellDict[i], 2);
             }
+
+            TimeSpan gameDuration = DateTime.Now - startTime;
+
+            txtTimeLeft.Text =(int) (5 - gameDuration.TotalMinutes) + ":" + (60 - (int) gameDuration.TotalSeconds % 60).ToString("D2");
+            
+
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
             if (destableDiff > 0)
@@ -458,7 +465,7 @@ namespace GravitonClient
                 }
 
                 Debug.Print(DisplayedPowerups[i].ToString());
-                Canvas.SetLeft(HudPowerups[i], 500 + 70 * i);
+                Canvas.SetTop(HudPowerups[i], 80 + 70 * i);
             }
             for(; i < 3; i++)
             {
