@@ -17,8 +17,8 @@ namespace GravitonClient
             game1.Player.Xcoor = 23.17;
             game1.Player.Ycoor = 23.17;
             game1.StableWells[3].Orbs = 4;
-            GameLoader.Save(game1,"\\temp\\temp.json");
-            Game game2 = GameLoader.Load("\\temp\\temp.json", false);
+            GameLoader.Save(game1, Path.Combine(Directory.GetCurrentDirectory(), "Saved Games/temp.json"));
+            Game game2 = GameLoader.Load(Path.Combine(Directory.GetCurrentDirectory(), "Saved Games/temp.json"), false);
             Assert.AreEqual(game1.Orbs.Count, game2.Orbs.Count);
             for (int i = 0; i < game2.Orbs.Count; i++)
             {
@@ -48,7 +48,7 @@ namespace GravitonClient
             Assert.AreEqual(game1.Player.Xcoor, game2.Player.Xcoor, 0.5);
             Assert.AreEqual(game1.Player.Ycoor, game2.Player.Ycoor, 0.5);
 
-            File.Delete("\\temp\\temp.json");
+            File.Delete(Path.Combine(Directory.GetCurrentDirectory(), "Saved Games/temp.json"));
         }
         [Test]
         public void Test_OrbSerialize()

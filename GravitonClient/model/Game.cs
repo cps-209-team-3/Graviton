@@ -210,6 +210,7 @@ namespace GravitonClient
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
                     GameInvokeSoundEvent(this, SoundEffect.Neutralize);
+                    Player.GamePowerup.AddNew();
                     Points += 100;
                 }
                 else if (well.Orbs != originalColor)
@@ -267,7 +268,7 @@ namespace GravitonClient
                         AIShips.Remove(aI);
                         GameObjects.Remove(aI);
                     }
-                    else if (aI.DepositOrbs(well))
+                    else if (aI.DepositOrbs(well) && !well.IsGhost)
                     {
                         StableWells.Remove(well);
                         GameObjects.Remove(well);
@@ -356,7 +357,6 @@ namespace GravitonClient
             Timer.Stop();
             highScores.CheckNewScores(this);
             highScores.Save(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
-            GameLoader.Save(this, "C:\\temp\\temp.json"); //Change this filename
         }
     }
 }

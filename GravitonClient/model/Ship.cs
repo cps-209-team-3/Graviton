@@ -141,9 +141,9 @@ namespace GravitonClient
             return $@"{{
     ""xcoor"":{Xcoor},
     ""ycoor"":{Ycoor},
-    ""points"":{Points},
+    ""points"":{ParentGame.Points},
     ""orblist"":{JsonUtils.ToJsonList(Orbs)},
-    ""powerups"":{JsonUtils.ToJsonList( GamePowerup.CurrentPowerups)}
+    ""powerups"":{JsonUtils.ToJsonList( GamePowerup.CurrentPowerups)},
 }}";
 
         }
@@ -155,7 +155,7 @@ namespace GravitonClient
             
             base.Deserialize(info);
             Points = Convert.ToInt32(JsonUtils.ExtractValue(info, "points"));
-            GamePowerup = new Powerup(ParentGame);
+            
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(info, "orblist")))
             {
                 Orbs.Add(Convert.ToInt32(s));
