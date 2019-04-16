@@ -15,17 +15,17 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 * Pause screen
 * Game Timer (runs in the background, is not visible but is core to the game)
 * Serialization
-* Saving and loading
-* Well Destabilization | Required | Ross, Lane | Finished
-* Cheat Mode | Required | Lane | Finished
-* Difficulty Levels | Required | Lane | Finished
-* Camera | Required | Ross | Finished
-* HUD | Required | Labadorf | In Progress (for release)
-* Sound Effects | Required | Visser | Finished
-* Help screen | Required | Visser | Finished
-* About Screen | Required | Visser | Finished
-* Basic AI | Not Required | Lane | Finished
-* Load | Required | Labadorf | Finished
+* Saving
+* Well Destabilization
+* Cheat Mode
+* Difficulty Levels
+* Camera
+* HUD
+* Sound Effects
+* Help screen
+* About Screen
+* Basic AI
+* Loading
 ### Known Issues
 * Loading from a save works but will crash the game soon after due to some AI elements not being initialized.
 * Powerup images stay after the powerup has been used.
