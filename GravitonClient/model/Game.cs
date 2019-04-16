@@ -150,6 +150,8 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
+            if (Ticks % WellDestabFreq / 20 == 0)
+                ShockWave();
             if (Ticks % 5 == 0 && Orbs.Count < 170)
                 SpawnOrb();
             if (AIShips.Count < 3)
@@ -161,6 +163,22 @@ namespace GravitonClient
             ViewCamera.Render();           
             
             GameUpdatedEvent(this, 0);
+        }
+
+        //Destroys all orbs within vicinity of destabilized wells
+        public void ShockWave()
+        {
+            foreach (Well well in UnstableWells)
+            {
+                foreach (Orb orb in Orbs.ToList())
+                {
+                    if (Math.Pow(well.Xcoor - orb.Xcoor, 2) + Math.Pow(well.Ycoor - orb.Ycoor, 2) < 100000)
+                    {
+                        Orbs.Remove(orb);
+                        GameObjects.Remove(orb);
+                    }
+                }
+            }
         }
 
         // This method updates all the wells in the game.
