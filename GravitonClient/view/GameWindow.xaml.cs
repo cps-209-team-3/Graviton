@@ -230,7 +230,6 @@ namespace GravitonClient
             TimeSpan gameDuration = DateTime.Now - startTime;
 
             txtTimeLeft.Text =(int) (5 - gameDuration.TotalMinutes) + ":" + (60 - (int) gameDuration.TotalSeconds % 60).ToString("D2");
-            
 
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
@@ -471,35 +470,7 @@ namespace GravitonClient
 
         private void UpdateHudPowerups()
         {
-            
-            for (int i = 0; i < DisplayedPowerups.Count; i ++)
-            {
-                switch (DisplayedPowerups[i])
-                {
-                    case Powerup.powerups.neutralize:
-                        HudPowerups[i].Source = NeutralizeImage;
-                        break;
-                    case Powerup.powerups.ghost:
-                        HudPowerups[i].Source = GhostImage;
-                        break;
-                    case Powerup.powerups.destabilize:
-                        HudPowerups[i].Source = DestabilizeImage;
-                    break;
-                }
 
-                Debug.Print(DisplayedPowerups[i].ToString());
-                Canvas.SetLeft(HudPowerups[i], 500 + 70 * i);
-            }
-        }
-
-        private void GameWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            background.Width = DrawCanvas.ActualWidth;
-            /*
-            HudPowerups[0].Source = NeutralizeImage;
-            HudPowerups[1].Source = DestabilizeImage;
-            HudPowerups[2].Source = GhostImage;
-            */
             if (game.Player.GamePowerup.CarryingNeutralize)
                 HudPowerups[0].Opacity = 1;
             else
@@ -512,6 +483,11 @@ namespace GravitonClient
                 HudPowerups[2].Opacity = 1;
             else
                 HudPowerups[2].Opacity = 0.50;
+        }
+
+        private void GameWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            background.Width = DrawCanvas.ActualWidth;
         }
     }
 }
