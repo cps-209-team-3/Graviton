@@ -20,6 +20,8 @@ namespace GravitonClient
         public List<int> PlayerOrbs { get; set; }
         public List<Tuple<double, double>> AIShips { get; set; }
         public Tuple<double, double> PlayerShip { get; set; }
+        public double MainBackgroundX { get; set; }
+        public double MainBackgroundY { get; set; }
         public double PlayerAngle { get; set; }
         public int SecondsLeft { get; set; }
         public int Seconds { get; set; }
@@ -42,10 +44,39 @@ namespace GravitonClient
             Score = ParentGame.Points;
             IsOver = ParentGame.IsOver;
             AdjustScreenForPlayer();
+            CalculateBackgounds();
             PlayerAngle = Math.Atan2(ParentGame.Player.SpeedY, ParentGame.Player.SpeedX) * 180 / Math.PI;
+
             double xc, yc;
+
             StableWells = new List<Tuple<double, double, int>>();
             SecondsLeft = 600;
+            foreach (Well well in ParentGame.StableWells)
+            {
+                SecondsLeft = Math.Min(well.TicksLeft / 50, SecondsLeft);
+                xc = well.Xcoor - ScreenX;
+                yc = well.Ycoor - ScreenY;
+                if (xc > -60 && xc < Width + 60 && yc > -60 && yc < Height + 60)
+                    StableWells.Add(Tuple.Create(xc - 60, yc - 60, well.Orbs));
+            }
+
+            UnstableWells = new List<Tuple<double, double>>();
+            foreach (Well well in ParentGame.UnstableWells)
+            {
+                xc = well.Xcoor - ScreenX;
+                yc = well.Ycoor - ScreenY;
+                if (xc > -125 && xc < Width + 125 && yc > -125 && yc < Height + 125)
+                    UnstableWells.Add(Tuple.Create(xc - 125, yc - 125));
+            }
+
+            Orbs = new List<Tuple<double, double, int>>();
+            foreach (Orb orb in ParentGame.Orbs)
+            {
+                xc = orb.Xcoor - ScreenX;
+                yc = orb.Ycoor - ScreenY;
+                if (xc > -7 && xc < Width + 7 && yc > -7 && yc < Height + 7)
+                    Orbs.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));      
+            }
 
             AIShips = new List<Tuple<double, double>>();
             foreach (AIShip ship in ParentGame.AIShips)
@@ -56,31 +87,6 @@ namespace GravitonClient
                     AIShips.Add(Tuple.Create(xc - 25, yc - 25));
             }
 
-            foreach (Well well in ParentGame.StableWells)
-            {
-                SecondsLeft = Math.Min(well.TicksLeft / 50, SecondsLeft);
-                xc = well.Xcoor - ScreenX;
-                yc = well.Ycoor - ScreenY;
-                if (xc > -60 && xc < Width + 60 && yc > -60 && yc < Height + 60)
-                    StableWells.Add(Tuple.Create(xc - 60, yc - 60, well.Orbs));
-            }
-            UnstableWells = new List<Tuple<double, double>>();
-            foreach (Well well in ParentGame.UnstableWells)
-            {
-                xc = well.Xcoor - ScreenX;
-                yc = well.Ycoor - ScreenY;
-                if (xc > -125 && xc < Width + 125 && yc > -125 && yc < Height + 125)
-                    UnstableWells.Add(Tuple.Create(xc - 125, yc - 125));
-            }
-            Orbs = new List<Tuple<double, double, int>>();
-            foreach (Orb orb in ParentGame.Orbs)
-            {
-                xc = orb.Xcoor - ScreenX;
-                yc = orb.Ycoor - ScreenY;
-                if (xc > -7 && xc < Width + 7 && yc > -7 && yc < Height + 7)
-                    Orbs.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
-                
-            }
             PlayerOrbs = new List<int>();
             foreach (int orb in ParentGame.Player.Orbs)
             {
@@ -115,6 +121,10 @@ namespace GravitonClient
             }
             PlayerShip = Tuple.Create(xc - 25, yc - 25);
         }
-
+        public void CalculateBackgounds()
+        {
+            MainBackgroundX = -ScreenX - 250;
+            MainBackgroundY = -ScreenY - 250;
+        }
     }
 }
