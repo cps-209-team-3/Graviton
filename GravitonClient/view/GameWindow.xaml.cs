@@ -157,7 +157,13 @@ namespace GravitonClient
                 HudPowerups[i].Width = 70;
                 DrawCanvas.Children.Add(HudPowerups[i]);
                 Canvas.SetRight(HudPowerups[i], 75);
+                Canvas.SetTop(HudPowerups[i], 80 + 70 * i);
+                HudPowerups[i].Opacity = 0.50;
             }
+            HudPowerups[0].Source = NeutralizeImage;
+            HudPowerups[1].Source = DestabilizeImage;
+            HudPowerups[2].Source = GhostImage;
+
 
             collapse.Play();
             neutralize.Play();
@@ -449,29 +455,23 @@ namespace GravitonClient
 
         private void UpdateHudPowerups()
         {
-            int i = 0;
-            for (i = 0; i < DisplayedPowerups.Count; i ++)
-            {
-                switch (DisplayedPowerups[i])
-                {
-                    case Powerup.powerups.neutralize:
-                        HudPowerups[i].Source = NeutralizeImage;
-                        break;
-                    case Powerup.powerups.ghost:
-                        HudPowerups[i].Source = GhostImage;
-                        break;
-                    case Powerup.powerups.destabilize:
-                        HudPowerups[i].Source = DestabilizeImage;
-                    break;
-                }
-
-                Debug.Print(DisplayedPowerups[i].ToString());
-                Canvas.SetTop(HudPowerups[i], 80 + 70 * i);
-            }
-            for(; i < 3; i++)
-            {
-                HudPowerups[i].Source = null;
-            }
+            /*
+            HudPowerups[0].Source = NeutralizeImage;
+            HudPowerups[1].Source = DestabilizeImage;
+            HudPowerups[2].Source = GhostImage;
+            */
+            if (game.Player.GamePowerup.CarryingNeutralize)
+                HudPowerups[0].Opacity = 1;
+            else
+                HudPowerups[0].Opacity = 0.50;
+            if (game.Player.GamePowerup.CarryingDestabilize)
+                HudPowerups[1].Opacity = 1;
+            else
+                HudPowerups[1].Opacity = 0.50;
+            if (game.Player.GamePowerup.CarryingGhost)
+                HudPowerups[2].Opacity = 1;
+            else
+                HudPowerups[2].Opacity = 0.50;
         }
     }
 }
