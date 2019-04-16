@@ -14,6 +14,8 @@ namespace GravitonClient
 
         private Random rand = new Random();
 
+        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
+
         public Powerup(Game game)
         {
             ParentGame = game;
@@ -64,6 +66,7 @@ namespace GravitonClient
         {
             if (!CurrentPowerups.Contains(powerups.destabilize))
                 return;
+            GameInvokeSoundEvent(this, SoundEffect.Destabilize);
             CurrentPowerups.Remove(powerups.destabilize);
             foreach (Well well in ParentGame.StableWells.ToList())
             {

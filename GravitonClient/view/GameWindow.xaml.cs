@@ -30,6 +30,8 @@ namespace GravitonClient
         List<Image> AiImages;
         Image ship;
 
+        Image background;
+
 
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
@@ -39,6 +41,7 @@ namespace GravitonClient
         BitmapImage NeutralizeImage;
         BitmapImage DestabilizeImage;
         BitmapImage GhostImage;
+        BitmapImage BackgroundImage;
 
         Image[] HudOrbs = new Image[6];
         Image[] HudPowerups = new Image[3];
@@ -69,6 +72,19 @@ namespace GravitonClient
             orbDict = new List<Image>();
             AiImages = new List<Image>();
             ship = new Image();
+            
+            background = new Image();
+
+            BackgroundImage = new BitmapImage();
+            BackgroundImage.BeginInit();
+            BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
+            BackgroundImage.EndInit();
+
+            background.Source = BackgroundImage;
+            Canvas.SetLeft(background, 0);
+            Canvas.SetTop(background, 0);
+            Canvas.SetZIndex(background, 0);
+            DrawCanvas.Children.Add(background);
 
             wellImages = new List<BitmapImage>();
             string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
@@ -174,6 +190,7 @@ namespace GravitonClient
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.Initialize();
+            Game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
         }
 
         public GameWindow(bool cheat, Game game)
@@ -397,8 +414,7 @@ namespace GravitonClient
         {
             App.Current.MainWindow.Show();
         }
-
-        //"../../Assets/Sound/SFX/destabilize.wav"
+        
         void PlaySound(object sender, SoundEffect value)
         {
             switch (value)
@@ -460,6 +476,11 @@ namespace GravitonClient
                 Debug.Print(DisplayedPowerups[i].ToString());
                 Canvas.SetLeft(HudPowerups[i], 500 + 70 * i);
             }
+        }
+
+        private void GameWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            background.Width = DrawCanvas.ActualWidth;
         }
     }
 }
