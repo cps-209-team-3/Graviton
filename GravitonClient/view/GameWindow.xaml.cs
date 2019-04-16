@@ -144,6 +144,11 @@ namespace GravitonClient
             GhostImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ghosting.png");
             GhostImage.EndInit();
 
+
+            DestabilizeImage = new BitmapImage();
+            DestabilizeImage.BeginInit();
+            DestabilizeImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/powerup.png");
+            DestabilizeImage.EndInit();
             for (int i = 0; i < HudPowerups.Length; i++)
             {
                 HudPowerups[i] = new Image();
@@ -447,6 +452,9 @@ namespace GravitonClient
                     case Powerup.powerups.ghost:
                         HudPowerups[i].Source = GhostImage;
                         break;
+                    case Powerup.powerups.destabilize:
+                        HudPowerups[i].Source = DestabilizeImage;
+                    break;
                 }
 
                 Debug.Print(DisplayedPowerups[i].ToString());
