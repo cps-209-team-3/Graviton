@@ -8,90 +8,103 @@ namespace GravitonClient
 {
     public class Powerup
     {
-        public enum powerups { neutralize, destabilize, ghost };
+        public enum powerups { neutralize, destabilize, ghost}
         public List<powerups> CurrentPowerups;
         public Game ParentGame;
+        public bool CarryingNeutralize { get; set; }
+        public bool CarryingDestabilize { get; set; }
+        public bool CarryingGhost { get; set; }
 
         private Random rand = new Random();
 
         public Powerup(Game game)
         {
             ParentGame = game;
+            CarryingNeutralize = false;
+            CarryingDestabilize = false;
+            CarryingGhost = false;
             CurrentPowerups = new List<powerups>();
         }
 
         //This method adds a random powerup to the powerup list.
         public void AddNew()
         {
-            if (CurrentPowerups.Count <= 3)
+            int powerup = rand.Next(3);
+            switch (powerup)
             {
-                int powerup = rand.Next(3);
-                switch (powerup)
-                {
-                    case 0:
+                case 0:
+                    if (!CarryingNeutralize)
                         CurrentPowerups.Add(powerups.neutralize);
-                        break;
-                    case 1:
+                    CarryingNeutralize = true;
+                    break;
+                case 1:
+                    if (!CarryingDestabilize)
                         CurrentPowerups.Add(powerups.destabilize);
-                        break;
-                    case 2:
+                    CarryingDestabilize = true;
+                    break;
+                case 2:
+                    if (!CarryingGhost)
                         CurrentPowerups.Add(powerups.ghost);
-                        break;
+                    CarryingGhost = true;
+                    break;
                 }
-            }
         }
 
 
-        //This method does a neutralize powerup
+        //This method neutralizes a nearby destabilized well
         public void Neutralize()
         {
-            if (!CurrentPowerups.Contains(powerups.neutralize))
+            if (!CarryingNeutralize)
                 return;
-            CurrentPowerups.Remove(powerups.neutralize);
             foreach (Well well in ParentGame.UnstableWells.ToList())
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
                     ParentGame.UnstableWells.Remove(well);
                     ParentGame.GameObjects.Remove(well);
+                    CarryingNeutralize = false;
                     CurrentPowerups.Remove(powerups.neutralize);
                 }
             }
         }
 
-        //This method does a destabilize powerup
+        //This method destabilizes a nearby well
         public void Destabilize()
         {
-            if (!CurrentPowerups.Contains(powerups.destabilize))
+            if (!CarryingDestabilize)
                 return;
-            CurrentPowerups.Remove(powerups.destabilize);
             foreach (Well well in ParentGame.StableWells.ToList())
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
+                    CarryingDestabilize = false;
+                    CurrentPowerups.Remove(powerups.destabilize);
                     well.TicksLeft = 3000;
                     well.IsStable = false;
                     well.Strength = 50;
                     well.IsTrap = true;
                     ParentGame.UnstableWells.Add(well);
                     ParentGame.StableWells.Remove(well);
-                    CurrentPowerups.Remove(powerups.destabilize);
+                    ParentGame.Player.IsImmune = true;
+                    ParentGame.Player.ImmuneTicksLeft = 50;
                 }
             }
         }
 
-        //This method does a ghost powerup
+        //This method locks AI from depositing in a nearby well.
         public void Ghost()
         {
-            if (!CurrentPowerups.Contains(powerups.ghost))
+            if (!CarryingGhost)
                 return;
+            CarryingGhost = false;
             CurrentPowerups.Remove(powerups.ghost);
             foreach (Well well in ParentGame.StableWells.ToList())
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
                     well.IsGhost = true;
-                    CurrentPowerups.Remove(powerups.ghost);
+                    ParentGame.Player.IsImmune = true;
+                    ParentGame.Player.ImmuneTicksLeft = 150;
                 }
             }
         }

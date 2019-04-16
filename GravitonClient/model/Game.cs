@@ -219,7 +219,7 @@ namespace GravitonClient
                 int originalColor = well.Orbs;
                 if (!well.IsStable)
                 {
-                    if (!IsCheat)
+                    if (!IsCheat && !Player.IsImmune)
                         GameOver();
                 }
                 else if (Player.DepositOrbs(well))
@@ -245,6 +245,10 @@ namespace GravitonClient
                     GameInvokeSoundEvent(this, SoundEffect.OrbGrab);
                 }
             }
+            if (Player.ImmuneTicksLeft > 0)
+                --Player.ImmuneTicksLeft;
+            if (Player.ImmuneTicksLeft == 0)
+                Player.IsImmune = false;
         }
 
         //updates gravity effects on parameter ship
