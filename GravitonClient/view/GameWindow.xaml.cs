@@ -441,8 +441,8 @@ namespace GravitonClient
 
         private void UpdateHudPowerups()
         {
-            
-            for (int i = 0; i < DisplayedPowerups.Count; i ++)
+            int i = 0;
+            for (i = 0; i < DisplayedPowerups.Count; i ++)
             {
                 switch (DisplayedPowerups[i])
                 {
@@ -459,6 +459,10 @@ namespace GravitonClient
 
                 Debug.Print(DisplayedPowerups[i].ToString());
                 Canvas.SetLeft(HudPowerups[i], 500 + 70 * i);
+            }
+            for(; i < 3; i++)
+            {
+                HudPowerups[i].Source = null;
             }
         }
     }
