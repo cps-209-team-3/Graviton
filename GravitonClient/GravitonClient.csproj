@@ -197,6 +197,11 @@
     <Resource Include="Assets\Images\Neutralize.png" />
     <Resource Include="Assets\Images\Ghosting.png" />
     <Resource Include="Assets\Images\powerup.png" />
+    <Resource Include="Assets\Images\parallax-space-backgound.png" />
+    <Resource Include="Assets\Images\parallax-space-big-planet.png" />
+    <Resource Include="Assets\Images\parallax-space-far-planets.png" />
+    <Resource Include="Assets\Images\parallax-space-ring-planet.png" />
+    <Resource Include="Assets\Images\parallax-space-stars.png" />
     <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3" />
     <Content Include="Assets\Sound\SFX\destabilize.mp3" />
     <Content Include="Assets\Sound\SFX\destabilize.wav" />
