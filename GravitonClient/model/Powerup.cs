@@ -74,7 +74,6 @@ namespace GravitonClient
                     ParentGame.StableWells.Remove(well);
                 }
             }
-            //execute destabilize
         }
 
         //This method does a ghost powerup
@@ -83,11 +82,12 @@ namespace GravitonClient
             if (!CurrentPowerups.Contains(powerups.ghost))
                 return;
             CurrentPowerups.Remove(powerups.ghost);
-            // TODO: ghost logic
-            Well well = ParentGame.Player.WellOver();
-            if (well != null)
+            foreach (Well well in ParentGame.StableWells.ToList())
             {
-                //execute ghost
+                if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
+                {
+                    well.IsGhost = true;
+                }
             }
         }
     }

@@ -49,7 +49,7 @@ namespace GravitonClient
                     {
                         isCompatible = true;
                     }
-                    if (isCompatible == true)
+                    if (isCompatible == true && !well.IsGhost)
                     {
                         closestWell = well;
                         compareDist = dist;
