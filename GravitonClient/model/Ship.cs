@@ -15,6 +15,8 @@ namespace GravitonClient
         public double BoostFactor { get; set; }
         public List<int> Orbs { get; set; }
         public int Points{ get; set; }
+        public bool IsImmune { get; set; }
+        public int ImmuneTicksLeft { get; set; }
 
         private Random rand = new Random();
 
@@ -22,6 +24,7 @@ namespace GravitonClient
         {
             ParentGame = game;
             GamePowerup = new Powerup(game);
+            IsImmune = false;
             Xcoor = xcoor;
             Ycoor = ycoor;
             SpeedX = 0.0;
