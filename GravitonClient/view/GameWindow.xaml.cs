@@ -301,6 +301,7 @@ namespace GravitonClient
                 b.Foreground = Brushes.Red;
                 b.Click += GameOver_Click;
                 b.Width = 450;
+                Canvas.SetZIndex(b, 100);
                 Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
                 Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
                 DrawCanvas.Children.Add(b);

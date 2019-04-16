@@ -38,14 +38,12 @@ namespace GravitonClient
         {
             if (e.Key == Key.Escape)
             {
-                Game.Timer.Start();
                 Close();
             }
         }
 
         private void Resume_Click(object sender, RoutedEventArgs e)
         {
-            Game.Timer.Start();
             Close();
         }
 
@@ -74,6 +72,11 @@ namespace GravitonClient
                 MessageBox.Show("Cannot find file.");
             }
             
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Game.Timer.Start();
         }
     }
 }
