@@ -28,6 +28,8 @@ namespace GravitonClient
             SetTargetPos();
         }
 
+        public AIShip() { }
+
         //Sets TargetWell to the nearest well
         public void TargetNearestWell()
         {
@@ -49,7 +51,7 @@ namespace GravitonClient
                     {
                         isCompatible = true;
                     }
-                    if (isCompatible == true)
+                    if (isCompatible == true && !well.IsGhost)
                     {
                         closestWell = well;
                         compareDist = dist;
