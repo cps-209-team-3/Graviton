@@ -23,18 +23,21 @@ namespace GravitonClient
         //This method adds a random powerup to the powerup list.
         public void AddNew()
         {
-            int powerup = rand.Next(3);
-            switch (powerup)
+            if (CurrentPowerups.Count <= 3)
             {
-                case 0:
-                    CurrentPowerups.Add(powerups.neutralize);
-                    break;
-                case 1:
-                    CurrentPowerups.Add(powerups.destabilize);
-                    break;
-                case 2:
-                    CurrentPowerups.Add(powerups.ghost);
-                    break;
+                int powerup = rand.Next(3);
+                switch (powerup)
+                {
+                    case 0:
+                        CurrentPowerups.Add(powerups.neutralize);
+                        break;
+                    case 1:
+                        CurrentPowerups.Add(powerups.destabilize);
+                        break;
+                    case 2:
+                        CurrentPowerups.Add(powerups.ghost);
+                        break;
+                }
             }
         }
 
@@ -45,12 +48,13 @@ namespace GravitonClient
             if (!CurrentPowerups.Contains(powerups.neutralize))
                 return;
             CurrentPowerups.Remove(powerups.neutralize);
-            // TODO: neutralization
             foreach (Well well in ParentGame.UnstableWells.ToList())
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
                     ParentGame.UnstableWells.Remove(well);
+                    ParentGame.GameObjects.Remove(well);
+                    CurrentPowerups.Remove(powerups.neutralize);
                 }
             }
         }
@@ -61,7 +65,6 @@ namespace GravitonClient
             if (!CurrentPowerups.Contains(powerups.destabilize))
                 return;
             CurrentPowerups.Remove(powerups.destabilize);
-            // TODO: destabilization logic
             foreach (Well well in ParentGame.StableWells.ToList())
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
@@ -72,6 +75,7 @@ namespace GravitonClient
                     well.IsTrap = true;
                     ParentGame.UnstableWells.Add(well);
                     ParentGame.StableWells.Remove(well);
+                    CurrentPowerups.Remove(powerups.destabilize);
                 }
             }
         }
@@ -87,6 +91,7 @@ namespace GravitonClient
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
                     well.IsGhost = true;
+                    CurrentPowerups.Remove(powerups.ghost);
                 }
             }
         }
