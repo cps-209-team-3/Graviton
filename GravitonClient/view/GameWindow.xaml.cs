@@ -63,6 +63,7 @@ namespace GravitonClient
         MediaPlayer deposit;
         MediaPlayer powerup;
         MediaPlayer collapse;
+        MediaPlayer ghost;
 
         private Game game;
         public Game Game
@@ -339,7 +340,6 @@ namespace GravitonClient
                 Canvas.SetLeft(AiImages[i], Game.ViewCamera.AIShips[i].Item1);
                 Canvas.SetTop(AiImages[i], Game.ViewCamera.AIShips[i].Item2);
                 Canvas.SetZIndex(AiImages[i], 9);
-                //display the correct destabilized image at the right place
             }
             
 
@@ -395,6 +395,8 @@ namespace GravitonClient
             deposit.Close();
             orbGrab.Close();
             powerup.Close();
+            collapse.Close();
+            ghost.Close();
             Close();
         }
 
@@ -486,6 +488,8 @@ namespace GravitonClient
             deposit.Close();
             orbGrab.Close();
             powerup.Close();
+            collapse.Close();
+            ghost.Close();
             App.Current.MainWindow.Show();
         }
         
@@ -517,6 +521,16 @@ namespace GravitonClient
                     powerup.Volume = .5;
                     powerup.Position = new TimeSpan(0);
                     powerup.Play();
+                    break;
+                case SoundEffect.Collapse:
+                    collapse.Volume = .5;
+                    collapse.Position = new TimeSpan(0);
+                    collapse.Play();
+                    break;
+                case SoundEffect.Ghost:
+                    ghost.Volume = .5;
+                    ghost.Position = new TimeSpan(0);
+                    ghost.Play();
                     break;
                 default:
                     break;
@@ -592,23 +606,31 @@ namespace GravitonClient
             orbGrab = new MediaPlayer();
             orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX2.mp3")));
             neutralize = new MediaPlayer();
-            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
+            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Shut-down-sound-effect.mp3")));
             deposit = new MediaPlayer();
             deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Space entity(deposit).mp3")));
             powerup = new MediaPlayer();
             powerup.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Power-Up-KP-1879176533 (packet pickup).mp3")));
+            collapse = new MediaPlayer();
+            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
+            ghost = new MediaPlayer();
+            ghost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/ghost.mp3")));
 
             unstable.Volume = 0;
             orbGrab.Volume = 0;
             neutralize.Volume = 0;
             deposit.Volume = 0;
             powerup.Volume = 0;
+            collapse.Volume = 0;
+            ghost.Volume = 0;
 
             unstable.Play();
             neutralize.Play();
             deposit.Play();
             orbGrab.Play();
             powerup.Play();
+            collapse.Play();
+            ghost.Play();
         }
     }
 }

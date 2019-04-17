@@ -55,7 +55,8 @@ namespace GravitonClient
                             if (!CarryingNeutralize)
                             {
                                 CurrentPowerups.Add(powerups.neutralize);
-                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                if (ParentGame.Player.GamePowerup == this)
+                                    GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
                                 CarryingNeutralize = true;
                                 powerupAdded = true;
                             }
@@ -64,7 +65,8 @@ namespace GravitonClient
                             if (!CarryingDestabilize)
                             {
                                 CurrentPowerups.Add(powerups.destabilize);
-                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                if (ParentGame.Player.GamePowerup == this)
+                                    GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
                                 CarryingDestabilize = true;
                                 powerupAdded = true;
                             }
@@ -73,7 +75,8 @@ namespace GravitonClient
                             if (!CarryingGhost)
                             {
                                 CurrentPowerups.Add(powerups.ghost);
-                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                if (ParentGame.Player.GamePowerup == this)
+                                    GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
                                 CarryingGhost = true;
                                 powerupAdded = true;
                             }
@@ -93,6 +96,8 @@ namespace GravitonClient
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
+                    if (ParentGame.Player.GamePowerup == this)
+                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     ParentGame.UnstableWells.Remove(well);
                     ParentGame.GameObjects.Remove(well);
                     CarryingNeutralize = false;
@@ -106,12 +111,12 @@ namespace GravitonClient
         {
             if (!CarryingDestabilize)
                 return;
-            GameInvokeSoundEvent(this, SoundEffect.Destabilize);
-            CurrentPowerups.Remove(powerups.destabilize);
             foreach (Well well in ParentGame.StableWells.ToList())
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
+                    if (ParentGame.Player.GamePowerup == this)
+                        GameInvokeSoundEvent(this, SoundEffect.Destabilize);
                     CarryingDestabilize = false;
                     CurrentPowerups.Remove(powerups.destabilize);
                     well.TicksLeft = 3000;
@@ -131,12 +136,14 @@ namespace GravitonClient
         {
             if (!CarryingGhost)
                 return;
-            CarryingGhost = false;
-            CurrentPowerups.Remove(powerups.ghost);
             foreach (Well well in ParentGame.StableWells.ToList())
             {
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
+                    CarryingGhost = false;
+                    CurrentPowerups.Remove(powerups.ghost);
+                    if (ParentGame.Player.GamePowerup == this)
+                        GameInvokeSoundEvent(this, SoundEffect.Ghost);
                     well.IsGhost = true;
                     ParentGame.Player.IsImmune = true;
                     ParentGame.Player.ImmuneTicksLeft = 150;

@@ -198,6 +198,7 @@ namespace GravitonClient
                     ShockWave();
                 if (well.TicksLeft == 0)
                 {
+                    GameInvokeSoundEvent(this, SoundEffect.Collapse);
                     // any explosions or something????
                     UnstableWells.Remove(well);
                     GameObjects.Remove(well);
