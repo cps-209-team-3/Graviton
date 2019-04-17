@@ -31,6 +31,9 @@ namespace GravitonClient
         Image ship;
         Image background;
         Image[] planets;
+        Image[] rings;
+        Image[] twins;
+        Image[] stars;
 
         private DateTime startTime; 
         List<BitmapImage> wellImages;
@@ -43,13 +46,15 @@ namespace GravitonClient
         BitmapImage GhostImage;
         BitmapImage BackgroundImage;
         BitmapImage PlanetImage;
+        BitmapImage RingImage;
+        BitmapImage TwinImage;
+        BitmapImage StarImage;
 
         Image[] HudOrbs = new Image[6];
         Image[] HudPowerups = new Image[3];
 
         private List<int> currentOrbs = new List<int>();
         private List<Powerup.powerups> DisplayedPowerups = new List<Powerup.powerups>();
-
 
         MediaPlayer unstable;
         MediaPlayer orbGrab;
@@ -64,8 +69,6 @@ namespace GravitonClient
             get { return game; }
             set { game = value; }
         }
-
-        
 
         private void SetupGameWindow()
         {
@@ -95,8 +98,44 @@ namespace GravitonClient
             for (int i = 0; i < 4; ++i)
             {
                 planets[i].Source = PlanetImage;
-                Canvas.SetZIndex(planets[i], 1);
+                Canvas.SetZIndex(planets[i], 4);
                 DrawCanvas.Children.Add(planets[i]);
+            }
+
+            rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            RingImage = new BitmapImage();
+            RingImage.BeginInit();
+            RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
+            RingImage.EndInit();
+            for (int i = 0; i < 4; ++i)
+            {
+                rings[i].Source = RingImage;
+                Canvas.SetZIndex(rings[i], 3);
+                DrawCanvas.Children.Add(rings[i]);
+            }
+
+            twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            TwinImage = new BitmapImage();
+            TwinImage.BeginInit();
+            TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
+            TwinImage.EndInit();
+            for (int i = 0; i < 4; ++i)
+            {
+                twins[i].Source = TwinImage;
+                Canvas.SetZIndex(twins[i], 2);
+                DrawCanvas.Children.Add(twins[i]);
+            }
+
+            stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            StarImage = new BitmapImage();
+            StarImage.BeginInit();
+            StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
+            StarImage.EndInit();
+            for (int i = 0; i < 4; ++i)
+            {
+                stars[i].Source = StarImage;
+                Canvas.SetZIndex(stars[i], 1);
+                DrawCanvas.Children.Add(stars[i]);
             }
 
             startTime = DateTime.Now;
@@ -148,7 +187,7 @@ namespace GravitonClient
                 HudOrbs[i] = new Image();
                 HudOrbs[i].Opacity = 0.80;
                 HudOrbs[i].Width = 30;
-                Canvas.SetZIndex(HudOrbs[i], 10);
+                Canvas.SetZIndex(HudOrbs[i], 50);
                 DrawCanvas.Children.Add(HudOrbs[i]);
             }
 
@@ -171,7 +210,7 @@ namespace GravitonClient
             for (int i = 0; i < HudPowerups.Length; i++)
             {
                 HudPowerups[i] = new Image();
-                Canvas.SetZIndex(HudPowerups[i], 10);
+                Canvas.SetZIndex(HudPowerups[i], 50);
                 HudPowerups[i].Width = 70;
                 DrawCanvas.Children.Add(HudPowerups[i]);
                 Canvas.SetRight(HudPowerups[i], 75);
@@ -210,6 +249,12 @@ namespace GravitonClient
             {
                 Canvas.SetLeft(planets[i], Game.ViewCamera.Backgrounds[3][i].Item1);
                 Canvas.SetTop(planets[i], Game.ViewCamera.Backgrounds[3][i].Item2);
+                Canvas.SetLeft(rings[i], Game.ViewCamera.Backgrounds[2][i].Item1);
+                Canvas.SetTop(rings[i], Game.ViewCamera.Backgrounds[2][i].Item2);
+                Canvas.SetLeft(twins[i], Game.ViewCamera.Backgrounds[1][i].Item1);
+                Canvas.SetTop(twins[i], Game.ViewCamera.Backgrounds[1][i].Item2);
+                Canvas.SetLeft(stars[i], Game.ViewCamera.Backgrounds[0][i].Item1);
+                Canvas.SetTop(stars[i], Game.ViewCamera.Backgrounds[0][i].Item2);
             }
 
             int wellDiff = wellDict.Count - Game.ViewCamera.StableWells.Count;
@@ -224,7 +269,7 @@ namespace GravitonClient
                 wellDict[i].Source = wellImages[color];
                 Canvas.SetLeft(wellDict[i], Game.ViewCamera.StableWells[i].Item1);
                 Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
-                Canvas.SetZIndex(wellDict[i], 2);
+                Canvas.SetZIndex(wellDict[i], 5);
             }
 
             TimeSpan gameDuration = DateTime.Now - startTime;
@@ -245,7 +290,7 @@ namespace GravitonClient
                 destableDict[i].Source = destabilizedImage;
                 Canvas.SetLeft(destableDict[i], Game.ViewCamera.UnstableWells[i].Item1);
                 Canvas.SetTop(destableDict[i], Game.ViewCamera.UnstableWells[i].Item2);
-                Canvas.SetZIndex(destableDict[i], 3);
+                Canvas.SetZIndex(destableDict[i], 6);
             }
 
             int orbDiff =  orbDict.Count - Game.ViewCamera.Orbs.Count;
@@ -260,12 +305,12 @@ namespace GravitonClient
                 orbDict[i].Source = orbImages[color];
                 Canvas.SetLeft(orbDict[i], Game.ViewCamera.Orbs[i].Item1);
                 Canvas.SetTop(orbDict[i], Game.ViewCamera.Orbs[i].Item2);
-                Canvas.SetZIndex(orbDict[i], 2);
+                Canvas.SetZIndex(orbDict[i], 7);
             }
 
             Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
             Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
-            Canvas.SetZIndex(ship, 50);
+            Canvas.SetZIndex(ship, 10);
             txtScore.Text = "Score: " + game.Points;
 
 
@@ -287,7 +332,7 @@ namespace GravitonClient
                 AiImages[i].Width = 50;
                 Canvas.SetLeft(AiImages[i], Game.ViewCamera.AIShips[i].Item1);
                 Canvas.SetTop(AiImages[i], Game.ViewCamera.AIShips[i].Item2);
-                Canvas.SetZIndex(AiImages[i], 4);
+                Canvas.SetZIndex(AiImages[i], 9);
                 //display the correct destabilized image at the right place
             }
             
@@ -515,6 +560,9 @@ namespace GravitonClient
             for (int i = 0; i < 4; ++i)
             {
                 planets[i].Width = DrawCanvas.ActualWidth;
+                rings[i].Width = DrawCanvas.ActualWidth;
+                twins[i].Width = DrawCanvas.ActualWidth;
+                stars[i].Width = DrawCanvas.ActualWidth;
             }
 
             unstable = new MediaPlayer();

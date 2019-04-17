@@ -129,7 +129,7 @@ namespace GravitonClient
 
         public void CalculateBackgounds(double changeX, double changeY)
         {
-            for (int i = 1; i < 4; i++)
+            for (int i = 0; i < 4; i++)
             {
                 BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.1 + 0.07 * i) + Width) % Width;
                 BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.1 + 0.07 * i) + Height) % Height;
