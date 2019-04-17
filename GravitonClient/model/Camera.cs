@@ -13,6 +13,7 @@ namespace GravitonClient
         public double Height { get; set; }
         public double ScreenX { get; set; }
         public double ScreenY { get; set; }
+        public double[,] BackgroundXY { get; set; }
 
         public List<Tuple<double, double, int>> StableWells { get; set; }
         public List<Tuple<double, double>> UnstableWells { get; set; }
@@ -20,12 +21,7 @@ namespace GravitonClient
         public List<int> PlayerOrbs { get; set; }
         public List<Tuple<double, double>> AIShips { get; set; }
         public Tuple<double, double> PlayerShip { get; set; }
-        public double B_Big_X { get; set; }
-        public double B_Big_Y { get; set; }
-        public List<Tuple<double, double>> B_Big { get; set; }
-        //public List<Tuple<double, double>> B_Ring { get; set; }
-        //public List<Tuple<double, double>> B_Far { get; set; }
-        //public List<Tuple<double, double>> B_Star { get; set; }
+        public List<Tuple<double, double>>[] Backgrounds { get; set; }
         public double PlayerAngle { get; set; }
         public int SecondsLeft { get; set; }
         public int Seconds { get; set; }
@@ -39,19 +35,10 @@ namespace GravitonClient
             Height = 900;
             ScreenX = 1780.0;
             ScreenY = 2050.0;
+            Backgrounds = new List<Tuple<double, double>>[4];
+            BackgroundXY = new double[4, 2];
         }
 
-        //public void InitializeSize(double width, double height)
-        //{
-        //    Width = width;
-        //    Height = height;
-        //    B_Big = new double[4,2];
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        B_Big[i, 0] = width * (i / 2); 
-        //        B_Big[i, 1] = height * (i % 2);
-        //    }
-        //}
         
         //This method updates all of its properties to represent where everything should be on the screen.
         public void Render() //ai, ship 90x90   well 120x120   dswell 250x250    orbs 14x14
@@ -139,15 +126,19 @@ namespace GravitonClient
             PlayerShip = Tuple.Create(xc - 25, yc - 25);
             CalculateBackgounds(ScreenX - tempX, ScreenY - tempY);
         }
+
         public void CalculateBackgounds(double changeX, double changeY)
         {
-            B_Big_X = (B_Big_X + changeX * 0.5 + Width) % Width;
-            B_Big_Y = (B_Big_Y + changeY * 0.5 + Height) % Height;
-            B_Big = new List<Tuple<double, double>>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 1; i < 4; i++)
             {
-                B_Big.Add(Tuple.Create(B_Big_X - Width * (i / 2), B_Big_Y - Height * (i % 2)));
-            }            
+                BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.1 + 0.07 * i) + Width) % Width;
+                BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.1 + 0.07 * i) + Height) % Height;
+                Backgrounds[i] = new List<Tuple<double, double>>();
+                for (int j = 0; j < 4; j++)
+                {
+                    Backgrounds[i].Add(Tuple.Create(BackgroundXY[i, 0] - Width * (j / 2), BackgroundXY[i, 1] - Height * (j % 2)));
+                }
+            }        
         }
     }
 }

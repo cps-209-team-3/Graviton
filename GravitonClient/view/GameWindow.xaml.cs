@@ -206,8 +206,8 @@ namespace GravitonClient
         {
             for (int i = 0; i < 4; ++i)
             {
-                Canvas.SetLeft(planets[i], Game.ViewCamera.B_Big[i].Item1);
-                Canvas.SetTop(planets[i], Game.ViewCamera.B_Big[i].Item2);
+                Canvas.SetLeft(planets[i], Game.ViewCamera.Backgrounds[3][i].Item1);
+                Canvas.SetTop(planets[i], Game.ViewCamera.Backgrounds[3][i].Item2);
             }
 
             int wellDiff = wellDict.Count - Game.ViewCamera.StableWells.Count;
