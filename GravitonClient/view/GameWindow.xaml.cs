@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 
 namespace GravitonClient
 {
-    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop };
+    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse };
 
     /// <summary>
     /// Interaction logic for GameWindow.xaml
