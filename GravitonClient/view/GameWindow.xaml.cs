@@ -566,17 +566,30 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //background.Width = DrawCanvas.ActualWidth;
-            background.Height = DrawCanvas.ActualHeight;
-
-            for (int i = 0; i < 4; ++i)
+            if (272 / 160 > DrawCanvas.ActualWidth / DrawCanvas.ActualHeight)
             {
-                planets[i].Width = DrawCanvas.ActualWidth;
-                rings[i].Width = DrawCanvas.ActualWidth;
-                twins[i].Width = DrawCanvas.ActualWidth;
-                stars[i].Width = DrawCanvas.ActualWidth;
+                background.Height = DrawCanvas.ActualHeight;
+                for (int i = 0; i < 4; ++i)
+                {
+                    planets[i].Height = DrawCanvas.ActualHeight;
+                    rings[i].Height = DrawCanvas.ActualHeight;
+                    twins[i].Height = DrawCanvas.ActualHeight;
+                    stars[i].Height = DrawCanvas.ActualHeight;
+                }
             }
 
+            else
+            {
+                background.Width = DrawCanvas.ActualWidth;
+                for (int i = 0; i < 4; ++i)
+                {
+                    planets[i].Width = DrawCanvas.ActualWidth;
+                    rings[i].Width = DrawCanvas.ActualWidth;
+                    twins[i].Width = DrawCanvas.ActualWidth;
+                    stars[i].Width = DrawCanvas.ActualWidth;
+                }
+            }
+            
             unstable = new MediaPlayer();
             unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
             orbGrab = new MediaPlayer();
