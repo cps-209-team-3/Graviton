@@ -37,6 +37,7 @@ namespace GravitonClient
 
         private DateTime startTime;
         private TimeSpan gameDuration;
+        public TimeSpan PauseDuration { get; set; }
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
@@ -140,6 +141,7 @@ namespace GravitonClient
             }
 
             startTime = DateTime.Now;
+            PauseDuration = new TimeSpan(0);
             wellImages = new List<BitmapImage>();
             string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
             for (int i = 0; i < 6; ++i)
@@ -275,9 +277,24 @@ namespace GravitonClient
             }
             
 
-            gameDuration = DateTime.Now - startTime;
+            gameDuration = DateTime.Now - startTime - PauseDuration;
             if (gameDuration.TotalMinutes > 5) {
                 Game.GameOver();
+
+                Button b2 = new Button();
+                b2.Content = "Start Next Round";
+                b2.FontSize = 40;
+                b2.FontFamily = (FontFamily)this.FindResource("Azonix");
+                b2.Margin = new Thickness(20);
+                b2.Padding = new Thickness(10, 5, 10, 0);
+                b2.Background = Brushes.Black;
+                b2.Foreground = Brushes.Red;
+                b2.Click += NextRound_Click;
+                b2.Width = 500;
+                Canvas.SetZIndex(b2, 100);
+                Canvas.SetLeft(b2, (DrawCanvas.ActualWidth - b2.Width) / 2);
+                Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
+                DrawCanvas.Children.Add(b2);
             }
             txtTimeLeft.Text = (int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
 
@@ -380,12 +397,27 @@ namespace GravitonClient
                 b.Background = Brushes.Black;
                 b.Foreground = Brushes.Red;
                 b.Click += GameOver_Click;
-                b.Width = 450;
+                b.Width = 500;
                 Canvas.SetZIndex(b, 100);
                 Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
                 Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
                 DrawCanvas.Children.Add(b);
             }
+        }
+
+        private void NextRound_Click(object sender, RoutedEventArgs e)
+        {
+            int newWellSpawnFreq = Game.WellSpawnFreq - 50;
+            int newWellDestabFreq = Game.WellDestabFreq - 250;
+            bool isCheat = Game.IsCheat;
+            string username = Game.Username;
+
+            GameWindow g = new GameWindow(isCheat);
+            g.Game.WellSpawnFreq = newWellSpawnFreq;
+            g.Game.WellDestabFreq = newWellDestabFreq;
+            g.game.Username = username;
+            g.Show();
+            Close();
         }
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
