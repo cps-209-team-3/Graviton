@@ -163,15 +163,24 @@ namespace GravitonClient
             {
                 Orbs.Add(Convert.ToInt32(s));
             }
-
+            GamePowerup = new Powerup();
             var strs = JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(info, "powerups"));
             for (int i = 0; i < Math.Min(strs.Count, 3); ++i)
             {
                 switch (strs[i])
                 {
-                    case "ghost": GamePowerup.CurrentPowerups.Add(Powerup.powerups.ghost); break;
-                    case "destabilize": GamePowerup.CurrentPowerups.Add(Powerup.powerups.destabilize); break;
-                    case "neutralize": GamePowerup.CurrentPowerups.Add(Powerup.powerups.neutralize); break;
+                    case "ghost":
+                        GamePowerup.CurrentPowerups.Add(Powerup.powerups.ghost);
+                        GamePowerup.CarryingGhost = true;
+                        break;
+                    case "destabilize":
+                        GamePowerup.CurrentPowerups.Add(Powerup.powerups.destabilize);
+                        GamePowerup.CarryingDestabilize = true;
+                        break;
+                    case "neutralize":
+                        GamePowerup.CurrentPowerups.Add(Powerup.powerups.neutralize);
+                        GamePowerup.CarryingNeutralize = true;
+                        break;
                 }
             }
         }

@@ -80,7 +80,7 @@ namespace GravitonClient
             AiImages = new List<Image>();
             ship = new Image();
             
-            /*background = new Image();
+            background = new Image();
             BackgroundImage = new BitmapImage();
             BackgroundImage.BeginInit();
             BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
@@ -89,7 +89,7 @@ namespace GravitonClient
             Canvas.SetLeft(background, 0);
             Canvas.SetTop(background, 0);
             Canvas.SetZIndex(background, 0);
-            DrawCanvas.Children.Add(background);*/
+            //DrawCanvas.Children.Add(background);
 
             planets = new Image[4] { new Image(), new Image() , new Image() , new Image() };
             PlanetImage = new BitmapImage();
@@ -273,7 +273,7 @@ namespace GravitonClient
                 Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
                 Canvas.SetZIndex(wellDict[i], 5);
             }
-
+            
 
             gameDuration = DateTime.Now - startTime;
             if (gameDuration.TotalMinutes > 5) {
@@ -563,7 +563,8 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //background.Width = DrawCanvas.ActualWidth;
+            background.Width = DrawCanvas.ActualWidth;
+            background.Height = DrawCanvas.ActualHeight;
 
             for (int i = 0; i < 4; ++i)
             {
