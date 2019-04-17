@@ -185,7 +185,7 @@ namespace GravitonClient
                 {
                     well.TicksLeft = 3000;
                     well.IsStable = false;
-                    well.Strength = 50;
+                    well.Strength = 900;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
                     GameInvokeSoundEvent(this, SoundEffect.Destabilize);
@@ -254,7 +254,7 @@ namespace GravitonClient
                 double deltaX = well.Xcoor - ship.Xcoor;
                 double deltaY = well.Ycoor - ship.Ycoor;
                 double dist = Math.Max(0.01, Math.Pow(deltaX * deltaX + deltaY * deltaY, 0.5));
-                double force = well.Strength / Math.Max(30, dist);
+                double force = well.Strength / Math.Max(200, Math.Pow(dist, 1.5));
                 ship.SpeedX += deltaX / dist * force;
                 ship.SpeedY += deltaY / dist * force;
             }
