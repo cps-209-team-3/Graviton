@@ -22,7 +22,7 @@ namespace GravitonClient
             IsStable = true;
             IsTrap = false;
             IsGhost = false;
-            Strength = 15;
+            Strength = 300;
             TicksLeft = rand.Next(1500,4001);
             Orbs = 0;
         }

@@ -86,6 +86,7 @@ namespace GravitonClient
             BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
             BackgroundImage.EndInit();
             background.Source = BackgroundImage;
+            RenderOptions.SetBitmapScalingMode(background, BitmapScalingMode.NearestNeighbor);
             Canvas.SetLeft(background, 0);
             Canvas.SetTop(background, 0);
             Canvas.SetZIndex(background, 0);
@@ -96,46 +97,45 @@ namespace GravitonClient
             PlanetImage.BeginInit();
             PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
             PlanetImage.EndInit();
-            for (int i = 0; i < 4; ++i)
-            {
-                planets[i].Source = PlanetImage;
-                Canvas.SetZIndex(planets[i], 4);
-                DrawCanvas.Children.Add(planets[i]);
-            }
 
             rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
             RingImage = new BitmapImage();
             RingImage.BeginInit();
             RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
             RingImage.EndInit();
-            for (int i = 0; i < 4; ++i)
-            {
-                rings[i].Source = RingImage;
-                Canvas.SetZIndex(rings[i], 3);
-                DrawCanvas.Children.Add(rings[i]);
-            }
 
             twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
             TwinImage = new BitmapImage();
             TwinImage.BeginInit();
             TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
             TwinImage.EndInit();
-            for (int i = 0; i < 4; ++i)
-            {
-                twins[i].Source = TwinImage;
-                Canvas.SetZIndex(twins[i], 2);
-                DrawCanvas.Children.Add(twins[i]);
-            }
 
             stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
             StarImage = new BitmapImage();
             StarImage.BeginInit();
             StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
             StarImage.EndInit();
+
             for (int i = 0; i < 4; ++i)
             {
+                planets[i].Source = PlanetImage;
+                rings[i].Source = RingImage;
+                twins[i].Source = TwinImage;
                 stars[i].Source = StarImage;
+
+                RenderOptions.SetBitmapScalingMode(planets[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(rings[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(twins[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(stars[i], BitmapScalingMode.NearestNeighbor);
+
+                Canvas.SetZIndex(planets[i], 4);
+                Canvas.SetZIndex(rings[i], 3);
+                Canvas.SetZIndex(twins[i], 2);
                 Canvas.SetZIndex(stars[i], 1);
+
+                DrawCanvas.Children.Add(planets[i]);
+                DrawCanvas.Children.Add(rings[i]);
+                DrawCanvas.Children.Add(twins[i]);
                 DrawCanvas.Children.Add(stars[i]);
             }
 

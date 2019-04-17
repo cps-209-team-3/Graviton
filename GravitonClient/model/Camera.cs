@@ -131,8 +131,8 @@ namespace GravitonClient
         {
             for (int i = 0; i < 4; i++)
             {
-                BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.1 + 0.07 * i) + Width) % Width;
-                BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.1 + 0.07 * i) + Height) % Height;
+                BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.04 + 0.08 * i) + Width) % Width;
+                BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.04 + 0.08 * i) + Height) % Height;
                 Backgrounds[i] = new List<Tuple<double, double>>();
                 for (int j = 0; j < 4; j++)
                 {
