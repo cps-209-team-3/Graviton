@@ -154,7 +154,7 @@ namespace GravitonClient
                 SpawnOrb();
             if (AIShips.Count < 3)
                 SpawnAI();
-            ViewCamera.Render();           
+            //ViewCamera.Render();           
             
             GameUpdatedEvent(this, 0);
         }

@@ -247,19 +247,22 @@ namespace GravitonClient
 
         public void Render(object sender, int e)
         {
+            CameraFrame currentFrame = Game.ViewCamera.GetCameraFrame();
+
+
             for (int i = 0; i < 4; ++i)
             {
-                Canvas.SetLeft(planets[i], Game.ViewCamera.Backgrounds[3][i].Item1);
-                Canvas.SetTop(planets[i], Game.ViewCamera.Backgrounds[3][i].Item2);
-                Canvas.SetLeft(rings[i], Game.ViewCamera.Backgrounds[2][i].Item1);
-                Canvas.SetTop(rings[i], Game.ViewCamera.Backgrounds[2][i].Item2);
-                Canvas.SetLeft(twins[i], Game.ViewCamera.Backgrounds[1][i].Item1);
-                Canvas.SetTop(twins[i], Game.ViewCamera.Backgrounds[1][i].Item2);
-                Canvas.SetLeft(stars[i], Game.ViewCamera.Backgrounds[0][i].Item1);
-                Canvas.SetTop(stars[i], Game.ViewCamera.Backgrounds[0][i].Item2);
+                Canvas.SetLeft(planets[i], currentFrame.Backgrounds[3][i].Item1);
+                Canvas.SetTop(planets[i], currentFrame.Backgrounds[3][i].Item2);
+                Canvas.SetLeft(rings[i], currentFrame.Backgrounds[2][i].Item1);
+                Canvas.SetTop(rings[i], currentFrame.Backgrounds[2][i].Item2);
+                Canvas.SetLeft(twins[i], currentFrame.Backgrounds[1][i].Item1);
+                Canvas.SetTop(twins[i], currentFrame.Backgrounds[1][i].Item2);
+                Canvas.SetLeft(stars[i], currentFrame.Backgrounds[0][i].Item1);
+                Canvas.SetTop(stars[i], currentFrame.Backgrounds[0][i].Item2);
             }
 
-            int wellDiff = wellDict.Count - Game.ViewCamera.StableWells.Count;
+            int wellDiff = wellDict.Count - currentFrame.StableWells.Count;
             if (wellDiff > 0)
                 RemoveGameObjects(wellDict, wellDiff);
             if (wellDiff < 0)
@@ -267,10 +270,10 @@ namespace GravitonClient
             
             for (int i = 0; i < wellDict.Count; ++i)
             {
-                int color = Game.ViewCamera.StableWells[i].Item3;
+                int color = currentFrame.StableWells[i].Item3;
                 wellDict[i].Source = wellImages[color];
-                Canvas.SetLeft(wellDict[i], Game.ViewCamera.StableWells[i].Item1);
-                Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
+                Canvas.SetLeft(wellDict[i], currentFrame.StableWells[i].Item1);
+                Canvas.SetTop(wellDict[i], currentFrame.StableWells[i].Item2);
                 Canvas.SetZIndex(wellDict[i], 5);
             }
             
@@ -283,7 +286,7 @@ namespace GravitonClient
 
 
 
-            int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
+            int destableDiff = destableDict.Count - currentFrame.UnstableWells.Count;
             if (destableDiff > 0)
                 RemoveGameObjects(destableDict, destableDiff);
             if (destableDiff < 0)
@@ -294,12 +297,12 @@ namespace GravitonClient
             for (int i = 0; i < destableDict.Count; ++i)
             {
                 destableDict[i].Source = destabilizedImage;
-                Canvas.SetLeft(destableDict[i], Game.ViewCamera.UnstableWells[i].Item1);
-                Canvas.SetTop(destableDict[i], Game.ViewCamera.UnstableWells[i].Item2);
+                Canvas.SetLeft(destableDict[i], currentFrame.UnstableWells[i].Item1);
+                Canvas.SetTop(destableDict[i], currentFrame.UnstableWells[i].Item2);
                 Canvas.SetZIndex(destableDict[i], 6);
             }
 
-            int orbDiff =  orbDict.Count - Game.ViewCamera.Orbs.Count;
+            int orbDiff =  orbDict.Count - currentFrame.Orbs.Count;
             if (orbDiff > 0)
                 RemoveGameObjects(orbDict, orbDiff);
             if (orbDiff < 0)
@@ -307,15 +310,15 @@ namespace GravitonClient
 
             for (int i = 0; i < orbDict.Count; ++i)
             {
-                int color = Game.ViewCamera.Orbs[i].Item3;
+                int color = currentFrame.Orbs[i].Item3;
                 orbDict[i].Source = orbImages[color];
-                Canvas.SetLeft(orbDict[i], Game.ViewCamera.Orbs[i].Item1);
-                Canvas.SetTop(orbDict[i], Game.ViewCamera.Orbs[i].Item2);
+                Canvas.SetLeft(orbDict[i], currentFrame.Orbs[i].Item1);
+                Canvas.SetTop(orbDict[i], currentFrame.Orbs[i].Item2);
                 Canvas.SetZIndex(orbDict[i], 7);
             }
 
-            Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
-            Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
+            Canvas.SetLeft(ship, currentFrame.PlayerShip.Item1);
+            Canvas.SetTop(ship, currentFrame.PlayerShip.Item2);
             Canvas.SetZIndex(ship, 10);
             txtScore.Text = "Score: " + game.Points;
 
@@ -325,7 +328,7 @@ namespace GravitonClient
             
 
 
-            int shipDiff = AiImages.Count - Game.ViewCamera.AIShips.Count;
+            int shipDiff = AiImages.Count - currentFrame.AIShips.Count;
 
             if (shipDiff > 0)
                 RemoveGameObjects(AiImages, shipDiff);
@@ -336,8 +339,8 @@ namespace GravitonClient
             {
                 AiImages[i].Source = AiImage;
                 AiImages[i].Width = 50;
-                Canvas.SetLeft(AiImages[i], Game.ViewCamera.AIShips[i].Item1);
-                Canvas.SetTop(AiImages[i], Game.ViewCamera.AIShips[i].Item2);
+                Canvas.SetLeft(AiImages[i], currentFrame.AIShips[i].Item1);
+                Canvas.SetTop(AiImages[i], currentFrame.AIShips[i].Item2);
                 Canvas.SetZIndex(AiImages[i], 9);
                 //display the correct destabilized image at the right place
             }

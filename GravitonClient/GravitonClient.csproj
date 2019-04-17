@@ -63,6 +63,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="model\AIShip.cs" />
+    <Compile Include="model\CameraFrame.cs" />
     <Compile Include="model\GameLoader.cs" />
     <Compile Include="model\JsonUtils.cs" />
     <Compile Include="model\Powerup.cs" />
