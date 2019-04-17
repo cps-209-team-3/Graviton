@@ -29,8 +29,8 @@ namespace GravitonClient
         List<Image> orbDict;
         List<Image> AiImages;
         Image ship;
-
         Image background;
+        Image[] planets;
 
         private DateTime startTime; 
         List<BitmapImage> wellImages;
@@ -42,6 +42,7 @@ namespace GravitonClient
         BitmapImage DestabilizeImage;
         BitmapImage GhostImage;
         BitmapImage BackgroundImage;
+        BitmapImage PlanetImage;
 
         Image[] HudOrbs = new Image[6];
         Image[] HudPowerups = new Image[3];
@@ -50,10 +51,10 @@ namespace GravitonClient
         private List<Powerup.powerups> DisplayedPowerups = new List<Powerup.powerups>();
 
 
-        SoundPlayer collapse;
-        SoundPlayer orbGrab;
-        SoundPlayer neutralize;
-        SoundPlayer deposit;
+        MediaPlayer collapse;
+        MediaPlayer orbGrab;
+        MediaPlayer neutralize;
+        MediaPlayer deposit;
 
         private Game game;
         public Game Game
@@ -74,17 +75,27 @@ namespace GravitonClient
             ship = new Image();
             
             background = new Image();
-
             BackgroundImage = new BitmapImage();
             BackgroundImage.BeginInit();
             BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
             BackgroundImage.EndInit();
-
             background.Source = BackgroundImage;
             Canvas.SetLeft(background, 0);
             Canvas.SetTop(background, 0);
             Canvas.SetZIndex(background, 0);
             DrawCanvas.Children.Add(background);
+
+            planets = new Image[4] { new Image(), new Image() , new Image() , new Image() };
+            PlanetImage = new BitmapImage();
+            PlanetImage.BeginInit();
+            PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
+            PlanetImage.EndInit();
+            for (int i = 0; i < 4; ++i)
+            {
+                planets[i].Source = PlanetImage;
+                Canvas.SetZIndex(planets[i], 1);
+                DrawCanvas.Children.Add(planets[i]);
+            }
 
             startTime = DateTime.Now;
             wellImages = new List<BitmapImage>();
@@ -124,23 +135,12 @@ namespace GravitonClient
             AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
             AiImage.EndInit();
 
-            collapse = new SoundPlayer("../../Assets/Sound/SFX/destabilize.wav");
-            collapse.Load();
-            orbGrab = new SoundPlayer("../../Assets/Sound/SFX/SFX2.wav");
-            orbGrab.Load();
-            neutralize = new SoundPlayer("../../Assets/Sound/SFX/SFX1.wav");
-            neutralize.Load();
-            deposit = new SoundPlayer("../../Assets/Sound/SFX/Space entity(deposit).wav");
-            deposit.Load();
-
             AiImages = new List<Image>();
             //----------------------------------
             ship.Source = shipImage;
             ship.Width = 50;
             DrawCanvas.Children.Add(ship);
             //----------------------------------
-
-            
             
             for (int i = 0; i < HudOrbs.Length; i++) {
                 HudOrbs[i] = new Image();
@@ -180,38 +180,36 @@ namespace GravitonClient
             HudPowerups[1].Source = DestabilizeImage;
             HudPowerups[2].Source = GhostImage;
 
-
-            collapse.Play();
-            neutralize.Play();
-            deposit.Play();
-            orbGrab.Play();
-
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
         }
         public GameWindow(bool cheat)
         {
-
-            SetupGameWindow();
             Game = new Game(cheat);
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.Initialize();
             Game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
+            SetupGameWindow();
         }
 
         public GameWindow(bool cheat, Game game)
         {
-            SetupGameWindow();
-
             Game = game;
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.InitializeWithShipCreated();
+            SetupGameWindow();
         }
 
         public void Render(object sender, int e)
         {
+            for (int i = 0; i < 4; ++i)
+            {
+                Canvas.SetLeft(planets[i], Game.ViewCamera.B_Big[i].Item1);
+                Canvas.SetTop(planets[i], Game.ViewCamera.B_Big[i].Item2);
+            }
+
             int wellDiff = wellDict.Count - Game.ViewCamera.StableWells.Count;
             if (wellDiff > 0)
                 RemoveGameObjects(wellDict, wellDiff);
@@ -339,6 +337,10 @@ namespace GravitonClient
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
         {
+            collapse.Close();
+            neutralize.Close();
+            deposit.Close();
+            orbGrab.Close();
             Close();
         }
 
@@ -425,6 +427,10 @@ namespace GravitonClient
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
+            collapse.Close();
+            neutralize.Close();
+            deposit.Close();
+            orbGrab.Close();
             App.Current.MainWindow.Show();
         }
         
@@ -433,16 +439,24 @@ namespace GravitonClient
             switch (value)
             {
                 case SoundEffect.Destabilize:
-                    Task.Run(() => collapse.Play());
+                    collapse.Volume = .5;
+                    collapse.Position = new TimeSpan(0);
+                    collapse.Play();
                     break;
                 case SoundEffect.Neutralize:
-                    Task.Run(() => neutralize.Play());
+                    neutralize.Volume = .5;
+                    neutralize.Position = new TimeSpan(0);
+                    neutralize.Play();
                     break;
                 case SoundEffect.OrbDrop:
-                    Task.Run(() => deposit.Play());
+                    deposit.Volume = .5;
+                    deposit.Position = new TimeSpan(0);
+                    deposit.Play();
                     break;
                 case SoundEffect.OrbGrab:
-                    Task.Run(() => orbGrab.Play());
+                    orbGrab.Volume = .5;
+                    orbGrab.Position = new TimeSpan(0);
+                    orbGrab.Play();
                     break;
                 default:
                     break;
@@ -488,6 +502,30 @@ namespace GravitonClient
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
             background.Width = DrawCanvas.ActualWidth;
+
+            for (int i = 0; i < 4; ++i)
+            {
+                planets[i].Width = DrawCanvas.ActualWidth;
+            }
+
+            collapse = new MediaPlayer();
+            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
+            orbGrab = new MediaPlayer();
+            orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX2.mp3")));
+            neutralize = new MediaPlayer();
+            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX1.mp3")));
+            deposit = new MediaPlayer();
+            deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Space entity(deposit).mp3")));
+
+            collapse.Volume = 0;
+            orbGrab.Volume = 0;
+            neutralize.Volume = 0;
+            deposit.Volume = 0;
+
+            collapse.Play();
+            neutralize.Play();
+            deposit.Play();
+            orbGrab.Play();
         }
     }
 }
