@@ -563,7 +563,7 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            background.Width = DrawCanvas.ActualWidth;
+            //background.Width = DrawCanvas.ActualWidth;
             background.Height = DrawCanvas.ActualHeight;
 
             for (int i = 0; i < 4; ++i)
