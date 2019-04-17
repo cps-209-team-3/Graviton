@@ -216,11 +216,12 @@ namespace GravitonClient
                 DrawCanvas.Children.Add(HudPowerups[i]);
                 Canvas.SetRight(HudPowerups[i], 75);
                 Canvas.SetTop(HudPowerups[i], 80 + 70 * i);
-                HudPowerups[i].Opacity = 0.50;
             }
             HudPowerups[0].Source = NeutralizeImage;
             HudPowerups[1].Source = DestabilizeImage;
             HudPowerups[2].Source = GhostImage;
+
+            UpdateHudPowerups();
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
@@ -272,10 +273,14 @@ namespace GravitonClient
                 Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
                 Canvas.SetZIndex(wellDict[i], 5);
             }
+            
 
             gameDuration = DateTime.Now - startTime;
-            if (gameDuration.TotalMinutes > 5) { Game.GameOver(); }
-            txtTimeLeft.Text =(int) (5 - gameDuration.TotalMinutes) + ":" + (60 - (int) gameDuration.TotalSeconds % 60).ToString("D2");
+            if (gameDuration.TotalMinutes > 5) {
+                Game.GameOver();
+            }
+            txtTimeLeft.Text = (int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+
 
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
@@ -539,24 +544,27 @@ namespace GravitonClient
 
         private void UpdateHudPowerups()
         {
+            double heldOpacity = 1.0;
+            double notHeldOpacity = 0.3;
 
             if (game.Player.GamePowerup.CarryingNeutralize)
-                HudPowerups[0].Opacity = 1;
+                HudPowerups[0].Opacity = heldOpacity;
             else
-                HudPowerups[0].Opacity = 0.50;
+                HudPowerups[0].Opacity = notHeldOpacity;
             if (game.Player.GamePowerup.CarryingDestabilize)
-                HudPowerups[1].Opacity = 1;
+                HudPowerups[1].Opacity = heldOpacity;
             else
-                HudPowerups[1].Opacity = 0.50;
+                HudPowerups[1].Opacity = notHeldOpacity;
             if (game.Player.GamePowerup.CarryingGhost)
-                HudPowerups[2].Opacity = 1;
+                HudPowerups[2].Opacity = heldOpacity;
             else
-                HudPowerups[2].Opacity = 0.50;
+                HudPowerups[2].Opacity = notHeldOpacity;
         }
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
             background.Width = DrawCanvas.ActualWidth;
+            background.Height = DrawCanvas.ActualHeight;
 
             for (int i = 0; i < 4; ++i)
             {

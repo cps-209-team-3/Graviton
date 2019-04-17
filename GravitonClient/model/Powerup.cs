@@ -28,6 +28,14 @@ namespace GravitonClient
             CurrentPowerups = new List<powerups>();
         }
 
+        public Powerup()
+        {
+            CarryingNeutralize = false;
+            CarryingDestabilize = false;
+            CarryingGhost = false;
+            CurrentPowerups = new List<powerups>();
+        }
+
         //This method adds a random powerup to the powerup list.
         public void AddNew()
         {
