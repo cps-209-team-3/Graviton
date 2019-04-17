@@ -26,11 +26,13 @@ namespace GravitonClient
 
         private Game Game { get; set; }
         private GameWindow GameWindow { get; set; }
+        private DateTime pauseStartTime;
 
         public PauseWindow(Game game, GameWindow gameWindow)
         {
             Game = game;
             GameWindow = gameWindow;
+            pauseStartTime = DateTime.Now;
             InitializeComponent();
         }
 
@@ -77,6 +79,7 @@ namespace GravitonClient
         private void Window_Closed(object sender, EventArgs e)
         {
             Game.Timer.Start();
+            GameWindow.PauseDuration += DateTime.Now - pauseStartTime;
         }
     }
 }
