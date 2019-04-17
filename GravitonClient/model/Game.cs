@@ -154,10 +154,6 @@ namespace GravitonClient
                 SpawnOrb();
             if (AIShips.Count < 3)
                 SpawnAI();
-            if (Ticks == 15000)
-            {
-                GameOver();
-            }
             ViewCamera.Render();           
             
             GameUpdatedEvent(this, 0);
