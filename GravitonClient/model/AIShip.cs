@@ -46,12 +46,7 @@ namespace GravitonClient
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
                 if (dist < compareDist)
                 {
-                    bool isCompatible = false;
-                    if (Orbs.Contains(well.Orbs))
-                    {
-                        isCompatible = true;
-                    }
-                    if (isCompatible == true && !well.IsGhost)
+                    if (Orbs.Contains(well.Orbs) && !well.IsGhost)
                     {
                         closestWell = well;
                         compareDist = dist;
