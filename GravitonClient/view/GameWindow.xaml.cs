@@ -79,7 +79,7 @@ namespace GravitonClient
             AiImages = new List<Image>();
             ship = new Image();
             
-            background = new Image();
+            /*background = new Image();
             BackgroundImage = new BitmapImage();
             BackgroundImage.BeginInit();
             BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
@@ -88,7 +88,7 @@ namespace GravitonClient
             Canvas.SetLeft(background, 0);
             Canvas.SetTop(background, 0);
             Canvas.SetZIndex(background, 0);
-            DrawCanvas.Children.Add(background);
+            DrawCanvas.Children.Add(background);*/
 
             planets = new Image[4] { new Image(), new Image() , new Image() , new Image() };
             PlanetImage = new BitmapImage();
@@ -215,11 +215,12 @@ namespace GravitonClient
                 DrawCanvas.Children.Add(HudPowerups[i]);
                 Canvas.SetRight(HudPowerups[i], 75);
                 Canvas.SetTop(HudPowerups[i], 80 + 70 * i);
-                HudPowerups[i].Opacity = 0.50;
             }
             HudPowerups[0].Source = NeutralizeImage;
             HudPowerups[1].Source = DestabilizeImage;
             HudPowerups[2].Source = GhostImage;
+
+            UpdateHudPowerups();
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
@@ -274,7 +275,7 @@ namespace GravitonClient
 
             TimeSpan gameDuration = DateTime.Now - startTime;
 
-            txtTimeLeft.Text =(int) (5 - gameDuration.TotalMinutes) + ":" + (60 - (int) gameDuration.TotalSeconds % 60).ToString("D2");
+            txtTimeLeft.Text =(int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
 
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
@@ -538,24 +539,26 @@ namespace GravitonClient
 
         private void UpdateHudPowerups()
         {
+            double heldOpacity = 1.0;
+            double notHeldOpacity = 0.3;
 
             if (game.Player.GamePowerup.CarryingNeutralize)
-                HudPowerups[0].Opacity = 1;
+                HudPowerups[0].Opacity = heldOpacity;
             else
-                HudPowerups[0].Opacity = 0.50;
+                HudPowerups[0].Opacity = notHeldOpacity;
             if (game.Player.GamePowerup.CarryingDestabilize)
-                HudPowerups[1].Opacity = 1;
+                HudPowerups[1].Opacity = heldOpacity;
             else
-                HudPowerups[1].Opacity = 0.50;
+                HudPowerups[1].Opacity = notHeldOpacity;
             if (game.Player.GamePowerup.CarryingGhost)
-                HudPowerups[2].Opacity = 1;
+                HudPowerups[2].Opacity = heldOpacity;
             else
-                HudPowerups[2].Opacity = 0.50;
+                HudPowerups[2].Opacity = notHeldOpacity;
         }
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            background.Width = DrawCanvas.ActualWidth;
+            //background.Width = DrawCanvas.ActualWidth;
 
             for (int i = 0; i < 4; ++i)
             {
