@@ -90,7 +90,7 @@ namespace GravitonClient
             Canvas.SetLeft(background, 0);
             Canvas.SetTop(background, 0);
             Canvas.SetZIndex(background, 0);
-            //DrawCanvas.Children.Add(background);
+            DrawCanvas.Children.Add(background);
 
             planets = new Image[4] { new Image(), new Image() , new Image() , new Image() };
             PlanetImage = new BitmapImage();
