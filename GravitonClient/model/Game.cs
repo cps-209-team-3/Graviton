@@ -208,7 +208,9 @@ namespace GravitonClient
         //This method updates the player's position and what orbs it has.
         public void UpdatePlayer()
         {
-            UpdatePlayerPosition();
+            if (!IsCheat)
+                UpdateGravity(Player);
+            Player.Move(HorizontalInput, VerticalInput);
             Well well = Player.WellOver();
             if (well != null)
             {
@@ -260,20 +262,14 @@ namespace GravitonClient
             }
         }
 
-        //This method updates the player's position.
-        public void UpdatePlayerPosition()
-        {
-            if (!IsCheat)
-                UpdateGravity(Player);
-            Player.Move(HorizontalInput, VerticalInput);
-        }
 
         //Updates AI position and collected orbs
         public void UpdateAI()
         {
             foreach (AIShip aI in AIShips.ToList())
             {
-                UpdateAIPosition(aI);
+                UpdateGravity(aI);
+                aI.AIMove();
                 Well well = aI.WellOver();
                 if (well != null)
                 {
@@ -306,12 +302,6 @@ namespace GravitonClient
             }
         }
 
-        //updates AI position
-        public void UpdateAIPosition(AIShip aI)
-        {
-            UpdateGravity(aI);
-            aI.AIMove();
-        }
 
         //This method usually spawns a well. It sometimes not spawning a well has 2 reasons:
         //#1: To add a little bit of randomness to the game.
