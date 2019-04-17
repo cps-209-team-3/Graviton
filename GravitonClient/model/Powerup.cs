@@ -31,43 +31,48 @@ namespace GravitonClient
         //This method adds a random powerup to the powerup list.
         public void AddNew()
         {
-            int powerup = rand.Next(3);
-            switch (powerup)
+            bool powerupAdded = false;
+            while (powerupAdded == false)
             {
-                case 0:
-                    if (!CarryingNeutralize)
-                    {
-                        CurrentPowerups.Add(powerups.neutralize);
-                        GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
-                    }
-
-                    else
-                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
-                    CarryingNeutralize = true;
-                    break;
-                case 1:
-                    if (!CarryingDestabilize)
-                    {
-                        CurrentPowerups.Add(powerups.destabilize);
-                        GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
-                    }
-
-                    else
-                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
-                    CarryingDestabilize = true;
-                    break;
-                case 2:
-                    if (!CarryingGhost)
-                    {
-                        CurrentPowerups.Add(powerups.ghost);
-                        GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
-                    }
-
-                    else
-                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
-                    CarryingGhost = true;
-                    break;
+                if (CarryingDestabilize && CarryingNeutralize && CarryingGhost)
+                {
+                    powerupAdded = true;
                 }
+                else
+                {
+                    int powerup = rand.Next(3);
+                    switch (powerup)
+                    {
+                        case 0:
+                            if (!CarryingNeutralize)
+                            {
+                                CurrentPowerups.Add(powerups.neutralize);
+                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                CarryingNeutralize = true;
+                                powerupAdded = true;
+                            }
+                            break;
+                        case 1:
+                            if (!CarryingDestabilize)
+                            {
+                                CurrentPowerups.Add(powerups.destabilize);
+                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                CarryingDestabilize = true;
+                                powerupAdded = true;
+                            }
+                            break;
+                        case 2:
+                            if (!CarryingGhost)
+                            {
+                                CurrentPowerups.Add(powerups.ghost);
+                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                CarryingGhost = true;
+                                powerupAdded = true;
+                            }
+                            break;
+                    }
+                }
+            }
         }
 
 

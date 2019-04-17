@@ -35,7 +35,8 @@ namespace GravitonClient
         Image[] twins;
         Image[] stars;
 
-        private DateTime startTime; 
+        private DateTime startTime;
+        private TimeSpan gameDuration;
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
@@ -273,9 +274,13 @@ namespace GravitonClient
                 Canvas.SetZIndex(wellDict[i], 5);
             }
 
-            TimeSpan gameDuration = DateTime.Now - startTime;
 
-            txtTimeLeft.Text =(int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+            gameDuration = DateTime.Now - startTime;
+            if (gameDuration.TotalMinutes > 5) {
+                Game.GameOver();
+            }
+            txtTimeLeft.Text = (int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+
 
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
