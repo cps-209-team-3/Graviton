@@ -36,17 +36,35 @@ namespace GravitonClient
             {
                 case 0:
                     if (!CarryingNeutralize)
+                    {
                         CurrentPowerups.Add(powerups.neutralize);
+                        GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                    }
+
+                    else
+                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     CarryingNeutralize = true;
                     break;
                 case 1:
                     if (!CarryingDestabilize)
+                    {
                         CurrentPowerups.Add(powerups.destabilize);
+                        GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                    }
+
+                    else
+                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     CarryingDestabilize = true;
                     break;
                 case 2:
                     if (!CarryingGhost)
+                    {
                         CurrentPowerups.Add(powerups.ghost);
+                        GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                    }
+
+                    else
+                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     CarryingGhost = true;
                     break;
                 }

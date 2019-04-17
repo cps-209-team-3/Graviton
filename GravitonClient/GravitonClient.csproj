@@ -208,6 +208,7 @@
     <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3" />
     <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.wav" />
     <Resource Include="Assets\Sound\SFX\SFX1.mp3" />
+    <Content Include="Assets\Sound\SFX\PowerDown5.mp3" />
     <Content Include="Assets\Sound\SFX\SFX1.wav" />
     <Resource Include="Assets\Sound\SFX\SFX2.mp3" />
     <Content Include="Assets\Sound\SFX\SFX2.wav" />

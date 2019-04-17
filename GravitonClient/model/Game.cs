@@ -226,7 +226,6 @@ namespace GravitonClient
                 {
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
-                    GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     Player.GamePowerup.AddNew();
                     Points += 100;
                 }

@@ -51,10 +51,12 @@ namespace GravitonClient
         private List<Powerup.powerups> DisplayedPowerups = new List<Powerup.powerups>();
 
 
-        MediaPlayer collapse;
+        MediaPlayer unstable;
         MediaPlayer orbGrab;
         MediaPlayer neutralize;
         MediaPlayer deposit;
+        MediaPlayer powerup;
+        MediaPlayer collapse;
 
         private Game game;
         public Game Game
@@ -337,10 +339,11 @@ namespace GravitonClient
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
         {
-            collapse.Close();
+            unstable.Close();
             neutralize.Close();
             deposit.Close();
             orbGrab.Close();
+            powerup.Close();
             Close();
         }
 
@@ -427,10 +430,11 @@ namespace GravitonClient
 
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-            collapse.Close();
+            unstable.Close();
             neutralize.Close();
             deposit.Close();
             orbGrab.Close();
+            powerup.Close();
             App.Current.MainWindow.Show();
         }
         
@@ -439,9 +443,9 @@ namespace GravitonClient
             switch (value)
             {
                 case SoundEffect.Destabilize:
-                    collapse.Volume = .5;
-                    collapse.Position = new TimeSpan(0);
-                    collapse.Play();
+                    unstable.Volume = .5;
+                    unstable.Position = new TimeSpan(0);
+                    unstable.Play();
                     break;
                 case SoundEffect.Neutralize:
                     neutralize.Volume = .5;
@@ -457,6 +461,11 @@ namespace GravitonClient
                     orbGrab.Volume = .5;
                     orbGrab.Position = new TimeSpan(0);
                     orbGrab.Play();
+                    break;
+                case SoundEffect.PowerupGrab:
+                    powerup.Volume = .5;
+                    powerup.Position = new TimeSpan(0);
+                    powerup.Play();
                     break;
                 default:
                     break;
@@ -508,24 +517,28 @@ namespace GravitonClient
                 planets[i].Width = DrawCanvas.ActualWidth;
             }
 
-            collapse = new MediaPlayer();
-            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
+            unstable = new MediaPlayer();
+            unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
             orbGrab = new MediaPlayer();
             orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX2.mp3")));
             neutralize = new MediaPlayer();
-            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX1.mp3")));
+            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
             deposit = new MediaPlayer();
             deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Space entity(deposit).mp3")));
+            powerup = new MediaPlayer();
+            powerup.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Power-Up-KP-1879176533 (packet pickup).mp3")));
 
-            collapse.Volume = 0;
+            unstable.Volume = 0;
             orbGrab.Volume = 0;
             neutralize.Volume = 0;
             deposit.Volume = 0;
+            powerup.Volume = 0;
 
-            collapse.Play();
+            unstable.Play();
             neutralize.Play();
             deposit.Play();
             orbGrab.Play();
+            powerup.Play();
         }
     }
 }

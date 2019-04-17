@@ -14,6 +14,9 @@
         <TextBlock Text="Ethan Lane" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
         <TextBlock Text="Erick Ross" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
         <TextBlock Text="Brandton Visser" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="10" Foreground="Red"/>
+        <TextBlock Text="Asset credits" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="24" Margin="5" Foreground="Aqua"/>
+        <TextBlock Text="Neutralization SFX by Eric Matyas (https://soundimage.org/attribution-info/)" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+        <TextBlock Text="Font by MixoFX (https://fontsrepo.com/azonix-free-font/)" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
         <Button Content="Return to Menu" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="15" HorizontalAlignment="Center" Padding="5" Background="#101010" Foreground="Aqua" Click="ExitButton_Click"/>
     </StackPanel>
 </Window>
