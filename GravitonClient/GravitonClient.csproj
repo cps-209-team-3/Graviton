@@ -205,7 +205,9 @@
     <Resource Include="Assets\Images\parallax-space-stars.png" />
     <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3" />
     <Resource Include="Assets\Sound\SFX\destabilize.mp3" />
+    <Content Include="Assets\Sound\SFX\boost.mp3" />
     <Content Include="Assets\Sound\SFX\destabilize.wav" />
+    <Content Include="Assets\Sound\SFX\ghost.mp3" />
     <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3" />
     <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.wav" />
     <Resource Include="Assets\Sound\SFX\SFX1.mp3" />
@@ -215,6 +217,7 @@
     <Content Include="Assets\Sound\SFX\SFX2.wav" />
     <Resource Include="Assets\Sound\SFX\Silence.wav" />
     <Resource Include="Assets\Sound\SFX\Space entity%28deposit%29.mp3" />
+    <Content Include="Assets\Sound\SFX\Shut-down-sound-effect.mp3" />
     <Content Include="Assets\Sound\SFX\Space entity%28deposit%29.wav" />
   </ItemGroup>
   <ItemGroup />

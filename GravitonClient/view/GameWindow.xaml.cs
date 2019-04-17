@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 
 namespace GravitonClient
 {
-    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop };
+    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse };
 
     /// <summary>
     /// Interaction logic for GameWindow.xaml
@@ -566,7 +566,7 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            background.Width = DrawCanvas.ActualWidth;
+            //background.Width = DrawCanvas.ActualWidth;
             background.Height = DrawCanvas.ActualHeight;
 
             for (int i = 0; i < 4; ++i)
