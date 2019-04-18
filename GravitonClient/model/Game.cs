@@ -109,13 +109,13 @@ namespace GravitonClient
                     Player.SpeedBoost();
                     break;
                 case 'q':
-                    Player.GamePowerup.Neutralize();
+                    Player.GamePowerup.Neutralize(Player);
                     break;
                 case 'f':
-                    Player.GamePowerup.Destabilize();
+                    Player.GamePowerup.Destabilize(Player);
                     break;
                 case 'e':
-                    Player.GamePowerup.Ghost();
+                    Player.GamePowerup.Ghost(Player);
                     break;
             }
         }
@@ -154,25 +154,10 @@ namespace GravitonClient
                 SpawnOrb();
             if (AIShips.Count < 3)
                 SpawnAI();
+
             ViewCamera.Render();           
             
             GameUpdatedEvent(this, 0);
-        }
-
-        //Destroys all orbs within vicinity of destabilized wells
-        public void ShockWave()
-        {
-            foreach (Well well in UnstableWells)
-            {
-                foreach (Orb orb in Orbs.ToList())
-                {
-                    if (Math.Pow(well.Xcoor - orb.Xcoor, 2) + Math.Pow(well.Ycoor - orb.Ycoor, 2) < 100000)
-                    {
-                        Orbs.Remove(orb);
-                        GameObjects.Remove(orb);
-                    }
-                }
-            }
         }
 
         // This method updates all the wells in the game.
@@ -194,8 +179,21 @@ namespace GravitonClient
             foreach (Well well in UnstableWells.ToList())
             {
                 well.TicksLeft--;
-                if (well.TicksLeft % WellDestabFreq / 20 == 0)
-                    ShockWave();
+                if (well.TicksLeft % 100 == 0)
+                {
+                    if (well.ShockWaveTicksLeft == 0)
+                    {
+                        well.ShockWaveTicksLeft = 50;
+                    }
+                    if (well.ShockWaveTicksLeft > 0)
+                    {
+                        --well.ShockWaveTicksLeft;
+                        well.ShockWaveRadius += 5000;
+                        well.ShockWave(this);
+                        if (well.ShockWaveTicksLeft == 0)
+                            well.ShockWaveRadius = 0;
+                    }
+                }
                 if (well.TicksLeft == 0)
                 {
                     GameInvokeSoundEvent(this, SoundEffect.Collapse);
@@ -285,6 +283,7 @@ namespace GravitonClient
                     {
                         StableWells.Remove(well);
                         GameObjects.Remove(well);
+                        aI.GamePowerup.AddNew();
                         aI.SetTargetPos();
                     }
                 }
@@ -300,6 +299,9 @@ namespace GravitonClient
                         aI.SetTargetPos();
                     }
                 }
+                aI.UseNeutralize();
+                aI.UseDestabilize();
+                aI.UseGhost();
             }
         }
 
