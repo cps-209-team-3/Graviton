@@ -418,6 +418,7 @@ namespace GravitonClient
             g.game.Username = username;
             g.Show();
             Close();
+            App.Current.MainWindow.Hide();
         }
 
         private void GameOver_Click(object sender, RoutedEventArgs e)

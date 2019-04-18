@@ -138,6 +138,39 @@ namespace GravitonClient
             Move(XMove, YMove);
         }
 
+        public void UseDestabilize()
+        {
+            foreach (Well well in ParentGame.UnstableWells.ToList())
+            {
+                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                {
+                    GamePowerup.Destabilize(this);
+                }
+            }
+        }
+
+        public void UseNeutralize()
+        {
+            foreach (Well well in ParentGame.StableWells.ToList())
+            {
+                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                {
+                    GamePowerup.Neutralize(this);
+                }
+            }
+        }
+
+        public void UseGhost()
+        {
+            foreach (Well well in ParentGame.UnstableWells.ToList())
+            {
+                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                {
+                    GamePowerup.Ghost(this);
+                }
+            }
+        }
+
         public override void IncrementScore()
         {
         }
