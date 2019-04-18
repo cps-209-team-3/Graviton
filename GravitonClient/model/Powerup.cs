@@ -45,6 +45,7 @@ namespace GravitonClient
                 if (CarryingDestabilize && CarryingNeutralize && CarryingGhost)
                 {
                     powerupAdded = true;
+                    GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                 }
                 else
                 {
@@ -97,7 +98,7 @@ namespace GravitonClient
                 if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
                 {
                     if (ParentGame.Player.GamePowerup == this)
-                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
+                        GameInvokeSoundEvent(this, SoundEffect.Collapse);
                     ParentGame.UnstableWells.Remove(well);
                     ParentGame.GameObjects.Remove(well);
                     CarryingNeutralize = false;

@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 
 namespace GravitonClient
 {
-    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse };
+    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
 
     /// <summary>
     /// Interaction logic for GameWindow.xaml
@@ -65,6 +65,7 @@ namespace GravitonClient
         MediaPlayer powerup;
         MediaPlayer collapse;
         MediaPlayer ghost;
+        MediaPlayer boost;
 
         private Game game;
         public Game Game
@@ -236,6 +237,7 @@ namespace GravitonClient
             Game.GameInvokeSoundEvent += PlaySound;
             Game.Initialize();
             Game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
+            Game.Player.GameInvokeSoundEvent += PlaySound;
             SetupGameWindow();
         }
 
@@ -245,6 +247,7 @@ namespace GravitonClient
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.InitializeWithShipCreated();
+            Game.Player.GameInvokeSoundEvent += PlaySound;
             SetupGameWindow();
         }
 
@@ -277,7 +280,6 @@ namespace GravitonClient
                 Canvas.SetZIndex(wellDict[i], 5);
             }
             
-
             gameDuration = DateTime.Now - startTime - PauseDuration;
             if (gameDuration.TotalMinutes > 5) {
                 Game.GameOver();
@@ -429,6 +431,7 @@ namespace GravitonClient
             powerup.Close();
             collapse.Close();
             ghost.Close();
+            boost.Close();
             Close();
         }
 
@@ -522,6 +525,7 @@ namespace GravitonClient
             powerup.Close();
             collapse.Close();
             ghost.Close();
+            boost.Close();
             App.Current.MainWindow.Show();
         }
         
@@ -563,6 +567,11 @@ namespace GravitonClient
                     ghost.Volume = .5;
                     ghost.Position = new TimeSpan(0);
                     ghost.Play();
+                    break;
+                case SoundEffect.Boost:
+                    boost.Volume = .5;
+                    boost.Position = new TimeSpan(0);
+                    boost.Play();
                     break;
                 default:
                     break;
@@ -647,6 +656,8 @@ namespace GravitonClient
             collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
             ghost = new MediaPlayer();
             ghost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/ghost.mp3")));
+            boost = new MediaPlayer();
+            boost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/boost.mp3")));
 
             unstable.Volume = 0;
             orbGrab.Volume = 0;
@@ -655,6 +666,7 @@ namespace GravitonClient
             powerup.Volume = 0;
             collapse.Volume = 0;
             ghost.Volume = 0;
+            boost.Volume = 0;
 
             unstable.Play();
             neutralize.Play();
@@ -663,6 +675,7 @@ namespace GravitonClient
             powerup.Play();
             collapse.Play();
             ghost.Play();
+            boost.Play();
         }
     }
 }
