@@ -113,7 +113,7 @@ namespace GravitonClient
             {
                 double deltaX = well.Xcoor - this.Xcoor;
                 double deltaY = well.Ycoor - this.Ycoor;
-                if (deltaX * deltaX + deltaY * deltaY < 3600)
+                if (deltaX * deltaX + deltaY * deltaY < 2500)
                     return well;
             }
             return null;
