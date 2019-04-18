@@ -181,19 +181,12 @@ namespace GravitonClient
                 well.TicksLeft--;
                 if (well.TicksLeft % 100 == 0)
                 {
-                    if (well.ShockWaveTicksLeft == 0)
+                    if (well.ShockWave.TicksLeft == 0)
                     {
-                        well.ShockWaveTicksLeft = 50;
-                    }
-                    if (well.ShockWaveTicksLeft > 0)
-                    {
-                        --well.ShockWaveTicksLeft;
-                        well.ShockWaveRadius += 5000;
-                        well.ShockWave(this);
-                        if (well.ShockWaveTicksLeft == 0)
-                            well.ShockWaveRadius = 0;
+                        well.ShockWave.TicksLeft = 50;
                     }
                 }
+                well.ShockWave.Pulse();
                 if (well.TicksLeft == 0)
                 {
                     GameInvokeSoundEvent(this, SoundEffect.Collapse);
@@ -319,6 +312,7 @@ namespace GravitonClient
                 well.TicksLeft = WellDestabFreq + Random.Next(1001);
                 StableWells.Add(well);
                 GameObjects.Add(well);
+                well.ShockWave = new Shockwave(this, well);
             }
         }
 
