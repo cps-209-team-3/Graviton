@@ -45,6 +45,7 @@ namespace GravitonClient
                 if (CarryingDestabilize && CarryingNeutralize && CarryingGhost)
                 {
                     powerupAdded = true;
+                    GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                 }
                 else
                 {
