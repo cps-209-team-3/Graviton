@@ -36,12 +36,10 @@ namespace GravitonClient
                         ParentGame.GameObjects.Remove(orb);
                     }
                 }
-                if (TicksLeft <= 0)
-                    Radius = 0;
-                else
-                    --TicksLeft;
+                --TicksLeft;
             }
-            
+            if (TicksLeft == 0)
+                Radius = 0;
         }
 
         public override string Serialize()
