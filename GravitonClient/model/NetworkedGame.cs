@@ -38,7 +38,7 @@ namespace GravitonClient
 
         internal void KeyReleased(char v)
         {
-            UDPGameClient.SendKeyRealease(v);
+            UDPGameClient.SendKeyRelease(v);
         }
     }
 }

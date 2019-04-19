@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    class GameStats
+    public class GameStats
     {
         public static GameStats Deserialize(string data)
         {

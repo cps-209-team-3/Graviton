@@ -56,7 +56,6 @@ namespace GravitonClient
         Image[] HudPowerups = new Image[3];
 
         private List<int> currentOrbs = new List<int>();
-        private List<Powerup.powerups> DisplayedPowerups = new List<Powerup.powerups>();
 
         MediaPlayer unstable;
         MediaPlayer orbGrab;
@@ -68,7 +67,7 @@ namespace GravitonClient
         MediaPlayer boost;
 
         private NetworkedGame game;
-        
+        private bool gameStarted;
 
         private void SetupGameWindow()
         {
@@ -231,7 +230,9 @@ namespace GravitonClient
 
         public NetworkedGameWindow(NetworkedGame game)
         {
+            UDPGameClient.SetCurrentGameReporter(this);
             this.game = game;
+            UDPGameClient.StartListening();
             game.GameUpdatedEvent += Render;
             game.GameInvokeSoundEvent += PlaySound;
             SetupGameWindow();
@@ -239,6 +240,13 @@ namespace GravitonClient
 
         public void Render(object sender, NetworkedCameraFrame e)
         {
+            if (!gameStarted)
+            {
+                gameStarted = true;
+                DrawCanvas.Children.Remove(grid_secondsLeft);
+            }
+
+
             CameraFrame currentFrame = e;
 
 
@@ -657,12 +665,12 @@ namespace GravitonClient
 
         public void DisplaySecondsTillStart(int seconds)
         {
-            throw new NotImplementedException();
+            lbl_secondsLeft.Content = "Seconds to start: " + seconds;
         }
 
         public void DisplayError(string s)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(s);
         }
     }
 }

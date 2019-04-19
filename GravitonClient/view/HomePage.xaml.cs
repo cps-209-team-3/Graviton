@@ -58,5 +58,10 @@ namespace GravitonClient.view
             a.Show();
             App.Current.MainWindow.Hide();
         }
+
+        private void MultiPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new NetworkPlayPage(this));
+        }
     }
 }

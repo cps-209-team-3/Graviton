@@ -26,6 +26,8 @@ namespace GravitonClient
         public bool HasDestabilizePowerup { get; set; }
         public bool HasNeutralizePowerup { get; set; }
         public int Points { get; internal set; }
+        public List<Tuple<double, double>> OtherHumanShips { get; set}
+
 
         public CameraFrame()
         {

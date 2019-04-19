@@ -15,33 +15,29 @@ namespace GravitonClient
     {
         private static string gameServerName = "127.0.0.1";
         private static int gameServerPort = 8000;
+        private static IPEndPoint gameEndPoint;
 
         private static UdpClient gameConn;
 
-        private static bool IsDoneWithCurrentGame;
+        private static bool IsListening;
         private static GameReporter reporter;
 
         private static NetworkedGame currentGame;
 
         internal static NetworkedGame JoinGame(string userName, double CameraWidth, double CameraHeight)
-        {
-            IsDoneWithCurrentGame = false;
+        {            
+            IsListening = false;
             gameConn = new UdpClient();
-            
+
             gameConn.Connect(gameServerName, gameServerPort);
             byte[] nameBytes = Encoding.ASCII.GetBytes($"{userName}|{CameraWidth}|{CameraHeight}");
             gameConn.Send(nameBytes, nameBytes.Length);
-            IPEndPoint gameEndPoint = new IPEndPoint(IPAddress.Any, 0);
+            gameEndPoint = new IPEndPoint(IPAddress.Any, 0);
             currentGame = new NetworkedGame(userName);
-            Task.Run(() =>
-            {
-                while (!IsDoneWithCurrentGame)
-                {
-                    DoAction(gameConn.Receive(ref gameEndPoint));
-                }
-            });
+            
 
             return currentGame;
+           
         }
 
         internal static void SetCurrentGameReporter(GameReporter gr)
@@ -49,14 +45,31 @@ namespace GravitonClient
             reporter = gr;
         }
 
-
+        internal static void StartListening()
+        {
+            IsListening = true;
+            Task.Run(() =>
+            {
+                while (IsListening)
+                {
+                    try
+                    {
+                        DoAction(gameConn.Receive(ref gameEndPoint));
+                    }
+                    catch (Exception e)
+                    {
+                        reporter.DisplayError(e.Message);
+                    }
+                }
+            });
+        }
 
         internal static void SendKeyPress(char key)
         {
             gameConn.Send(new byte[] { (byte)key, 1}, 2);
         }
 
-        internal static void SendKeyRealease(char key)
+        internal static void SendKeyRelease(char key)
         {
             gameConn.Send(new byte[] { (byte)key, 0}, 2);
         }
@@ -74,14 +87,11 @@ namespace GravitonClient
                     reporter.GameOver();
                     break;
                 case 2:
-                    reporter.DisplayStart();
-                    break;
-                case 3:
                     string str = Encoding.ASCII.GetString(data, 1, data.Length - 1);
                     reporter.DisplayStats(GameStats.Deserialize(str));
-                    IsDoneWithCurrentGame = true;
+                    IsListening = true;
                     break;
-                case 4:
+                case 3:
                     reporter.DisplaySecondsTillStart((int) data[1]);
                     break;
             }

@@ -15,9 +15,11 @@ namespace GravitonClient
         public double ScreenY { get; set; }
         public double[,] BackgroundXY { get; set; }
         public List<Tuple<double, double>>[] Backgrounds { get; set; }
+        private Ship Player;
 
-        public Camera(Game game)
+        public Camera(Game game, Ship s)
         {
+            Player = s;
             ParentGame = game;
             Width = 1440;
             Height = 900;
@@ -30,10 +32,10 @@ namespace GravitonClient
         public CameraFrame GetCameraFrame() {
             CameraFrame cameraFrame = new CameraFrame();
             cameraFrame.Seconds = ParentGame.Ticks / 50;
-            cameraFrame.Points = ParentGame.Points;
+            cameraFrame.Points = Player.Points;
             cameraFrame.IsOver = ParentGame.IsOver;
             AdjustScreenForPlayer(cameraFrame);
-            cameraFrame.PlayerAngle = Math.Atan2(ParentGame.Player.SpeedY, ParentGame.Player.SpeedX) * 180 / Math.PI;
+            cameraFrame.PlayerAngle = Math.Atan2(Player.SpeedY, Player.SpeedX) * 180 / Math.PI;
 
             double xc, yc;
 
@@ -76,14 +78,14 @@ namespace GravitonClient
             }
 
             cameraFrame.PlayerOrbs = new List<int>();
-            foreach (int orb in ParentGame.Player.Orbs)
+            foreach (int orb in Player.Orbs)
             {
                 cameraFrame.PlayerOrbs.Add(orb);
             }
 
-            cameraFrame.HasDestabilizePowerup = ParentGame.Player.GamePowerup.CarryingDestabilize;
-            cameraFrame.HasNeutralizePowerup = ParentGame.Player.GamePowerup.CarryingNeutralize;
-            cameraFrame.HasGhostingPowerup = ParentGame.Player.GamePowerup.CarryingGhost;
+            cameraFrame.HasDestabilizePowerup = Player.GamePowerup.CarryingDestabilize;
+            cameraFrame.HasNeutralizePowerup = Player.GamePowerup.CarryingNeutralize;
+            cameraFrame.HasGhostingPowerup = Player.GamePowerup.CarryingGhost;
             return cameraFrame;
         }
         
@@ -92,8 +94,8 @@ namespace GravitonClient
         {
             double tempX = ScreenX;
             double tempY = ScreenY;
-            double xc = ParentGame.Player.Xcoor - ScreenX;
-            double yc = ParentGame.Player.Ycoor - ScreenY;
+            double xc = Player.Xcoor - ScreenX;
+            double yc = Player.Ycoor - ScreenY;
             if (xc < 250)
             {
                 ScreenX += xc - 250;
