@@ -282,7 +282,8 @@ namespace GravitonClient
             
             gameDuration = DateTime.Now - startTime - PauseDuration;
             if (gameDuration.TotalMinutes > 5) {
-                Game.GameOver();
+                Game.Timer.Stop();
+                Game.IsOver = true;
 
                 Button b2 = new Button();
                 b2.Content = "Start Next Round";
@@ -411,12 +412,14 @@ namespace GravitonClient
         {
             int newWellSpawnFreq = Game.WellSpawnFreq - 50;
             int newWellDestabFreq = Game.WellDestabFreq - 250;
+            int points = Game.Points;
             bool isCheat = Game.IsCheat;
             string username = Game.Username;
 
             GameWindow g = new GameWindow(isCheat);
             g.Game.WellSpawnFreq = newWellSpawnFreq;
             g.Game.WellDestabFreq = newWellDestabFreq;
+            g.Game.Points = points;
             g.game.Username = username;
             g.Show();
             Close();
@@ -433,6 +436,7 @@ namespace GravitonClient
             collapse.Close();
             ghost.Close();
             boost.Close();
+            Game.GameOver();
             Close();
         }
 
@@ -619,7 +623,7 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (272 / 160 > DrawCanvas.ActualWidth / DrawCanvas.ActualHeight)
+            if ((DrawCanvas.ActualWidth / 272)*160 < DrawCanvas.ActualHeight)
             {
                 background.Height = DrawCanvas.ActualHeight;
                 background.Width = DrawCanvas.ActualWidth;
