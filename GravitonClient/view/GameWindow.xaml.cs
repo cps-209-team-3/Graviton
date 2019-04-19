@@ -622,6 +622,7 @@ namespace GravitonClient
             if (272 / 160 > DrawCanvas.ActualWidth / DrawCanvas.ActualHeight)
             {
                 background.Height = DrawCanvas.ActualHeight;
+                background.Width = DrawCanvas.ActualWidth;
                 for (int i = 0; i < 4; ++i)
                 {
                     planets[i].Height = DrawCanvas.ActualHeight;
@@ -633,7 +634,7 @@ namespace GravitonClient
 
             else
             {
-                background.Width = DrawCanvas.ActualWidth;
+                background.Height = DrawCanvas.ActualHeight;
                 for (int i = 0; i < 4; ++i)
                 {
                     planets[i].Width = DrawCanvas.ActualWidth;
