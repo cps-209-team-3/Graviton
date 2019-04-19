@@ -43,7 +43,11 @@ namespace GravitonClient
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(json, "stablegravitywells")))
                 game.StableWells.Add(GameObject.FromJsonFactory<Well>(s));
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(json, "unstablegravitywells")))
-                game.UnstableWells.Add(GameObject.FromJsonFactory<Well>(s));
+            {
+                Well w = GameObject.FromJsonFactory<Well>(s);
+                w.ShockWave.ParentGame = game;
+                game.UnstableWells.Add(w);
+            }
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(json, "orbs")))
                 game.Orbs.Add(GameObject.FromJsonFactory<Orb>(s));
             foreach (string s in JsonUtils.GetObjectsInArray(JsonUtils.ExtractValue(json, "aiplayers")))

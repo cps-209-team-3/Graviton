@@ -55,6 +55,7 @@ namespace GravitonClient
             catch
             {
                 IsStable = false;
+                ShockWave = new Shockwave(this);
             }
         }
     }
