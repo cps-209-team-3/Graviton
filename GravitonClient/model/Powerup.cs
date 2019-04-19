@@ -97,7 +97,7 @@ namespace GravitonClient
             {
                 if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
-                    if (ship.GamePowerup == this)
+                    if (ParentGame.Player.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     ParentGame.UnstableWells.Remove(well);
                     ParentGame.GameObjects.Remove(well);

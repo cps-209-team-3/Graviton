@@ -619,7 +619,7 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (272 / 160 > DrawCanvas.ActualWidth / DrawCanvas.ActualHeight)
+            if ((DrawCanvas.ActualWidth / 272)*160 < DrawCanvas.ActualHeight)
             {
                 background.Height = DrawCanvas.ActualHeight;
                 for (int i = 0; i < 4; ++i)
