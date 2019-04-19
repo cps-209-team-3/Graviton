@@ -146,10 +146,10 @@ namespace GravitonClient
                     if (ship.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Ghost);
                     well.IsGhost = true;
-                    ship.IsImmune = true;
-                    ship.ImmuneTicksLeft = 150;
                 }
             }
+            ship.IsImmune = true;
+            ship.ImmuneTicksLeft = 100;
         }
     }
 }

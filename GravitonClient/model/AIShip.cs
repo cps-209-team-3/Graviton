@@ -174,5 +174,10 @@ namespace GravitonClient
         public override void IncrementScore()
         {
         }
+
+        public override bool Locked(Well well)
+        {
+            return well.IsGhost;
+        }
     }
 }
