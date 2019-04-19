@@ -150,7 +150,7 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 5 == 0 && Orbs.Count < 170)
+            if (Ticks % 5 == 0 && Orbs.Count < 200)
                 SpawnOrb();
             if (AIShips.Count < 3)
                 SpawnAI();
@@ -190,7 +190,6 @@ namespace GravitonClient
                 if (well.TicksLeft == 0)
                 {
                     GameInvokeSoundEvent(this, SoundEffect.Collapse);
-                    // any explosions or something????
                     UnstableWells.Remove(well);
                     GameObjects.Remove(well);
                 }
@@ -210,7 +209,10 @@ namespace GravitonClient
                 if (!well.IsStable)
                 {
                     if (!IsCheat && !Player.IsImmune)
-                        GameOver();
+                    {
+                        IsOver = true;
+                        Timer.Stop();
+                    }
                 }
                 else if (Player.DepositOrbs(well))
                 {
@@ -272,7 +274,7 @@ namespace GravitonClient
                         AIShips.Remove(aI);
                         GameObjects.Remove(aI);
                     }
-                    else if (aI.DepositOrbs(well) && !well.IsGhost)
+                    else if (aI.DepositOrbs(well))
                     {
                         StableWells.Remove(well);
                         GameObjects.Remove(well);
@@ -356,8 +358,8 @@ namespace GravitonClient
         //This method is called when the game ends.
         public void GameOver()
         {
-            IsOver = true;
-            Timer.Stop();
+            //IsOver = true;
+            //Timer.Stop();
             highScores.CheckNewScores(this);
             highScores.Save(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
         }
