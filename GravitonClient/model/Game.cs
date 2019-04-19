@@ -186,6 +186,8 @@ namespace GravitonClient
                         well.ShockWave.TicksLeft = 50;
                     }
                 }
+                if (well.ShockWave == null)
+                    well.ShockWave = new Shockwave(this, well);
                 well.ShockWave.Pulse();
                 if (well.TicksLeft == 0)
                 {
