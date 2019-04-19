@@ -109,13 +109,13 @@ namespace GravitonClient
                     Player.SpeedBoost();
                     break;
                 case 'q':
-                    Player.GamePowerup.Neutralize();
+                    Player.GamePowerup.Neutralize(Player);
                     break;
                 case 'f':
-                    Player.GamePowerup.Destabilize();
+                    Player.GamePowerup.Destabilize(Player);
                     break;
                 case 'e':
-                    Player.GamePowerup.Ghost();
+                    Player.GamePowerup.Ghost(Player);
                     break;
             }
         }
@@ -154,25 +154,10 @@ namespace GravitonClient
                 SpawnOrb();
             if (AIShips.Count < 3)
                 SpawnAI();
+
             ViewCamera.Render();           
             
             GameUpdatedEvent(this, 0);
-        }
-
-        //Destroys all orbs within vicinity of destabilized wells
-        public void ShockWave()
-        {
-            foreach (Well well in UnstableWells)
-            {
-                foreach (Orb orb in Orbs.ToList())
-                {
-                    if (Math.Pow(well.Xcoor - orb.Xcoor, 2) + Math.Pow(well.Ycoor - orb.Ycoor, 2) < 100000)
-                    {
-                        Orbs.Remove(orb);
-                        GameObjects.Remove(orb);
-                    }
-                }
-            }
         }
 
         // This method updates all the wells in the game.
@@ -194,10 +179,17 @@ namespace GravitonClient
             foreach (Well well in UnstableWells.ToList())
             {
                 well.TicksLeft--;
-                if (well.TicksLeft % WellDestabFreq / 20 == 0)
-                    ShockWave();
+                if (well.TicksLeft % 100 == 0)
+                {
+                    if (well.ShockWave.TicksLeft == 0)
+                    {
+                        well.ShockWave.TicksLeft = 50;
+                    }
+                }
+                well.ShockWave.Pulse();
                 if (well.TicksLeft == 0)
                 {
+                    GameInvokeSoundEvent(this, SoundEffect.Collapse);
                     // any explosions or something????
                     UnstableWells.Remove(well);
                     GameObjects.Remove(well);
@@ -208,7 +200,9 @@ namespace GravitonClient
         //This method updates the player's position and what orbs it has.
         public void UpdatePlayer()
         {
-            UpdatePlayerPosition();
+            if (!IsCheat)
+                UpdateGravity(Player);
+            Player.Move(HorizontalInput, VerticalInput);
             Well well = Player.WellOver();
             if (well != null)
             {
@@ -260,20 +254,14 @@ namespace GravitonClient
             }
         }
 
-        //This method updates the player's position.
-        public void UpdatePlayerPosition()
-        {
-            if (!IsCheat)
-                UpdateGravity(Player);
-            Player.Move(HorizontalInput, VerticalInput);
-        }
 
         //Updates AI position and collected orbs
         public void UpdateAI()
         {
             foreach (AIShip aI in AIShips.ToList())
             {
-                UpdateAIPosition(aI);
+                UpdateGravity(aI);
+                aI.AIMove();
                 Well well = aI.WellOver();
                 if (well != null)
                 {
@@ -288,6 +276,7 @@ namespace GravitonClient
                     {
                         StableWells.Remove(well);
                         GameObjects.Remove(well);
+                        aI.GamePowerup.AddNew();
                         aI.SetTargetPos();
                     }
                 }
@@ -303,15 +292,12 @@ namespace GravitonClient
                         aI.SetTargetPos();
                     }
                 }
+                aI.UseNeutralize();
+                aI.UseDestabilize();
+                aI.UseGhost();
             }
         }
 
-        //updates AI position
-        public void UpdateAIPosition(AIShip aI)
-        {
-            UpdateGravity(aI);
-            aI.AIMove();
-        }
 
         //This method usually spawns a well. It sometimes not spawning a well has 2 reasons:
         //#1: To add a little bit of randomness to the game.
@@ -326,6 +312,7 @@ namespace GravitonClient
                 well.TicksLeft = WellDestabFreq + Random.Next(1001);
                 StableWells.Add(well);
                 GameObjects.Add(well);
+                well.ShockWave = new Shockwave(this, well);
             }
         }
 

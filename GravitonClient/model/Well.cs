@@ -14,6 +14,7 @@ namespace GravitonClient
         public int TicksLeft { get; set; }
         public double Strength { get; set; }
         public int Orbs { get; set; }
+        public Shockwave ShockWave { get; set; }
         private Random rand;
 
         public Well(double xcoor, double ycoor) : base(xcoor, ycoor)

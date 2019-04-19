@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 
 namespace GravitonClient
 {
-    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse };
+    public enum SoundEffect {OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
 
     /// <summary>
     /// Interaction logic for GameWindow.xaml
@@ -37,6 +37,7 @@ namespace GravitonClient
 
         private DateTime startTime;
         private TimeSpan gameDuration;
+        public TimeSpan PauseDuration { get; set; }
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
@@ -63,6 +64,8 @@ namespace GravitonClient
         MediaPlayer deposit;
         MediaPlayer powerup;
         MediaPlayer collapse;
+        MediaPlayer ghost;
+        MediaPlayer boost;
 
         private Game game;
         public Game Game
@@ -140,6 +143,7 @@ namespace GravitonClient
             }
 
             startTime = DateTime.Now;
+            PauseDuration = new TimeSpan(0);
             wellImages = new List<BitmapImage>();
             string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
             for (int i = 0; i < 6; ++i)
@@ -233,6 +237,7 @@ namespace GravitonClient
             Game.GameInvokeSoundEvent += PlaySound;
             Game.Initialize();
             Game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
+            Game.Player.GameInvokeSoundEvent += PlaySound;
             SetupGameWindow();
         }
 
@@ -242,6 +247,7 @@ namespace GravitonClient
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.InitializeWithShipCreated();
+            Game.Player.GameInvokeSoundEvent += PlaySound;
             SetupGameWindow();
         }
 
@@ -274,10 +280,24 @@ namespace GravitonClient
                 Canvas.SetZIndex(wellDict[i], 5);
             }
             
-
-            gameDuration = DateTime.Now - startTime;
+            gameDuration = DateTime.Now - startTime - PauseDuration;
             if (gameDuration.TotalMinutes > 5) {
                 Game.GameOver();
+
+                Button b2 = new Button();
+                b2.Content = "Start Next Round";
+                b2.FontSize = 40;
+                b2.FontFamily = (FontFamily)this.FindResource("Azonix");
+                b2.Margin = new Thickness(20);
+                b2.Padding = new Thickness(10, 5, 10, 0);
+                b2.Background = Brushes.Black;
+                b2.Foreground = Brushes.Red;
+                b2.Click += NextRound_Click;
+                b2.Width = 500;
+                Canvas.SetZIndex(b2, 100);
+                Canvas.SetLeft(b2, (DrawCanvas.ActualWidth - b2.Width) / 2);
+                Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
+                DrawCanvas.Children.Add(b2);
             }
             txtTimeLeft.Text = (int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
 
@@ -339,7 +359,6 @@ namespace GravitonClient
                 Canvas.SetLeft(AiImages[i], Game.ViewCamera.AIShips[i].Item1);
                 Canvas.SetTop(AiImages[i], Game.ViewCamera.AIShips[i].Item2);
                 Canvas.SetZIndex(AiImages[i], 9);
-                //display the correct destabilized image at the right place
             }
             
 
@@ -380,12 +399,28 @@ namespace GravitonClient
                 b.Background = Brushes.Black;
                 b.Foreground = Brushes.Red;
                 b.Click += GameOver_Click;
-                b.Width = 450;
+                b.Width = 500;
                 Canvas.SetZIndex(b, 100);
                 Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
                 Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
                 DrawCanvas.Children.Add(b);
             }
+        }
+
+        private void NextRound_Click(object sender, RoutedEventArgs e)
+        {
+            int newWellSpawnFreq = Game.WellSpawnFreq - 50;
+            int newWellDestabFreq = Game.WellDestabFreq - 250;
+            bool isCheat = Game.IsCheat;
+            string username = Game.Username;
+
+            GameWindow g = new GameWindow(isCheat);
+            g.Game.WellSpawnFreq = newWellSpawnFreq;
+            g.Game.WellDestabFreq = newWellDestabFreq;
+            g.game.Username = username;
+            g.Show();
+            Close();
+            App.Current.MainWindow.Hide();
         }
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
@@ -395,6 +430,9 @@ namespace GravitonClient
             deposit.Close();
             orbGrab.Close();
             powerup.Close();
+            collapse.Close();
+            ghost.Close();
+            boost.Close();
             Close();
         }
 
@@ -486,6 +524,9 @@ namespace GravitonClient
             deposit.Close();
             orbGrab.Close();
             powerup.Close();
+            collapse.Close();
+            ghost.Close();
+            boost.Close();
             App.Current.MainWindow.Show();
         }
         
@@ -517,6 +558,21 @@ namespace GravitonClient
                     powerup.Volume = .5;
                     powerup.Position = new TimeSpan(0);
                     powerup.Play();
+                    break;
+                case SoundEffect.Collapse:
+                    collapse.Volume = .5;
+                    collapse.Position = new TimeSpan(0);
+                    collapse.Play();
+                    break;
+                case SoundEffect.Ghost:
+                    ghost.Volume = .5;
+                    ghost.Position = new TimeSpan(0);
+                    ghost.Play();
+                    break;
+                case SoundEffect.Boost:
+                    boost.Volume = .5;
+                    boost.Position = new TimeSpan(0);
+                    boost.Play();
                     break;
                 default:
                     break;
@@ -592,23 +648,35 @@ namespace GravitonClient
             orbGrab = new MediaPlayer();
             orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX2.mp3")));
             neutralize = new MediaPlayer();
-            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
+            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Shut-down-sound-effect.mp3")));
             deposit = new MediaPlayer();
             deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Space entity(deposit).mp3")));
             powerup = new MediaPlayer();
             powerup.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Power-Up-KP-1879176533 (packet pickup).mp3")));
+            collapse = new MediaPlayer();
+            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
+            ghost = new MediaPlayer();
+            ghost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/ghost.mp3")));
+            boost = new MediaPlayer();
+            boost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/boost.mp3")));
 
             unstable.Volume = 0;
             orbGrab.Volume = 0;
             neutralize.Volume = 0;
             deposit.Volume = 0;
             powerup.Volume = 0;
+            collapse.Volume = 0;
+            ghost.Volume = 0;
+            boost.Volume = 0;
 
             unstable.Play();
             neutralize.Play();
             deposit.Play();
             orbGrab.Play();
             powerup.Play();
+            collapse.Play();
+            ghost.Play();
+            boost.Play();
         }
     }
 }

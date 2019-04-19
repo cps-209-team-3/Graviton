@@ -45,6 +45,7 @@ namespace GravitonClient
                 if (CarryingDestabilize && CarryingNeutralize && CarryingGhost)
                 {
                     powerupAdded = true;
+                    GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                 }
                 else
                 {
@@ -55,7 +56,8 @@ namespace GravitonClient
                             if (!CarryingNeutralize)
                             {
                                 CurrentPowerups.Add(powerups.neutralize);
-                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                if (ParentGame.Player.GamePowerup == this)
+                                    GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
                                 CarryingNeutralize = true;
                                 powerupAdded = true;
                             }
@@ -64,7 +66,8 @@ namespace GravitonClient
                             if (!CarryingDestabilize)
                             {
                                 CurrentPowerups.Add(powerups.destabilize);
-                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                if (ParentGame.Player.GamePowerup == this)
+                                    GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
                                 CarryingDestabilize = true;
                                 powerupAdded = true;
                             }
@@ -73,7 +76,8 @@ namespace GravitonClient
                             if (!CarryingGhost)
                             {
                                 CurrentPowerups.Add(powerups.ghost);
-                                GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
+                                if (ParentGame.Player.GamePowerup == this)
+                                    GameInvokeSoundEvent(this, SoundEffect.PowerupGrab);
                                 CarryingGhost = true;
                                 powerupAdded = true;
                             }
@@ -85,14 +89,16 @@ namespace GravitonClient
 
 
         //This method neutralizes a nearby destabilized well
-        public void Neutralize()
+        public void Neutralize(Ship ship)
         {
             if (!CarryingNeutralize)
                 return;
             foreach (Well well in ParentGame.UnstableWells.ToList())
             {
-                if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
+                if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
+                    if (ship.GamePowerup == this)
+                        GameInvokeSoundEvent(this, SoundEffect.Neutralize);
                     ParentGame.UnstableWells.Remove(well);
                     ParentGame.GameObjects.Remove(well);
                     CarryingNeutralize = false;
@@ -102,16 +108,16 @@ namespace GravitonClient
         }
 
         //This method destabilizes a nearby well
-        public void Destabilize()
+        public void Destabilize(Ship ship)
         {
             if (!CarryingDestabilize)
                 return;
-            GameInvokeSoundEvent(this, SoundEffect.Destabilize);
-            CurrentPowerups.Remove(powerups.destabilize);
             foreach (Well well in ParentGame.StableWells.ToList())
             {
-                if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
+                if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
+                    if (ship.GamePowerup == this)
+                        GameInvokeSoundEvent(this, SoundEffect.Destabilize);
                     CarryingDestabilize = false;
                     CurrentPowerups.Remove(powerups.destabilize);
                     well.TicksLeft = 3000;
@@ -120,26 +126,28 @@ namespace GravitonClient
                     well.IsTrap = true;
                     ParentGame.UnstableWells.Add(well);
                     ParentGame.StableWells.Remove(well);
-                    ParentGame.Player.IsImmune = true;
-                    ParentGame.Player.ImmuneTicksLeft = 50;
+                    ship.IsImmune = true;
+                    ship.ImmuneTicksLeft = 50;
                 }
             }
         }
 
         //This method locks AI from depositing in a nearby well.
-        public void Ghost()
+        public void Ghost(Ship ship)
         {
             if (!CarryingGhost)
                 return;
-            CarryingGhost = false;
-            CurrentPowerups.Remove(powerups.ghost);
             foreach (Well well in ParentGame.StableWells.ToList())
             {
-                if (Math.Pow(ParentGame.Player.Xcoor - well.Xcoor, 2) + Math.Pow(ParentGame.Player.Ycoor - well.Ycoor, 2) < 40000)
+                if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
+                    CarryingGhost = false;
+                    CurrentPowerups.Remove(powerups.ghost);
+                    if (ship.GamePowerup == this)
+                        GameInvokeSoundEvent(this, SoundEffect.Ghost);
                     well.IsGhost = true;
-                    ParentGame.Player.IsImmune = true;
-                    ParentGame.Player.ImmuneTicksLeft = 150;
+                    ship.IsImmune = true;
+                    ship.ImmuneTicksLeft = 150;
                 }
             }
         }
