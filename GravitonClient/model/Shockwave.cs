@@ -8,6 +8,8 @@ namespace GravitonClient
 {
     public class Shockwave : GameObject
     {
+        private Well well;
+
         public Game ParentGame { get; set; }
         public Well ParentWell { get; set; }
         public int Radius { get; set; }
@@ -21,6 +23,11 @@ namespace GravitonClient
             Ycoor = well.Ycoor;
             Radius = 0;
             TicksLeft = 0;
+        }
+
+        public Shockwave(Well well)
+        {
+            this.well = well;
         }
 
         public void Pulse()

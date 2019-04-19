@@ -248,6 +248,7 @@ namespace GravitonClient
             Game.GameInvokeSoundEvent += PlaySound;
             Game.InitializeWithShipCreated();
             Game.Player.GameInvokeSoundEvent += PlaySound;
+            game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
             SetupGameWindow();
         }
 
