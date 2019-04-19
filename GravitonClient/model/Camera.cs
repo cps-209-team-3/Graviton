@@ -80,6 +80,10 @@ namespace GravitonClient
             {
                 cameraFrame.PlayerOrbs.Add(orb);
             }
+
+            cameraFrame.HasDestabilizePowerup = ParentGame.Player.GamePowerup.CarryingDestabilize;
+            cameraFrame.HasNeutralizePowerup = ParentGame.Player.GamePowerup.CarryingNeutralize;
+            cameraFrame.HasGhostingPowerup = ParentGame.Player.GamePowerup.CarryingGhost;
             return cameraFrame;
         }
         
@@ -118,12 +122,12 @@ namespace GravitonClient
         {
             for (int i = 0; i < 4; i++)
             {
-                BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.04 + 0.08 * i) + Width) % Width;
-                BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.04 + 0.08 * i) + Height) % Height;
+                BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.04 + 0.09 * i) + Width * (1 + 0.2 * i)) % (Width * (1 + 0.2 * i));
+                BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.04 + 0.09 * i) + Height * (1 + 0.2 * i)) % (Height * (1 + 0.2 * i));
                 Backgrounds[i] = new List<Tuple<double, double>>();
                 for (int j = 0; j < 4; j++)
                 {
-                    Backgrounds[i].Add(Tuple.Create(BackgroundXY[i, 0] - Width * (j / 2), BackgroundXY[i, 1] - Height * (j % 2)));
+                    Backgrounds[i].Add(Tuple.Create(BackgroundXY[i, 0] - Width * (1 + 0.2 * i) * (j / 2), BackgroundXY[i, 1] - Height * (1 + 0.2 * i) * (j % 2)));
                 }
             }
             cameraFrame.Backgrounds = Backgrounds;

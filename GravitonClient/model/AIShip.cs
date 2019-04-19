@@ -46,12 +46,7 @@ namespace GravitonClient
                 dist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
                 if (dist < compareDist)
                 {
-                    bool isCompatible = false;
-                    if (Orbs.Contains(well.Orbs))
-                    {
-                        isCompatible = true;
-                    }
-                    if (isCompatible == true && !well.IsGhost)
+                    if (Orbs.Contains(well.Orbs) && !well.IsGhost)
                     {
                         closestWell = well;
                         compareDist = dist;
@@ -141,6 +136,39 @@ namespace GravitonClient
             SetTargetPos();
             SetMoveDir();
             Move(XMove, YMove);
+        }
+
+        public void UseDestabilize()
+        {
+            foreach (Well well in ParentGame.UnstableWells.ToList())
+            {
+                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                {
+                    GamePowerup.Destabilize(this);
+                }
+            }
+        }
+
+        public void UseNeutralize()
+        {
+            foreach (Well well in ParentGame.StableWells.ToList())
+            {
+                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                {
+                    GamePowerup.Neutralize(this);
+                }
+            }
+        }
+
+        public void UseGhost()
+        {
+            foreach (Well well in ParentGame.UnstableWells.ToList())
+            {
+                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                {
+                    GamePowerup.Ghost(this);
+                }
+            }
         }
 
         public override void IncrementScore()

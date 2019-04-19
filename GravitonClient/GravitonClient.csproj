@@ -65,8 +65,14 @@
     <Compile Include="model\AIShip.cs" />
     <Compile Include="model\CameraFrame.cs" />
     <Compile Include="model\GameLoader.cs" />
+    <Compile Include="model\GameReporter.cs" />
+    <Compile Include="model\GameStats.cs" />
     <Compile Include="model\JsonUtils.cs" />
+    <Compile Include="model\NetworkedCameraFrame.cs" />
+    <Compile Include="model\NetworkedGame.cs" />
     <Compile Include="model\Powerup.cs" />
+    <Compile Include="model\Shockwave.cs" />
+    <Compile Include="model\UDPClient.cs" />
     <Compile Include="tests\JsonTests.cs" />
     <Compile Include="view\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
@@ -91,6 +97,9 @@
     <Compile Include="tests\SerializeTests.cs" />
     <Compile Include="view\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\NetworkedGameWindow.xaml.cs">
+      <DependentUpon>NetworkedGameWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\PauseWindow.xaml.cs">
       <DependentUpon>PauseWindow.xaml</DependentUpon>
@@ -131,6 +140,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="view\NetworkedGameWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\PauseWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -20,6 +20,8 @@ namespace GravitonClient
 
         private Random rand = new Random();
 
+        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
+
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
@@ -79,7 +81,9 @@ namespace GravitonClient
         {
             if (Orbs.Count >= 3)
             {
-                for(int i = 0; i < 3; ++i)
+                if (ParentGame.Player == this)
+                    GameInvokeSoundEvent(this, SoundEffect.Boost);
+                for (int i = 0; i < 3; ++i)
                 {
                     int orbIndex = rand.Next(Orbs.Count);
                     Orbs.RemoveAt(orbIndex);
@@ -109,7 +113,7 @@ namespace GravitonClient
             {
                 double deltaX = well.Xcoor - this.Xcoor;
                 double deltaY = well.Ycoor - this.Ycoor;
-                if (deltaX * deltaX + deltaY * deltaY < 3600)
+                if (deltaX * deltaX + deltaY * deltaY < 2500)
                     return well;
             }
             return null;
@@ -119,17 +123,21 @@ namespace GravitonClient
         //This method deposits all of the orbs it can into a given well.
         public bool DepositOrbs(Well well)
         {
+            bool completed = false;
             foreach (int orb in Orbs.ToList())
             {
                 if (orb == well.Orbs)
                 {
-                    well.Orbs++;
+                    if (well.Orbs == 5)
+                        completed = true;
+                    else
+                        well.Orbs++;
                     IncrementScore();
                     Orbs.Remove(orb);
                     well.TicksLeft = ParentGame.WellDestabFreq;
                 }
             }
-            return well.Orbs == 6;
+            return completed;
         }
 
         public virtual void IncrementScore()

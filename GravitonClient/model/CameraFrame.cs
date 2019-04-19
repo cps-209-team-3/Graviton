@@ -23,11 +23,17 @@ namespace GravitonClient
         public int Seconds { get; set; }
         public int Score { get; set; }
         public bool IsOver { get; set; }
+        public bool HasGhostingPowerup { get; set; }
+        public bool HasDestabilizePowerup { get; set; }
+        public bool HasNeutralizePowerup { get; set; }
+        public string Points { get; internal set; }
 
         public CameraFrame()
         {
             Backgrounds = new List<Tuple<double, double>>[4];
             BackgroundXY = new double[4, 2];
         }
+
+     
     }
 }
