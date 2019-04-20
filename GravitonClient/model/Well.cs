@@ -11,6 +11,7 @@ namespace GravitonClient
         public bool IsStable { get; set; }
         public bool IsTrap { get; set; }
         public bool IsGhost { get; set; }
+        public Ship Owner { get; set; }
         public int TicksLeft { get; set; }
         public double Strength { get; set; }
         public int Orbs { get; set; }
@@ -23,6 +24,7 @@ namespace GravitonClient
             IsStable = true;
             IsTrap = false;
             IsGhost = false;
+            Owner = null;
             Strength = 300;
             TicksLeft = rand.Next(1500,4001);
             Orbs = 0;

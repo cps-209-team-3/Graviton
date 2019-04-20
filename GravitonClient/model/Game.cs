@@ -271,7 +271,7 @@ namespace GravitonClient
                 {
                     if (!well.IsStable)
                     {
-                        if (well.IsTrap)
+                        if (well.IsTrap && well.Owner == Player)
                             Points += 200;
                         AIShips.Remove(aI);
                         GameObjects.Remove(aI);
