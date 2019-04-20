@@ -77,6 +77,15 @@ namespace GravitonClient
                     cameraFrame.AIShips.Add(Tuple.Create(xc - 25, yc - 25));
             }
 
+            cameraFrame.OtherHumanShips = new List<Tuple<double, double>>();
+            foreach (Ship ship in ParentGame.Players)
+            {
+                xc = ship.Xcoor - ScreenX;
+                yc = ship.Ycoor - ScreenY;
+                if (xc > -25 && xc < Width + 25 && yc > -25 && yc < Height + 25)
+                    cameraFrame.OtherHumanShips.Add(Tuple.Create(xc - 25, yc - 25));
+            }
+
             cameraFrame.PlayerOrbs = new List<int>();
             foreach (int orb in Player.Orbs)
             {
@@ -117,23 +126,9 @@ namespace GravitonClient
                 yc = Height - 250;
             }
             cameraFrame.PlayerShip = Tuple.Create(xc - 25, yc - 25);
-            CalculateBackgounds(ScreenX - tempX, ScreenY - tempY, cameraFrame);
+            cameraFrame.ChangeX = ScreenX - tempX;
+            cameraFrame.ScreenY = ScreenY - tempY;
         }
 
-        public void CalculateBackgounds(double changeX, double changeY, CameraFrame cameraFrame)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.04 + 0.09 * i) + Width * (1 + 0.2 * i)) % (Width * (1 + 0.2 * i));
-                BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.04 + 0.09 * i) + Height * (1 + 0.2 * i)) % (Height * (1 + 0.2 * i));
-                Backgrounds[i] = new List<Tuple<double, double>>();
-                for (int j = 0; j < 4; j++)
-                {
-                    Backgrounds[i].Add(Tuple.Create(BackgroundXY[i, 0] - Width * (1 + 0.2 * i) * (j / 2), BackgroundXY[i, 1] - Height * (1 + 0.2 * i) * (j % 2)));
-                }
-            }
-            cameraFrame.Backgrounds = Backgrounds;
-            cameraFrame.BackgroundXY = BackgroundXY;
-        }
     }
 }

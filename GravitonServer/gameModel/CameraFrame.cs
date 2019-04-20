@@ -8,6 +8,8 @@ namespace GravitonClient
 {
     public class CameraFrame
     {
+        public double ChangeX { get; set; }
+        public double ChangeY { get; set; }
         public double ScreenX { get; set; }
         public double ScreenY { get; set; }
         public double[,] BackgroundXY { get; set; }
@@ -26,7 +28,7 @@ namespace GravitonClient
         public bool HasDestabilizePowerup { get; set; }
         public bool HasNeutralizePowerup { get; set; }
         public int Points { get; internal set; }
-        public List<Tuple<double, double>> OtherHumanShips { get; set}
+        public List<Tuple<double, double>> OtherHumanShips { get; set; }
 
 
         public CameraFrame()
@@ -35,6 +37,22 @@ namespace GravitonClient
             BackgroundXY = new double[4, 2];
         }
 
-     
+        public string Serialize()
+        {
+            return $"{Math.Round(ScreenX,2)} {Math.Round(ScreenY, 2)} {Math.Round(ChangeX, 2)} {Math.Round(ChangeY, 2)} ";
+        }
+
+        private static string serializeTuples(List<Tuple<double, double, int>> tuples)
+        {
+            string retVal = "";
+            int i = 0;
+            for(; i < tuples.Count - 1; i++)
+            {
+                var currentTuple = tuples[i];
+                //retVal += currentTuple[i]
+            }
+            
+            return retVal;
+        }
     }
 }

@@ -13,7 +13,6 @@ namespace GravitonClient
         public bool IsCheat { get; set; }
         public bool IsOver { get; set; }
         public Random Random { get; set; }
-        public Camera ViewCamera { get; set; }
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }
         public int VerticalInput { get; set; }

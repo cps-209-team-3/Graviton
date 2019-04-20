@@ -20,6 +20,7 @@ namespace GravitonClient
         public int ImmuneTicksLeft { get; set; }
         public int VerticalInput { get; set; }
         public int HorizontalInput { get; set; }
+        public Camera ViewCamera { get; set; }
 
         private Random rand = new Random();
 
@@ -29,6 +30,7 @@ namespace GravitonClient
         {
             ParentGame = game;
             GamePowerup = new Powerup(this);
+            ViewCamera = new Camera(game, this);
             IsImmune = false;
             Xcoor = xcoor;
             Ycoor = ycoor;
