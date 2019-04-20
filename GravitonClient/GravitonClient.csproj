@@ -63,6 +63,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="model\AIShip.cs" />
+    <Compile Include="model\Animation.cs" />
+    <Compile Include="view\Animator.cs" />
     <Compile Include="model\GameLoader.cs" />
     <Compile Include="model\JsonUtils.cs" />
     <Compile Include="model\Powerup.cs" />
