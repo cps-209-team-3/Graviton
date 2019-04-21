@@ -390,7 +390,7 @@ namespace GravitonClient.view
             }
 
             gameDuration = DateTime.Now - startTime - pauseDuration;
-            if (gameDuration.TotalMinutes > 5)
+            if (gameDuration.TotalMinutes > 1)
             {
                 Game.Timer.Stop();
                 Game.IsOver = true;
@@ -405,7 +405,7 @@ namespace GravitonClient.view
                 b2.Foreground = Brushes.Red;
                 b2.Click += NextRound_Click;
                 b2.Width = 500;
-                Canvas.SetZIndex(b2, 100);
+                Canvas.SetZIndex(b2, 101);
                 Canvas.SetLeft(b2, (DrawCanvas.ActualWidth - b2.Width) / 2);
                 Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
                 DrawCanvas.Children.Add(b2);
@@ -511,10 +511,14 @@ namespace GravitonClient.view
                 b.Foreground = Brushes.Red;
                 b.Click += GameOver_Click;
                 b.Width = 500;
-                Canvas.SetZIndex(b, 100);
+                Canvas.SetZIndex(b, 101);
                 Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
                 Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
                 DrawCanvas.Children.Add(b);
+                DrawCanvas.Children.Add(pauseRectangle);
+                Canvas.SetZIndex(pauseRectangle, 100);
+                pauseRectangle.Width = DrawCanvas.ActualWidth;
+                pauseRectangle.Height = DrawCanvas.ActualHeight;
             }
         }
 
@@ -526,11 +530,12 @@ namespace GravitonClient.view
             bool isCheat = Game.IsCheat;
             string username = Game.Username;
 
-            GamePage g = new GamePage(isCheat, new Game(isCheat), ParentPage, Window);
+            GamePage g = new GamePage(isCheat, ParentPage, Window);
             g.Game.WellSpawnFreq = newWellSpawnFreq;
             g.Game.WellDestabFreq = newWellDestabFreq;
             g.Game.Points = points;
             g.game.Username = username;
+            DrawCanvas.Children.Remove(pauseRectangle);
             this.NavigationService.Navigate(g);
             GameWindow_Closed();
         }
