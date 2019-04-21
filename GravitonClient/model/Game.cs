@@ -7,6 +7,8 @@ using System.Windows.Threading;
 
 namespace GravitonClient
 {
+    public enum SoundEffect { OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
+
     public class Game
     {
         public event EventHandler<int> GameUpdatedEvent;

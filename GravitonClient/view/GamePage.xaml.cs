@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,14 +11,15 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GravitonClient
+namespace GravitonClient.view
 {
     /// <summary>
     /// Interaction logic for GameWindow.xaml
     /// </summary>
-    public partial class GameWindow : Window
+    public partial class GamePage : Page
     {
         List<Image> wellDict;
         List<Image> destableDict;
@@ -36,6 +35,10 @@ namespace GravitonClient
         private DateTime startTime;
         private TimeSpan gameDuration;
         public TimeSpan PauseDuration { get; set; }
+
+        public Page ParentPage { get; set; }
+        public Window Window { get; set; }
+
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
@@ -80,7 +83,7 @@ namespace GravitonClient
             orbDict = new List<Image>();
             AiImages = new List<Image>();
             ship = new Image();
-            
+
             background = new Image();
             BackgroundImage = new BitmapImage();
             BackgroundImage.BeginInit();
@@ -93,7 +96,7 @@ namespace GravitonClient
             Canvas.SetZIndex(background, 0);
             DrawCanvas.Children.Add(background);
 
-            planets = new Image[4] { new Image(), new Image() , new Image() , new Image() };
+            planets = new Image[4] { new Image(), new Image(), new Image(), new Image() };
             PlanetImage = new BitmapImage();
             PlanetImage.BeginInit();
             PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
@@ -185,8 +188,9 @@ namespace GravitonClient
             ship.Width = 50;
             DrawCanvas.Children.Add(ship);
             //----------------------------------
-            
-            for (int i = 0; i < HudOrbs.Length; i++) {
+
+            for (int i = 0; i < HudOrbs.Length; i++)
+            {
                 HudOrbs[i] = new Image();
                 HudOrbs[i].Opacity = 0.80;
                 HudOrbs[i].Width = 30;
@@ -228,8 +232,12 @@ namespace GravitonClient
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
         }
-        public GameWindow(bool cheat)
+        public GamePage(bool cheat, Page parentPage, Window w)
         {
+            ParentPage = parentPage;
+            Window = w;
+            Window.KeyDown += Window_KeyDown;
+            Window.KeyUp += Window_KeyUp;
             Game = new Game(cheat);
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
@@ -239,8 +247,12 @@ namespace GravitonClient
             SetupGameWindow();
         }
 
-        public GameWindow(bool cheat, Game game)
+        public GamePage(bool cheat, Game game, Page parentPage, Window w)
         {
+            ParentPage = parentPage;
+            Window = w;
+            Window.KeyDown += Window_KeyDown;
+            Window.KeyUp += Window_KeyUp;
             Game = game;
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
@@ -269,7 +281,7 @@ namespace GravitonClient
                 RemoveGameObjects(wellDict, wellDiff);
             if (wellDiff < 0)
                 AddGameObjects(wellDict, -wellDiff);
-            
+
             for (int i = 0; i < wellDict.Count; ++i)
             {
                 int color = Game.ViewCamera.StableWells[i].Item3;
@@ -278,9 +290,10 @@ namespace GravitonClient
                 Canvas.SetTop(wellDict[i], Game.ViewCamera.StableWells[i].Item2);
                 Canvas.SetZIndex(wellDict[i], 5);
             }
-            
+
             gameDuration = DateTime.Now - startTime - PauseDuration;
-            if (gameDuration.TotalMinutes > 5) {
+            if (gameDuration.TotalMinutes > 5)
+            {
                 Game.Timer.Stop();
                 Game.IsOver = true;
 
@@ -299,7 +312,7 @@ namespace GravitonClient
                 Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
                 DrawCanvas.Children.Add(b2);
             }
-            txtTimeLeft.Text = (int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+            txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
 
 
 
@@ -319,7 +332,7 @@ namespace GravitonClient
                 Canvas.SetZIndex(destableDict[i], 6);
             }
 
-            int orbDiff =  orbDict.Count - Game.ViewCamera.Orbs.Count;
+            int orbDiff = orbDict.Count - Game.ViewCamera.Orbs.Count;
             if (orbDiff > 0)
                 RemoveGameObjects(orbDict, orbDiff);
             if (orbDiff < 0)
@@ -342,7 +355,7 @@ namespace GravitonClient
 
 
             //to be implemented with AI
-            
+
 
 
             int shipDiff = AiImages.Count - Game.ViewCamera.AIShips.Count;
@@ -351,7 +364,7 @@ namespace GravitonClient
                 RemoveGameObjects(AiImages, shipDiff);
             if (shipDiff < 0)
                 AddGameObjects(AiImages, -shipDiff);
-            
+
             for (int i = 0; i < AiImages.Count; ++i)
             {
                 AiImages[i].Source = AiImage;
@@ -360,7 +373,7 @@ namespace GravitonClient
                 Canvas.SetTop(AiImages[i], Game.ViewCamera.AIShips[i].Item2);
                 Canvas.SetZIndex(AiImages[i], 9);
             }
-            
+
 
 
             Game.ViewCamera.Width = DrawCanvas.ActualWidth;
@@ -371,9 +384,9 @@ namespace GravitonClient
             //==========================
             //HUD
             //==========================
-            
-            
-            if(!Enumerable.SequenceEqual(currentOrbs, game.Player.Orbs))
+
+
+            if (!Enumerable.SequenceEqual(currentOrbs, game.Player.Orbs))
             {
                 UpdateHudOrbs();
                 currentOrbs = game.Player.Orbs.ToList();
@@ -385,7 +398,7 @@ namespace GravitonClient
                 DisplayedPowerups = game.Player.GamePowerup.CurrentPowerups.ToList();
                 UpdateHudPowerups();
             }
-            
+
 
 
             if (Game.IsOver)
@@ -415,14 +428,13 @@ namespace GravitonClient
             bool isCheat = Game.IsCheat;
             string username = Game.Username;
 
-            GameWindow g = new GameWindow(isCheat);
+            GamePage g = new GamePage(isCheat, new Game(isCheat), ParentPage, Window);
             g.Game.WellSpawnFreq = newWellSpawnFreq;
             g.Game.WellDestabFreq = newWellDestabFreq;
             g.Game.Points = points;
             g.game.Username = username;
-            g.Show();
-            Close();
-            App.Current.MainWindow.Hide();
+            this.NavigationService.Navigate(g);
+            GameWindow_Closed();
         }
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
@@ -436,7 +448,8 @@ namespace GravitonClient
             ghost.Close();
             boost.Close();
             Game.GameOver();
-            Close();
+            this.NavigationService.Navigate(ParentPage);
+            GameWindow_Closed();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -444,8 +457,8 @@ namespace GravitonClient
             if (e.Key == Key.Escape)
             {
                 Game.Timer.Stop();
-                PauseWindow pauseWin = new PauseWindow(Game, this);
-                pauseWin.Show();
+                PausePage pauseWin = new PausePage(Game, this, Window);
+                this.NavigationService.Navigate(pauseWin);
             }
             else
             {
@@ -520,7 +533,7 @@ namespace GravitonClient
             }
         }
 
-        private void GameWindow_Closed(object sender, EventArgs e)
+        private void GameWindow_Closed()
         {
             unstable.Close();
             neutralize.Close();
@@ -530,9 +543,8 @@ namespace GravitonClient
             collapse.Close();
             ghost.Close();
             boost.Close();
-            App.Current.MainWindow.Show();
         }
-        
+
         void PlaySound(object sender, SoundEffect value)
         {
             switch (value)
@@ -585,8 +597,8 @@ namespace GravitonClient
         private void UpdateHudOrbs()
         {
 
-            
-            for( int i = 0; i < HudOrbs.Length; i++)
+
+            for (int i = 0; i < HudOrbs.Length; i++)
             {
                 try
                 {
@@ -622,7 +634,7 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if ((DrawCanvas.ActualWidth / 272)*160 < DrawCanvas.ActualHeight)
+            if ((DrawCanvas.ActualWidth / 272) * 160 < DrawCanvas.ActualHeight)
             {
                 background.Height = DrawCanvas.ActualHeight;
                 for (int i = 0; i < 4; ++i)
@@ -645,7 +657,7 @@ namespace GravitonClient
                     stars[i].Width = DrawCanvas.ActualWidth;
                 }
             }
-            
+
             unstable = new MediaPlayer();
             unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
             orbGrab = new MediaPlayer();

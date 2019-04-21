@@ -20,19 +20,16 @@ namespace GravitonClient.view
     /// </summary>
     public partial class HomePage : Page
     {
-        bool cheat;
-
+        public Window Window { get; set; }
         public HomePage()
         {
             InitializeComponent();
-            cheat = false;
+            Window = Application.Current.MainWindow;
         }
 
         private void BtnHighScores_Click(object sender, RoutedEventArgs e)
         {
-            HighScoreWindow hs = new HighScoreWindow();
-            hs.Show();
-            App.Current.MainWindow.Hide();
+            this.NavigationService.Navigate(new HighScorePage(this));
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -42,21 +39,17 @@ namespace GravitonClient.view
         
         private void PlayButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new PlayPage(this));
+            this.NavigationService.Navigate(new PlayPage(this, Window));
         }
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
         {
-            HelpWindow h = new HelpWindow();
-            h.Show();
-            App.Current.MainWindow.Hide();
+            this.NavigationService.Navigate(new HelpPage(this));
         }
 
         private void AboutButton_Click(object sender, RoutedEventArgs e)
         {
-            AboutWindow a = new AboutWindow();
-            a.Show();
-            App.Current.MainWindow.Hide();
+            this.NavigationService.Navigate(new AboutPage(this));
         }
     }
 }
