@@ -142,7 +142,6 @@ namespace GravitonClient
             {
                 if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
-                    CarryingGhost = false;
                     CurrentPowerups.Remove(powerups.ghost);
                     if (ParentGame.Player.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Ghost);
@@ -150,6 +149,7 @@ namespace GravitonClient
                     well.Owner = ship;
                 }
             }
+            CarryingGhost = false;
             ship.IsImmune = true;
             ship.ImmuneTicksLeft = 100;
         }
