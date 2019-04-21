@@ -23,11 +23,14 @@ namespace GravitonClient.view
         bool cheat;
         Page prevPage;
 
+        Window window;
+
         public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
 
-        public PlayPage(Page p)
+        public PlayPage(Page p, Window w)
         {
             prevPage = p;
+            window = w;
             cheat = false;
             InitializeComponent();
         }
@@ -47,8 +50,7 @@ namespace GravitonClient.view
         {
             if (txtBxUser.Text != "" && txtBxUser.Text != null)
             {
-                GameWindow g = new GameWindow(cheat);
-                g.Show();
+                GamePage g = new GamePage(cheat, this, window);
                 g.Game.Username = txtBxUser.Text;
                 if (DifficultyBx.Text == "Easy")
                 {
@@ -65,7 +67,7 @@ namespace GravitonClient.view
                     g.Game.WellSpawnFreq = 200;
                     g.Game.WellDestabFreq = 1000;
                 }
-                App.Current.MainWindow.Hide();
+                this.NavigationService.Navigate(g);
             }
 
             else
@@ -81,9 +83,8 @@ namespace GravitonClient.view
                 try
                 {
                     Game g = GameLoader.Load(SaveFileName, false);
-                    GameWindow newWindow = new GameWindow(g.IsCheat, g);
-                    newWindow.Show();
-                    App.Current.MainWindow.Hide();
+                    GamePage newWindow = new GamePage(g.IsCheat, g, this, window);
+                    this.NavigationService.Navigate(newWindow);
                 }
                 catch (ArgumentException)
                 {

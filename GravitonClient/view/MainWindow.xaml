@@ -6,7 +6,5 @@
         xmlns:local="clr-namespace:GravitonClient"
         mc:Ignorable="d"
         Title="MainWindow" WindowState="Maximized">
-    <StackPanel Background="Black">
-        <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" Source="pack:HomePage.xaml"/>
-    </StackPanel>
+    <Frame x:Name="NavigationFrame" NavigationUIVisibility="Hidden" Source="pack:HomePage.xaml"/>
 </Window>
