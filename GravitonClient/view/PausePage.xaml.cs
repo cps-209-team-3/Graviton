@@ -85,7 +85,7 @@ namespace GravitonClient.view
 
         private void BtnHelp_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new HelpPage(this, Window));
+            this.NavigationService.Navigate(new HelpPage(this));
         }
     }
 }
