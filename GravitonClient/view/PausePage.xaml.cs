@@ -79,7 +79,7 @@ namespace GravitonClient.view
         private void LeavePage()
         {
             Game.Timer.Start();
-            GamePage.PauseDuration += DateTime.Now - pauseStartTime;
+            //GamePage.pauseDuration += DateTime.Now - pauseStartTime;
             this.NavigationService.Navigate(GamePage);
         }
 

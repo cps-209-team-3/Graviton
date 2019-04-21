@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Path = System.IO.Path;
 
 namespace GravitonClient.view
 {
@@ -34,10 +35,21 @@ namespace GravitonClient.view
 
         private DateTime startTime;
         private TimeSpan gameDuration;
-        public TimeSpan PauseDuration { get; set; }
+        private DateTime pauseStartTime;
+        private TimeSpan pauseDuration;
+
+        private bool isPaused;
 
         public Page ParentPage { get; set; }
         public Window Window { get; set; }
+
+        private Rectangle pauseRectangle;
+        private Button btnResume;
+        private Button btnLoad;
+        private Button btnExit;
+        private Button btnHelp;
+
+        public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
 
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
@@ -144,7 +156,7 @@ namespace GravitonClient.view
             }
 
             startTime = DateTime.Now;
-            PauseDuration = new TimeSpan(0);
+            pauseDuration = new TimeSpan(0);
             wellImages = new List<BitmapImage>();
             string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
             for (int i = 0; i < 6; ++i)
@@ -231,7 +243,91 @@ namespace GravitonClient.view
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
+
+            //Set up pause elements
+            pauseRectangle = new Rectangle();
+            pauseRectangle.Fill = Brushes.Black;
+            pauseRectangle.Opacity = 0.75;
+
+            btnResume = new Button();
+            btnResume.Content = "Resume";
+            btnResume.FontSize = 40;
+            btnResume.FontFamily = (FontFamily)this.FindResource("Azonix");
+            btnResume.Margin = new Thickness(20);
+            btnResume.Padding = new Thickness(10, 5, 10, 0);
+            btnResume.Background = Brushes.Black;
+            btnResume.Foreground = Brushes.Red;
+            btnResume.Click += btnResume_Click;
+            btnResume.Width = 500;
+
+            btnExit = new Button();
+            btnExit.Content = "Save and Exit";
+            btnExit.FontSize = 40;
+            btnExit.FontFamily = (FontFamily)this.FindResource("Azonix");
+            btnExit.Margin = new Thickness(20);
+            btnExit.Padding = new Thickness(10, 5, 10, 0);
+            btnExit.Background = Brushes.Black;
+            btnExit.Foreground = Brushes.Red;
+            btnExit.Click += btnExit_Click;
+            btnExit.Width = 500;
+
+            btnLoad = new Button();
+            btnLoad.Content = "Load Last Save";
+            btnLoad.FontSize = 40;
+            btnLoad.FontFamily = (FontFamily)this.FindResource("Azonix");
+            btnLoad.Margin = new Thickness(20);
+            btnLoad.Padding = new Thickness(10, 5, 10, 0);
+            btnLoad.Background = Brushes.Black;
+            btnLoad.Foreground = Brushes.Red;
+            btnLoad.Click += btnLoad_Click;
+            btnLoad.Width = 500;
+
+            btnHelp = new Button();
+            btnHelp.Content = "Help";
+            btnHelp.FontSize = 40;
+            btnHelp.FontFamily = (FontFamily)this.FindResource("Azonix");
+            btnHelp.Margin = new Thickness(20);
+            btnHelp.Padding = new Thickness(10, 5, 10, 0);
+            btnHelp.Background = Brushes.Black;
+            btnHelp.Foreground = Brushes.Red;
+            btnHelp.Click += btnHelp_Click;
+            btnHelp.Width = 500;
         }
+
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new HelpPage(this));
+        }
+
+        private void btnLoad_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+
+                Game = GameLoader.Load(SaveFileName, false);
+                GamePage newWindow = new GamePage(Game.IsCheat, Game, ParentPage, Window);
+                this.NavigationService.Navigate(newWindow);
+                Game.Timer.Start();
+            }
+            catch (ArgumentException)
+            {
+                MessageBox.Show("Cannot find file.");
+            }
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            Game.IsOver = true;
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(Directory.GetCurrentDirectory(), SaveFileName)));
+            GameLoader.Save(Game, SaveFileName);
+            this.NavigationService.Navigate(ParentPage);
+        }
+
+        private void btnResume_Click(object sender, RoutedEventArgs e)
+        {
+            UnPause();
+        }
+
         public GamePage(bool cheat, Page parentPage, Window w)
         {
             ParentPage = parentPage;
@@ -239,6 +335,7 @@ namespace GravitonClient.view
             Window.KeyDown += Window_KeyDown;
             Window.KeyUp += Window_KeyUp;
             Game = new Game(cheat);
+            isPaused = false;
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.Initialize();
@@ -254,6 +351,7 @@ namespace GravitonClient.view
             Window.KeyDown += Window_KeyDown;
             Window.KeyUp += Window_KeyUp;
             Game = game;
+            isPaused = false;
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
             Game.InitializeWithShipCreated();
@@ -291,7 +389,7 @@ namespace GravitonClient.view
                 Canvas.SetZIndex(wellDict[i], 5);
             }
 
-            gameDuration = DateTime.Now - startTime - PauseDuration;
+            gameDuration = DateTime.Now - startTime - pauseDuration;
             if (gameDuration.TotalMinutes > 5)
             {
                 Game.Timer.Stop();
@@ -456,9 +554,16 @@ namespace GravitonClient.view
         {
             if (e.Key == Key.Escape)
             {
-                Game.Timer.Stop();
-                PausePage pauseWin = new PausePage(Game, this, Window);
-                this.NavigationService.Navigate(pauseWin);
+                if (!isPaused)
+                {
+                    Pause();
+                }
+                else if (isPaused)
+                {
+                    UnPause();
+                }
+                //PausePage pauseWin = new PausePage(Game, this, Window);
+                //this.NavigationService.Navigate(pauseWin);
             }
             else
             {
@@ -513,6 +618,45 @@ namespace GravitonClient.view
                 default:
                     break;
             }
+        }
+
+        public void Pause()
+        {
+            isPaused = true;
+            Game.Timer.Stop();
+            pauseStartTime = DateTime.Now;
+            DrawCanvas.Children.Add(btnResume);
+            DrawCanvas.Children.Add(btnExit);
+            DrawCanvas.Children.Add(btnHelp);
+            DrawCanvas.Children.Add(btnLoad);
+            DrawCanvas.Children.Add(pauseRectangle);
+            Canvas.SetZIndex(pauseRectangle, 100);
+            pauseRectangle.Width = DrawCanvas.ActualWidth;
+            pauseRectangle.Height = DrawCanvas.ActualHeight;
+            Canvas.SetZIndex(btnResume, 101);
+            Canvas.SetLeft(btnResume, (DrawCanvas.ActualWidth - btnResume.Width) / 2);
+            Canvas.SetTop(btnResume, DrawCanvas.ActualHeight / 5);
+            Canvas.SetZIndex(btnExit, 101);
+            Canvas.SetLeft(btnExit, (DrawCanvas.ActualWidth - btnExit.Width) / 2);
+            Canvas.SetTop(btnExit, DrawCanvas.ActualHeight / 5 * 4);
+            Canvas.SetZIndex(btnLoad, 101);
+            Canvas.SetLeft(btnLoad, (DrawCanvas.ActualWidth - btnLoad.Width) / 2);
+            Canvas.SetTop(btnLoad, DrawCanvas.ActualHeight / 5 * 3);
+            Canvas.SetZIndex(btnHelp, 101);
+            Canvas.SetLeft(btnHelp, (DrawCanvas.ActualWidth - btnHelp.Width) / 2);
+            Canvas.SetTop(btnHelp, DrawCanvas.ActualHeight / 5 * 2);
+        }
+
+        public void UnPause()
+        {
+            isPaused = false;
+            Game.Timer.Start();
+            pauseDuration += DateTime.Now - pauseStartTime;
+            DrawCanvas.Children.Remove(btnResume);
+            DrawCanvas.Children.Remove(btnExit);
+            DrawCanvas.Children.Remove(btnHelp);
+            DrawCanvas.Children.Remove(btnLoad);
+            DrawCanvas.Children.Remove(pauseRectangle);
         }
 
         public void AddGameObjects(List<Image> gameObjs, int add)
