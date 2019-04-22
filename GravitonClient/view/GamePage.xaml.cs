@@ -26,7 +26,6 @@ namespace GravitonClient.view
         List<Image> destableDict;
         List<Image> orbDict;
         List<Image> AiImages;
-        Image ship;
         Image background;
         Image[] planets;
         Image[] rings;
@@ -80,6 +79,8 @@ namespace GravitonClient.view
         MediaPlayer ghost;
         MediaPlayer boost;
 
+        Animator playerShip;
+
         private Game game;
         public Game Game
         {
@@ -94,7 +95,6 @@ namespace GravitonClient.view
             destableDict = new List<Image>();
             orbDict = new List<Image>();
             AiImages = new List<Image>();
-            ship = new Image();
 
             background = new Image();
             BackgroundImage = new BitmapImage();
@@ -195,11 +195,8 @@ namespace GravitonClient.view
             AiImage.EndInit();
 
             AiImages = new List<Image>();
-            //----------------------------------
-            ship.Source = shipImage;
-            ship.Width = 50;
-            DrawCanvas.Children.Add(ship);
-            //----------------------------------
+
+            playerShip = new Animator(DrawCanvas, new Animation[1] { new Animation(new BitmapImage[1] { shipImage }, new int[1] { 10 }) }, 0, 10, 50);
 
             for (int i = 0; i < HudOrbs.Length; i++)
             {
@@ -444,10 +441,8 @@ namespace GravitonClient.view
                 Canvas.SetTop(orbDict[i], Game.ViewCamera.Orbs[i].Item2);
                 Canvas.SetZIndex(orbDict[i], 7);
             }
-
-            Canvas.SetLeft(ship, Game.ViewCamera.PlayerShip.Item1);
-            Canvas.SetTop(ship, Game.ViewCamera.PlayerShip.Item2);
-            Canvas.SetZIndex(ship, 10);
+            
+            playerShip.Animate(Game.ViewCamera.PlayerShip.Item1, Game.ViewCamera.PlayerShip.Item2);
             txtScore.Text = "Score: " + game.Points;
 
 
@@ -629,6 +624,14 @@ namespace GravitonClient.view
         {
             isPaused = true;
             Game.Timer.Stop();
+            unstable.Pause();
+            neutralize.Pause();
+            deposit.Pause();
+            orbGrab.Pause();
+            powerup.Pause();
+            collapse.Pause();
+            ghost.Pause();
+            boost.Pause();
             pauseStartTime = DateTime.Now;
             DrawCanvas.Children.Add(btnResume);
             DrawCanvas.Children.Add(btnExit);
@@ -656,6 +659,14 @@ namespace GravitonClient.view
         {
             isPaused = false;
             Game.Timer.Start();
+            unstable.Play();
+            neutralize.Play();
+            deposit.Play();
+            orbGrab.Play();
+            powerup.Play();
+            collapse.Play();
+            ghost.Play();
+            boost.Play();
             pauseDuration += DateTime.Now - pauseStartTime;
             DrawCanvas.Children.Remove(btnResume);
             DrawCanvas.Children.Remove(btnExit);

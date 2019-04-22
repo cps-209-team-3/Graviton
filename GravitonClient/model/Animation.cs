@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace GravitonClient.model
+namespace GravitonClient
 {
     class Animation
     {
@@ -26,8 +26,20 @@ namespace GravitonClient.model
         private BitmapImage currentImage;
         public BitmapImage CurrentImage
         {
-            get { return currentImage; }
-            set { currentImage = value; }
+            get
+            {
+                int sumHolder = passedTicks;
+                for (int i = 0; i < imageList.Length; ++i)
+                {
+                    sumHolder -= tickDiffs[i];
+                    if (sumHolder < 0)
+                    {
+                        currentImage = imageList[i];
+                        break;
+                    }
+                }
+                return currentImage;
+            }
         }
 
         private int maxTicks;
@@ -41,7 +53,42 @@ namespace GravitonClient.model
         public int PassedTicks
         {
             get { return passedTicks; }
-            set { passedTicks = value; }
+            set
+            {
+                passedTicks = value > maxTicks ? 0 : value;
+            }
+        }
+
+        public Animation(BitmapImage[] images, int[] ticks)
+        {
+            imageList = images;
+            tickDiffs = ticks;
+            currentImage = images[0];
+            maxTicks = 0;
+            for (int i = 0; i < ticks.Length; ++i)
+            {
+                maxTicks += ticks[i];
+            }
+            passedTicks = 0;
+        }
+
+        public Animation(BitmapImage[] images, int[] ticks, int startImage)
+        {
+            imageList = images;
+            tickDiffs = ticks;
+            currentImage = images[startImage];
+            maxTicks = 0;
+            for (int i = 0; i < ticks.Length; ++i)
+            {
+                maxTicks += ticks[i];
+            }
+            passedTicks = 0;
+        }
+
+        public void Reset()
+        {
+            currentImage = imageList[0];
+            passedTicks = 0;
         }
     }
 }
