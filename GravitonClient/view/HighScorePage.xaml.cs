@@ -28,8 +28,7 @@ namespace GravitonClient.view
         {
             ParentPage = parentPage;
             InitializeComponent();
-            string parentDir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\");
-            hs = HighScores.Load(System.IO.Path.Combine(parentDir, "Saves/HighScoreSave.txt"));
+            hs = HighScores.Load(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Saves/HighScoreSave.txt"));
         }
 
         private void HighScoresWindow_Loaded(object sender, RoutedEventArgs e)
