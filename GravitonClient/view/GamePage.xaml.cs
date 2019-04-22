@@ -22,6 +22,11 @@ namespace GravitonClient.view
     /// </summary>
     public partial class GamePage : Page
     {
+        List<Animator> wellList;
+        List<Animator> destableList;
+        List<Animator> orbList;
+        List<Animator> AIList;
+
         List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
@@ -753,6 +758,11 @@ namespace GravitonClient.view
                 default:
                     break;
             }
+        }
+
+        public void UpdateAnimation(bool isTransition, AnimationType type, int objIndex, int animIndex, int transitionIndex)
+        {
+
         }
 
         private void UpdateHudOrbs()

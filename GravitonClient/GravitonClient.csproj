@@ -38,6 +38,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework, Version=3.11.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>packages\NUnit.3.11.0\lib\net45\nunit.framework.dll</HintPath>
@@ -195,8 +198,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Assets\Fonts\Azonix.otf" />
-    <None Include="Assets\Images\Library.md" />
+    <None Include="Saved Games\game1.json" />
+    <Resource Include="Assets\Fonts\Azonix.otf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Library.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <None Include="Assets\Sound\Music\Library.md" />
     <None Include="Assets\Sound\SFX\Library.md" />
     <None Include="GravitonDiagram.cd" />
@@ -210,53 +218,133 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Saves\HighScoreSave.txt" />
+    <Resource Include="Saves\HighScoreSave.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="tests\HSLoad.txt" />
     <Resource Include="tests\HSSave.txt" />
-    <Resource Include="Assets\Images\AI.png" />
-    <Resource Include="Assets\Images\AI1.png" />
-    <Resource Include="Assets\Images\destabilized.png" />
-    <Resource Include="Assets\Images\destabilized1.png" />
-    <Resource Include="Assets\Images\OrbBlue.png" />
-    <Resource Include="Assets\Images\OrbGreen.png" />
-    <Resource Include="Assets\Images\OrbOrange.png" />
-    <Resource Include="Assets\Images\OrbPurple.png" />
-    <Resource Include="Assets\Images\OrbRed.png" />
-    <Resource Include="Assets\Images\OrbYellow.png" />
-    <Resource Include="Assets\Images\Ship.png" />
-    <Resource Include="Assets\Images\Ship1.png" />
-    <Resource Include="Assets\Images\Well.png" />
-    <Resource Include="Assets\Images\WellBasic1.png" />
-    <Resource Include="Assets\Images\WellBlue.png" />
-    <Resource Include="Assets\Images\WellGreen.png" />
-    <Resource Include="Assets\Images\WellOrange.png" />
-    <Resource Include="Assets\Images\WellPurple.png" />
-    <Resource Include="Assets\Images\WellYellow.png" />
-    <Resource Include="Assets\Images\Neutralize.png" />
-    <Resource Include="Assets\Images\Ghosting.png" />
-    <Resource Include="Assets\Images\powerup.png" />
-    <Resource Include="Assets\Images\parallax-space-backgound.png" />
-    <Resource Include="Assets\Images\parallax-space-big-planet.png" />
-    <Resource Include="Assets\Images\parallax-space-far-planets.png" />
-    <Resource Include="Assets\Images\parallax-space-ring-planet.png" />
-    <Resource Include="Assets\Images\parallax-space-stars.png" />
-    <Resource Include="Assets\Images\test1.png" />
-    <Resource Include="Assets\Images\test2.png" />
-    <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3" />
-    <Resource Include="Assets\Sound\SFX\destabilize.mp3" />
-    <Content Include="Assets\Sound\SFX\boost.mp3" />
+    <Resource Include="Assets\Images\AI.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\AI1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\destabilized.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\destabilized1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\OrbBlue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\OrbGreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\OrbOrange.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\OrbPurple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\OrbRed.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\OrbYellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Ship.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Ship1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Well.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\WellBasic1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\WellBlue.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\WellGreen.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\WellOrange.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\WellPurple.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\WellYellow.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Neutralize.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\Ghosting.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\powerup.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\parallax-space-backgound.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\parallax-space-big-planet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\parallax-space-far-planets.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\parallax-space-ring-planet.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\parallax-space-stars.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\test1.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\test2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Sound\SFX\destabilize.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Assets\Sound\SFX\boost.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Sound\SFX\destabilize.wav" />
-    <Content Include="Assets\Sound\SFX\ghost.mp3" />
-    <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3" />
+    <Content Include="Assets\Sound\SFX\ghost.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.wav" />
-    <Resource Include="Assets\Sound\SFX\SFX1.mp3" />
-    <Content Include="Assets\Sound\SFX\PowerDown5.mp3" />
+    <Resource Include="Assets\Sound\SFX\SFX1.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Assets\Sound\SFX\PowerDown5.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Sound\SFX\SFX1.wav" />
-    <Resource Include="Assets\Sound\SFX\SFX2.mp3" />
+    <Resource Include="Assets\Sound\SFX\SFX2.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Content Include="Assets\Sound\SFX\SFX2.wav" />
     <Resource Include="Assets\Sound\SFX\Silence.wav" />
-    <Resource Include="Assets\Sound\SFX\Space entity%28deposit%29.mp3" />
-    <Content Include="Assets\Sound\SFX\Shut-down-sound-effect.mp3" />
+    <Resource Include="Assets\Sound\SFX\Space entity%28deposit%29.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="Assets\Sound\SFX\Shut-down-sound-effect.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Assets\Sound\SFX\Space entity%28deposit%29.wav" />
   </ItemGroup>
   <ItemGroup />

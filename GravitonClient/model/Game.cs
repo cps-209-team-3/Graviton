@@ -9,6 +9,8 @@ namespace GravitonClient
 {
     public enum SoundEffect { OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
 
+    public enum AnimationType { Stable, Unstable, Orb, Player, AI };
+
     public class Game
     {
         public event EventHandler<int> GameUpdatedEvent;
