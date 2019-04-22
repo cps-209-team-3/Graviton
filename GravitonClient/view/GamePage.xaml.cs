@@ -196,7 +196,8 @@ namespace GravitonClient.view
 
             AiImages = new List<Image>();
 
-            playerShip = new Animator(DrawCanvas, new Animation[1] { new Animation(new BitmapImage[1] { shipImage }, new int[1] { 10 }) }, 0, 10, 50);
+            Animation playerAnim = new Animation(new BitmapImage[1] { shipImage }, new int[1] { 20 });
+            playerShip = new Animator(DrawCanvas, new Animation[1] { playerAnim }, 0, 10, 50);
 
             for (int i = 0; i < HudOrbs.Length; i++)
             {
@@ -387,7 +388,7 @@ namespace GravitonClient.view
             }
 
             gameDuration = DateTime.Now - startTime - pauseDuration;
-            if (gameDuration.TotalMinutes > 1)
+            if (gameDuration.TotalMinutes > 5)
             {
                 Game.Timer.Stop();
                 Game.IsOver = true;
@@ -407,8 +408,9 @@ namespace GravitonClient.view
                 Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
                 DrawCanvas.Children.Add(b2);
             }
-            txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
-
+            //txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+            int sLeft = 300 - (int)gameDuration.TotalSeconds;
+            txtTimeLeft.Text = (sLeft / 60) + ":" + (sLeft % 60).ToString("D2");
 
 
             int destableDiff = destableDict.Count - frame.UnstableWells.Count;
