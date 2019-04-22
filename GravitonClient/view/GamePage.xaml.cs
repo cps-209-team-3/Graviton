@@ -388,7 +388,7 @@ namespace GravitonClient.view
             }
 
             gameDuration = DateTime.Now - startTime - pauseDuration;
-            if (gameDuration.TotalMinutes > 1)
+            if (gameDuration.TotalMinutes > 5)
             {
                 Game.Timer.Stop();
                 Game.IsOver = true;
