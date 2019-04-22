@@ -407,8 +407,9 @@ namespace GravitonClient.view
                 Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
                 DrawCanvas.Children.Add(b2);
             }
-            txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
-
+            //txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+            int sLeft = 300 - (int)gameDuration.TotalSeconds;
+            txtTimeLeft.Text = (sLeft / 60) + ":" + (sLeft % 60).ToString("D2");
 
 
             int destableDiff = destableDict.Count - Game.ViewCamera.UnstableWells.Count;
