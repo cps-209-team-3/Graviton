@@ -2,46 +2,37 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Windows.Threading;
+using System.Timers;
 
 
-namespace GravitonClient
+namespace GravitonServer
 {
-    public enum SoundEffect { OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
-
     public class Game
     {
-        public event EventHandler<CameraFrame> GameUpdatedEvent;
-        public bool IsCheat { get; set; }
+        public event EventHandler<int> GameUpdatedEvent;
         public bool IsOver { get; set; }
         public Random Random { get; set; }
-        public Camera ViewCamera { get; set; }
-        public int Points { get; set; }
         public int Ticks { get; set; }
         public int HorizontalInput { get; set; }
         public int VerticalInput { get; set; }
         public int WellSpawnFreq { get; set; }
         public int WellDestabFreq { get; set; }
-        public DispatcherTimer Timer { get; set; }
+        public Timer Timer { get; set; }
         public List<Well> StableWells { get; set; }
         public List<Well> UnstableWells { get; set; }
-        public Ship Player { get; set; }
+        public List<Ship> Players { get; set; }
         public List<AIShip> AIShips { get; set; }
         public List<Orb> Orbs { get; set; }
         public List<GameObject> GameObjects { get; set; }
-        public string Username { get; internal set; }
+        private DateTime StartTime;
 
-        private HighScores highScores;
+        internal HighScores HighScores = new HighScores();
+        
 
-        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
-
-        public Game(bool isCheat)
+        public Game()
         {
-            IsCheat = isCheat;
             IsOver = false;
             Random = new Random();
-            ViewCamera = new Camera(this);
-            Points = 0;
             Ticks = 0;
             HorizontalInput = 0;
             VerticalInput = 0;
@@ -52,15 +43,13 @@ namespace GravitonClient
             AIShips = new List<AIShip>();
             Orbs = new List<Orb>();
             GameObjects = new List<GameObject>();
-
-            highScores = HighScores.Load(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
+            Players = new List<Ship>();
         }
 
-        //This method initializes the ship, all of the wells, all of the orbs, and the timer.
+        //This method initializes all of the wells, all of the orbs, and the timer.
         public void Initialize()
         {
-            Player = new Ship(2500.0, 2500.0, this);
-            GameObjects.Add(Player);
+            StartTime = DateTime.Now;
             while (Orbs.Count < 100)
             {
                 SpawnOrb();
@@ -74,92 +63,67 @@ namespace GravitonClient
                 SpawnAI();
             }
 
-            Timer = new DispatcherTimer();
-            Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
-            Timer.Start();
-            Timer.Tick += Timer_Tick;
+            Timer = new Timer(50);
+            Timer.AutoReset = true;
+            Timer.Elapsed += Timer_Tick;
+            
         }
 
-        public void InitializeWithShipCreated()
+        public Ship AddPlayer()
         {
-            GameObjects.Add(Player);
-            Timer = new DispatcherTimer();
-            Timer.Interval = new TimeSpan(0, 0, 0, 0, 20);
-            Timer.Start();
-            Timer.Tick += Timer_Tick;
+            Ship player = new Ship(Random.NextDouble() * 5000, Random.NextDouble() * 5000, this);
+            Players.Add(player);
+            player.PlayerDiedEvent += RemovePlayer;
+            return player;
         }
 
-
-        //This method deals with a keypress. It either updates the user directional input, does a speed boost, or uses a powerup.
-        public void KeyPressed(char c)
+        private void RemovePlayer(object sender, EventArgs e)
         {
-            switch (c)
+            try
             {
-                case 'w':
-                    VerticalInput = -1;
-                    break;
-                case 'a':
-                    HorizontalInput = -1;
-                    break;
-                case 's':
-                    VerticalInput = 1;
-                    break;
-                case 'd':
-                    HorizontalInput = 1;
-                    break;
-                case ' ':
-                    Player.SpeedBoost();
-                    break;
-                case 'q':
-                    Player.GamePowerup.Neutralize(Player);
-                    break;
-                case 'f':
-                    Player.GamePowerup.Destabilize(Player);
-                    break;
-                case 'e':
-                    Player.GamePowerup.Ghost(Player);
-                    break;
+                Ship player = sender as Ship;
+                Players.Remove(player);
             }
+            catch { }
         }
 
-        //This method deals with a key release. It updates the user directional input.
-        public void KeyReleased(char c)
+        public void StartGame()
         {
-            switch (c)
-            {
-                case 'w':
-                    VerticalInput = 0;
-                    break;
-                case 'a':
-                    HorizontalInput = 0;
-                    break;
-                case 's':
-                    VerticalInput = 0;
-                    break;
-                case 'd':
-                    HorizontalInput = 0;
-                    break;
-            }
+            Initialize();
 
+            Timer.Enabled = true;
         }
+
+
+       
+
+        
 
         //This method is called every frame and updates everything in the game, then notifies the view.
         public void Timer_Tick(object sender, EventArgs e)
         {
             Ticks++;
-            UpdatePlayer();
+            foreach(Ship player in Players.ToArray())
+                UpdatePlayer(player);
             UpdateAI();
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 5 == 0 && Orbs.Count < 200)
+            if (Ticks % 5 == 0 && Orbs.Count < 170)
                 SpawnOrb();
             if (AIShips.Count < 3)
-                SpawnAI();
-            //ViewCamera.Render();           
+                SpawnAI();     
 
             
-            GameUpdatedEvent(this, ViewCamera.GetCameraFrame());
+            GameUpdatedEvent(this, 0);
+        }
+
+        internal GameStats GetStats()
+        {
+            HighScores.CheckNewScores(this);
+            GameStats stats = new GameStats();
+            stats.SetHighScores(HighScores);
+            return stats;
         }
 
         // This method updates all the wells in the game.
@@ -175,25 +139,15 @@ namespace GravitonClient
                     well.Strength = 900;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
-                    GameInvokeSoundEvent(this, SoundEffect.Destabilize);
+                    
                 }
             }
             foreach (Well well in UnstableWells.ToList())
             {
-                well.TicksLeft--;
-                if (well.TicksLeft % 100 == 0)
-                {
-                    if (well.ShockWave.TicksLeft == 0)
-                    {
-                        well.ShockWave.TicksLeft = 50;
-                    }
-                }
-                if (well.ShockWave == null)
-                    well.ShockWave = new Shockwave(this, well);
-                well.ShockWave.Pulse();
+                
                 if (well.TicksLeft == 0)
                 {
-                    GameInvokeSoundEvent(this, SoundEffect.Collapse);
+                    // any explosions or something????
                     UnstableWells.Remove(well);
                     GameObjects.Remove(well);
                 }
@@ -201,32 +155,27 @@ namespace GravitonClient
         }
 
         //This method updates the player's position and what orbs it has.
-        public void UpdatePlayer()
+        public void UpdatePlayer(Ship Player)
         {
-            if (!IsCheat)
-                UpdateGravity(Player);
-            Player.Move(HorizontalInput, VerticalInput);
+
+            UpdateGravity(Player);
+            Player.Move();
             Well well = Player.WellOver();
             if (well != null)
             {
                 int originalColor = well.Orbs;
                 if (!well.IsStable)
                 {
-                    if (!IsCheat && !Player.IsImmune)
-                    {
-                        IsOver = true;
-                        Timer.Stop();
-                    }
+                    if (!Player.IsImmune)
+                        Player.Die();
                 }
                 else if (Player.DepositOrbs(well))
                 {
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
                     Player.GamePowerup.AddNew();
-                    Points += 100;
+                    Player.Points += 100;
                 }
-                else if (well.Orbs != originalColor)
-                    GameInvokeSoundEvent(this, SoundEffect.OrbDrop);
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
@@ -237,7 +186,7 @@ namespace GravitonClient
                     GameObjects.Remove(orb);
                     Player.Orbs.Add(orb.Color);
                     Player.Orbs.Sort();
-                    GameInvokeSoundEvent(this, SoundEffect.OrbGrab);
+                    
                 }
             }
             if (Player.ImmuneTicksLeft > 0)
@@ -245,6 +194,8 @@ namespace GravitonClient
             if (Player.ImmuneTicksLeft == 0)
                 Player.IsImmune = false;
         }
+
+       
 
         //updates gravity effects on parameter ship
         public void UpdateGravity(Ship ship)
@@ -273,12 +224,12 @@ namespace GravitonClient
                 {
                     if (!well.IsStable)
                     {
-                        if (well.IsTrap && well.Owner == Player)
-                            Points += 200;
+                        if (well.IsTrap)
+                            well.PlayerWhoSetTrap.Points += 200;
                         AIShips.Remove(aI);
                         GameObjects.Remove(aI);
                     }
-                    else if (aI.DepositOrbs(well))
+                    else if (aI.DepositOrbs(well) && !well.IsGhost)
                     {
                         StableWells.Remove(well);
                         GameObjects.Remove(well);
@@ -318,7 +269,6 @@ namespace GravitonClient
                 well.TicksLeft = WellDestabFreq + Random.Next(1001);
                 StableWells.Add(well);
                 GameObjects.Add(well);
-                well.ShockWave = new Shockwave(this, well);
             }
         }
 
@@ -362,10 +312,9 @@ namespace GravitonClient
         //This method is called when the game ends.
         public void GameOver()
         {
-            //IsOver = true;
-            //Timer.Stop();
-            highScores.CheckNewScores(this);
-            highScores.Save(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
+            IsOver = true;
+            Timer.Stop();
+           
         }
     }
 }

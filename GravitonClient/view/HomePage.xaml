@@ -10,7 +10,8 @@
 
     <StackPanel Orientation="Vertical" Background="Black">
         <TextBlock Text="Graviton" FontSize="80" HorizontalAlignment="Center" Margin="10" FontFamily="{StaticResource Azonix}" Foreground="Aqua"/>
-        <Button Content="Play" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="PlayButton_Click"/>
+        <Button Content="Play Single Player" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="PlayButton_Click"/>
+        <Button Content="Play multiPlayer" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="MultiPlayer_Click"/>
         <Button Content="High Scores" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="BtnHighScores_Click"/>
         <Button Content="Help" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="HelpButton_Click"/>
         <Button Content="About" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black" BorderBrush="Red" BorderThickness="2" Click="AboutButton_Click"/>
