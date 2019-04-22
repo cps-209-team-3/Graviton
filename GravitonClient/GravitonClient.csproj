@@ -7,7 +7,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0B18D35F-1228-45ED-AEF1-00761CA6FA08}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <RootNamespace>GravitonClient</RootNamespace>
     <AssemblyName>GravitonClient</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -238,9 +238,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Saves\HighScoreSave.txt">
+    <None Include="Saves\HighScoreSave.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </None>
     <Resource Include="tests\HSLoad.txt" />
     <Resource Include="tests\HSSave.txt" />
     <Resource Include="Assets\Images\AI.png">

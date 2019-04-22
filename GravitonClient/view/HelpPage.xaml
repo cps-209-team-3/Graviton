@@ -17,34 +17,34 @@
             <StackPanel x:Name="Images" Orientation="Horizontal" HorizontalAlignment="Center">
                 <StackPanel Margin="5">
                     <TextBlock Text="Your Ship" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
-                    <Image Source="../../Assets/Images/Ship1.png" Margin="0, 10"/>
+                    <Image Source="/Assets/Images/Ship1.png" Margin="0, 10"/>
                 </StackPanel>
                 <StackPanel Margin="5">
                     <TextBlock Text="Orbs" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
                     <StackPanel HorizontalAlignment="Center">
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../../Assets/Images/OrbRed.png" Margin="3, 10"/>
-                            <Image Source="../../Assets/Images/OrbOrange.png" Margin="3, 10"/>
-                            <Image Source="../../Assets/Images/OrbYellow.png" Margin="3, 10"/>
+                            <Image Source="/Assets/Images/OrbRed.png" Margin="3, 10"/>
+                            <Image Source="/Assets/Images/OrbOrange.png" Margin="3, 10"/>
+                            <Image Source="/Assets/Images/OrbYellow.png" Margin="3, 10"/>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <Image Source="../../Assets/Images/OrbGreen.png" Margin="3, 10"/>
-                            <Image Source="../../Assets/Images/OrbBlue.png" Margin="3, 10"/>
-                            <Image Source="../../Assets/Images/OrbPurple.png" Margin="3, 10"/>
+                            <Image Source="/Assets/Images/OrbGreen.png" Margin="3, 10"/>
+                            <Image Source="/Assets/Images/OrbBlue.png" Margin="3, 10"/>
+                            <Image Source="/Assets/Images/OrbPurple.png" Margin="3, 10"/>
                         </StackPanel>
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="5">
                     <TextBlock Text="Well" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
-                    <Image Source="../../Assets/Images/WellBasic1.png" Margin="0, 10"/>
+                    <Image Source="/Assets/Images/WellBasic1.png" Margin="0, 10"/>
                 </StackPanel>
                 <StackPanel Margin="2">
                     <TextBlock Text="Black Hole" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
-                    <Image Source="../../Assets/Images/destabilized1.png" Width="200" Margin="-15"/>
+                    <Image Source="/Assets/Images/destabilized1.png" Width="200" Margin="-15"/>
                 </StackPanel>
                 <StackPanel Margin="5">
                     <TextBlock Text="AI" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="5" Foreground="Red"/>
-                    <Image Source="../../Assets/Images/AI1.png" Margin="0, 10"/>
+                    <Image Source="/Assets/Images/AI1.png" Margin="0, 10"/>
                 </StackPanel>
             </StackPanel>
             <TextBlock Text="Powerup Descriptions" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="30" Margin="20" Foreground="Aqua"/>
