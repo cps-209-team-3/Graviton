@@ -240,6 +240,8 @@
     <Resource Include="Assets\Images\parallax-space-far-planets.png" />
     <Resource Include="Assets\Images\parallax-space-ring-planet.png" />
     <Resource Include="Assets\Images\parallax-space-stars.png" />
+    <Resource Include="Assets\Images\test1.png" />
+    <Resource Include="Assets\Images\test2.png" />
     <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3" />
     <Resource Include="Assets\Sound\SFX\destabilize.mp3" />
     <Content Include="Assets\Sound\SFX\boost.mp3" />

@@ -196,7 +196,8 @@ namespace GravitonClient.view
 
             AiImages = new List<Image>();
 
-            playerShip = new Animator(DrawCanvas, new Animation[1] { new Animation(new BitmapImage[1] { shipImage }, new int[1] { 10 }) }, 0, 10, 50);
+            Animation playerAnim = new Animation(new BitmapImage[1] { shipImage }, new int[1] { 20 });
+            playerShip = new Animator(DrawCanvas, new Animation[1] { playerAnim }, 0, 10, 50);
 
             for (int i = 0; i < HudOrbs.Length; i++)
             {
