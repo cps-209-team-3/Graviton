@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Net;
 
 namespace GravitonServer
@@ -102,21 +101,30 @@ namespace GravitonServer
 
     internal class InGameState : ClientState
     {
-        private Stack<SoundEffect> SoundEffects = new Stack<SoundEffect>();
+        
         private Game CurrentGame;
         private void GameUpdated(object sender, int e)
         {
             if(!CurrentGame.IsOver)
                 CurrentClient.RaiseReply('\0' +
-                    CurrentClient.MyPlayer.ViewCamera.GetCameraFrame().Serialize() + 
-                    ( (SoundEffects.Count > 0) ? SoundEffects.Pop().ToString() : ""));
+                    CurrentClient.MyPlayer.ViewCamera.GetCameraFrame().Serialize());
             else
             {
-                CurrentClient.RaiseReply("\x01");
-                var gos = new GameOverState(CurrentClient);
-                gos.SetGameStats(CurrentGame.GetStats());
-                CurrentClient.CurrentState = gos;
+                GameOver();
             }
+        }
+
+        private void GameOver(object sender, EventArgs e)
+        {
+            GameOver();
+        }
+
+        private void GameOver()
+        {
+            CurrentClient.RaiseReply("\x01");
+            var gos = new GameOverState(CurrentClient);
+            gos.SetGameStats(CurrentGame.GetStats());
+            CurrentClient.CurrentState = gos;
         }
 
         public InGameState(Client client) : base(client) { }
@@ -133,6 +141,7 @@ namespace GravitonServer
         {
             CurrentGame = g;
             g.GameUpdatedEvent += GameUpdated;
+            CurrentClient.MyPlayer.PlayerDiedEvent += GameOver;
         }
     }
 

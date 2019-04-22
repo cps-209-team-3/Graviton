@@ -25,7 +25,7 @@ namespace GravitonServer
 
         private Random rand = new Random();
 
-        public event EventHandler<SoundEffect> InvokeSoundEventForShip;
+        public event EventHandler PlayerDiedEvent; 
 
         public Ship(double xcoor, double ycoor, Game game)
         {
@@ -39,13 +39,11 @@ namespace GravitonServer
             SpeedY = 0.0;
             BoostFactor = 1.0;
             Orbs = new List<int>();
-            game.GameInvokeSoundEvent += InvokeSoundEffect;
-            GamePowerup.GameInvokeSoundEvent += InvokeSoundEffect;
         }
 
-        private void InvokeSoundEffect(object sender, SoundEffect s)
+        internal void Die()
         {
-            //InvokeSoundEventForShip(this, s);
+            PlayerDiedEvent(this, null);
         }
 
         public Ship() : base() {

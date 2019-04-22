@@ -7,9 +7,11 @@ using System.Windows.Threading;
 
 namespace GravitonClient
 {
+    public enum SoundEffect { OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
+
     public class Game
     {
-        public event EventHandler<int> GameUpdatedEvent;
+        public event EventHandler<CameraFrame> GameUpdatedEvent;
         public bool IsCheat { get; set; }
         public bool IsOver { get; set; }
         public Random Random { get; set; }
@@ -157,7 +159,7 @@ namespace GravitonClient
             //ViewCamera.Render();           
 
             
-            GameUpdatedEvent(this, 0);
+            GameUpdatedEvent(this, ViewCamera.GetCameraFrame());
         }
 
         // This method updates all the wells in the game.
@@ -271,7 +273,7 @@ namespace GravitonClient
                 {
                     if (!well.IsStable)
                     {
-                        if (well.IsTrap)
+                        if (well.IsTrap && well.Owner == Player)
                             Points += 200;
                         AIShips.Remove(aI);
                         GameObjects.Remove(aI);

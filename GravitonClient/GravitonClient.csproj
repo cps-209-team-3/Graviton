@@ -64,6 +64,11 @@
     </ApplicationDefinition>
     <Compile Include="model\AIShip.cs" />
     <Compile Include="model\CameraFrame.cs" />
+    <Compile Include="model\Animation.cs" />
+    <Compile Include="view\AboutPage.xaml.cs">
+      <DependentUpon>AboutPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\Animator.cs" />
     <Compile Include="model\GameLoader.cs" />
     <Compile Include="model\GameReporter.cs" />
     <Compile Include="model\GameStats.cs" />
@@ -78,13 +83,22 @@
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\Camera.cs" />
+    <Compile Include="view\GamePage.xaml.cs">
+      <DependentUpon>GamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\GameWindow.xaml.cs">
       <DependentUpon>GameWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\HelpPage.xaml.cs">
+      <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\HelpWindow.xaml.cs">
       <DependentUpon>HelpWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\HighScores.cs" />
+    <Compile Include="view\HighScorePage.xaml.cs">
+      <DependentUpon>HighScorePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\HighScoreWindow.xaml.cs">
       <DependentUpon>HighScoreWindow.xaml</DependentUpon>
     </Compile>
@@ -104,13 +118,24 @@
     <Compile Include="view\NetworkPlayPage.xaml.cs">
       <DependentUpon>NetworkPlayPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\PausePage.xaml.cs">
+      <DependentUpon>PausePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\PauseWindow.xaml.cs">
       <DependentUpon>PauseWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="view\PlayPage.xaml.cs">
       <DependentUpon>PlayPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="view\AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\AboutWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\GamePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -118,7 +143,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="view\HelpPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\HelpWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\HighScorePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -148,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\NetworkPlayPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\PausePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

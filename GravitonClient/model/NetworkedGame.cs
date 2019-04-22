@@ -8,23 +8,10 @@ namespace GravitonClient
 {
     public class NetworkedGame
     {
-        private bool started;
-        private string userName;
 
-        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
         public event EventHandler<NetworkedCameraFrame> GameUpdatedEvent;
 
-        public bool IsOver
-        {
-            get;
-            set;
-        }
-        
-
-        public NetworkedGame(string userName)
-        {
-            this.userName = userName;
-        }
+        public NetworkedGame(){}
 
         public void UpdateFrame(NetworkedCameraFrame ncf)
         {

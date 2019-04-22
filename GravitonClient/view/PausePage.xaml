@@ -1,0 +1,27 @@
+﻿<Page x:Class="GravitonClient.view.PausePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GravitonClient.view"
+      mc:Ignorable="d" 
+      KeyDown="Page_KeyDown"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="PausePage">
+
+    <StackPanel Orientation="Vertical" Background="Black">
+        <TextBlock Margin="20"/>
+        <Button x:Name="btnResume" Content="Resume" Click="Resume_Click" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" 
+                Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" Foreground="Red" Background="Black"/>
+        <Button x:Name="btnHelp" Content="Help" Click="BtnHelp_Click" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" 
+                Foreground="Red" Background="Black"/>
+        <Button x:Name="btnLoad" Content="Load Last Save" Click="BtnLoad_Click" 
+                HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" 
+                Foreground="Red" Background="Black"/>
+        <Button x:Name="Exit" Content="Save and Exit" Click="Exit_Click" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                FontSize="40" Margin="20" Padding="10, 5" FontFamily="{StaticResource Azonix}" 
+                Foreground="Red" Background="Black"/>
+    </StackPanel>
+</Page>

@@ -116,14 +116,15 @@ namespace GravitonClient
             {
                 if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
-                    if (ship.GamePowerup == this)
+                    if (ParentGame.Player.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Destabilize);
                     CarryingDestabilize = false;
                     CurrentPowerups.Remove(powerups.destabilize);
                     well.TicksLeft = 3000;
                     well.IsStable = false;
-                    well.Strength = 50;
+                    well.Strength = 900;
                     well.IsTrap = true;
+                    well.Owner = ship;
                     ParentGame.UnstableWells.Add(well);
                     ParentGame.StableWells.Remove(well);
                     ship.IsImmune = true;
@@ -141,13 +142,14 @@ namespace GravitonClient
             {
                 if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
-                    CarryingGhost = false;
                     CurrentPowerups.Remove(powerups.ghost);
-                    if (ship.GamePowerup == this)
+                    if (ParentGame.Player.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Ghost);
                     well.IsGhost = true;
+                    well.Owner = ship;
                 }
             }
+            CarryingGhost = false;
             ship.IsImmune = true;
             ship.ImmuneTicksLeft = 100;
         }

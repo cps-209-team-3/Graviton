@@ -296,7 +296,6 @@ namespace GravitonClient
             this.game = game;
             UDPGameClient.StartListening();
             game.GameUpdatedEvent += Render;
-            game.GameInvokeSoundEvent += PlaySound;
             InitializeComponent();
 
         }
@@ -332,23 +331,7 @@ namespace GravitonClient
 
 
                    gameDuration = DateTime.Now - startTime - PauseDuration;
-                   if (game.IsOver)
-                   {
-                       Button b2 = new Button();
-                       b2.Content = "Play Again";
-                       b2.FontSize = 40;
-                       b2.FontFamily = (FontFamily)this.FindResource("Azonix");
-                       b2.Margin = new Thickness(20);
-                       b2.Padding = new Thickness(10, 5, 10, 0);
-                       b2.Background = Brushes.Black;
-                       b2.Foreground = Brushes.Red;
-                       b2.Click += NewGame_Click;
-                       b2.Width = 500;
-                       Canvas.SetZIndex(b2, 100);
-                       Canvas.SetLeft(b2, (DrawCanvas.ActualWidth - b2.Width) / 2);
-                       Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
-                       DrawCanvas.Children.Add(b2);
-                   }
+                   
                    txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
 
                    int playerdiff = OtherHumanImages.Count - currentFrame.OtherHumanShips.Count;
@@ -464,31 +447,12 @@ namespace GravitonClient
                        currentFrame.HasDestabilizePowerup,
                        currentFrame.HasGhostingPowerup);
 
-                   if (game.IsOver)
-                   {
-                       Button b = new Button();
-                       b.Content = "Return to Menu";
-                       b.FontSize = 40;
-                       b.FontFamily = (FontFamily)this.FindResource("Azonix");
-                       b.Margin = new Thickness(20);
-                       b.Padding = new Thickness(10, 5, 10, 0);
-                       b.Background = Brushes.Black;
-                       b.Foreground = Brushes.Red;
-                       b.Click += GameOver_Click;
-                       b.Width = 500;
-                       Canvas.SetZIndex(b, 100);
-                       Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
-                       Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
-                       DrawCanvas.Children.Add(b);
-                   }
+                   
                }
            });
         }
 
-        private void NewGame_Click(object sender, RoutedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
         {
@@ -582,11 +546,13 @@ namespace GravitonClient
         {
             for (int i = 0; i < add; ++i)
             {
-                var l = new Label();
-                l.FontSize = 15;
-                l.FontFamily = (FontFamily)FindResource("Azonix");
-                l.HorizontalAlignment = HorizontalAlignment.Center;
-                l.Foreground = (Brush)new BrushConverter().ConvertFrom("#ffffff");
+                var l = new Label
+                {
+                    FontSize = 15,
+                    FontFamily = (FontFamily)FindResource("Azonix"),
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Foreground = (Brush)new BrushConverter().ConvertFrom("#ffffff")
+                };
                 gameObjs.Add(l);
                 DrawCanvas.Children.Add(gameObjs[gameObjs.Count - 1]);
             }
@@ -704,19 +670,29 @@ namespace GravitonClient
                 HudPowerups[2].Opacity = notHeldOpacity;
         }
 
-        private void GameWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            
-        }
+        
 
         public void GameOver()
         {
-            
+            Dispatcher.Invoke(() =>
+            {
+                var GameOverRect = new Rectangle();
+                GameOverRect.Fill = Brushes.Black;
+                GameOverRect.Opacity = 0.75;
+                DrawCanvas.Children.Add(GameOverRect);
+                Canvas.SetZIndex(GameOverRect, 100);
+                GameOverRect.Width = DrawCanvas.ActualWidth;
+                GameOverRect.Height = DrawCanvas.ActualHeight;
+            });
         }
 
         public void DisplayStats(GameStats gameStats)
         {
-            
+            Dispatcher.Invoke(() => {
+
+                lbl_secondsLeft.Content = "Game Over";
+                Canvas.SetZIndex(grid_secondsLeft, 10000);
+             });
         }
 
 

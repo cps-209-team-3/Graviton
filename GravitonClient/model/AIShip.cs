@@ -169,15 +169,17 @@ namespace GravitonClient
                     GamePowerup.Ghost(this);
                 }
             }
+            foreach (Well well in ParentGame.StableWells.ToList())
+            {
+                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                {
+                    GamePowerup.Ghost(this);
+                }
+            }
         }
 
         public override void IncrementScore()
         {
-        }
-
-        public override bool Locked(Well well)
-        {
-            return well.IsGhost;
         }
     }
 }

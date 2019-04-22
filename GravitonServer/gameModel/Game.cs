@@ -24,8 +24,10 @@ namespace GravitonServer
         public List<AIShip> AIShips { get; set; }
         public List<Orb> Orbs { get; set; }
         public List<GameObject> GameObjects { get; set; }
+        private DateTime StartTime;
+
         internal HighScores HighScores = new HighScores();
-        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
+        
 
         public Game()
         {
@@ -42,13 +44,12 @@ namespace GravitonServer
             Orbs = new List<Orb>();
             GameObjects = new List<GameObject>();
             Players = new List<Ship>();
-            
         }
 
         //This method initializes all of the wells, all of the orbs, and the timer.
         public void Initialize()
         {
-            
+            StartTime = DateTime.Now;
             while (Orbs.Count < 100)
             {
                 SpawnOrb();
@@ -72,12 +73,24 @@ namespace GravitonServer
         {
             Ship player = new Ship(Random.NextDouble() * 5000, Random.NextDouble() * 5000, this);
             Players.Add(player);
+            player.PlayerDiedEvent += RemovePlayer;
             return player;
+        }
+
+        private void RemovePlayer(object sender, EventArgs e)
+        {
+            try
+            {
+                Ship player = sender as Ship;
+                Players.Remove(player);
+            }
+            catch { }
         }
 
         public void StartGame()
         {
             Initialize();
+
             Timer.Enabled = true;
         }
 
@@ -90,7 +103,7 @@ namespace GravitonServer
         public void Timer_Tick(object sender, EventArgs e)
         {
             Ticks++;
-            foreach(Ship player in Players)
+            foreach(Ship player in Players.ToArray())
                 UpdatePlayer(player);
             UpdateAI();
             UpdateWells();
@@ -126,7 +139,7 @@ namespace GravitonServer
                     well.Strength = 900;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
-                    GameInvokeSoundEvent(this, SoundEffect.Destabilize);
+                    
                 }
             }
             foreach (Well well in UnstableWells.ToList())
@@ -134,7 +147,6 @@ namespace GravitonServer
                 
                 if (well.TicksLeft == 0)
                 {
-                    //GameInvokeSoundEvent(this, SoundEffect.Collapse);
                     // any explosions or something????
                     UnstableWells.Remove(well);
                     GameObjects.Remove(well);
@@ -155,7 +167,7 @@ namespace GravitonServer
                 if (!well.IsStable)
                 {
                     if (!Player.IsImmune)
-                        GameOver();
+                        Player.Die();
                 }
                 else if (Player.DepositOrbs(well))
                 {
@@ -164,8 +176,6 @@ namespace GravitonServer
                     Player.GamePowerup.AddNew();
                     Player.Points += 100;
                 }
-                else if (well.Orbs != originalColor)
-                    InvokeSoundEventForAllShips(SoundEffect.OrbDrop);
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
@@ -176,7 +186,7 @@ namespace GravitonServer
                     GameObjects.Remove(orb);
                     Player.Orbs.Add(orb.Color);
                     Player.Orbs.Sort();
-                    //GameInvokeSoundEvent(this, SoundEffect.OrbGrab);
+                    
                 }
             }
             if (Player.ImmuneTicksLeft > 0)
@@ -185,10 +195,7 @@ namespace GravitonServer
                 Player.IsImmune = false;
         }
 
-        private void InvokeSoundEventForAllShips(SoundEffect soundEffect)
-        {
-            //throw new NotImplementedException();
-        }
+       
 
         //updates gravity effects on parameter ship
         public void UpdateGravity(Ship ship)

@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
-using System.Windows.Threading;
 
 namespace GravitonClient
 {
@@ -34,7 +31,7 @@ namespace GravitonClient
             byte[] nameBytes = Encoding.ASCII.GetBytes($"{userName}|{CameraWidth}|{CameraHeight}");
             gameConn.Send(nameBytes, nameBytes.Length);
             gameEndPoint = new IPEndPoint(IPAddress.Any, 0);
-            currentGame = new NetworkedGame(userName);
+            currentGame = new NetworkedGame();
             
 
             return currentGame;

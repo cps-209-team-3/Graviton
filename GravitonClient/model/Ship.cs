@@ -126,7 +126,7 @@ namespace GravitonClient
             bool completed = false;
             foreach (int orb in Orbs.ToList())
             {
-                if (orb == well.Orbs && !Locked(well))
+                if (orb == well.Orbs && (!well.IsGhost || this == well.Owner))
                 {
                     if (well.Orbs == 5)
                         completed = true;
@@ -138,11 +138,6 @@ namespace GravitonClient
                 }
             }
             return completed;
-        }
-
-        public virtual bool Locked(Well well)
-        {
-            return false;
         }
 
         public virtual void IncrementScore()
