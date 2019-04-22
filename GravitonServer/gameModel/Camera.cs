@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GravitonClient
+namespace GravitonServer
 {
     public class Camera
     {
@@ -15,9 +15,11 @@ namespace GravitonClient
         public double ScreenY { get; set; }
         public double[,] BackgroundXY { get; set; }
         public List<Tuple<double, double>>[] Backgrounds { get; set; }
+        private Ship Player;
 
-        public Camera(Game game)
+        public Camera(Game game, Ship s)
         {
+            Player = s;
             ParentGame = game;
             Width = 1440;
             Height = 900;
@@ -30,10 +32,10 @@ namespace GravitonClient
         public CameraFrame GetCameraFrame() {
             CameraFrame cameraFrame = new CameraFrame();
             cameraFrame.Seconds = ParentGame.Ticks / 50;
-            cameraFrame.Points = ParentGame.Points;
+            cameraFrame.Points = Player.Points;
             cameraFrame.IsOver = ParentGame.IsOver;
             AdjustScreenForPlayer(cameraFrame);
-            cameraFrame.PlayerAngle = Math.Atan2(ParentGame.Player.SpeedY, ParentGame.Player.SpeedX) * 180 / Math.PI;
+            cameraFrame.PlayerAngle = Math.Atan2(Player.SpeedY, Player.SpeedX) * 180 / Math.PI;
 
             double xc, yc;
 
@@ -75,15 +77,24 @@ namespace GravitonClient
                     cameraFrame.AIShips.Add(Tuple.Create(xc - 25, yc - 25));
             }
 
+            cameraFrame.OtherHumanShips = new List<Tuple<double, double, string>>();
+            foreach (Ship ship in ParentGame.Players)
+            {
+                xc = ship.Xcoor - ScreenX;
+                yc = ship.Ycoor - ScreenY;
+                if (xc > -25 && xc < Width + 25 && yc > -25 && yc < Height + 25)
+                    cameraFrame.OtherHumanShips.Add(Tuple.Create(xc - 25, yc - 25, ship.Username));
+            }
+
             cameraFrame.PlayerOrbs = new List<int>();
-            foreach (int orb in ParentGame.Player.Orbs)
+            foreach (int orb in Player.Orbs)
             {
                 cameraFrame.PlayerOrbs.Add(orb);
             }
 
-            cameraFrame.HasDestabilizePowerup = ParentGame.Player.GamePowerup.CarryingDestabilize;
-            cameraFrame.HasNeutralizePowerup = ParentGame.Player.GamePowerup.CarryingNeutralize;
-            cameraFrame.HasGhostingPowerup = ParentGame.Player.GamePowerup.CarryingGhost;
+            cameraFrame.HasDestabilizePowerup = Player.GamePowerup.CarryingDestabilize;
+            cameraFrame.HasNeutralizePowerup = Player.GamePowerup.CarryingNeutralize;
+            cameraFrame.HasGhostingPowerup = Player.GamePowerup.CarryingGhost;
             return cameraFrame;
         }
         
@@ -92,8 +103,8 @@ namespace GravitonClient
         {
             double tempX = ScreenX;
             double tempY = ScreenY;
-            double xc = ParentGame.Player.Xcoor - ScreenX;
-            double yc = ParentGame.Player.Ycoor - ScreenY;
+            double xc = Player.Xcoor - ScreenX;
+            double yc = Player.Ycoor - ScreenY;
             if (xc < 250)
             {
                 ScreenX += xc - 250;
@@ -114,24 +125,12 @@ namespace GravitonClient
                 ScreenY += yc - (Height - 250);
                 yc = Height - 250;
             }
-            cameraFrame.PlayerShip = Tuple.Create(xc - 25, yc - 25);
-            CalculateBackgounds(ScreenX - tempX, ScreenY - tempY, cameraFrame);
+            
+            cameraFrame.ChangeX = ScreenX - tempX;
+            cameraFrame.ChangeY = ScreenY - tempY;
+
+            
         }
 
-        public void CalculateBackgounds(double changeX, double changeY, CameraFrame cameraFrame)
-        {
-            for (int i = 0; i < 4; i++)
-            {
-                BackgroundXY[i, 0] = (BackgroundXY[i, 0] - changeX * (0.04 + 0.09 * i) + Width * (1 + 0.2 * i)) % (Width * (1 + 0.2 * i));
-                BackgroundXY[i, 1] = (BackgroundXY[i, 1] - changeY * (0.04 + 0.09 * i) + Height * (1 + 0.2 * i)) % (Height * (1 + 0.2 * i));
-                Backgrounds[i] = new List<Tuple<double, double>>();
-                for (int j = 0; j < 4; j++)
-                {
-                    Backgrounds[i].Add(Tuple.Create(BackgroundXY[i, 0] - Width * (1 + 0.2 * i) * (j / 2), BackgroundXY[i, 1] - Height * (1 + 0.2 * i) * (j % 2)));
-                }
-            }
-            cameraFrame.Backgrounds = Backgrounds;
-            cameraFrame.BackgroundXY = BackgroundXY;
-        }
     }
 }
