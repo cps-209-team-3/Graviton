@@ -5,12 +5,11 @@ using System.Linq;
 using System.Timers;
 
 
-namespace GravitonClient
+namespace GravitonServer
 {
     public class Game
     {
         public event EventHandler<int> GameUpdatedEvent;
-        public bool IsCheat { get; set; }
         public bool IsOver { get; set; }
         public Random Random { get; set; }
         public int Ticks { get; set; }
@@ -25,11 +24,11 @@ namespace GravitonClient
         public List<AIShip> AIShips { get; set; }
         public List<Orb> Orbs { get; set; }
         public List<GameObject> GameObjects { get; set; }
-        public string Username { get; internal set; }
+        internal HighScores HighScores = new HighScores();
+        public event EventHandler<SoundEffect> GameInvokeSoundEvent;
 
-        public Game(bool isCheat)
+        public Game()
         {
-            IsCheat = isCheat;
             IsOver = false;
             Random = new Random();
             Ticks = 0;
@@ -42,7 +41,7 @@ namespace GravitonClient
             AIShips = new List<AIShip>();
             Orbs = new List<Orb>();
             GameObjects = new List<GameObject>();
-
+            Players = new List<Ship>();
             
         }
 
@@ -76,8 +75,9 @@ namespace GravitonClient
             return player;
         }
 
-        void StartGame()
+        public void StartGame()
         {
+            Initialize();
             Timer.Enabled = true;
         }
 
@@ -99,11 +99,18 @@ namespace GravitonClient
             if (Ticks % 5 == 0 && Orbs.Count < 170)
                 SpawnOrb();
             if (AIShips.Count < 3)
-                SpawnAI();
-            //ViewCamera.Render();           
+                SpawnAI();     
 
             
             GameUpdatedEvent(this, 0);
+        }
+
+        internal GameStats GetStats()
+        {
+            HighScores.CheckNewScores(this);
+            GameStats stats = new GameStats();
+            stats.SetHighScores(HighScores);
+            return stats;
         }
 
         // This method updates all the wells in the game.
@@ -119,7 +126,7 @@ namespace GravitonClient
                     well.Strength = 900;
                     UnstableWells.Add(well);
                     StableWells.Remove(well);
-                    //GameInvokeSoundEvent(this, SoundEffect.Destabilize);
+                    GameInvokeSoundEvent(this, SoundEffect.Destabilize);
                 }
             }
             foreach (Well well in UnstableWells.ToList())
@@ -138,8 +145,8 @@ namespace GravitonClient
         //This method updates the player's position and what orbs it has.
         public void UpdatePlayer(Ship Player)
         {
-            if (!IsCheat)
-                UpdateGravity(Player);
+
+            UpdateGravity(Player);
             Player.Move();
             Well well = Player.WellOver();
             if (well != null)
@@ -147,7 +154,7 @@ namespace GravitonClient
                 int originalColor = well.Orbs;
                 if (!well.IsStable)
                 {
-                    if (!IsCheat && !Player.IsImmune)
+                    if (!Player.IsImmune)
                         GameOver();
                 }
                 else if (Player.DepositOrbs(well))
@@ -180,7 +187,7 @@ namespace GravitonClient
 
         private void InvokeSoundEventForAllShips(SoundEffect soundEffect)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         //updates gravity effects on parameter ship

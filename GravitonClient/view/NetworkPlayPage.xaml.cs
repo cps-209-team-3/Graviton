@@ -20,14 +20,11 @@ namespace GravitonClient.view
     /// </summary>
     public partial class NetworkPlayPage : Page
     {
-        bool cheat;
         Page prevPage;
-        private NetworkedGame game;
 
         public NetworkPlayPage(Page p)
         {
             prevPage = p;
-            cheat = false;
             InitializeComponent();
         }
 

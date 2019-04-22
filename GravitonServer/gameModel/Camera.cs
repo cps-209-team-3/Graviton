@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GravitonClient
+namespace GravitonServer
 {
     public class Camera
     {
@@ -77,13 +77,13 @@ namespace GravitonClient
                     cameraFrame.AIShips.Add(Tuple.Create(xc - 25, yc - 25));
             }
 
-            cameraFrame.OtherHumanShips = new List<Tuple<double, double>>();
+            cameraFrame.OtherHumanShips = new List<Tuple<double, double, string>>();
             foreach (Ship ship in ParentGame.Players)
             {
                 xc = ship.Xcoor - ScreenX;
                 yc = ship.Ycoor - ScreenY;
                 if (xc > -25 && xc < Width + 25 && yc > -25 && yc < Height + 25)
-                    cameraFrame.OtherHumanShips.Add(Tuple.Create(xc - 25, yc - 25));
+                    cameraFrame.OtherHumanShips.Add(Tuple.Create(xc - 25, yc - 25, ship.Username));
             }
 
             cameraFrame.PlayerOrbs = new List<int>();
@@ -125,9 +125,11 @@ namespace GravitonClient
                 ScreenY += yc - (Height - 250);
                 yc = Height - 250;
             }
-            cameraFrame.PlayerShip = Tuple.Create(xc - 25, yc - 25);
+            
             cameraFrame.ChangeX = ScreenX - tempX;
-            cameraFrame.ScreenY = ScreenY - tempY;
+            cameraFrame.ChangeY = ScreenY - tempY;
+
+            
         }
 
     }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GravitonClient
+namespace GravitonServer
 {
     public class CameraFrame
     {
@@ -28,7 +28,7 @@ namespace GravitonClient
         public bool HasDestabilizePowerup { get; set; }
         public bool HasNeutralizePowerup { get; set; }
         public int Points { get; internal set; }
-        public List<Tuple<double, double>> OtherHumanShips { get; set; }
+        public List<Tuple<double, double, string>> OtherHumanShips { get; set; }
 
 
         public CameraFrame()
@@ -39,19 +39,48 @@ namespace GravitonClient
 
         public string Serialize()
         {
-            return $"{Math.Round(ScreenX,2)} {Math.Round(ScreenY, 2)} {Math.Round(ChangeX, 2)} {Math.Round(ChangeY, 2)} ";
+            
+            return $"{Math.Round(ScreenX,2)} {Math.Round(ScreenY, 2)} {Math.Round(ChangeX, 2)} {Math.Round(ChangeY, 2)} {serializeTuples<int>(StableWells)} {serializeTuples(UnstableWells)} {serializeTuples<int>(Orbs)} {String.Join('|', PlayerOrbs.ToArray())} {serializeTuples(AIShips)} {serializeTuples(OtherHumanShips)} {Seconds} {SecondsLeft} {Points} {(HasGhostingPowerup?"t":"f")} {(HasNeutralizePowerup ? "t" : "f")} {(HasDestabilizePowerup ? "t" : "f")}";
         }
 
-        private static string serializeTuples(List<Tuple<double, double, int>> tuples)
+        private static string serializeTuples<T>(List<Tuple<double, double, T>> tuples)
         {
             string retVal = "";
             int i = 0;
-            for(; i < tuples.Count - 1; i++)
+            Tuple<double, double, T> currentTuple;
+            if (tuples.Count > 1)
             {
-                var currentTuple = tuples[i];
-                //retVal += currentTuple[i]
+                for (; i < tuples.Count - 1; i++)
+                {
+                    currentTuple = tuples[i];
+                    retVal += $"{Math.Round(currentTuple.Item1, 2)},{Math.Round(currentTuple.Item2, 2)},{currentTuple.Item3}|";
+                }
             }
-            
+            if (tuples.Count > 0)
+            {
+                currentTuple = tuples[i];
+                retVal += $"{Math.Round(currentTuple.Item1, 2)},{Math.Round(currentTuple.Item2, 2)},{currentTuple.Item3}";
+            }
+            return retVal;
+        }
+
+        private static string serializeTuples(List<Tuple<double, double>> tuples)
+        {
+            string retVal = "";
+            int i = 0;
+            Tuple<double, double> currentTuple;
+            if (tuples.Count > 1)
+            {
+                for (; i < tuples.Count - 1; i++)
+                {
+                    currentTuple = tuples[i];
+                    retVal += $"{Math.Round(currentTuple.Item1, 2)},{Math.Round(currentTuple.Item2, 2)}|";
+                }
+                currentTuple = tuples[i];
+                retVal += $"{Math.Round(currentTuple.Item1, 2)},{Math.Round(currentTuple.Item2, 2)}";
+            }
+            else if(tuples.Count == 1)
+                retVal += $"{Math.Round(tuples[i].Item1, 2)},{Math.Round(tuples[i].Item2, 2)}";
             return retVal;
         }
     }

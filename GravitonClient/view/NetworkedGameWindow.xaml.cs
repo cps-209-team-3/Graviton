@@ -28,6 +28,8 @@ namespace GravitonClient
         List<Image> destableDict;
         List<Image> orbDict;
         List<Image> AiImages;
+        List<Image> OtherHumanImages;
+        List<Label> OtherHumanNames = new List<Label>();
         Image ship;
         Image background;
         Image[] planets;
@@ -71,7 +73,7 @@ namespace GravitonClient
 
         private void SetupGameWindow()
         {
-            InitializeComponent();
+            
             wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
@@ -177,10 +179,11 @@ namespace GravitonClient
             AiImage.EndInit();
 
             AiImages = new List<Image>();
+            OtherHumanImages = new List<Image>();
             //----------------------------------
             ship.Source = shipImage;
             ship.Width = 50;
-            DrawCanvas.Children.Add(ship);
+            //DrawCanvas.Children.Add(ship);
             //----------------------------------
 
             for (int i = 0; i < HudOrbs.Length; i++)
@@ -225,6 +228,65 @@ namespace GravitonClient
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
+            if (272 / 160 > DrawCanvas.ActualWidth / DrawCanvas.ActualHeight)
+            {
+                background.Height = DrawCanvas.ActualHeight;
+                background.Width = DrawCanvas.ActualWidth;
+                for (int i = 0; i < 4; ++i)
+                {
+                    planets[i].Height = DrawCanvas.ActualHeight;
+                    rings[i].Height = DrawCanvas.ActualHeight;
+                    twins[i].Height = DrawCanvas.ActualHeight;
+                    stars[i].Height = DrawCanvas.ActualHeight;
+                }
+            }
+
+            else
+            {
+                background.Height = DrawCanvas.ActualHeight;
+                for (int i = 0; i < 4; ++i)
+                {
+                    planets[i].Width = DrawCanvas.ActualWidth;
+                    rings[i].Width = DrawCanvas.ActualWidth;
+                    twins[i].Width = DrawCanvas.ActualWidth;
+                    stars[i].Width = DrawCanvas.ActualWidth;
+                }
+            }
+
+            unstable = new MediaPlayer();
+            unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
+            orbGrab = new MediaPlayer();
+            orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX2.mp3")));
+            neutralize = new MediaPlayer();
+            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Shut-down-sound-effect.mp3")));
+            deposit = new MediaPlayer();
+            deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Space entity(deposit).mp3")));
+            powerup = new MediaPlayer();
+            powerup.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Power-Up-KP-1879176533 (packet pickup).mp3")));
+            collapse = new MediaPlayer();
+            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
+            ghost = new MediaPlayer();
+            ghost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/ghost.mp3")));
+            boost = new MediaPlayer();
+            boost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/boost.mp3")));
+
+            unstable.Volume = 0;
+            orbGrab.Volume = 0;
+            neutralize.Volume = 0;
+            deposit.Volume = 0;
+            powerup.Volume = 0;
+            collapse.Volume = 0;
+            ghost.Volume = 0;
+            boost.Volume = 0;
+
+            unstable.Play();
+            neutralize.Play();
+            deposit.Play();
+            orbGrab.Play();
+            powerup.Play();
+            collapse.Play();
+            ghost.Play();
+            boost.Play();
         }
         
 
@@ -235,161 +297,192 @@ namespace GravitonClient
             UDPGameClient.StartListening();
             game.GameUpdatedEvent += Render;
             game.GameInvokeSoundEvent += PlaySound;
-            SetupGameWindow();
+            InitializeComponent();
+
         }
 
-        public void Render(object sender, NetworkedCameraFrame e)
+        public void Render(object sender, NetworkedCameraFrame currentFrame)
         {
-            if (!gameStarted)
+            Dispatcher.Invoke(() =>
             {
-                gameStarted = true;
-                DrawCanvas.Children.Remove(grid_secondsLeft);
-            }
-
-
-            CameraFrame currentFrame = e;
-
-
-            for (int i = 0; i < 4; ++i)
-            {
-                Canvas.SetLeft(planets[i], currentFrame.Backgrounds[3][i].Item1);
-                Canvas.SetTop(planets[i], currentFrame.Backgrounds[3][i].Item2);
-                Canvas.SetLeft(rings[i], currentFrame.Backgrounds[2][i].Item1);
-                Canvas.SetTop(rings[i], currentFrame.Backgrounds[2][i].Item2);
-                Canvas.SetLeft(twins[i], currentFrame.Backgrounds[1][i].Item1);
-                Canvas.SetTop(twins[i], currentFrame.Backgrounds[1][i].Item2);
-                Canvas.SetLeft(stars[i], currentFrame.Backgrounds[0][i].Item1);
-                Canvas.SetTop(stars[i], currentFrame.Backgrounds[0][i].Item2);
-            }
-
-            int wellDiff = wellDict.Count - currentFrame.StableWells.Count;
-            if (wellDiff > 0)
-                RemoveGameObjects(wellDict, wellDiff);
-            if (wellDiff < 0)
-                AddGameObjects(wellDict, -wellDiff);
-
-            for (int i = 0; i < wellDict.Count; ++i)
-            {
-                int color = currentFrame.StableWells[i].Item3;
-                wellDict[i].Source = wellImages[color];
-                Canvas.SetLeft(wellDict[i], currentFrame.StableWells[i].Item1);
-                Canvas.SetTop(wellDict[i], currentFrame.StableWells[i].Item2);
-                Canvas.SetZIndex(wellDict[i], 5);
-            }
-
-            gameDuration = DateTime.Now - startTime - PauseDuration;
-            if (game.IsOver)
-            {
-                Button b2 = new Button();
-                b2.Content = "Play Again";
-                b2.FontSize = 40;
-                b2.FontFamily = (FontFamily)this.FindResource("Azonix");
-                b2.Margin = new Thickness(20);
-                b2.Padding = new Thickness(10, 5, 10, 0);
-                b2.Background = Brushes.Black;
-                b2.Foreground = Brushes.Red;
-                b2.Click += NewGame_Click;
-                b2.Width = 500;
-                Canvas.SetZIndex(b2, 100);
-                Canvas.SetLeft(b2, (DrawCanvas.ActualWidth - b2.Width) / 2);
-                Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
-                DrawCanvas.Children.Add(b2);
-            }
-            txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+               if (!gameStarted)
+               {
+                   gameStarted = true;
+                   DrawCanvas.Children.Remove(grid_secondsLeft);
+                   SetupGameWindow();
+               }
+               else
+               {
 
 
 
-            int destableDiff = destableDict.Count - currentFrame.UnstableWells.Count;
-            if (destableDiff > 0)
-                RemoveGameObjects(destableDict, destableDiff);
-            if (destableDiff < 0)
-            {
-                AddGameObjects(destableDict, -destableDiff);
-            }
-
-            for (int i = 0; i < destableDict.Count; ++i)
-            {
-                destableDict[i].Source = destabilizedImage;
-                Canvas.SetLeft(destableDict[i], currentFrame.UnstableWells[i].Item1);
-                Canvas.SetTop(destableDict[i], currentFrame.UnstableWells[i].Item2);
-                Canvas.SetZIndex(destableDict[i], 6);
-            }
-
-            int orbDiff = orbDict.Count - currentFrame.Orbs.Count;
-            if (orbDiff > 0)
-                RemoveGameObjects(orbDict, orbDiff);
-            if (orbDiff < 0)
-                AddGameObjects(orbDict, -orbDiff);
-
-            for (int i = 0; i < orbDict.Count; ++i)
-            {
-                int color = currentFrame.Orbs[i].Item3;
-                orbDict[i].Source = orbImages[color];
-                Canvas.SetLeft(orbDict[i], currentFrame.Orbs[i].Item1);
-                Canvas.SetTop(orbDict[i], currentFrame.Orbs[i].Item2);
-                Canvas.SetZIndex(orbDict[i], 7);
-            }
-
-            Canvas.SetLeft(ship, currentFrame.PlayerShip.Item1);
-            Canvas.SetTop(ship, currentFrame.PlayerShip.Item2);
-            Canvas.SetZIndex(ship, 10);
-            txtScore.Text = "Score: " + currentFrame.Points;
 
 
-
-            //to be implemented with AI
-
-
-
-            int shipDiff = AiImages.Count - currentFrame.AIShips.Count;
-
-            if (shipDiff > 0)
-                RemoveGameObjects(AiImages, shipDiff);
-            if (shipDiff < 0)
-                AddGameObjects(AiImages, -shipDiff);
-
-            for (int i = 0; i < AiImages.Count; ++i)
-            {
-                AiImages[i].Source = AiImage;
-                AiImages[i].Width = 50;
-                Canvas.SetLeft(AiImages[i], currentFrame.AIShips[i].Item1);
-                Canvas.SetTop(AiImages[i], currentFrame.AIShips[i].Item2);
-                Canvas.SetZIndex(AiImages[i], 9);
-            }
+                   for (int i = 0; i < 4; ++i)
+                   {
+                       Canvas.SetLeft(planets[i], currentFrame.Backgrounds[3][i].Item1);
+                       Canvas.SetTop(planets[i], currentFrame.Backgrounds[3][i].Item2);
+                       Canvas.SetLeft(rings[i], currentFrame.Backgrounds[2][i].Item1);
+                       Canvas.SetTop(rings[i], currentFrame.Backgrounds[2][i].Item2);
+                       Canvas.SetLeft(twins[i], currentFrame.Backgrounds[1][i].Item1);
+                       Canvas.SetTop(twins[i], currentFrame.Backgrounds[1][i].Item2);
+                       Canvas.SetLeft(stars[i], currentFrame.Backgrounds[0][i].Item1);
+                       Canvas.SetTop(stars[i], currentFrame.Backgrounds[0][i].Item2);
+                   }
 
 
-            //==========================
-            //HUD
-            //==========================
+                   gameDuration = DateTime.Now - startTime - PauseDuration;
+                   if (game.IsOver)
+                   {
+                       Button b2 = new Button();
+                       b2.Content = "Play Again";
+                       b2.FontSize = 40;
+                       b2.FontFamily = (FontFamily)this.FindResource("Azonix");
+                       b2.Margin = new Thickness(20);
+                       b2.Padding = new Thickness(10, 5, 10, 0);
+                       b2.Background = Brushes.Black;
+                       b2.Foreground = Brushes.Red;
+                       b2.Click += NewGame_Click;
+                       b2.Width = 500;
+                       Canvas.SetZIndex(b2, 100);
+                       Canvas.SetLeft(b2, (DrawCanvas.ActualWidth - b2.Width) / 2);
+                       Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
+                       DrawCanvas.Children.Add(b2);
+                   }
+                   txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+
+                   int playerdiff = OtherHumanImages.Count - currentFrame.OtherHumanShips.Count;
+                   if (playerdiff > 0)
+                   {
+                       RemoveGameObjects(OtherHumanImages, playerdiff);
+                       RemoveGameObjects(OtherHumanNames, playerdiff);
+                   }
+                   if (playerdiff < 0)
+                   {
+                       AddGameObjects(OtherHumanImages, -playerdiff);
+                       AddGameObjects(OtherHumanNames, -playerdiff);
+                   }
+                   for (int i = 0; i < OtherHumanImages.Count; ++i)
+                   {
+
+                       OtherHumanImages[i].Source = shipImage;
+                       OtherHumanImages[i].Width = 50;
+                       Canvas.SetLeft(OtherHumanImages[i], currentFrame.OtherHumanShips[i].Item1);
+                       Canvas.SetTop(OtherHumanImages[i], currentFrame.OtherHumanShips[i].Item2);
+                       Canvas.SetLeft(OtherHumanNames[i], currentFrame.OtherHumanShips[i].Item1);
+                       Canvas.SetTop(OtherHumanNames[i], currentFrame.OtherHumanShips[i].Item2 -30);
+                       OtherHumanNames[i].Content = currentFrame.OtherHumanShips[i].Item3;
+                       Canvas.SetZIndex(OtherHumanNames[i], 7);
+                       Canvas.SetZIndex(OtherHumanImages[i], 7);
+                   }
+                   int wellDiff = wellDict.Count - currentFrame.StableWells.Count;
+                   if (wellDiff > 0)
+                       RemoveGameObjects(wellDict, wellDiff);
+                   if (wellDiff < 0)
+                       AddGameObjects(wellDict, -wellDiff);
+
+                   for (int i = 0; i < wellDict.Count; ++i)
+                   {
+                       int color = currentFrame.StableWells[i].Item3;
+                       wellDict[i].Source = wellImages[color];
+                       Canvas.SetLeft(wellDict[i], currentFrame.StableWells[i].Item1);
+                       Canvas.SetTop(wellDict[i], currentFrame.StableWells[i].Item2);
+                       Canvas.SetZIndex(wellDict[i], 5);
+                   }
+
+                   int destableDiff = destableDict.Count - currentFrame.UnstableWells.Count;
+                   if (destableDiff > 0)
+                       RemoveGameObjects(destableDict, destableDiff);
+                   if (destableDiff < 0)
+                   {
+                       AddGameObjects(destableDict, -destableDiff);
+                   }
+
+                   for (int i = 0; i < destableDict.Count; ++i)
+                   {
+                       destableDict[i].Source = destabilizedImage;
+                       Canvas.SetLeft(destableDict[i], currentFrame.UnstableWells[i].Item1);
+                       Canvas.SetTop(destableDict[i], currentFrame.UnstableWells[i].Item2);
+                       Canvas.SetZIndex(destableDict[i], 6);
+                   }
+
+                   int orbDiff = orbDict.Count - currentFrame.Orbs.Count;
+                   if (orbDiff > 0)
+                       RemoveGameObjects(orbDict, orbDiff);
+                   if (orbDiff < 0)
+                       AddGameObjects(orbDict, -orbDiff);
+
+                   for (int i = 0; i < orbDict.Count; ++i)
+                   {
+                       int color = currentFrame.Orbs[i].Item3;
+                       orbDict[i].Source = orbImages[color];
+                       Canvas.SetLeft(orbDict[i], currentFrame.Orbs[i].Item1);
+                       Canvas.SetTop(orbDict[i], currentFrame.Orbs[i].Item2);
+                       Canvas.SetZIndex(orbDict[i], 7);
+                   }
+
+                   Canvas.SetLeft(ship, currentFrame.PlayerShip.Item1);
+                   Canvas.SetTop(ship, currentFrame.PlayerShip.Item2);
+                   Canvas.SetZIndex(ship, 10);
+                   txtScore.Text = "Score: " + currentFrame.Points;
 
 
-            if (!Enumerable.SequenceEqual(currentOrbs, currentFrame.PlayerOrbs))
-            {
-                UpdateHudOrbs(currentFrame.PlayerOrbs);
-                currentOrbs = currentFrame.PlayerOrbs.ToList();
-            }
-            
-            UpdateHudPowerups(currentFrame.HasNeutralizePowerup, 
-                currentFrame.HasDestabilizePowerup, 
-                currentFrame.HasGhostingPowerup);
 
-            if (game.IsOver)
-            {
-                Button b = new Button();
-                b.Content = "Return to Menu";
-                b.FontSize = 40;
-                b.FontFamily = (FontFamily)this.FindResource("Azonix");
-                b.Margin = new Thickness(20);
-                b.Padding = new Thickness(10, 5, 10, 0);
-                b.Background = Brushes.Black;
-                b.Foreground = Brushes.Red;
-                b.Click += GameOver_Click;
-                b.Width = 500;
-                Canvas.SetZIndex(b, 100);
-                Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
-                Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
-                DrawCanvas.Children.Add(b);
-            }
+                    //to be implemented with AI
+
+
+
+                    int shipDiff = AiImages.Count - currentFrame.AIShips.Count;
+
+                   if (shipDiff > 0)
+                       RemoveGameObjects(AiImages, shipDiff);
+                   if (shipDiff < 0)
+                       AddGameObjects(AiImages, -shipDiff);
+
+                   for (int i = 0; i < AiImages.Count; ++i)
+                   {
+                       AiImages[i].Source = AiImage;
+                       AiImages[i].Width = 50;
+                       Canvas.SetLeft(AiImages[i], currentFrame.AIShips[i].Item1);
+                       Canvas.SetTop(AiImages[i], currentFrame.AIShips[i].Item2);
+                       Canvas.SetZIndex(AiImages[i], 9);
+                   }
+
+
+                    //==========================
+                    //HUD
+                    //==========================
+
+
+                    if (!Enumerable.SequenceEqual(currentOrbs, currentFrame.PlayerOrbs))
+                   {
+                       UpdateHudOrbs(currentFrame.PlayerOrbs);
+                       currentOrbs = currentFrame.PlayerOrbs.ToList();
+                   }
+
+                   UpdateHudPowerups(currentFrame.HasNeutralizePowerup,
+                       currentFrame.HasDestabilizePowerup,
+                       currentFrame.HasGhostingPowerup);
+
+                   if (game.IsOver)
+                   {
+                       Button b = new Button();
+                       b.Content = "Return to Menu";
+                       b.FontSize = 40;
+                       b.FontFamily = (FontFamily)this.FindResource("Azonix");
+                       b.Margin = new Thickness(20);
+                       b.Padding = new Thickness(10, 5, 10, 0);
+                       b.Background = Brushes.Black;
+                       b.Foreground = Brushes.Red;
+                       b.Click += GameOver_Click;
+                       b.Width = 500;
+                       Canvas.SetZIndex(b, 100);
+                       Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
+                       Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
+                       DrawCanvas.Children.Add(b);
+                   }
+               }
+           });
         }
 
         private void NewGame_Click(object sender, RoutedEventArgs e)
@@ -485,16 +578,42 @@ namespace GravitonClient
             }
         }
 
+        public void AddGameObjects(List<Label> gameObjs, int add)
+        {
+            for (int i = 0; i < add; ++i)
+            {
+                var l = new Label();
+                l.FontSize = 15;
+                l.FontFamily = (FontFamily)FindResource("Azonix");
+                l.HorizontalAlignment = HorizontalAlignment.Center;
+                l.Foreground = (Brush)new BrushConverter().ConvertFrom("#ffffff");
+                gameObjs.Add(l);
+                DrawCanvas.Children.Add(gameObjs[gameObjs.Count - 1]);
+            }
+        }
+
+        public void RemoveGameObjects(List<Label> gameObjs, int remove)
+        {
+            for (int i = 0; i < remove; ++i)
+            {
+                DrawCanvas.Children.Remove(gameObjs[0]);
+                gameObjs.RemoveAt(0);
+            }
+        }
+
         private void GameWindow_Closed(object sender, EventArgs e)
         {
-            unstable.Close();
-            neutralize.Close();
-            deposit.Close();
-            orbGrab.Close();
-            powerup.Close();
-            collapse.Close();
-            ghost.Close();
-            boost.Close();
+            if (gameStarted)
+            {
+                unstable.Close();
+                neutralize.Close();
+                deposit.Close();
+                orbGrab.Close();
+                powerup.Close();
+                collapse.Close();
+                ghost.Close();
+                boost.Close();
+            }
             App.Current.MainWindow.Show();
         }
 
@@ -587,85 +706,23 @@ namespace GravitonClient
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            if (272 / 160 > DrawCanvas.ActualWidth / DrawCanvas.ActualHeight)
-            {
-                background.Height = DrawCanvas.ActualHeight;
-                background.Width = DrawCanvas.ActualWidth;
-                for (int i = 0; i < 4; ++i)
-                {
-                    planets[i].Height = DrawCanvas.ActualHeight;
-                    rings[i].Height = DrawCanvas.ActualHeight;
-                    twins[i].Height = DrawCanvas.ActualHeight;
-                    stars[i].Height = DrawCanvas.ActualHeight;
-                }
-            }
-
-            else
-            {
-                background.Height = DrawCanvas.ActualHeight;
-                for (int i = 0; i < 4; ++i)
-                {
-                    planets[i].Width = DrawCanvas.ActualWidth;
-                    rings[i].Width = DrawCanvas.ActualWidth;
-                    twins[i].Width = DrawCanvas.ActualWidth;
-                    stars[i].Width = DrawCanvas.ActualWidth;
-                }
-            }
-
-            unstable = new MediaPlayer();
-            unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
-            orbGrab = new MediaPlayer();
-            orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX2.mp3")));
-            neutralize = new MediaPlayer();
-            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Shut-down-sound-effect.mp3")));
-            deposit = new MediaPlayer();
-            deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Space entity(deposit).mp3")));
-            powerup = new MediaPlayer();
-            powerup.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Power-Up-KP-1879176533 (packet pickup).mp3")));
-            collapse = new MediaPlayer();
-            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
-            ghost = new MediaPlayer();
-            ghost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/ghost.mp3")));
-            boost = new MediaPlayer();
-            boost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/boost.mp3")));
-
-            unstable.Volume = 0;
-            orbGrab.Volume = 0;
-            neutralize.Volume = 0;
-            deposit.Volume = 0;
-            powerup.Volume = 0;
-            collapse.Volume = 0;
-            ghost.Volume = 0;
-            boost.Volume = 0;
-
-            unstable.Play();
-            neutralize.Play();
-            deposit.Play();
-            orbGrab.Play();
-            powerup.Play();
-            collapse.Play();
-            ghost.Play();
-            boost.Play();
+            
         }
 
         public void GameOver()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void DisplayStats(GameStats gameStats)
         {
-            throw new NotImplementedException();
+            
         }
 
-        public void DisplayStart()
-        {
-            throw new NotImplementedException();
-        }
 
         public void DisplaySecondsTillStart(int seconds)
         {
-            lbl_secondsLeft.Content = "Seconds to start: " + seconds;
+            Dispatcher.Invoke(()=>lbl_secondsLeft.Content = "Seconds to start: " + seconds);
         }
 
         public void DisplayError(string s)

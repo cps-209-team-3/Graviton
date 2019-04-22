@@ -31,6 +31,11 @@ namespace GravitonClient
         {
             Backgrounds = new List<Tuple<double, double>>[4];
             BackgroundXY = new double[4, 2];
+            StableWells = new List<Tuple<double, double, int>>();
+            UnstableWells = new List<Tuple<double, double>>();
+            PlayerOrbs = new List<int>();
+            AIShips = new List<Tuple<double, double>>();
+            Orbs = new List<Tuple<double, double, int>>();
         }
 
      

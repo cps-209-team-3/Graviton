@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GravitonClient
+namespace GravitonServer
 {
     class HighScores
     {
@@ -24,7 +24,7 @@ namespace GravitonClient
 
         public HighScores()
         {
-
+            hiScores = new List<HiScore>();
         }
 
         
@@ -33,14 +33,9 @@ namespace GravitonClient
         // Returns nothing.
         public void CheckNewScores(Game game)
         {
-            if (hiScores.Count == 10)
+            foreach(Ship s in game.Players)
             {
-                if (game.Points > hiScores[9].Score)
-                    AddNewScore(game.Username, game.Points);
-            }
-            else
-            {
-                AddNewScore(game.Username, game.Points);
+                AddNewScore(s.Username, s.Points);
             }
         }
         
@@ -62,31 +57,8 @@ namespace GravitonClient
             }
         }
         
-        // Creates a HighScores object from a file.
-        // Accepts a path to the file as a string.
-        // Returns a HighScores object.
-        public static HighScores Load(string path)
-        {
-            HighScores loadScores;
-            using (StreamReader rd = new StreamReader(path))
-            {
-                loadScores = Deserialize(rd.ReadLine());
-                loadScores.hiScores.Sort(CompareHighScores);
-            }
-            return loadScores;
-        }
-        
-        // Writes the current HighScores object to a file.
-        // Accepts a path to the file as a string.
-        // Returns nothing.
-        public void Save(string path)
-        {
-            hiScores.Sort(CompareHighScores);
-            using (StreamWriter writer = new StreamWriter(path, false))
-            {
-                writer.WriteLine(Serialize());
-            }
-        }
+
+
         
         // Serializes the HighScores object to string.
         // Accepts nothing.

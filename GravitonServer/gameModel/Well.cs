@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GravitonClient
+namespace GravitonServer
 {
     public class Well : GameObject
     {

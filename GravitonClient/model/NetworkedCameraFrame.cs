@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GravitonClient
 {
@@ -21,14 +18,16 @@ namespace GravitonClient
             get; set;
         }
 
-        public List<Tuple<double, double>> OtherHumanShips; 
+        public List<Tuple<double, double, string>> OtherHumanShips = new List<Tuple<double, double, string>>(); 
         public NetworkedCameraFrame() : base() { }
         public static NetworkedCameraFrame Deserialize(string data)
         {
             string[] parts = data.Split(' ');
             NetworkedCameraFrame newFrame = new NetworkedCameraFrame();
             newFrame.ScreenX = Convert.ToDouble(parts[0]);
-            newFrame.ScreenX = Convert.ToDouble(parts[1]);
+            newFrame.ScreenY = Convert.ToDouble(parts[1]);
+
+            newFrame.PlayerShip = Tuple.Create<double, double>(newFrame.ScreenX, newFrame.ScreenY);
 
             double changeX = Convert.ToDouble(parts[2]);
             double changeY = Convert.ToDouble(parts[3]);
@@ -46,49 +45,58 @@ namespace GravitonClient
             newFrame.Backgrounds = Backgrounds;
            
 
-            string[] wells = parts[5].Split('|');
+            string[] wells = parts[4].Split('|');
 
-            for(int i = 0; i < wells.Length; i++)
+            if (wells.Length > 0)
             {
-                string[] wellParts = wells[i].Split(',');
-                newFrame.StableWells.Add(Tuple.Create(
-                    Convert.ToDouble(wellParts[0]),
-                    Convert.ToDouble(wellParts[1]),
-                    Convert.ToInt32( wellParts[3])));
+                for (int i = 0; i < wells.Length; i++)
+                {
+                    string[] wellParts = wells[i].Split(',');
+                    if (wellParts.Length == 3) 
+                        newFrame.StableWells.Add(Tuple.Create(
+                            Convert.ToDouble(wellParts[0]),
+                            Convert.ToDouble(wellParts[1]),
+                            Convert.ToInt32(wellParts[2])));
+                }
             }
 
-            string[] unstableWells = parts[6].Split('|');
+            string[] unstableWells = parts[5].Split('|');
 
+            if(unstableWells.Length > 0)
             for (int i = 0; i < unstableWells.Length; i++)
             {
                 string[] wellParts = unstableWells[i].Split(',');
+                if(wellParts.Length ==2)
                 newFrame.UnstableWells.Add(Tuple.Create(
                     Convert.ToDouble(wellParts[0]),
                     Convert.ToDouble(wellParts[1])));
             }
 
-            string[] orbs = parts[7].Split('|');
+            string[] orbs = parts[6].Split('|');
+            if(orbs.Length > 0)
+                for (int i = 0; i < orbs.Length; i++)
+                {
+                    string[] wellParts = orbs[i].Split(',');
+                        if (wellParts.Length == 3)
+                            newFrame.Orbs.Add(Tuple.Create(
+                                Convert.ToDouble(wellParts[0]),
+                                Convert.ToDouble(wellParts[1]),
+                                Convert.ToInt32(wellParts[2])));
+                }
 
-            for (int i = 0; i < orbs.Length; i++)
-            {
-                string[] wellParts = orbs[i].Split(',');
-                newFrame.Orbs.Add(Tuple.Create(
-                    Convert.ToDouble(wellParts[0]),
-                    Convert.ToDouble(wellParts[1]),
-                    Convert.ToInt32(wellParts[3])));
-            }
 
-
-            string[] playerOrbs = parts[8].Split('|');
+            string[] playerOrbs = parts[7].Split('|');
 
             for (int i = 0; i < playerOrbs.Length; i++)
-                newFrame.PlayerOrbs.Add(Convert.ToInt32(playerOrbs[i]));
+                if(!string.IsNullOrEmpty(playerOrbs[i]))
+                    newFrame.PlayerOrbs.Add(Convert.ToInt32(playerOrbs[i]));
 
-            string[] aiShips = parts[14].Split('|');
+            string[] aiShips = parts[8].Split('|');
             for(int i = 0; i < aiShips.Length; i++)
             {
                 string[] wellParts = aiShips[i].Split(',');
-                newFrame.AIShips.Add(Tuple.Create(
+                if (wellParts.Length == 2)
+                    newFrame.AIShips.Add(Tuple.Create(
                     Convert.ToDouble(wellParts[0]),
                     Convert.ToDouble(wellParts[1])));
             }
@@ -97,9 +105,13 @@ namespace GravitonClient
             for (int i = 0; i < PlayerShips.Length; i++)
             {
                 string[] wellParts = PlayerShips[i].Split(',');
-                newFrame.AIShips.Add(Tuple.Create(
+                if (wellParts.Length == 3)
+                {
+                    newFrame.OtherHumanShips.Add(Tuple.Create(
                     Convert.ToDouble(wellParts[0]),
-                    Convert.ToDouble(wellParts[1])));
+                    Convert.ToDouble(wellParts[1]),
+                    wellParts[2]));
+                }
             }
 
             newFrame.Seconds = Convert.ToInt32(parts[10]);

@@ -8,9 +8,12 @@ namespace GravitonClient
 {
     public class GameStats
     {
+        internal HighScores HighScores;
         public static GameStats Deserialize(string data)
         {
-            throw new NotImplementedException();
+            GameStats stats = new GameStats();
+            stats.HighScores = HighScores.Deserialize(data);
+            return stats;
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Net;
+using System.Windows.Threading;
 
 namespace GravitonClient
 {
@@ -14,7 +15,7 @@ namespace GravitonClient
     internal static class UDPGameClient
     {
         private static string gameServerName = "127.0.0.1";
-        private static int gameServerPort = 8000;
+        private static int gameServerPort = 8020;
         private static IPEndPoint gameEndPoint;
 
         private static UdpClient gameConn;
@@ -58,7 +59,7 @@ namespace GravitonClient
                     }
                     catch (Exception e)
                     {
-                        reporter.DisplayError(e.Message);
+                       reporter.DisplayError(e.Message);
                     }
                 }
             });
@@ -66,12 +67,12 @@ namespace GravitonClient
 
         internal static void SendKeyPress(char key)
         {
-            gameConn.Send(new byte[] { (byte)key, 1}, 2);
+            gameConn.Send(new byte[] { 0, (byte)key}, 2);
         }
 
         internal static void SendKeyRelease(char key)
         {
-            gameConn.Send(new byte[] { (byte)key, 0}, 2);
+            gameConn.Send(new byte[] { 1, (byte)key}, 2);
         }
 
         internal static void DoAction(byte[] data)
@@ -92,7 +93,9 @@ namespace GravitonClient
                     IsListening = true;
                     break;
                 case 3:
-                    reporter.DisplaySecondsTillStart((int) data[1]);
+                        reporter.DisplaySecondsTillStart(
+                            Convert.ToInt32(
+                                Encoding.ASCII.GetString(data, 1, data.Length - 1)));
                     break;
             }
         }

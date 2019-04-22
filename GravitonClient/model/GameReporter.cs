@@ -10,7 +10,6 @@ namespace GravitonClient
     {
         void GameOver();
         void DisplayStats(GameStats gameStats);
-        void DisplayStart();
         void DisplaySecondsTillStart(int seconds);
         void DisplayError(string s);
     }

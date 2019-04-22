@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GravitonClient
+namespace GravitonServer
 {
     public enum SoundEffect { OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
     public class Ship : GameObject
     {
+        public string Username { get; internal set; }
         public Game ParentGame { get; set; }
         public Powerup GamePowerup { get; set; }
         public double SpeedX { get; set; }
@@ -38,6 +39,13 @@ namespace GravitonClient
             SpeedY = 0.0;
             BoostFactor = 1.0;
             Orbs = new List<int>();
+            game.GameInvokeSoundEvent += InvokeSoundEffect;
+            GamePowerup.GameInvokeSoundEvent += InvokeSoundEffect;
+        }
+
+        private void InvokeSoundEffect(object sender, SoundEffect s)
+        {
+            //InvokeSoundEventForShip(this, s);
         }
 
         public Ship() : base() {
@@ -135,7 +143,7 @@ namespace GravitonClient
         {
             if (Orbs.Count >= 3)
             {
-                    InvokeSoundEventForShip(this, SoundEffect.Boost);
+                //    InvokeSoundEventForShip(this, SoundEffect.Boost);
                 for (int i = 0; i < 3; ++i)
                 {
                     int orbIndex = rand.Next(Orbs.Count);
