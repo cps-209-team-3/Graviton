@@ -1,0 +1,24 @@
+﻿<Window x:Class="GravitonClient.NetworkedGameWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GravitonClient"
+        Closed="GameWindow_Closed"
+        mc:Ignorable="d"
+        Title="GameWindow" WindowState="Maximized" Background="#000020">
+    <Canvas x:Name="DrawCanvas">
+        <TextBlock x:Name="txtScore" Canvas.Right="75" Canvas.Top="10" Canvas.ZIndex="1000" Text="Score: 0" FontFamily="{StaticResource Azonix}" Foreground="Aqua" FontSize="20"/>
+        <TextBlock x:Name="txtTimeLeft" Canvas.Right="240" Canvas.Top="10" Canvas.ZIndex="1000" Text="5:00" FontFamily="{StaticResource Azonix}" Foreground="Aqua" FontSize="20"/>
+        <Grid x:Name="grid_secondsLeft" Width="{Binding ActualWidth, ElementName=DrawCanvas}" 
+          Height="{Binding ActualHeight, ElementName=DrawCanvas}">
+            <Label x:Name="lbl_secondsLeft" Content="Seconds to Start: 20"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" 
+               Foreground="White"
+               FontSize="40"
+               FontFamily="{StaticResource Azonix}"
+        />
+        </Grid>
+    </Canvas>
+</Window>
