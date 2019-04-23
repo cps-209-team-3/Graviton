@@ -26,6 +26,7 @@ namespace GravitonClient.view
         List<Animator> destableList;
         List<Animator> orbList;
         List<Animator> AIList;
+        Animator playerShip;
 
         //to be deleted with rise of animations
         List<Image> wellDict;
@@ -61,7 +62,7 @@ namespace GravitonClient.view
         Animator wellTemplate;
         Animator playerTemplate;
         Animator orbTemplate;
-
+        Animator aiTemplate;
 
         Animation redWellReg;
         Animation orangeWellReg;
@@ -69,15 +70,28 @@ namespace GravitonClient.view
         Animation greenWellReg;
         Animation blueWellReg;
         Animation purpleWellReg;
-
+        Animation redOrb;
+        Animation orangeOrb;
+        Animation yellowOrb;
+        Animation greenOrb;
+        Animation blueOrb;
+        Animation purpleOrb;
+        Animation destabilized;
+        Animation player;
+        Animation ai;
+        
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
-        BitmapImage shipImage;
+        BitmapImage shipImage1;
+        BitmapImage shipImage2;
+        BitmapImage shipImage3;
+        BitmapImage shipImage4;
         BitmapImage AiImage;
         BitmapImage NeutralizeImage;
         BitmapImage DestabilizeImage;
         BitmapImage GhostImage;
+
         BitmapImage BackgroundImage;
         BitmapImage PlanetImage;
         BitmapImage RingImage;
@@ -99,8 +113,6 @@ namespace GravitonClient.view
         MediaPlayer ghost;
         MediaPlayer boost;
 
-        Animator playerShip;
-
         private Game game;
         public Game Game
         {
@@ -111,114 +123,11 @@ namespace GravitonClient.view
         private void SetupGameWindow()
         {
             InitializeComponent();
-            wellDict = new List<Image>();
-            destableDict = new List<Image>();
-            orbDict = new List<Image>();
-            AiImages = new List<Image>();
-
-            background = new Image();
-            BackgroundImage = new BitmapImage();
-            BackgroundImage.BeginInit();
-            BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
-            BackgroundImage.EndInit();
-            background.Source = BackgroundImage;
-            RenderOptions.SetBitmapScalingMode(background, BitmapScalingMode.NearestNeighbor);
-            Canvas.SetLeft(background, 0);
-            Canvas.SetTop(background, 0);
-            Canvas.SetZIndex(background, 0);
-            DrawCanvas.Children.Add(background);
-
-            planets = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            PlanetImage = new BitmapImage();
-            PlanetImage.BeginInit();
-            PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
-            PlanetImage.EndInit();
-
-            rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            RingImage = new BitmapImage();
-            RingImage.BeginInit();
-            RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
-            RingImage.EndInit();
-
-            twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            TwinImage = new BitmapImage();
-            TwinImage.BeginInit();
-            TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
-            TwinImage.EndInit();
-
-            stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            StarImage = new BitmapImage();
-            StarImage.BeginInit();
-            StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
-            StarImage.EndInit();
-
-            for (int i = 0; i < 4; ++i)
-            {
-                planets[i].Source = PlanetImage;
-                rings[i].Source = RingImage;
-                twins[i].Source = TwinImage;
-                stars[i].Source = StarImage;
-
-                RenderOptions.SetBitmapScalingMode(planets[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(rings[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(twins[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(stars[i], BitmapScalingMode.NearestNeighbor);
-
-                Canvas.SetZIndex(planets[i], 4);
-                Canvas.SetZIndex(rings[i], 3);
-                Canvas.SetZIndex(twins[i], 2);
-                Canvas.SetZIndex(stars[i], 1);
-
-                DrawCanvas.Children.Add(planets[i]);
-                DrawCanvas.Children.Add(rings[i]);
-                DrawCanvas.Children.Add(twins[i]);
-                DrawCanvas.Children.Add(stars[i]);
-            }
-
+            SetupAssets();
+            
             startTime = DateTime.Now;
             pauseDuration = new TimeSpan(0);
-            wellImages = new List<BitmapImage>();
-            string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
-            for (int i = 0; i < 6; ++i)
-            {
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
-                img.EndInit();
-                wellImages.Add(img);
-            }
-
-            destabilizedImage = new BitmapImage();
-            destabilizedImage.BeginInit();
-            destabilizedImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/destabilized1.png");
-            destabilizedImage.EndInit();
-
-            orbImages = new List<BitmapImage>();
-            imagePaths = new string[6] { "Assets/Images/OrbRed.png", "Assets/Images/OrbOrange.png", "Assets/Images/OrbYellow.png", "Assets/Images/OrbGreen.png", "Assets/Images/OrbBlue.png", "Assets/Images/OrbPurple.png" };
-            for (int i = 0; i < 6; ++i)
-            {
-                BitmapImage img = new BitmapImage();
-                img.BeginInit();
-                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
-                img.EndInit();
-                orbImages.Add(img);
-            }
-
-            shipImage = new BitmapImage();
-            shipImage.BeginInit();
-            shipImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship1.png");
-            shipImage.EndInit();
-
-            AiImage = new BitmapImage();
-            AiImage.BeginInit();
-            AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
-            AiImage.EndInit();
-
-            AiImages = new List<Image>();
-
-            Animation playerAnim = new Animation(new BitmapImage[1] { shipImage }, new int[1] { 20 });
-            playerShip = new Animator(DrawCanvas, new Animation[1] { playerAnim }, 0, 10, 50);
-
+            
             for (int i = 0; i < HudOrbs.Length; i++)
             {
                 HudOrbs[i] = new Image();
@@ -238,7 +147,6 @@ namespace GravitonClient.view
             GhostImage.BeginInit();
             GhostImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ghosting.png");
             GhostImage.EndInit();
-
 
             DestabilizeImage = new BitmapImage();
             DestabilizeImage.BeginInit();
@@ -310,6 +218,143 @@ namespace GravitonClient.view
             btnHelp.Foreground = Brushes.Red;
             btnHelp.Click += btnHelp_Click;
             btnHelp.Width = 500;
+        }
+
+        private void SetupAssets()
+        {
+            wellDict = new List<Image>();
+            destableDict = new List<Image>();
+            orbDict = new List<Image>();
+            AiImages = new List<Image>();
+
+            background = new Image();
+            BackgroundImage = new BitmapImage();
+            BackgroundImage.BeginInit();
+            BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
+            BackgroundImage.EndInit();
+            background.Source = BackgroundImage;
+            RenderOptions.SetBitmapScalingMode(background, BitmapScalingMode.NearestNeighbor);
+            Canvas.SetLeft(background, 0);
+            Canvas.SetTop(background, 0);
+            Canvas.SetZIndex(background, 0);
+            DrawCanvas.Children.Add(background);
+
+            planets = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            PlanetImage = new BitmapImage();
+            PlanetImage.BeginInit();
+            PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
+            PlanetImage.EndInit();
+
+            rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            RingImage = new BitmapImage();
+            RingImage.BeginInit();
+            RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
+            RingImage.EndInit();
+
+            twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            TwinImage = new BitmapImage();
+            TwinImage.BeginInit();
+            TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
+            TwinImage.EndInit();
+
+            stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            StarImage = new BitmapImage();
+            StarImage.BeginInit();
+            StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
+            StarImage.EndInit();
+
+            for (int i = 0; i < 4; ++i)
+            {
+                planets[i].Source = PlanetImage;
+                rings[i].Source = RingImage;
+                twins[i].Source = TwinImage;
+                stars[i].Source = StarImage;
+
+                RenderOptions.SetBitmapScalingMode(planets[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(rings[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(twins[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(stars[i], BitmapScalingMode.NearestNeighbor);
+
+                Canvas.SetZIndex(planets[i], 4);
+                Canvas.SetZIndex(rings[i], 3);
+                Canvas.SetZIndex(twins[i], 2);
+                Canvas.SetZIndex(stars[i], 1);
+
+                DrawCanvas.Children.Add(planets[i]);
+                DrawCanvas.Children.Add(rings[i]);
+                DrawCanvas.Children.Add(twins[i]);
+                DrawCanvas.Children.Add(stars[i]);
+            }
+
+            wellImages = new List<BitmapImage>();
+            string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
+            for (int i = 0; i < 6; ++i)
+            {
+                BitmapImage img = new BitmapImage();
+                img.BeginInit();
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
+                img.EndInit();
+                wellImages.Add(img);
+            }
+
+            destabilizedImage = new BitmapImage();
+            destabilizedImage.BeginInit();
+            destabilizedImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/destabilized1.png");
+            destabilizedImage.EndInit();
+
+            orbImages = new List<BitmapImage>();
+            imagePaths = new string[6] { "Assets/Images/OrbRed.png", "Assets/Images/OrbOrange.png", "Assets/Images/OrbYellow.png", "Assets/Images/OrbGreen.png", "Assets/Images/OrbBlue.png", "Assets/Images/OrbPurple.png" };
+            for (int i = 0; i < 6; ++i)
+            {
+                BitmapImage img = new BitmapImage();
+                img.BeginInit();
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
+                img.EndInit();
+                orbImages.Add(img);
+            }
+
+            shipImage1 = new BitmapImage();
+            shipImage1.BeginInit();
+            shipImage1.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship1.png");
+            shipImage1.EndInit();
+
+            shipImage2 = new BitmapImage();
+            shipImage2.BeginInit();
+            shipImage2.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship2.png");
+            shipImage2.EndInit();
+
+            shipImage3 = new BitmapImage();
+            shipImage3.BeginInit();
+            shipImage3.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship3.png");
+            shipImage3.EndInit();
+
+            shipImage4 = new BitmapImage();
+            shipImage4.BeginInit();
+            shipImage4.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship4.png");
+            shipImage4.EndInit();
+
+            AiImage = new BitmapImage();
+            AiImage.BeginInit();
+            AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
+            AiImage.EndInit();
+            
+            player = new Animation(new BitmapImage[6] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage3, shipImage2 }, new int[6] { 5, 5, 5, 5, 5, 5 });
+            redWellReg = new Animation(new BitmapImage[1] { wellImages[0] }, new int[1] { 20 });
+            orangeWellReg = new Animation(new BitmapImage[1] { wellImages[1] }, new int[1] { 20 });
+            yellowWellReg = new Animation(new BitmapImage[1] { wellImages[2] }, new int[1] { 20 });
+            greenWellReg = new Animation(new BitmapImage[1] { wellImages[3] }, new int[1] { 20 });
+            blueWellReg = new Animation(new BitmapImage[1] { wellImages[4] }, new int[1] { 20 });
+            purpleWellReg = new Animation(new BitmapImage[1] { wellImages[5] }, new int[1] { 20 });
+            redOrb = new Animation(new BitmapImage[1] { orbImages[0] }, new int[1] { 20 });
+            orangeOrb = new Animation(new BitmapImage[1] { orbImages[1] }, new int[1] { 20 });
+            yellowOrb = new Animation(new BitmapImage[1] { orbImages[2] }, new int[1] { 20 });
+            greenOrb = new Animation(new BitmapImage[1] { orbImages[3] }, new int[1] { 20 });
+            blueOrb = new Animation(new BitmapImage[1] { orbImages[4] }, new int[1] { 20 });
+            purpleOrb = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
+            destabilized = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
+            ai = new Animation(new BitmapImage[1] { AiImage }, new int[1] { 20 });
+
+            playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)
