@@ -41,7 +41,7 @@ namespace GravitonServer
                 }
             });
             GameManager.Start();
-            Console.ReadKey();
+            Console.ReadLine();
         }
         static void HandleClient(Client client, string message)
         {

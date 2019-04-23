@@ -97,6 +97,11 @@ namespace GravitonClient
             }
         }
 
-        
+        internal static void StopListening()
+        {
+            IsListening = false;
+        }
+
+
     }
 }

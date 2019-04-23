@@ -7,7 +7,7 @@ namespace GravitonServer
 {
     internal static class GameManager
     {
-        private static readonly int SECONDS_BETWEEN_GAME_START = 20;
+        private static readonly int SECONDS_BETWEEN_GAME_START = 5;
         private static int SecondCounter = 0;
 
         private static List<Game> OnGoingGames = new List<Game>();
@@ -51,6 +51,7 @@ namespace GravitonServer
                 SecondCounter = 0;
                 StartGame();
                 GameTimer.Stop();
+                WaitingClients.RemoveAll((client) => true);
             }
             else
             {

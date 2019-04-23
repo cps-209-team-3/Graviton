@@ -1,15 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Media;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -297,6 +291,9 @@ namespace GravitonClient
             UDPGameClient.StartListening();
             game.GameUpdatedEvent += Render;
             InitializeComponent();
+            gameStarted = false;
+            
+
 
         }
 
@@ -306,16 +303,13 @@ namespace GravitonClient
             {
                if (!gameStarted)
                {
-                   gameStarted = true;
-                   DrawCanvas.Children.Remove(grid_secondsLeft);
-                   SetupGameWindow();
+                    gameStarted = true;
+                    DrawCanvas.Children.Remove(grid_secondsLeft);
+                    SetupGameWindow();
+                    Render(null, currentFrame);
                }
                else
                {
-
-
-
-
 
                    for (int i = 0; i < 4; ++i)
                    {
@@ -329,11 +323,8 @@ namespace GravitonClient
                        Canvas.SetTop(stars[i], currentFrame.Backgrounds[0][i].Item2);
                    }
 
-
-                   gameDuration = DateTime.Now - startTime - PauseDuration;
+                   txtTimeLeft.Text = (int)(5 - Math.Ceiling((double) currentFrame.Seconds)/60) + ":" + ((60 - (int)currentFrame.Seconds % 60) % 60).ToString("D2");
                    
-                   txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
-
                    int playerdiff = OtherHumanImages.Count - currentFrame.OtherHumanShips.Count;
                    if (playerdiff > 0)
                    {
@@ -579,6 +570,7 @@ namespace GravitonClient
                 collapse.Close();
                 ghost.Close();
                 boost.Close();
+                UDPGameClient.StopListening();
             }
             App.Current.MainWindow.Show();
         }
@@ -692,7 +684,9 @@ namespace GravitonClient
 
                 lbl_secondsLeft.Content = "Game Over";
                 Canvas.SetZIndex(grid_secondsLeft, 10000);
-             });
+                Canvas.SetZIndex(lbl_secondsLeft, 10000);
+            });
+            UDPGameClient.StopListening();
         }
 
 

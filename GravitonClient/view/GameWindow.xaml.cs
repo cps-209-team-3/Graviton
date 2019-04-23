@@ -302,7 +302,7 @@ namespace GravitonClient
                 Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
                 DrawCanvas.Children.Add(b2);
             }
-            txtTimeLeft.Text = (int) (5 - gameDuration.TotalMinutes) + ":" + ((60 - (int) gameDuration.TotalSeconds % 60) % 60).ToString("D2");
+            txtTimeLeft.Text = (int) (5 - gameDuration.Minutes) + ":" + (60 - gameDuration.Seconds % 60).ToString("D2");
 
 
 
