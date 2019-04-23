@@ -35,17 +35,20 @@ namespace GravitonClient.view
             InitializeComponent();
         }
 
+        //navigates back to home page
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(prevPage);
         }
 
+        //toggles cheat
         private void CheatButton_Click(object sender, RoutedEventArgs e)
         {
             cheat = !cheat;
             CheatBtn.Content = cheat ? "Cheatmode: On" : "Cheatmode: Off";
         }
         
+        //starts a new game page
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             if (txtBxUser.Text != "" && txtBxUser.Text != null)
@@ -76,6 +79,7 @@ namespace GravitonClient.view
             }
         }
 
+        //loads previous game
         private void LoadButton_Click(object sender, RoutedEventArgs e)
         {
             if (txtBxUser.Text != "" && txtBxUser.Text != null)
