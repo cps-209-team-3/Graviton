@@ -52,6 +52,7 @@ namespace GravitonClient.view
         private Button btnLoad;
         private Button btnExit;
         private Button btnHelp;
+        private TextBlock announcement;
 
         public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
 
@@ -295,6 +296,8 @@ namespace GravitonClient.view
             btnHelp.Foreground = Brushes.Red;
             btnHelp.Click += btnHelp_Click;
             btnHelp.Width = 500;
+
+            announcement = new TextBlock();
         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)
@@ -862,6 +865,16 @@ namespace GravitonClient.view
             collapse.Play();
             ghost.Play();
             boost.Play();
+        }
+        private void DisplayMessage(string s)
+        {
+            announcement.Text = s;
+            Canvas.SetZIndex(announcement, 1000);
+            announcement.FontSize = 20;
+            //announcement.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Assets/Fonts/Azonix.otf");
+            Canvas.SetLeft(announcement, (DrawCanvas.ActualWidth - announcement.ActualWidth) / 2);
+            Canvas.SetTop(announcement, 400);
+            DrawCanvas.Children.Add(announcement);
         }
     }
 }
