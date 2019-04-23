@@ -534,7 +534,8 @@ namespace GravitonClient.view
                 Canvas.SetLeft(c, t.Item1);
                 Canvas.SetTop(c, t.Item2);
                 Canvas.SetZIndex(c, 1000);
-                c.Stroke = Brushes.Yellow;
+                c.Stroke = Brushes.DarkRed;
+                c.StrokeThickness = 5;
 
                 DrawCanvas.Children.Add(c);
                 waveDict.Add(c);
