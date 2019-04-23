@@ -46,13 +46,6 @@ namespace GravitonClient.view
 
         private bool isPaused;
 
-        private bool nextRound;
-        public bool NextRound
-        {
-            get { return nextRound; }
-            set { nextRound = value; }
-        }
-
         public Page ParentPage { get; set; }
         public Window Window { get; set; }
 

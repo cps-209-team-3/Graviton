@@ -50,36 +50,24 @@ namespace GravitonClient.view
         {
             if (txtBxUser.Text != "" && txtBxUser.Text != null)
             {
-                GamePage g;
-                bool nextRound = false;
-                int points = 0;
-                do
+                GamePage g = new GamePage(cheat, this, window);
+                g.Game.Username = txtBxUser.Text;
+                if (DifficultyBx.Text == "Easy")
                 {
-                    g = new GamePage(cheat, this, window);
-                    g.Game.Username = txtBxUser.Text;
-                    if (nextRound)
-                    {
-                        g.Game.Points = points;
-                    }
-                    if (DifficultyBx.Text == "Easy")
-                    {
-                        g.Game.WellSpawnFreq = 400;
-                        g.Game.WellDestabFreq = 3000;
-                    }
-                    else if (DifficultyBx.Text == "Normal")
-                    {
-                        g.Game.WellSpawnFreq = 300;
-                        g.Game.WellDestabFreq = 2000;
-                    }
-                    else if (DifficultyBx.Text == "Hard")
-                    {
-                        g.Game.WellSpawnFreq = 200;
-                        g.Game.WellDestabFreq = 1000;
-                    }
-                    this.NavigationService.Navigate(g);
-
-                    nextRound = g.NextRound;
-                } while (nextRound);
+                    g.Game.WellSpawnFreq = 400;
+                    g.Game.WellDestabFreq = 3000;
+                }
+                else if (DifficultyBx.Text == "Normal")
+                {
+                    g.Game.WellSpawnFreq = 300;
+                    g.Game.WellDestabFreq = 2000;
+                }
+                else if (DifficultyBx.Text == "Hard")
+                {
+                    g.Game.WellSpawnFreq = 200;
+                    g.Game.WellDestabFreq = 1000;
+                }
+                this.NavigationService.Navigate(g);
             }
 
             else
