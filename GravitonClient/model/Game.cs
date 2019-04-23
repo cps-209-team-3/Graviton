@@ -82,6 +82,7 @@ namespace GravitonClient
             Timer.Tick += Timer_Tick;
         }
 
+        // This method initializes when the object already has a player.
         public void InitializeWithShipCreated()
         {
             GameObjects.Add(Player);

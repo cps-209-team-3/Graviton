@@ -128,6 +128,7 @@ namespace GravitonClient
             CalculateBackgounds(ScreenX - tempX, ScreenY - tempY, cameraFrame);
         }
 
+        //This method calculates the parrallax backgrounds.
         public void CalculateBackgounds(double changeX, double changeY, CameraFrame cameraFrame)
         {
             for (int i = 0; i < 4; i++)
