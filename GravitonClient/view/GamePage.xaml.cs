@@ -125,6 +125,7 @@ namespace GravitonClient.view
             set { game = value; }
         }
 
+        //Sets up game page
         private void SetupGameWindow()
         {
             InitializeComponent();
@@ -225,6 +226,7 @@ namespace GravitonClient.view
             btnHelp.Width = 500;
         }
 
+        //sets up game assets (background, images, etc.)
         private void SetupAssets()
         {
             wellDict = new List<Image>();
@@ -374,11 +376,13 @@ namespace GravitonClient.view
             playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
         }
 
+        //Button appears while paused.  Goes to help page.
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new HelpPage(this));
         }
 
+        //appears while paused.  Loads current save file
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -394,6 +398,7 @@ namespace GravitonClient.view
             }
         }
 
+        //appears while paused.  Saves the game and returns to the play page
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(Directory.GetCurrentDirectory(), SaveFileName)));
@@ -401,11 +406,13 @@ namespace GravitonClient.view
             this.NavigationService.Navigate(ParentPage);
         }
 
+        //appears while paused.  Resumes the game
         private void btnResume_Click(object sender, RoutedEventArgs e)
         {
             UnPause();
         }
 
+        //constructor
         public GamePage(bool cheat, Page parentPage, Window w)
         {
             ParentPage = parentPage;
@@ -422,6 +429,7 @@ namespace GravitonClient.view
             SetupGameWindow();
         }
 
+        //alternate constructor
         public GamePage(bool cheat, Game game, Page parentPage, Window w)
         {
             ParentPage = parentPage;
@@ -438,6 +446,7 @@ namespace GravitonClient.view
             SetupGameWindow();
         }
 
+        //called every tick.  Displays state of game
         public void Render(object sender, CameraFrame frame)
         {
             for (int i = 0; i < 4; ++i)
@@ -597,6 +606,7 @@ namespace GravitonClient.view
             }
         }
 
+        //appears if time runs out.  begins new round.
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int newWellSpawnFreq = Game.WellSpawnFreq - 50;
@@ -618,6 +628,7 @@ namespace GravitonClient.view
             GameWindow_Closed();
         }
 
+        //appears when time runs out or if player dies.  Returns to play page and processes high score
         private void GameOver_Click(object sender, RoutedEventArgs e)
         {
             NextRound = false;
@@ -635,6 +646,7 @@ namespace GravitonClient.view
             GameWindow_Closed();
         }
 
+        //handles input when key is pressed
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -647,8 +659,6 @@ namespace GravitonClient.view
                 {
                     UnPause();
                 }
-                //PausePage pauseWin = new PausePage(Game, this, Window);
-                //this.NavigationService.Navigate(pauseWin);
             }
             else
             {
@@ -684,6 +694,7 @@ namespace GravitonClient.view
             }
         }
 
+        //Handles key input when key is released
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -705,6 +716,7 @@ namespace GravitonClient.view
             }
         }
 
+        //pauses the game, obscuring the game and adding several buttons to the screen
         public void Pause()
         {
             isPaused = true;
@@ -740,6 +752,7 @@ namespace GravitonClient.view
             Canvas.SetTop(btnHelp, DrawCanvas.ActualHeight / 5 * 2);
         }
 
+        //ends pause; undoes work done by pause method
         public void UnPause()
         {
             isPaused = false;
@@ -760,6 +773,7 @@ namespace GravitonClient.view
             if (DrawCanvas.Children.Contains(pauseRectangle)) { DrawCanvas.Children.Remove(pauseRectangle); }
         }
 
+        //adds game objects to the canvas
         public void AddGameObjects(List<Image> gameObjs, int add)
         {
             for (int i = 0; i < add; ++i)
@@ -769,6 +783,7 @@ namespace GravitonClient.view
             }
         }
 
+        //removes game objects from the canvas
         public void RemoveGameObjects(List<Image> gameObjs, int remove)
         {
             for (int i = 0; i < remove; ++i)
@@ -778,6 +793,7 @@ namespace GravitonClient.view
             }
         }
 
+        //called when navigating away from this page
         private void GameWindow_Closed()
         {
             unstable.Close();
@@ -790,6 +806,7 @@ namespace GravitonClient.view
             boost.Close();
         }
 
+        //Handles sound effects
         void PlaySound(object sender, SoundEffect value)
         {
             switch (value)
@@ -844,6 +861,7 @@ namespace GravitonClient.view
 
         }
 
+        //updates orb display in hub
         private void UpdateHudOrbs()
         {
 
@@ -863,6 +881,7 @@ namespace GravitonClient.view
             }
         }
 
+        //updates powerup display in hub
         private void UpdateHudPowerups()
         {
             double heldOpacity = 1.0;
@@ -882,6 +901,7 @@ namespace GravitonClient.view
                 HudPowerups[2].Opacity = notHeldOpacity;
         }
 
+        //activates when the game page is initialized
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
             if ((DrawCanvas.ActualWidth / 272) * 160 < DrawCanvas.ActualHeight)
