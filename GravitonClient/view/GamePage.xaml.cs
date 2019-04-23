@@ -39,6 +39,8 @@ namespace GravitonClient.view
         Image[] twins;
         Image[] stars;
 
+        public bool NextRound;
+
         private DateTime startTime;
         private TimeSpan gameDuration;
         private DateTime pauseStartTime;
@@ -321,7 +323,6 @@ namespace GravitonClient.view
         {
             try
             {
-
                 Game = GameLoader.Load(SaveFileName, false);
                 GamePage newWindow = new GamePage(Game.IsCheat, Game, ParentPage, Window);
                 this.NavigationService.Navigate(newWindow);
@@ -335,7 +336,6 @@ namespace GravitonClient.view
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            Game.IsOver = true;
             Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(Directory.GetCurrentDirectory(), SaveFileName)));
             GameLoader.Save(Game, SaveFileName);
             this.NavigationService.Navigate(ParentPage);
@@ -407,8 +407,9 @@ namespace GravitonClient.view
                 Canvas.SetZIndex(wellDict[i], 5);
             }
 
+            //Time Limit
             gameDuration = DateTime.Now - startTime - pauseDuration;
-            if (gameDuration.TotalMinutes > 5)
+            if (gameDuration.TotalMinutes > 1)
             {
                 Game.Timer.Stop();
                 Game.IsOver = true;
@@ -428,7 +429,6 @@ namespace GravitonClient.view
                 Canvas.SetTop(b2, DrawCanvas.ActualHeight / 4);
                 DrawCanvas.Children.Add(b2);
             }
-            //txtTimeLeft.Text = (int)(5 - gameDuration.TotalMinutes) + ":" + ((60 - (int)gameDuration.TotalSeconds % 60) % 60).ToString("D2");
             int sLeft = 300 - (int)gameDuration.TotalSeconds;
             txtTimeLeft.Text = (sLeft / 60) + ":" + (sLeft % 60).ToString("D2");
 
@@ -530,7 +530,7 @@ namespace GravitonClient.view
                 Canvas.SetLeft(b, (DrawCanvas.ActualWidth - b.Width) / 2);
                 Canvas.SetTop(b, (DrawCanvas.ActualHeight / 4 * 3));
                 DrawCanvas.Children.Add(b);
-                DrawCanvas.Children.Add(pauseRectangle);
+                if (!DrawCanvas.Children.Contains(pauseRectangle)) { DrawCanvas.Children.Add(pauseRectangle); }
                 Canvas.SetZIndex(pauseRectangle, 100);
                 pauseRectangle.Width = DrawCanvas.ActualWidth;
                 pauseRectangle.Height = DrawCanvas.ActualHeight;
@@ -545,18 +545,23 @@ namespace GravitonClient.view
             bool isCheat = Game.IsCheat;
             string username = Game.Username;
 
+            NextRound = true;
+
             GamePage g = new GamePage(isCheat, ParentPage, Window);
             g.Game.WellSpawnFreq = newWellSpawnFreq;
             g.Game.WellDestabFreq = newWellDestabFreq;
             g.Game.Points = points;
             g.game.Username = username;
-            DrawCanvas.Children.Remove(pauseRectangle);
+            if (DrawCanvas.Children.Contains(pauseRectangle)) { DrawCanvas.Children.Remove(pauseRectangle); }
+            
             this.NavigationService.Navigate(g);
             GameWindow_Closed();
         }
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
         {
+            NextRound = false;
+
             unstable.Close();
             neutralize.Close();
             deposit.Close();
@@ -657,7 +662,7 @@ namespace GravitonClient.view
             DrawCanvas.Children.Add(btnExit);
             DrawCanvas.Children.Add(btnHelp);
             DrawCanvas.Children.Add(btnLoad);
-            DrawCanvas.Children.Add(pauseRectangle);
+            if (!DrawCanvas.Children.Contains(pauseRectangle)) { DrawCanvas.Children.Add(pauseRectangle); }
             Canvas.SetZIndex(pauseRectangle, 100);
             pauseRectangle.Width = DrawCanvas.ActualWidth;
             pauseRectangle.Height = DrawCanvas.ActualHeight;
@@ -692,7 +697,7 @@ namespace GravitonClient.view
             DrawCanvas.Children.Remove(btnExit);
             DrawCanvas.Children.Remove(btnHelp);
             DrawCanvas.Children.Remove(btnLoad);
-            DrawCanvas.Children.Remove(pauseRectangle);
+            if (DrawCanvas.Children.Contains(pauseRectangle)) { DrawCanvas.Children.Remove(pauseRectangle); }
         }
 
         public void AddGameObjects(List<Image> gameObjs, int add)

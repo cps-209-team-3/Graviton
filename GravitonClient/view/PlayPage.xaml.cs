@@ -45,7 +45,7 @@ namespace GravitonClient.view
             cheat = !cheat;
             CheatBtn.Content = cheat ? "Cheatmode: On" : "Cheatmode: Off";
         }
-
+        
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             if (txtBxUser.Text != "" && txtBxUser.Text != null)
