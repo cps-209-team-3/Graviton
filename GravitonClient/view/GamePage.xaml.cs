@@ -499,8 +499,6 @@ namespace GravitonClient.view
                 UpdateHudPowerups();
             }
 
-
-
             if (Game.IsOver)
             {
                 Button b = new Button();
@@ -831,21 +829,21 @@ namespace GravitonClient.view
             }
 
             unstable = new MediaPlayer();
-            unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/destabilize.mp3")));
+            unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/destabilize.mp3")));
             orbGrab = new MediaPlayer();
-            orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/SFX2.mp3")));
+            orbGrab.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/SFX2.mp3")));
             neutralize = new MediaPlayer();
-            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Shut-down-sound-effect.mp3")));
+            neutralize.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/Shut-down-sound-effect.mp3")));
             deposit = new MediaPlayer();
-            deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Space entity(deposit).mp3")));
+            deposit.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/Space entity(deposit).mp3")));
             powerup = new MediaPlayer();
-            powerup.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/Power-Up-KP-1879176533 (packet pickup).mp3")));
+            powerup.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/Power-Up-KP-1879176533 (packet pickup).mp3")));
             collapse = new MediaPlayer();
-            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/PowerDown5.mp3")));
+            collapse.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/PowerDown5.mp3")));
             ghost = new MediaPlayer();
-            ghost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/ghost.mp3")));
+            ghost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/ghost.mp3")));
             boost = new MediaPlayer();
-            boost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Assets/Sound/SFX/boost.mp3")));
+            boost.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/boost.mp3")));
 
             unstable.Volume = 0;
             orbGrab.Volume = 0;

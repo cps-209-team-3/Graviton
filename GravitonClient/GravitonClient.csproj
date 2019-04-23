@@ -7,7 +7,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0B18D35F-1228-45ED-AEF1-00761CA6FA08}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>GravitonClient</RootNamespace>
     <AssemblyName>GravitonClient</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -333,38 +333,38 @@
     <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="Assets\Sound\SFX\destabilize.mp3">
+    <None Include="Assets\Sound\SFX\destabilize.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="Assets\Sound\SFX\boost.mp3">
+    </None>
+    <None Include="Assets\Sound\SFX\boost.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Assets\Sound\SFX\destabilize.wav" />
-    <Content Include="Assets\Sound\SFX\ghost.mp3">
+    <None Include="Assets\Sound\SFX\ghost.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3">
+    </None>
+    <None Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Assets\Sound\SFX\Power-Up-KP-1879176533 %28packet pickup%29.wav" />
-    <Resource Include="Assets\Sound\SFX\SFX1.mp3">
+    <None Include="Assets\Sound\SFX\SFX1.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="Assets\Sound\SFX\PowerDown5.mp3">
+    </None>
+    <None Include="Assets\Sound\SFX\PowerDown5.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Assets\Sound\SFX\SFX1.wav" />
-    <Resource Include="Assets\Sound\SFX\SFX2.mp3">
+    <None Include="Assets\Sound\SFX\SFX2.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    </None>
     <Content Include="Assets\Sound\SFX\SFX2.wav" />
     <Resource Include="Assets\Sound\SFX\Silence.wav" />
-    <Resource Include="Assets\Sound\SFX\Space entity%28deposit%29.mp3">
+    <None Include="Assets\Sound\SFX\Space entity%28deposit%29.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
-    <Content Include="Assets\Sound\SFX\Shut-down-sound-effect.mp3">
+    </None>
+    <None Include="Assets\Sound\SFX\Shut-down-sound-effect.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
     <Content Include="Assets\Sound\SFX\Space entity%28deposit%29.wav" />
   </ItemGroup>
   <ItemGroup />

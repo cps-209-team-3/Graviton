@@ -367,7 +367,7 @@ namespace GravitonClient
             //IsOver = true;
             //Timer.Stop();
             highScores.CheckNewScores(this);
-            highScores.Save(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
+            highScores.Save(Path.Combine(Directory.GetCurrentDirectory(), "Saves/HighScoreSave.txt"));
         }
     }
 }
