@@ -53,7 +53,7 @@ namespace GravitonClient
             Orbs = new List<Orb>();
             GameObjects = new List<GameObject>();
 
-            highScores = HighScores.Load(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\", "Saves/HighScoreSave.txt"));
+            highScores = HighScores.Load(Path.Combine(Directory.GetCurrentDirectory(), "Saves/HighScoreSave.txt"));
         }
 
         //This method initializes the ship, all of the wells, all of the orbs, and the timer. 

@@ -102,7 +102,7 @@ namespace GravitonClient
             else if (Orbs.Count < 5)
             {
                 TargetNearestWell();
-                TargetX = TargetWell.Xcoor;
+                Well w = TargetWell;
                 TargetY = TargetWell.Ycoor;
             }
             else if (Orbs.Count == 5)
