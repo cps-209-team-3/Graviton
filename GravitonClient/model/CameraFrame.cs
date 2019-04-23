@@ -17,6 +17,7 @@ namespace GravitonClient
         public List<int> PlayerOrbs { get; set; }
         public List<Tuple<double, double>> AIShips { get; set; }
         public Tuple<double, double> PlayerShip { get; set; }
+        public List<Tuple<double, double, int>> ShockWaves { get; set; } 
         public List<Tuple<double, double>>[] Backgrounds { get; set; }
         public double PlayerAngle { get; set; }
         public int SecondsLeft { get; set; }

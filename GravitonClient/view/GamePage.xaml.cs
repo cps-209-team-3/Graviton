@@ -27,6 +27,7 @@ namespace GravitonClient.view
         List<Animator> orbList;
         List<Animator> AIList;
 
+        List<Ellipse> waveDict;
         List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
@@ -97,6 +98,7 @@ namespace GravitonClient.view
         private void SetupGameWindow()
         {
             InitializeComponent();
+            waveDict = new List<Ellipse>();
             wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
@@ -435,6 +437,25 @@ namespace GravitonClient.view
                 Canvas.SetLeft(destableDict[i], frame.UnstableWells[i].Item1);
                 Canvas.SetTop(destableDict[i], frame.UnstableWells[i].Item2);
                 Canvas.SetZIndex(destableDict[i], 6);
+            }
+
+            foreach (Ellipse e in waveDict)
+            {
+                DrawCanvas.Children.Remove(e);
+            }
+            waveDict = new List<Ellipse>();
+            foreach (Tuple<double, double, int> t in frame.ShockWaves)
+            {
+                Ellipse c = new Ellipse();
+                c.Width = t.Item3;
+                c.Height = t.Item3;
+                Canvas.SetLeft(c, t.Item1);
+                Canvas.SetTop(c, t.Item2);
+                Canvas.SetZIndex(c, 1000);
+                c.Stroke = Brushes.Yellow;
+
+                DrawCanvas.Children.Add(c);
+                waveDict.Add(c);
             }
 
             int orbDiff = orbDict.Count - frame.Orbs.Count;

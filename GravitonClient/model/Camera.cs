@@ -35,6 +35,16 @@ namespace GravitonClient
             AdjustScreenForPlayer(cameraFrame);
             cameraFrame.PlayerAngle = Math.Atan2(ParentGame.Player.SpeedY, ParentGame.Player.SpeedX) * 180 / Math.PI;
 
+            cameraFrame.ShockWaves = new List<Tuple<double, double, int>>();
+            foreach (Well well in ParentGame.UnstableWells)
+            {
+                if (well.ShockWave != null)
+                {
+                    cameraFrame.ShockWaves.Add(Tuple.Create(well.Xcoor - ScreenX - well.ShockWave.Radius, well.Ycoor - ScreenY - well.ShockWave.Radius, 2 * well.ShockWave.Radius));
+                }
+            }
+
+
             double xc, yc;
 
             cameraFrame.StableWells = new List<Tuple<double, double, int>>();
