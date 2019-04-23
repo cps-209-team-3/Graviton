@@ -26,16 +26,23 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 * About Screen
 * Basic AI
 * Loading
+* Powerups
+* Animation
+* Parallax Background
+* Improved AI
+* Multiple Rounds
+* Destabilized Well Shockwaves
+* Networked Multiplayer
 ### Known Issues
-* Loading from a save works but will crash the game soon after due to some AI elements not being initialized.
-* Powerup images stay after the powerup has been used.
-* Sound blip at the beginning due to loading sound players.
+* Animations not up to snuff
+* No known bugs
 ### [Alpha Recording](https://youtu.be/3i9FIn4d9u4)
 ### [Beta Recording](https://youtu.be/3B5jn_T5dZQ)
+### [Release Candidate Recording](https://youtu.be/n9GMMBYiqnI)
 ### Expenses
 Team Member | Used Hours | Remaining Hours | Journal
 ----------- | ---------- | --------------- | ------
 Visser | 29:45 | 30:15 | [VisserJournal](https://github.com/cps-209-team-3/Graviton/wiki/VisserJournal)
-Ross | 41:55 | 18:05 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
-Lane | 24:40 | 35:20 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
-Labadorf | 31:00 | 29:00 | [LabadorfJournal](https://github.com/cps-209-team-3/Graviton/wiki/LabadorfJournal)
+Ross | 52:25 | 7:35 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
+Lane | 40:20 | 9:40 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
+Labadorf | 52:00 | 8:00 | [LabadorfJournal](https://github.com/cps-209-team-3/Graviton/wiki/LabadorfJournal)
