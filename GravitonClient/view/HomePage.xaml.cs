@@ -51,5 +51,10 @@ namespace GravitonClient.view
         {
             this.NavigationService.Navigate(new AboutPage(this));
         }
+
+        private void MultiPlayer_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new NetworkPlayPage(this));
+        }
     }
 }

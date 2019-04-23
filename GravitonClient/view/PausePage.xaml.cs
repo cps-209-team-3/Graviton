@@ -69,7 +69,7 @@ namespace GravitonClient.view
                 this.NavigationService.Navigate(newWindow);
                 Game.Timer.Start();
             }
-            catch (ArgumentException)
+            catch 
             {
                 MessageBox.Show("Cannot find file.");
             }
