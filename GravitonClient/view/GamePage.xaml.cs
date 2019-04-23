@@ -89,6 +89,8 @@ namespace GravitonClient.view
         BitmapImage shipImage2;
         BitmapImage shipImage3;
         BitmapImage shipImage4;
+        BitmapImage shipImage5;
+        BitmapImage shipImage6;
         BitmapImage AiImage;
         BitmapImage NeutralizeImage;
         BitmapImage DestabilizeImage;
@@ -335,12 +337,22 @@ namespace GravitonClient.view
             shipImage4.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship4.png");
             shipImage4.EndInit();
 
+            shipImage5 = new BitmapImage();
+            shipImage5.BeginInit();
+            shipImage5.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship5.png");
+            shipImage5.EndInit();
+
+            shipImage6 = new BitmapImage();
+            shipImage6.BeginInit();
+            shipImage6.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship6.png");
+            shipImage6.EndInit();
+
             AiImage = new BitmapImage();
             AiImage.BeginInit();
             AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
             AiImage.EndInit();
-            
-            player = new Animation(new BitmapImage[6] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage3, shipImage2 }, new int[6] { 5, 5, 5, 5, 5, 5 });
+
+            player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
             redWellReg = new Animation(new BitmapImage[1] { wellImages[0] }, new int[1] { 20 });
             orangeWellReg = new Animation(new BitmapImage[1] { wellImages[1] }, new int[1] { 20 });
             yellowWellReg = new Animation(new BitmapImage[1] { wellImages[2] }, new int[1] { 20 });
@@ -454,7 +466,7 @@ namespace GravitonClient.view
 
             //Time Limit
             gameDuration = DateTime.Now - startTime - pauseDuration;
-            if (gameDuration.TotalMinutes > 1)
+            if (gameDuration.TotalMinutes > 5)
             {
                 Game.Timer.Stop();
                 Game.IsOver = true;
