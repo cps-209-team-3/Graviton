@@ -28,11 +28,9 @@ namespace GravitonClient.view
         List<Animator> AIList;
         Animator playerShip;
 
-<<<<<<< HEAD
         List<Ellipse> waveDict;
-=======
+
         //to be deleted with rise of animations
->>>>>>> 84ea0f49318e4a80ceec0a00d549fea801445a93
         List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
@@ -132,9 +130,6 @@ namespace GravitonClient.view
         private void SetupGameWindow()
         {
             InitializeComponent();
-<<<<<<< HEAD
-            waveDict = new List<Ellipse>();
-=======
             SetupAssets();
             
             startTime = DateTime.Now;
@@ -234,7 +229,7 @@ namespace GravitonClient.view
 
         private void SetupAssets()
         {
->>>>>>> 84ea0f49318e4a80ceec0a00d549fea801445a93
+            waveDict = new List<Ellipse>();
             wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
