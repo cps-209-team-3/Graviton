@@ -291,7 +291,7 @@ namespace GravitonClient.view
             }
 
             wellImages = new List<BitmapImage>();
-            string[] imagePaths = new string[6] { "Assets/Images/WellBasic1.png", "Assets/Images/WellOrange.png", "Assets/Images/WellYellow.png", "Assets/Images/WellGreen.png", "Assets/Images/WellBlue.png", "Assets/Images/WellPurple.png" };
+            string[] imagePaths = new string[6] { "Assets/Images/WellRed1.png", "Assets/Images/WellOrange1.png", "Assets/Images/WellYellow1.png", "Assets/Images/WellGreen1.png", "Assets/Images/WellBlue1.png", "Assets/Images/WellPurple1.png" };
             for (int i = 0; i < 6; ++i)
             {
                 BitmapImage img = new BitmapImage();
@@ -352,7 +352,7 @@ namespace GravitonClient.view
             AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
             AiImage.EndInit();
 
-            player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+            player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
             redWellReg = new Animation(new BitmapImage[1] { wellImages[0] }, new int[1] { 20 });
             orangeWellReg = new Animation(new BitmapImage[1] { wellImages[1] }, new int[1] { 20 });
             yellowWellReg = new Animation(new BitmapImage[1] { wellImages[2] }, new int[1] { 20 });

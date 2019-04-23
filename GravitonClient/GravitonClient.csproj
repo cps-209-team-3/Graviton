@@ -7,7 +7,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{0B18D35F-1228-45ED-AEF1-00761CA6FA08}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>GravitonClient</RootNamespace>
     <AssemblyName>GravitonClient</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
@@ -343,6 +343,12 @@
     </Resource>
     <Resource Include="Assets\Images\Ship5.png" />
     <Resource Include="Assets\Images\Ship6.png" />
+    <Resource Include="Assets\Images\WellBlue1.png" />
+    <Resource Include="Assets\Images\WellGreen1.png" />
+    <Resource Include="Assets\Images\WellOrange1.png" />
+    <Resource Include="Assets\Images\WellPurple1.png" />
+    <Resource Include="Assets\Images\WellRed1.png" />
+    <Resource Include="Assets\Images\WellYellow1.png" />
     <Content Include="Assets\Sound\Music\Visager_-_28_-_Miniboss_Fight_Loop.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
