@@ -34,10 +34,10 @@ namespace GravitonClient
         {
             if (TicksLeft > 0)
             {
-                Radius += 5000;
+                Radius += 5;
                 foreach (Orb orb in ParentGame.Orbs.ToList())
                 {
-                    if (Math.Pow(Xcoor - orb.Xcoor, 2) + Math.Pow(Ycoor - orb.Ycoor, 2) < Radius)
+                    if (Math.Pow(Xcoor - orb.Xcoor, 2) + Math.Pow(Ycoor - orb.Ycoor, 2) < Math.Pow(Radius, 2))
                     {
                         ParentGame.Orbs.Remove(orb);
                         ParentGame.GameObjects.Remove(orb);

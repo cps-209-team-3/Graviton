@@ -154,7 +154,7 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 5 == 0 && Orbs.Count < 200)
+            if (Ticks % 4 == 0 && Orbs.Count < 200)
                 SpawnOrb();
             if (AIShips.Count < 3)
                 SpawnAI();
@@ -185,7 +185,7 @@ namespace GravitonClient
                 {
                     if (well.ShockWave.TicksLeft == 0)
                     {
-                        well.ShockWave.TicksLeft = 50;
+                        well.ShockWave.TicksLeft = 80;
                     }
                 }
                 if (well.ShockWave == null)
