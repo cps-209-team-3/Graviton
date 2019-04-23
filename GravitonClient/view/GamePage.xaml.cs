@@ -85,13 +85,9 @@ namespace GravitonClient.view
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
         List<BitmapImage> orbImages;
-        BitmapImage shipImage1;
-        BitmapImage shipImage2;
-        BitmapImage shipImage3;
-        BitmapImage shipImage4;
-        BitmapImage shipImage5;
-        BitmapImage shipImage6;
+        BitmapImage shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6;
         BitmapImage AiImage;
+
         BitmapImage NeutralizeImage;
         BitmapImage DestabilizeImage;
         BitmapImage GhostImage;
@@ -126,9 +122,6 @@ namespace GravitonClient.view
 
         private void SetupGameWindow()
         {
-            InitializeComponent();
-            SetupAssets();
-            
             startTime = DateTime.Now;
             pauseDuration = new TimeSpan(0);
             
@@ -230,69 +223,19 @@ namespace GravitonClient.view
             destableDict = new List<Image>();
             orbDict = new List<Image>();
             AiImages = new List<Image>();
-
-            background = new Image();
-            BackgroundImage = new BitmapImage();
-            BackgroundImage.BeginInit();
-            BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
-            BackgroundImage.EndInit();
-            background.Source = BackgroundImage;
-            RenderOptions.SetBitmapScalingMode(background, BitmapScalingMode.NearestNeighbor);
-            Canvas.SetLeft(background, 0);
-            Canvas.SetTop(background, 0);
-            Canvas.SetZIndex(background, 0);
-            DrawCanvas.Children.Add(background);
-
-            planets = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            PlanetImage = new BitmapImage();
-            PlanetImage.BeginInit();
-            PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
-            PlanetImage.EndInit();
-
-            rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            RingImage = new BitmapImage();
-            RingImage.BeginInit();
-            RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
-            RingImage.EndInit();
-
-            twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            TwinImage = new BitmapImage();
-            TwinImage.BeginInit();
-            TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
-            TwinImage.EndInit();
-
-            stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            StarImage = new BitmapImage();
-            StarImage.BeginInit();
-            StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
-            StarImage.EndInit();
-
-            for (int i = 0; i < 4; ++i)
-            {
-                planets[i].Source = PlanetImage;
-                rings[i].Source = RingImage;
-                twins[i].Source = TwinImage;
-                stars[i].Source = StarImage;
-
-                RenderOptions.SetBitmapScalingMode(planets[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(rings[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(twins[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(stars[i], BitmapScalingMode.NearestNeighbor);
-
-                Canvas.SetZIndex(planets[i], 4);
-                Canvas.SetZIndex(rings[i], 3);
-                Canvas.SetZIndex(twins[i], 2);
-                Canvas.SetZIndex(stars[i], 1);
-
-                DrawCanvas.Children.Add(planets[i]);
-                DrawCanvas.Children.Add(rings[i]);
-                DrawCanvas.Children.Add(twins[i]);
-                DrawCanvas.Children.Add(stars[i]);
-            }
-
+            
             wellImages = new List<BitmapImage>();
-            string[] imagePaths = new string[6] { "Assets/Images/WellRed1.png", "Assets/Images/WellOrange1.png", "Assets/Images/WellYellow1.png", "Assets/Images/WellGreen1.png", "Assets/Images/WellBlue1.png", "Assets/Images/WellPurple1.png" };
-            for (int i = 0; i < 6; ++i)
+            string[] imagePaths = new string[36] { "Assets/Images/WellRed1.png", "Assets/Images/WellRed2.png", "Assets/Images/WellRed3.png",
+                "Assets/Images/WellRed4.png", "Assets/Images/WellRed5.png", "Assets/Images/WellRed6.png", "Assets/Images/WellOrange1.png",
+                "Assets/Images/WellOrange2.png", "Assets/Images/WellOrange3.png", "Assets/Images/WellOrange4.png", "Assets/Images/WellOrange5.png",
+                "Assets/Images/WellOrange6.png", "Assets/Images/WellYellow1.png", "Assets/Images/WellYellow2.png", "Assets/Images/WellYellow3.png",
+                "Assets/Images/WellYellow4.png", "Assets/Images/WellYellow5.png", "Assets/Images/WellYellow6.png", "Assets/Images/WellGreen1.png",
+                "Assets/Images/WellGreen2.png", "Assets/Images/WellGreen3.png", "Assets/Images/WellGreen4.png", "Assets/Images/WellGreen5.png",
+                "Assets/Images/WellGreen6.png", "Assets/Images/WellBlue1.png", "Assets/Images/WellBlue2.png", "Assets/Images/WellBlue3.png",
+                "Assets/Images/WellBlue4.png", "Assets/Images/WellBlue5.png", "Assets/Images/WellBlue6.png", "Assets/Images/WellPurple1.png",
+                "Assets/Images/WellPurple2.png", "Assets/Images/WellPurple3.png", "Assets/Images/WellPurple4.png", "Assets/Images/WellPurple5.png",
+                "Assets/Images/WellPurple6.png" };
+            for (int i = 0; i < 36; ++i)
             {
                 BitmapImage img = new BitmapImage();
                 img.BeginInit();
@@ -353,12 +296,12 @@ namespace GravitonClient.view
             AiImage.EndInit();
 
             player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            redWellReg = new Animation(new BitmapImage[1] { wellImages[0] }, new int[1] { 20 });
-            orangeWellReg = new Animation(new BitmapImage[1] { wellImages[1] }, new int[1] { 20 });
-            yellowWellReg = new Animation(new BitmapImage[1] { wellImages[2] }, new int[1] { 20 });
-            greenWellReg = new Animation(new BitmapImage[1] { wellImages[3] }, new int[1] { 20 });
-            blueWellReg = new Animation(new BitmapImage[1] { wellImages[4] }, new int[1] { 20 });
-            purpleWellReg = new Animation(new BitmapImage[1] { wellImages[5] }, new int[1] { 20 });
+            redWellReg = new Animation(new BitmapImage[10] { wellImages[0], wellImages[1], wellImages[2], wellImages[3], wellImages[4], wellImages[5], wellImages[4], wellImages[3], wellImages[2], wellImages[1] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
+            orangeWellReg = new Animation(new BitmapImage[10] { wellImages[6], wellImages[7], wellImages[8], wellImages[9], wellImages[10], wellImages[11], wellImages[10], wellImages[9], wellImages[8], wellImages[7] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
+            yellowWellReg = new Animation(new BitmapImage[10] { wellImages[12], wellImages[13], wellImages[14], wellImages[15], wellImages[16], wellImages[17], wellImages[16], wellImages[15], wellImages[14], wellImages[13] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
+            greenWellReg = new Animation(new BitmapImage[10] { wellImages[18], wellImages[19], wellImages[20], wellImages[21], wellImages[22], wellImages[23], wellImages[22], wellImages[21], wellImages[20], wellImages[19] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
+            blueWellReg = new Animation(new BitmapImage[10] { wellImages[24], wellImages[25], wellImages[26], wellImages[27], wellImages[28], wellImages[29], wellImages[28], wellImages[27], wellImages[26], wellImages[25] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
+            purpleWellReg = new Animation(new BitmapImage[10] { wellImages[30], wellImages[31], wellImages[32], wellImages[33], wellImages[34], wellImages[35], wellImages[34], wellImages[33], wellImages[32], wellImages[31] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
             redOrb = new Animation(new BitmapImage[1] { orbImages[0] }, new int[1] { 20 });
             orangeOrb = new Animation(new BitmapImage[1] { orbImages[1] }, new int[1] { 20 });
             yellowOrb = new Animation(new BitmapImage[1] { orbImages[2] }, new int[1] { 20 });
@@ -368,7 +311,11 @@ namespace GravitonClient.view
             destabilized = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
             ai = new Animation(new BitmapImage[1] { AiImage }, new int[1] { 20 });
 
-            playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
+            playerTemplate = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
+            wellTemplate = new Animator(DrawCanvas, new Animation[6] { redWellReg, orangeWellReg, yellowWellReg, greenWellReg, blueWellReg, purpleWellReg }, 0, 5);
+            playerShip = playerTemplate;
+
+            wellList = new List<Animator>();
         }
 
         private void btnHelp_Click(object sender, RoutedEventArgs e)
@@ -405,6 +352,8 @@ namespace GravitonClient.view
 
         public GamePage(bool cheat, Page parentPage, Window w)
         {
+            InitializeComponent();
+            SetupAssets();
             ParentPage = parentPage;
             Window = w;
             Window.KeyDown += Window_KeyDown;
@@ -413,6 +362,7 @@ namespace GravitonClient.view
             isPaused = false;
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
+            game.UpdateAnimationEvent += UpdateAnimation;
             Game.Initialize();
             Game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
             Game.Player.GameInvokeSoundEvent += PlaySound;
@@ -421,6 +371,8 @@ namespace GravitonClient.view
 
         public GamePage(bool cheat, Game game, Page parentPage, Window w)
         {
+            InitializeComponent();
+            SetupAssets();
             ParentPage = parentPage;
             Window = w;
             Window.KeyDown += Window_KeyDown;
@@ -429,6 +381,7 @@ namespace GravitonClient.view
             isPaused = false;
             Game.GameUpdatedEvent += Render;
             Game.GameInvokeSoundEvent += PlaySound;
+            game.UpdateAnimationEvent += UpdateAnimation;
             Game.InitializeWithShipCreated();
             Game.Player.GameInvokeSoundEvent += PlaySound;
             game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
@@ -448,20 +401,15 @@ namespace GravitonClient.view
                 Canvas.SetLeft(stars[i], frame.Backgrounds[0][i].Item1);
                 Canvas.SetTop(stars[i], frame.Backgrounds[0][i].Item2);
             }
-
-            int wellDiff = wellDict.Count - frame.StableWells.Count;
-            if (wellDiff > 0)
-                RemoveGameObjects(wellDict, wellDiff);
-            if (wellDiff < 0)
-                AddGameObjects(wellDict, -wellDiff);
-
-            for (int i = 0; i < wellDict.Count; ++i)
+            
+            for (int i = 0; i < wellList.Count; ++i)
             {
-                int color = frame.StableWells[i].Item3;
-                wellDict[i].Source = wellImages[color];
-                Canvas.SetLeft(wellDict[i], frame.StableWells[i].Item1);
-                Canvas.SetTop(wellDict[i], frame.StableWells[i].Item2);
-                Canvas.SetZIndex(wellDict[i], 5);
+                wellList[i].Update();
+            }
+
+            for (int i = 0; i < frame.ScreenStables.Count; ++i)
+            {
+                wellList[frame.ScreenStables[i]].Animate(frame.StableWells[i].Item1, frame.StableWells[i].Item2);
             }
 
             //Time Limit
@@ -520,7 +468,8 @@ namespace GravitonClient.view
                 Canvas.SetTop(orbDict[i], frame.Orbs[i].Item2);
                 Canvas.SetZIndex(orbDict[i], 7);
             }
-            
+
+            playerShip.Update();
             playerShip.Animate(frame.PlayerShip.Item1, frame.PlayerShip.Item2);
             txtScore.Text = "Score: " + game.Points;
 
@@ -836,9 +785,28 @@ namespace GravitonClient.view
             }
         }
 
-        public void UpdateAnimation(bool isTransition, AnimationType type, int objIndex, int animIndex, int transitionIndex)
+        public void UpdateAnimation(object sender, AnimationEventArgs e)
         {
+            switch (e.Type)
+            {
+                case AnimationType.Stable:
+                    if (e.ObjIndex == game.StableWells.Count)
+                    {
+                        Animator anim = new Animator(DrawCanvas, new Animation[6] { redWellReg, orangeWellReg, yellowWellReg, greenWellReg, blueWellReg, purpleWellReg }, 0, 5);
+                        wellList.Add(anim);
+                    }
 
+                    else if (e.AnimIndex == game.StableWells.Count)
+                    {
+                        wellList[e.ObjIndex].RemoveFromScreen();
+                        wellList.RemoveAt(e.ObjIndex);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            //if objIndex is one greater than the last animation index in the desired array, create new animator and add to canvas
+            //if animIndex is one greater than the last animation index in the desired array, remove from canvas
         }
 
         private void UpdateHudOrbs()
@@ -881,6 +849,65 @@ namespace GravitonClient.view
 
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            background = new Image();
+            BackgroundImage = new BitmapImage();
+            BackgroundImage.BeginInit();
+            BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
+            BackgroundImage.EndInit();
+            background.Source = BackgroundImage;
+            RenderOptions.SetBitmapScalingMode(background, BitmapScalingMode.NearestNeighbor);
+            Canvas.SetLeft(background, 0);
+            Canvas.SetTop(background, 0);
+            Canvas.SetZIndex(background, 0);
+            DrawCanvas.Children.Add(background);
+
+            planets = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            PlanetImage = new BitmapImage();
+            PlanetImage.BeginInit();
+            PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
+            PlanetImage.EndInit();
+
+            rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            RingImage = new BitmapImage();
+            RingImage.BeginInit();
+            RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
+            RingImage.EndInit();
+
+            twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            TwinImage = new BitmapImage();
+            TwinImage.BeginInit();
+            TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
+            TwinImage.EndInit();
+
+            stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            StarImage = new BitmapImage();
+            StarImage.BeginInit();
+            StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
+            StarImage.EndInit();
+
+            for (int i = 0; i < 4; ++i)
+            {
+                planets[i].Source = PlanetImage;
+                rings[i].Source = RingImage;
+                twins[i].Source = TwinImage;
+                stars[i].Source = StarImage;
+
+                RenderOptions.SetBitmapScalingMode(planets[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(rings[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(twins[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(stars[i], BitmapScalingMode.NearestNeighbor);
+
+                Canvas.SetZIndex(planets[i], 4);
+                Canvas.SetZIndex(rings[i], 3);
+                Canvas.SetZIndex(twins[i], 2);
+                Canvas.SetZIndex(stars[i], 1);
+
+                DrawCanvas.Children.Add(planets[i]);
+                DrawCanvas.Children.Add(rings[i]);
+                DrawCanvas.Children.Add(twins[i]);
+                DrawCanvas.Children.Add(stars[i]);
+            }
+
             if ((DrawCanvas.ActualWidth / 272) * 160 < DrawCanvas.ActualHeight)
             {
                 background.Height = DrawCanvas.ActualHeight;

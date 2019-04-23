@@ -27,6 +27,13 @@ namespace GravitonClient
         public bool HasNeutralizePowerup { get; set; }
         public int Points { get; internal set; }
 
+        private List<int> screenStables;
+        public List<int> ScreenStables
+        {
+            get { return screenStables; }
+            set { screenStables = value; }
+        }
+
         public CameraFrame()
         {
             Backgrounds = new List<Tuple<double, double>>[4];
@@ -36,6 +43,7 @@ namespace GravitonClient
             PlayerOrbs = new List<int>();
             AIShips = new List<Tuple<double, double>>();
             Orbs = new List<Tuple<double, double, int>>();
+            screenStables = new List<int>();
         }
 
      

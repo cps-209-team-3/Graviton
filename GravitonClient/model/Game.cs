@@ -37,6 +37,8 @@ namespace GravitonClient
 
         public event EventHandler<SoundEffect> GameInvokeSoundEvent;
 
+        public event EventHandler<AnimationEventArgs> UpdateAnimationEvent;
+
         public Game(bool isCheat)
         {
             IsCheat = isCheat;
@@ -320,6 +322,7 @@ namespace GravitonClient
                 well.TicksLeft = WellDestabFreq + Random.Next(1001);
                 StableWells.Add(well);
                 GameObjects.Add(well);
+                UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, StableWells.Count, 0, 0));
                 well.ShockWave = new Shockwave(this, well);
             }
         }

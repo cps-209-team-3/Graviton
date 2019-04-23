@@ -39,13 +39,19 @@ namespace GravitonClient
 
             cameraFrame.StableWells = new List<Tuple<double, double, int>>();
             cameraFrame.SecondsLeft = 600;
+            int currentWell = 0;
             foreach (Well well in ParentGame.StableWells)
             {
                 cameraFrame.SecondsLeft = (int)Math.Min(well.TicksLeft / 31.25, cameraFrame.SecondsLeft);
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
                 if (xc > -60 && xc < Width + 60 && yc > -60 && yc < Height + 60)
+                {
                     cameraFrame.StableWells.Add(Tuple.Create(xc - 60, yc - 60, well.Orbs));
+                    int val = currentWell;
+                    cameraFrame.ScreenStables.Add(val);
+                }
+                ++currentWell;
             }
 
             cameraFrame.UnstableWells = new List<Tuple<double, double>>();
