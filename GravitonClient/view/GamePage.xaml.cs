@@ -27,10 +27,12 @@ namespace GravitonClient.view
         List<Animator> orbList;
         List<Animator> AIList;
 
+        //to be deleted with rise of animations
         List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
         List<Image> AiImages;
+
         Image background;
         Image[] planets;
         Image[] rings;
@@ -44,6 +46,13 @@ namespace GravitonClient.view
 
         private bool isPaused;
 
+        private bool nextRound;
+        public bool NextRound
+        {
+            get { return nextRound; }
+            set { nextRound = value; }
+        }
+
         public Page ParentPage { get; set; }
         public Window Window { get; set; }
 
@@ -54,6 +63,19 @@ namespace GravitonClient.view
         private Button btnHelp;
 
         public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
+
+        Animator destabilizedTemplate;
+        Animator wellTemplate;
+        Animator playerTemplate;
+        Animator orbTemplate;
+
+
+        Animation redWellReg;
+        Animation orangeWellReg;
+        Animation yellowWellReg;
+        Animation greenWellReg;
+        Animation blueWellReg;
+        Animation purpleWellReg;
 
         List<BitmapImage> wellImages;
         BitmapImage destabilizedImage;
