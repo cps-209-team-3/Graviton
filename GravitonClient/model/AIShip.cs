@@ -21,14 +21,20 @@ namespace GravitonClient
         {
             XMove = 0;
             YMove = 0;
+            InitializeTargets();
+        }
+
+        public AIShip() { }
+
+        //sets initial target values
+        public void InitializeTargets()
+        {
             TargetOrb = ParentGame.Orbs[0];
             TargetWell = ParentGame.StableWells[0];
             TargetNearestOrb();
             TargetNearestWell();
             SetTargetPos();
         }
-
-        public AIShip() { }
 
         //Sets TargetWell to the nearest well
         public void TargetNearestWell()
@@ -54,7 +60,10 @@ namespace GravitonClient
                 }
             }
             if (closestWell == null)
+            {
                 Orbs.Clear();
+                SetTargetPos();
+            }
             else
                 TargetWell = closestWell;
         }
