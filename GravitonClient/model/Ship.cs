@@ -7,19 +7,28 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
-    //This class describes a ship in the game. 
+    //This class describes a ship in the game. The ship can move, 
+    //do a speed boost, return the well/orb it is over, ...
     public class Ship : GameObject
     {
+        //This is a reference to the parent game
         public Game ParentGame { get; set; }
+        //This is a reference to a powerup instance (which will apply powerups to the game)
         public Powerup GamePowerup { get; set; }
+        //These are the speeds of the ship
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
+        //This scales the ship's input (i.e. it can go faster) according to whether boost is enabled
         public double BoostFactor { get; set; }
+        //This is a list of orbs that the ship has
         public List<int> Orbs { get; set; }
+        //This is how many points the ship has
         public int Points{ get; set; }
+        //This is a bool whether the ship is immune to destabilized wells
         public bool IsImmune { get; set; }
+        //This describes how much longer the ship will be immune
         public int ImmuneTicksLeft { get; set; }
-
+        //This is a Random object
         private Random rand = new Random();
 
         public event EventHandler<SoundEffect> GameInvokeSoundEvent;

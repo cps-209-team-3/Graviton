@@ -13,12 +13,17 @@ namespace GravitonClient
     //Finally, it calculates where everything should go on the screen and stores the information in a CameraFrame
     public class Camera
     {
+        //A reference to the parent game
         public Game ParentGame { get; set; }
+        //The width and height of the screen
         public double Width { get; set; }
         public double Height { get; set; }
+        //The coordinates of the sreen on the map
         public double ScreenX { get; set; }
         public double ScreenY { get; set; }
+        //The parallax background coordinates
         public double[,] BackgroundXY { get; set; }
+        //A list of all the backgrounds that need to be on the screen
         public List<Tuple<double, double>>[] Backgrounds { get; set; }
 
         public Camera(Game game)

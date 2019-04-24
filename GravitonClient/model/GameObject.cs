@@ -16,8 +16,10 @@ namespace GravitonClient
             Xcoor = xcoor;
             Ycoor = ycoor;
         }
+        //The coordinates of the object
         public double Xcoor { get; set; }
         public double Ycoor { get; set; }
+        //A string representing the type of the object
         public string Type { get; set; }
         public abstract string Serialize();
 
