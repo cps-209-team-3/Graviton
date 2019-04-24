@@ -37,6 +37,8 @@ namespace GravitonClient
 
         public event EventHandler<SoundEffect> GameInvokeSoundEvent;
 
+        public event EventHandler<AnimationEventArgs> UpdateAnimationEvent;
+
         public Game(bool isCheat)
         {
             IsCheat = isCheat;
@@ -82,6 +84,7 @@ namespace GravitonClient
             Timer.Tick += Timer_Tick;
         }
 
+        // This method initializes when the object already has a player.
         public void InitializeWithShipCreated()
         {
             GameObjects.Add(Player);
@@ -154,12 +157,10 @@ namespace GravitonClient
             UpdateWells();
             if (Ticks % WellSpawnFreq == 0)
                 SpawnWell();
-            if (Ticks % 5 == 0 && Orbs.Count < 200)
+            if (Ticks % 4 == 0 && Orbs.Count < 200)
                 SpawnOrb();
             if (AIShips.Count < 3)
                 SpawnAI();
-            //ViewCamera.Render();           
-
             
             GameUpdatedEvent(this, ViewCamera.GetCameraFrame());
         }
@@ -172,10 +173,13 @@ namespace GravitonClient
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
                 {
+                    int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, objIndex, 12, 0));
                     well.TicksLeft = 3000;
                     well.IsStable = false;
                     well.Strength = 900;
                     UnstableWells.Add(well);
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Unstable, UnstableWells.Count, 0, 0));
                     StableWells.Remove(well);
                     GameInvokeSoundEvent(this, SoundEffect.Destabilize);
                 }
@@ -187,7 +191,7 @@ namespace GravitonClient
                 {
                     if (well.ShockWave.TicksLeft == 0)
                     {
-                        well.ShockWave.TicksLeft = 50;
+                        well.ShockWave.TicksLeft = 80;
                     }
                 }
                 if (well.ShockWave == null)
@@ -195,6 +199,8 @@ namespace GravitonClient
                 well.ShockWave.Pulse();
                 if (well.TicksLeft == 0)
                 {
+                    int objIndex = UnstableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Unstable, objIndex, 24, 0));
                     GameInvokeSoundEvent(this, SoundEffect.Collapse);
                     UnstableWells.Remove(well);
                     GameObjects.Remove(well);
@@ -222,13 +228,19 @@ namespace GravitonClient
                 }
                 else if (Player.DepositOrbs(well))
                 {
+                    int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, objIndex, 12, 0));
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
                     Player.GamePowerup.AddNew();
                     Points += 100;
                 }
                 else if (well.Orbs != originalColor)
+                {
                     GameInvokeSoundEvent(this, SoundEffect.OrbDrop);
+                    int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(true, AnimationType.Stable, objIndex, well.Orbs, 6 + well.Orbs));
+                }
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
@@ -273,6 +285,7 @@ namespace GravitonClient
                 Well well = aI.WellOver();
                 if (well != null)
                 {
+                    int originalColor = well.Orbs;
                     if (!well.IsStable)
                     {
                         if (well.IsTrap && well.Owner == Player)
@@ -282,10 +295,17 @@ namespace GravitonClient
                     }
                     else if (aI.DepositOrbs(well))
                     {
+                        int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                        UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, objIndex, 12, 0));
                         StableWells.Remove(well);
                         GameObjects.Remove(well);
                         aI.GamePowerup.AddNew();
                         aI.SetTargetPos();
+                    }
+                    else if (well.Orbs != originalColor)
+                    {
+                        int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                        UpdateAnimationEvent(this, new AnimationEventArgs(true, AnimationType.Stable, objIndex, well.Orbs, 6 + well.Orbs));
                     }
                 }
                 Orb orb = aI.OrbOver();
@@ -320,6 +340,7 @@ namespace GravitonClient
                 well.TicksLeft = WellDestabFreq + Random.Next(1001);
                 StableWells.Add(well);
                 GameObjects.Add(well);
+                UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, StableWells.Count, 0, 0));
                 well.ShockWave = new Shockwave(this, well);
             }
         }

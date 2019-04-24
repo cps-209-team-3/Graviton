@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------
+//File:   AboutPage.xaml.cs
+//Desc:   Counterpart for AboutPage.xaml, contains logic 
+//        for credits menu view.
+//----------------------------------------------------------- 
+
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace GravitonClient.view
 {
-    /// <summary>
-    /// Interaction logic for AboutPage.xaml
-    /// </summary>
+    //-----------------------------------------------------------
+    //        This class contains the logic for the credits menu.
+    //        Its only function is to initialize the page and 
+    //        navigate back to the page that created it.
+    //----------------------------------------------------------- 
     public partial class AboutPage : Page
     {
+        //The page that created this page.
         public Page ParentPage { get; set; }
 
         public AboutPage(Page parent)
@@ -28,6 +25,9 @@ namespace GravitonClient.view
             InitializeComponent();
         }
 
+        //Logic for when Exit button is clicked. Returns to the menu that created the page.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(ParentPage);

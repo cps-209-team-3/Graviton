@@ -1,27 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
+﻿//-----------------------------------------------------------
+//File:   HomePage.xaml.cs
+//Desc:   Counterpart for HighScorePage.xaml, contains logic 
+//        for populating the high scores list.
+//----------------------------------------------------------- 
+
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GravitonClient.view
 {
-    /// <summary>
-    /// Interaction logic for HighScorePage.xaml
-    /// </summary>
+    //-----------------------------------------------------------
+    //        This class contains the logic for the high scores 
+    //        page. This class reads highscores from a file and
+    //        displays them in a list.
+    //----------------------------------------------------------- 
     public partial class HighScorePage : Page
     {
+        //Highscores model object.
         HighScores hs;
+
+        //Reference to the page that called this page.
         public Page ParentPage { get; set; }
 
         public HighScorePage(Page parentPage)
@@ -31,6 +32,9 @@ namespace GravitonClient.view
             hs = HighScores.Load(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Saves/HighScoreSave.txt"));
         }
 
+        //Runs when the page has loaded. Sets up the page and populates the list with highscores.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void HighScoresWindow_Loaded(object sender, RoutedEventArgs e)
         {
             for (int i = 0; i < 10; ++i)
@@ -90,6 +94,9 @@ namespace GravitonClient.view
             }
         }
 
+        //Logic for when Return to Menu button is clicked. Navigates back to the page that called it.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(ParentPage);

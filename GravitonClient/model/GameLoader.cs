@@ -57,6 +57,7 @@ namespace GravitonClient
                 aIShip.ParentGame = game;
                 game.AIShips.Add(aIShip);
                 aIShip.GamePowerup.ParentGame = game;
+                aIShip.InitializeTargets();
             }
             game.GameObjects.AddRange(game.Orbs);
             game.GameObjects.AddRange(game.UnstableWells);

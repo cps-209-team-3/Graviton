@@ -19,6 +19,8 @@ namespace GravitonClient
 
         public event EventHandler<SoundEffect> GameInvokeSoundEvent;
 
+        public event EventHandler<AnimationEventArgs> UpdateAnimationEvent;
+
         public Powerup(Game game)
         {
             ParentGame = game;
@@ -99,6 +101,8 @@ namespace GravitonClient
                 {
                     if (ParentGame.Player.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Neutralize);
+                    int objIndex = ParentGame.UnstableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Unstable, objIndex, 24, 0));
                     ParentGame.UnstableWells.Remove(well);
                     ParentGame.GameObjects.Remove(well);
                     CarryingNeutralize = false;
@@ -118,6 +122,8 @@ namespace GravitonClient
                 {
                     if (ParentGame.Player.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Destabilize);
+                    int objIndex = ParentGame.StableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, objIndex, 12, 0));
                     CarryingDestabilize = false;
                     CurrentPowerups.Remove(powerups.destabilize);
                     well.TicksLeft = 3000;
@@ -126,6 +132,7 @@ namespace GravitonClient
                     well.IsTrap = true;
                     well.Owner = ship;
                     ParentGame.UnstableWells.Add(well);
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Unstable, ParentGame.UnstableWells.Count, 0, 0));
                     ParentGame.StableWells.Remove(well);
                     ship.IsImmune = true;
                     ship.ImmuneTicksLeft = 50;
@@ -142,7 +149,6 @@ namespace GravitonClient
             {
                 if (Math.Pow(ship.Xcoor - well.Xcoor, 2) + Math.Pow(ship.Ycoor - well.Ycoor, 2) < 40000)
                 {
-                    CurrentPowerups.Remove(powerups.ghost);
                     if (ParentGame.Player.GamePowerup == this)
                         GameInvokeSoundEvent(this, SoundEffect.Ghost);
                     well.IsGhost = true;
@@ -150,6 +156,7 @@ namespace GravitonClient
                 }
             }
             CarryingGhost = false;
+            CurrentPowerups.Remove(powerups.ghost);
             ship.IsImmune = true;
             ship.ImmuneTicksLeft = 100;
         }

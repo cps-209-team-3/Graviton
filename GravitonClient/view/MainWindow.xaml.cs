@@ -1,4 +1,10 @@
-﻿using System;
+﻿//-----------------------------------------------------------
+//File:   MainWindow.xaml.cs
+//Desc:   Counterpart for MainWindow.xaml, 
+//        mostly empty because Page classes contain logic.
+//----------------------------------------------------------- 
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +21,10 @@ using System.Windows.Shapes;
 
 namespace GravitonClient
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+    //-----------------------------------------------------------
+    //        This class initializes the Window the entire game
+    //        is configured and played in.
+    //----------------------------------------------------------- 
     public partial class MainWindow : Window
     {
         public MainWindow()

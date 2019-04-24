@@ -35,26 +35,48 @@ namespace GravitonClient
             AdjustScreenForPlayer(cameraFrame);
             cameraFrame.PlayerAngle = Math.Atan2(ParentGame.Player.SpeedY, ParentGame.Player.SpeedX) * 180 / Math.PI;
 
+            cameraFrame.ShockWaves = new List<Tuple<double, double, int>>();
+            foreach (Well well in ParentGame.UnstableWells)
+            {
+                if (well.ShockWave != null)
+                {
+                    cameraFrame.ShockWaves.Add(Tuple.Create(well.Xcoor - ScreenX - well.ShockWave.Radius, well.Ycoor - ScreenY - well.ShockWave.Radius, 2 * well.ShockWave.Radius));
+                }
+            }
+
+
             double xc, yc;
 
             cameraFrame.StableWells = new List<Tuple<double, double, int>>();
             cameraFrame.SecondsLeft = 600;
+            int currentWell = 0;
             foreach (Well well in ParentGame.StableWells)
             {
                 cameraFrame.SecondsLeft = (int)Math.Min(well.TicksLeft / 31.25, cameraFrame.SecondsLeft);
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
                 if (xc > -60 && xc < Width + 60 && yc > -60 && yc < Height + 60)
+                {
                     cameraFrame.StableWells.Add(Tuple.Create(xc - 60, yc - 60, well.Orbs));
+                    int val = currentWell;
+                    cameraFrame.ScreenStables.Add(val);
+                }
+                ++currentWell;
             }
 
+            currentWell = 0;
             cameraFrame.UnstableWells = new List<Tuple<double, double>>();
             foreach (Well well in ParentGame.UnstableWells)
             {
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
                 if (xc > -125 && xc < Width + 125 && yc > -125 && yc < Height + 125)
+                {
                     cameraFrame.UnstableWells.Add(Tuple.Create(xc - 125, yc - 125));
+                    int val = currentWell;
+                    cameraFrame.ScreenUnstables.Add(val);
+                }
+                ++currentWell;
             }
 
             cameraFrame.Orbs = new List<Tuple<double, double, int>>();
@@ -118,6 +140,7 @@ namespace GravitonClient
             CalculateBackgounds(ScreenX - tempX, ScreenY - tempY, cameraFrame);
         }
 
+        //This method calculates the parrallax backgrounds.
         public void CalculateBackgounds(double changeX, double changeY, CameraFrame cameraFrame)
         {
             for (int i = 0; i < 4; i++)
