@@ -34,7 +34,6 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 * Destabilized Well Shockwaves
 * Networked Multiplayer
 ### Known Issues
-* Animations not up to snuff
 * No known bugs
 ### [Alpha Recording](https://youtu.be/3i9FIn4d9u4)
 ### [Beta Recording](https://youtu.be/3B5jn_T5dZQ)
@@ -42,7 +41,7 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 ### Expenses
 Team Member | Used Hours | Remaining Hours | Journal
 ----------- | ---------- | --------------- | ------
-Visser | 44:45 | 15:15 | [VisserJournal](https://github.com/cps-209-team-3/Graviton/wiki/VisserJournal)
-Ross | 52:25 | 7:35 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
-Lane | 40:20 | 9:40 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
+Visser | 55:30 | 4:30 | [VisserJournal](https://github.com/cps-209-team-3/Graviton/wiki/VisserJournal)
+Ross | 55:00 | 5:00 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
+Lane | 42:20 | 17:40 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
 Labadorf | 52:00 | 8:00 | [LabadorfJournal](https://github.com/cps-209-team-3/Graviton/wiki/LabadorfJournal)
