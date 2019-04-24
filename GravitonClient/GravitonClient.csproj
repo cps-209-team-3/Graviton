@@ -104,6 +104,12 @@
     <Compile Include="view\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="view\NetworkedGameOverPage.xaml.cs">
+      <DependentUpon>NetworkedGameOverPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="view\NetworkedGamePage.xaml.cs">
+      <DependentUpon>NetworkedGamePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="view\NetworkedGameWindow.xaml.cs">
       <DependentUpon>NetworkedGameWindow.xaml</DependentUpon>
     </Compile>
@@ -146,6 +152,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="view\NetworkedGameOverPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="view\NetworkedGamePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="view\NetworkedGameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -177,9 +191,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Saved Games\game1.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Resource Include="Assets\Fonts\Azonix.otf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

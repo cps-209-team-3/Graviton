@@ -40,10 +40,10 @@ namespace GravitonServer
         public string Serialize()
         {
             
-            return $"{Math.Round(ScreenX,2)} {Math.Round(ScreenY, 2)} {Math.Round(ChangeX, 2)} {Math.Round(ChangeY, 2)} {serializeTuples<int>(StableWells)} {serializeTuples(UnstableWells)} {serializeTuples<int>(Orbs)} {String.Join('|', PlayerOrbs.ToArray())} {serializeTuples(AIShips)} {serializeTuples(OtherHumanShips)} {Seconds} {SecondsLeft} {Points} {(HasGhostingPowerup?"t":"f")} {(HasNeutralizePowerup ? "t" : "f")} {(HasDestabilizePowerup ? "t" : "f")}";
+            return $"{Math.Round(ScreenX,2)} {Math.Round(ScreenY, 2)} {Math.Round(ChangeX, 2)} {Math.Round(ChangeY, 2)} {SerializeTuples<int>(StableWells)} {SerializeTuples(UnstableWells)} {SerializeTuples<int>(Orbs)} {String.Join('|', PlayerOrbs.ToArray())} {SerializeTuples(AIShips)} {SerializeTuples(OtherHumanShips)} {Seconds} {SecondsLeft} {Points} {(HasGhostingPowerup?"t":"f")} {(HasNeutralizePowerup ? "t" : "f")} {(HasDestabilizePowerup ? "t" : "f")}";
         }
 
-        private static string serializeTuples<T>(List<Tuple<double, double, T>> tuples)
+        private static string SerializeTuples<T>(List<Tuple<double, double, T>> tuples)
         {
             string retVal = "";
             int i = 0;
@@ -64,7 +64,7 @@ namespace GravitonServer
             return retVal;
         }
 
-        private static string serializeTuples(List<Tuple<double, double>> tuples)
+        private static string SerializeTuples(List<Tuple<double, double>> tuples)
         {
             string retVal = "";
             int i = 0;

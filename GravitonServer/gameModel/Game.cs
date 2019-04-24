@@ -10,6 +10,7 @@ namespace GravitonServer
     public class Game
     {
         public event EventHandler<int> GameUpdatedEvent;
+
         public bool IsOver { get; set; }
         public Random Random { get; set; }
         public int Ticks { get; set; }
@@ -24,7 +25,7 @@ namespace GravitonServer
         public List<AIShip> AIShips { get; set; }
         public List<Orb> Orbs { get; set; }
         public List<GameObject> GameObjects { get; set; }
-        private DateTime StartTime;
+        public DateTime StartTime { get; private set; }
 
         internal HighScores HighScores = new HighScores();
         
@@ -112,7 +113,9 @@ namespace GravitonServer
             if (Ticks % 5 == 0 && Orbs.Count < 170)
                 SpawnOrb();
             if (AIShips.Count < 3)
-                SpawnAI();     
+                SpawnAI();
+            if ((DateTime.Now - StartTime).TotalMinutes >= 5)
+                GameOver();
 
             
             GameUpdatedEvent(this, 0);

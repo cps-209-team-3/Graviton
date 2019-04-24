@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GravitonClient.view
+namespace GravitonClient
 {
     /// <summary>
     /// Interaction logic for NetworkPlayPage.xaml
@@ -52,9 +52,8 @@ namespace GravitonClient.view
 
         private void StartGame(NetworkedGame game)
         {
-            NetworkedGameWindow g = new NetworkedGameWindow(game);
-            g.Show();
-            App.Current.MainWindow.Hide();
+            this.NavigationService.Navigate(new NetworkedGamePage(game));
+            
         }
     }
 }

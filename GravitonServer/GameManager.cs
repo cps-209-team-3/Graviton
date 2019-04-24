@@ -51,6 +51,7 @@ namespace GravitonServer
                 SecondCounter = 0;
                 StartGame();
                 GameTimer.Stop();
+                WaitingClients.RemoveAll((client) => true);
             }
             else
             {

@@ -38,6 +38,7 @@ namespace GravitonServer
     {
         public ClientState(Client client)
         {
+            
             CurrentClient = client;
         }
         internal Client CurrentClient;
@@ -53,7 +54,9 @@ namespace GravitonServer
         private double CameraWidth;
         private double CameraHeight;
 
-        public NotAssignedGameState(Client client) : base(client){ }
+        public NotAssignedGameState(Client client) : base(client){
+            Logger.Log($"client {client.ClientIP} is in state: NotAssignedGameState");
+        }
 
         internal override void HandleIncomingMessage(string message) {
             string[] parts = message.Split('|');
@@ -82,7 +85,9 @@ namespace GravitonServer
     internal class GameNotStartedState : ClientState
     {
 
-        public GameNotStartedState(Client client) : base(client) { }
+        public GameNotStartedState(Client client) : base(client) {
+            Logger.Log($"client {client.ClientIP} is in state: GameNotStartedState");
+        }
         internal override void HandleIncomingMessage(string message) { }
 
         internal override void UpdateFromServer( object o)
@@ -127,7 +132,9 @@ namespace GravitonServer
             CurrentClient.CurrentState = gos;
         }
 
-        public InGameState(Client client) : base(client) { }
+        public InGameState(Client client) : base(client) {
+            Logger.Log($"client {client.ClientIP} is in state: InGameState");
+        }
         internal override void HandleIncomingMessage(string message)
         {
             if (message[0] == '\0')
@@ -155,6 +162,7 @@ namespace GravitonServer
         }
 
         public GameOverState(Client client) : base(client) {
+            Logger.Log($"client {client.ClientIP} is in state: GameOverState");
         }
         internal override void HandleIncomingMessage(string message) { }
         internal override void UpdateFromServer(object o) {

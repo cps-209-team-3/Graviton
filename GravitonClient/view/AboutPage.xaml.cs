@@ -7,7 +7,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace GravitonClient.view
+namespace GravitonClient
 {
     //-----------------------------------------------------------
     //        This class contains the logic for the credits menu.
