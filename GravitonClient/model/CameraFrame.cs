@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the CameraFrame class which holds all of the information for one frame in the game.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,8 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
+    //This class stores all of the information for one frame in the game.
+    //It only has instance variables; no methods.
     public class CameraFrame
     {
         public double ScreenX { get; set; }

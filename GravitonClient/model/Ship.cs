@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the Ship class which represents an ship in the game.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
+    //This class describes a ship in the game. 
     public class Ship : GameObject
     {
         public Game ParentGame { get; set; }
@@ -140,13 +142,14 @@ namespace GravitonClient
             return completed;
         }
 
+        //This method increments the ParentGame's points.
         public virtual void IncrementScore()
         {
             ParentGame.Points += 10;
         }
 
 
-
+        //This method serializes the instance and returns the string.
         public override string Serialize()
         {
             return $@"{{
@@ -160,7 +163,7 @@ namespace GravitonClient
         }
 
 
-
+        //This method deserializes a string and puts the information into the instance itself.
         public override void Deserialize(string info)
         {
             

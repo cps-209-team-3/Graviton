@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the Well class which represents a gravity well in the game.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
+    //This class describes a gravity well in the game.
     public class Well : GameObject
     {
         public bool IsStable { get; set; }
@@ -32,6 +34,7 @@ namespace GravitonClient
 
         public Well() { }
 
+        //This method serializes the instance and returns the string.
         public override string Serialize()
         {
             return $@"{{
@@ -43,6 +46,8 @@ namespace GravitonClient
 }}"; /* Colors are zero-based, 
             so the number of orbs it has is the color number it is seeking.*/
         }
+
+        //This method deserializes a string and puts the information into the instance itself.
         public override void Deserialize(string info)
         {
             // change the properties
