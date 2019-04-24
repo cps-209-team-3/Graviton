@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+File: Logger.cs
+Desc: Class to log server side messages
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 

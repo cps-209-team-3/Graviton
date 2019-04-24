@@ -1,10 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿/*
+* File: UdpServerUtils.cs
+* Desc: Brutally ripped off code from 
+* https://stackoverflow.com/questions/19786668/c-sharp-udp-socket-client-and-server/19787486#19787486
+*/
+
+
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
+//Credit:
+//https://stackoverflow.com/questions/19786668/c-sharp-udp-socket-client-and-server/19787486#19787486
 namespace GravitonServer
 {
     public struct Received

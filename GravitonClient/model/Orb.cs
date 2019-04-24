@@ -10,6 +10,7 @@ namespace GravitonClient
     //This class describes an orb in the game.
     public class Orb : GameObject
     {
+        //What color the orb is
         public int Color { get; set; }
         public Orb(double xcoor, double ycoor, int color) : base(xcoor, ycoor)
         { 

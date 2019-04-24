@@ -18,25 +18,40 @@ namespace GravitonClient
     public class Game
     {
         public event EventHandler<CameraFrame> GameUpdatedEvent;
+        //Whether cheat mode is on
         public bool IsCheat { get; set; }
+        //Whether the game is over
         public bool IsOver { get; set; }
+        //A Random object
         public Random Random { get; set; }
+        //A reference to a camera object
         public Camera ViewCamera { get; set; }
+        //How many points in the game
         public int Points { get; set; }
+        //How many ticks in the game
         public int Ticks { get; set; }
+        //The user input
         public int HorizontalInput { get; set; }
         public int VerticalInput { get; set; }
+        //Well frequencies
         public int WellSpawnFreq { get; set; }
         public int WellDestabFreq { get; set; }
+        //A timer object
         public DispatcherTimer Timer { get; set; }
+        //All the wells in the game
         public List<Well> StableWells { get; set; }
         public List<Well> UnstableWells { get; set; }
+        //The player and ai ships
         public Ship Player { get; set; }
         public List<AIShip> AIShips { get; set; }
+        //orbs in the game
         public List<Orb> Orbs { get; set; }
+        //A list of gameobjects in the game
         public List<GameObject> GameObjects { get; set; }
+        //The username of whoever is playing the game
         public string Username { get; internal set; }
 
+        //A reference to a HighScores object
         private HighScores highScores;
 
         public event EventHandler<SoundEffect> GameInvokeSoundEvent;

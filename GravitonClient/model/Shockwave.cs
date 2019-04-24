@@ -8,13 +8,16 @@ namespace GravitonClient
 {
     public class Shockwave : GameObject
     {
-        private Well well;
-
+        //Shockwave's parent game
         public Game ParentGame { get; set; }
+        //Shockwave's parent well
         public Well ParentWell { get; set; }
+        //Shockwave radius
         public int Radius { get; set; }
+        //Ticks left until shockwave radius is reset
         public int TicksLeft { get; set; }
 
+        //constructor
         public Shockwave(Game game, Well well)
         {
             ParentGame = game;
@@ -25,11 +28,15 @@ namespace GravitonClient
             TicksLeft = 0;
         }
 
+        //alternate constructor for loading
         public Shockwave(Well well)
         {
-            this.well = well;
+            ParentWell = well;
+            Xcoor = well.Xcoor;
+            Ycoor = well.Ycoor;
         }
 
+        //Destroys all orbs in shockwave radius; increments radius; if ticksleft == 0, resets radius
         public void Pulse()
         {
             if (TicksLeft > 0)
@@ -49,6 +56,7 @@ namespace GravitonClient
                 Radius = 0;
         }
 
+        //not implemented.  Shockwaves do not need to be saved, since they are attached to wells
         public override string Serialize()
         {
             throw new NotImplementedException();

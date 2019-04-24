@@ -1,4 +1,10 @@
-﻿using System;
+﻿/*
+File: Program.cs 
+Desc: Main class the server code.
+*/
+
+
+using System;
 using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
@@ -6,7 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-//https://stackoverflow.com/questions/19786668/c-sharp-udp-socket-client-and-server/19787486#19787486
+
 namespace GravitonServer
 {
     
@@ -41,7 +47,7 @@ namespace GravitonServer
                 }
             });
             GameManager.Start();
-            Console.ReadKey();
+            Console.ReadLine();
         }
         static void HandleClient(Client client, string message)
         {

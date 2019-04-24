@@ -8,6 +8,7 @@ namespace GravitonClient
 {
     public class NetworkedGame
     {
+        internal string UserName { get; set; }
 
         public event EventHandler<NetworkedCameraFrame> GameUpdatedEvent;
 

@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+File: GameManager.cs
+Desc: Manages starting games and alerting clients to the new game.
+*/
+using System;
 using System.Collections.Generic;
 using System.Timers;
 using System.Text;
@@ -51,6 +55,7 @@ namespace GravitonServer
                 SecondCounter = 0;
                 StartGame();
                 GameTimer.Stop();
+                WaitingClients.RemoveAll((client) => true);
             }
             else
             {

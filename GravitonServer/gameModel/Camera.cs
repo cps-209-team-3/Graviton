@@ -31,7 +31,8 @@ namespace GravitonServer
 
         public CameraFrame GetCameraFrame() {
             CameraFrame cameraFrame = new CameraFrame();
-            cameraFrame.Seconds = ParentGame.Ticks / 50;
+            cameraFrame.Seconds =(int) (DateTime.Now - ParentGame.StartTime).TotalSeconds;
+            
             cameraFrame.Points = Player.Points;
             cameraFrame.IsOver = ParentGame.IsOver;
             AdjustScreenForPlayer(cameraFrame);
@@ -40,10 +41,8 @@ namespace GravitonServer
             double xc, yc;
 
             cameraFrame.StableWells = new List<Tuple<double, double, int>>();
-            cameraFrame.SecondsLeft = 600;
             foreach (Well well in ParentGame.StableWells)
             {
-                cameraFrame.SecondsLeft = (int)Math.Min(well.TicksLeft / 31.25, cameraFrame.SecondsLeft);
                 xc = well.Xcoor - ScreenX;
                 yc = well.Ycoor - ScreenY;
                 if (xc > -60 && xc < Width + 60 && yc > -60 && yc < Height + 60)

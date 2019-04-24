@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
 
-namespace GravitonClient.view
+namespace GravitonClient
 {
     //-----------------------------------------------------------
     //        This class controls the view logic for the 
@@ -606,7 +606,7 @@ namespace GravitonClient.view
                 c.Height = t.Item3;
                 Canvas.SetLeft(c, t.Item1);
                 Canvas.SetTop(c, t.Item2);
-                Canvas.SetZIndex(c, 1000);
+                Canvas.SetZIndex(c, 9);
                 c.Stroke = Brushes.DarkRed;
                 c.StrokeThickness = 5;
 

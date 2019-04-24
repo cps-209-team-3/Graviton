@@ -10,7 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-namespace GravitonClient.view
+namespace GravitonClient
 {
     //-----------------------------------------------------------
     //        This class contains the logic for the high scores 

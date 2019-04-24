@@ -8,11 +8,15 @@ namespace GravitonClient
 {
     public class AIShip : Ship
     {
+        //Reference to AI destination well
         public Well TargetWell { get; set; }
+        //Reference to AI destination orb
         public Orb TargetOrb { get; set; }
+        //Destination x coordinate
         public double TargetX { get; set; }
+        //Destination y coordinate
         public double TargetY { get; set; }
-        public double TargetDist { get; set; }
+        //Vertical and Horizontal thrust indicators
         public int XMove { get; set; }
         public int YMove { get; set; }
 
@@ -24,6 +28,7 @@ namespace GravitonClient
             InitializeTargets();
         }
 
+        //Alternate constructor for loading
         public AIShip() { }
 
         //sets initial target values
@@ -36,7 +41,7 @@ namespace GravitonClient
             SetTargetPos();
         }
 
-        //Sets TargetWell to the nearest well
+        //Sets TargetWell to the nearest well requesting an orb that the AI is carrying
         public void TargetNearestWell()
         {
             Well closestWell = null;
@@ -91,14 +96,6 @@ namespace GravitonClient
             TargetOrb = closestOrb;
         }
 
-        //Sets TargetDist to dist from current target
-        public void FindTargetDist()
-        {
-            double xDist = TargetX - this.Xcoor;
-            double yDist = TargetY - this.Ycoor;
-            TargetDist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
-        }
-
         //Sets TargetX and TargetY to Xcoor and Ycoor of target well or orb
         public void SetTargetPos()
         {
@@ -118,18 +115,6 @@ namespace GravitonClient
             {
                 SpeedBoost();
             }
-            FindTargetDist();
-        }
-
-        public bool IsCloser()
-        {
-            double xDist = TargetX - this.Xcoor;
-            double yDist = TargetY - this.Ycoor;
-            double currentDist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
-            if (currentDist < TargetDist)
-                return true;
-            else
-                return false;
         }
 
         //Sets XMove and YMove to determine movement direction
@@ -147,46 +132,60 @@ namespace GravitonClient
             Move(XMove, YMove);
         }
 
+        //AI uses the destabilize powerup if a well is in range
         public void UseDestabilize()
         {
-            foreach (Well well in ParentGame.UnstableWells.ToList())
+            if (GamePowerup.CarryingDestabilize)
             {
-                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                foreach (Well well in ParentGame.UnstableWells.ToList())
                 {
-                    GamePowerup.Destabilize(this);
+                    if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                    {
+                        GamePowerup.Destabilize(this);
+                    }
                 }
             }
         }
 
+        //AI uses neutralize powerup if a well is in range
         public void UseNeutralize()
         {
-            foreach (Well well in ParentGame.StableWells.ToList())
+            if (GamePowerup.CarryingNeutralize)
             {
-                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                foreach (Well well in ParentGame.StableWells.ToList())
                 {
-                    GamePowerup.Neutralize(this);
+                    if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                    {
+                        GamePowerup.Neutralize(this);
+                    }
                 }
             }
         }
 
+        //Uses ghost powerup to become immune if a destabilized well is in range,
+        // or to take control of a stable well if in range
         public void UseGhost()
         {
-            foreach (Well well in ParentGame.UnstableWells.ToList())
+            if (GamePowerup.CarryingGhost)
             {
-                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                foreach (Well well in ParentGame.UnstableWells.ToList())
                 {
-                    GamePowerup.Ghost(this);
+                    if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                    {
+                        GamePowerup.Ghost(this);
+                    }
                 }
-            }
-            foreach (Well well in ParentGame.StableWells.ToList())
-            {
-                if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                foreach (Well well in ParentGame.StableWells.ToList())
                 {
-                    GamePowerup.Ghost(this);
+                    if (Math.Pow(Xcoor - well.Xcoor, 2) + Math.Pow(Ycoor - well.Ycoor, 2) < 30000)
+                    {
+                        GamePowerup.Ghost(this);
+                    }
                 }
             }
         }
 
+        //overrides ship IncrementScore() method to prevent AI from scoring when depositing orbs
         public override void IncrementScore()
         {
         }
