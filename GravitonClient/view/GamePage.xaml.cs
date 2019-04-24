@@ -36,7 +36,6 @@ namespace GravitonClient
 
         //to be deleted with rise of animations
         List<Image> orbDict;
-        List<Image> AiImages;
 
         //Image components for the various background layers. Moving parts have arrays of 4 Images to allow for wrapping.
         Image background;
@@ -308,7 +307,6 @@ namespace GravitonClient
 
             waveDict = new List<Ellipse>();
             orbDict = new List<Image>();
-            AiImages = new List<Image>();
             
             wellImages = new List<BitmapImage>();
             string[] imagePaths = new string[36] { "Assets/Images/WellRed1.png", "Assets/Images/WellRed2.png", "Assets/Images/WellRed3.png",
@@ -404,14 +402,6 @@ namespace GravitonClient
             announcement = new TextBlock();
 
             player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            redOrb = new Animation(new BitmapImage[1] { orbImages[0] }, new int[1] { 20 });
-            orangeOrb = new Animation(new BitmapImage[1] { orbImages[1] }, new int[1] { 20 });
-            yellowOrb = new Animation(new BitmapImage[1] { orbImages[2] }, new int[1] { 20 });
-            greenOrb = new Animation(new BitmapImage[1] { orbImages[3] }, new int[1] { 20 });
-            blueOrb = new Animation(new BitmapImage[1] { orbImages[4] }, new int[1] { 20 });
-            purpleOrb = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
-            destabilized = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
-            ai = new Animation(new BitmapImage[8] { aiImages[0], aiImages[1], aiImages[2], aiImages[3], aiImages[4], aiImages[5], aiImages[6], aiImages[7] }, new int[8] { 2, 2, 2, 2, 2, 2, 2, 2 });
             
             playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 11, 50);
 
