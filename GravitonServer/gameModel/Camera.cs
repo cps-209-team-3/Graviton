@@ -31,7 +31,7 @@ namespace GravitonServer
 
         public CameraFrame GetCameraFrame() {
             CameraFrame cameraFrame = new CameraFrame();
-            cameraFrame.Seconds = (DateTime.Now - ParentGame.StartTime).Seconds;
+            cameraFrame.Seconds =(int) (DateTime.Now - ParentGame.StartTime).TotalSeconds;
             
             cameraFrame.Points = Player.Points;
             cameraFrame.IsOver = ParentGame.IsOver;

@@ -5,15 +5,14 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
-<<<<<<< HEAD
+  <ItemGroup>
+    <None Remove="dotnet-warp.exe" />
+  </ItemGroup>
+
+
   <ItemGroup>
     <Folder Include="Releases\" />
   </ItemGroup>
   
-=======
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <OutputPath>bin\</OutputPath>
-  </PropertyGroup>
 
->>>>>>> master
 </Project>
