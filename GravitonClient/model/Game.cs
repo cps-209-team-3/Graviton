@@ -294,6 +294,8 @@ namespace GravitonClient
                     {
                         if (well.IsTrap && well.Owner == Player)
                             Points += 200;
+                        int objIndex = AIShips.FindIndex(item => item.Equals(aI));
+                        UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.AI, objIndex, 8, 0));
                         AIShips.Remove(aI);
                         GameObjects.Remove(aI);
                     }
@@ -372,6 +374,7 @@ namespace GravitonClient
                 AIShip aI = new AIShip(xc, yc, this);
                 AIShips.Add(aI);
                 GameObjects.Add(aI);
+                UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.AI, AIShips.Count, 0, 0));
             }
         }
 

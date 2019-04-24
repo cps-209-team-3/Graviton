@@ -104,6 +104,11 @@ namespace GravitonClient.view
                     {
                         newWindow.UpdateAnimation(this, new AnimationEventArgs(false, AnimationType.Unstable, g.StableWells.Count, 0, 0));
                     }
+
+                    for (int i = 0; i < g.AIShips.Count; ++i)
+                    {
+                        newWindow.UpdateAnimation(this, new AnimationEventArgs(false, AnimationType.AI, g.AIShips.Count, 0, 0));
+                    }
                     this.NavigationService.Navigate(newWindow);
                 }
                 catch (ArgumentException)

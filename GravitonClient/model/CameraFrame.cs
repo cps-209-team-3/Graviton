@@ -45,6 +45,13 @@ namespace GravitonClient
             set { screenUnstables = value; }
         }
 
+        private List<int> screenAI;
+        public List<int> ScreenAI
+        {
+            get { return screenAI; }
+            set { screenAI = value; }
+        }
+
         public CameraFrame()
         {
             Backgrounds = new List<Tuple<double, double>>[4];
@@ -56,6 +63,7 @@ namespace GravitonClient
             Orbs = new List<Tuple<double, double, int>>();
             screenStables = new List<int>();
             screenUnstables = new List<int>();
+            screenAI = new List<int>();
         }
 
      

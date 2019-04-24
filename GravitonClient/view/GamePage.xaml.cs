@@ -35,7 +35,6 @@ namespace GravitonClient.view
         List<Ellipse> waveDict;
 
         //to be deleted with rise of animations
-        List<Image> destableDict;
         List<Image> orbDict;
         List<Image> AiImages;
 
@@ -84,7 +83,7 @@ namespace GravitonClient.view
         List<BitmapImage> destabilizedImages;
         List<BitmapImage> orbImages;
         BitmapImage shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6;
-        BitmapImage AiImage;
+        List<BitmapImage> aiImages;
 
         //Bitmap image variables for the powerup indicators (neutralize, destabilize, and ghost respectively) in the HUD.
         BitmapImage NeutralizeImage;
@@ -308,7 +307,6 @@ namespace GravitonClient.view
             }
 
             waveDict = new List<Ellipse>();
-            destableDict = new List<Image>();
             orbDict = new List<Image>();
             AiImages = new List<Image>();
             
@@ -347,6 +345,19 @@ namespace GravitonClient.view
                 img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
                 img.EndInit();
                 destabilizedImages.Add(img);
+            }
+
+            aiImages = new List<BitmapImage>();
+            imagePaths = new string[8] {"Assets/Images/AI1.png", "Assets/Images/AI2.png", "Assets/Images/AI3.png",
+                "Assets/Images/AI4.png", "Assets/Images/AI5.png", "Assets/Images/AI6.png", "Assets/Images/AI7.png",
+                "Assets/Images/AI8.png"};
+            for (int i = 0; i < 8; ++i)
+            {
+                BitmapImage img = new BitmapImage();
+                img.BeginInit();
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
+                img.EndInit();
+                aiImages.Add(img);
             }
 
             orbImages = new List<BitmapImage>();
@@ -390,11 +401,6 @@ namespace GravitonClient.view
             shipImage6.UriSource = new Uri(@"pack://application:,,,/Assets/Images/Ship6.png");
             shipImage6.EndInit();
 
-            AiImage = new BitmapImage();
-            AiImage.BeginInit();
-            AiImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/AI1.png");
-            AiImage.EndInit();
-
             announcement = new TextBlock();
 
             player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
@@ -405,12 +411,13 @@ namespace GravitonClient.view
             blueOrb = new Animation(new BitmapImage[1] { orbImages[4] }, new int[1] { 20 });
             purpleOrb = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
             destabilized = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
-            ai = new Animation(new BitmapImage[1] { AiImage }, new int[1] { 20 });
+            ai = new Animation(new BitmapImage[8] { aiImages[0], aiImages[1], aiImages[2], aiImages[3], aiImages[4], aiImages[5], aiImages[6], aiImages[7] }, new int[8] { 2, 2, 2, 2, 2, 2, 2, 2 });
             
-            playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
+            playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 11, 50);
 
             wellList = new List<Animator>();
             destableList = new List<Animator>();
+            AIList = new List<Animator>();
         }
 
         //Logic for when Help Button is clicked (while game is paused). Navigates to help page.
@@ -549,6 +556,18 @@ namespace GravitonClient.view
                 destableList[frame.ScreenUnstables[i]].Animate(frame.UnstableWells[i].Item1, frame.UnstableWells[i].Item2);
             }
 
+            //update ai animation image sources
+            for (int i = 0; i < AIList.Count; ++i)
+            {
+                AIList[i].Update();
+            }
+
+            //display ai animations (in the camera frame) to screen
+            for (int i = 0; i < frame.ScreenAI.Count; ++i)
+            {
+                AIList[frame.ScreenAI[i]].Animate(frame.AIShips[i].Item1, frame.AIShips[i].Item2);
+            }
+
             //Time Limit
             gameDuration = DateTime.Now - startTime - pauseDuration;
             if (gameDuration.TotalMinutes > 5)
@@ -617,23 +636,6 @@ namespace GravitonClient.view
 
             //display score
             txtScore.Text = "Score: " + game.Points;
-            
-            //display ai
-            int shipDiff = AiImages.Count - frame.AIShips.Count;
-
-            if (shipDiff > 0)
-                RemoveGameObjects(AiImages, shipDiff);
-            if (shipDiff < 0)
-                AddGameObjects(AiImages, -shipDiff);
-
-            for (int i = 0; i < AiImages.Count; ++i)
-            {
-                AiImages[i].Source = AiImage;
-                AiImages[i].Width = 50;
-                Canvas.SetLeft(AiImages[i], frame.AIShips[i].Item1);
-                Canvas.SetTop(AiImages[i], frame.AIShips[i].Item2);
-                Canvas.SetZIndex(AiImages[i], 9);
-            }
 
             Game.ViewCamera.Width = DrawCanvas.ActualWidth;
             Game.ViewCamera.Height = DrawCanvas.ActualHeight;
@@ -996,6 +998,21 @@ namespace GravitonClient.view
                     {
                         destableList[e.ObjIndex].RemoveFromScreen();
                         destableList.RemoveAt(e.ObjIndex);
+                    }
+
+                    break;
+                case AnimationType.AI:
+                    if (e.ObjIndex == game.AIShips.Count)
+                    {
+                        Animation ai = new Animation(new BitmapImage[8] { aiImages[0], aiImages[1], aiImages[2], aiImages[3], aiImages[4], aiImages[5], aiImages[6], aiImages[7] }, new int[8] { 2, 2, 2, 2, 2, 2, 2, 2 });
+                        Animator anim = new Animator(DrawCanvas, new Animation[1] { ai }, 0, 10, 50);
+                        AIList.Add(anim);
+                    }
+
+                    else if (e.AnimIndex == 8)
+                    {
+                        AIList[e.ObjIndex].RemoveFromScreen();
+                        AIList.RemoveAt(e.ObjIndex);
                     }
 
                     break;

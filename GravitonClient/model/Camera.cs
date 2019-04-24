@@ -94,13 +94,19 @@ namespace GravitonClient
                     cameraFrame.Orbs.Add(Tuple.Create(xc - 7, yc - 7, orb.Color));
             }
 
+            int currentShip = 0;
             cameraFrame.AIShips = new List<Tuple<double, double>>();
             foreach (AIShip ship in ParentGame.AIShips)
             {
                 xc = ship.Xcoor - ScreenX;
                 yc = ship.Ycoor - ScreenY;
                 if (xc > -25 && xc < Width + 25 && yc > -25 && yc < Height + 25)
+                {
                     cameraFrame.AIShips.Add(Tuple.Create(xc - 25, yc - 25));
+                    int val = currentShip;
+                    cameraFrame.ScreenAI.Add(val);
+                }
+                ++currentShip;
             }
 
             cameraFrame.PlayerOrbs = new List<int>();
