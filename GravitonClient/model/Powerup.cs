@@ -8,19 +8,26 @@ namespace GravitonClient
 {
     public class Powerup
     {
+        //Enum type and list; used for saving the current powerups
         public enum powerups { neutralize, destabilize, ghost}
         public List<powerups> CurrentPowerups;
+        //Reference to parent game
         public Game ParentGame;
+        //bools for carrying powerups. Limit powerup inventory to 1 each
         public bool CarryingNeutralize { get; set; }
         public bool CarryingDestabilize { get; set; }
         public bool CarryingGhost { get; set; }
 
+        //Random used for selecting powerups
         private Random rand = new Random();
 
+        //event for sound effects
         public event EventHandler<SoundEffect> GameInvokeSoundEvent;
 
+        //event for animation
         public event EventHandler<AnimationEventArgs> UpdateAnimationEvent;
 
+        //Constructor
         public Powerup(Game game)
         {
             ParentGame = game;
@@ -30,6 +37,7 @@ namespace GravitonClient
             CurrentPowerups = new List<powerups>();
         }
 
+        //Constructor
         public Powerup()
         {
             CarryingNeutralize = false;
@@ -140,7 +148,8 @@ namespace GravitonClient
             }
         }
 
-        //This method locks AI from depositing in a nearby well.
+        //This method locks AI from depositing in a nearby well
+        //also makes ship invulnerable to destabilized wells for a few seconds
         public void Ghost(Ship ship)
         {
             if (!CarryingGhost)
