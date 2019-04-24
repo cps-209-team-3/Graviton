@@ -18,6 +18,8 @@
         <TextBlock Text="Asset credits" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="24" Margin="5" Foreground="Aqua"/>
         <TextBlock Text="Neutralization SFX by Eric Matyas (https://soundimage.org/attribution-info/)" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
         <TextBlock Text="Font by MixoFX (https://fontsrepo.com/azonix-free-font/)" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+        <TextBlock Text="Parallax Bacground by ansimuz (https://ansimuz.itch.io/space-background)" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
+        <TextBlock Text="Assorted SFX (copyright free): The Internet" HorizontalAlignment="Center" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="10" Foreground="Red"/>
         <Button Content="Return to Menu" FontFamily="{StaticResource Azonix}" FontSize="20" Margin="15" HorizontalAlignment="Center" Padding="5" Background="#101010" Foreground="Aqua" Click="ExitButton_Click"/>
     </StackPanel>
 </Page>

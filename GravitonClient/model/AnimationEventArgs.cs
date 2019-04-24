@@ -1,13 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------
+//File:   AnimationEventArgs.cs
+//Desc:   Contains model class for arguments to an animation 
+//        update event.
+//----------------------------------------------------------- 
+
+using System;
 
 namespace GravitonClient
 {
+    //-----------------------------------------------------------
+    //        This class contains the model for an animation 
+    //        update argument package.
+    //----------------------------------------------------------- 
     public class AnimationEventArgs : EventArgs
     {
+        //Determines if the animation to be displayed is a transition animation.
         private bool isTransition;
         public bool IsTransition
         {
@@ -15,6 +22,7 @@ namespace GravitonClient
             set { isTransition = value; }
         }
 
+        //Determines the gameobject the event applies to (i.e. gravity well, black hole, orb).
         private AnimationType type;
         public AnimationType Type
         {
@@ -22,6 +30,7 @@ namespace GravitonClient
             set { type = value; }
         }
 
+        //Determines the index of the gameobject in its respective list in the game model (helps bind animations to a particular object).
         private int objIndex;
         public int ObjIndex
         {
@@ -29,6 +38,7 @@ namespace GravitonClient
             set { objIndex = value; }
         }
 
+        //The index of the new animation (in the animator's animation array).
         private int animIndex;
         public int AnimIndex
         {
@@ -36,6 +46,7 @@ namespace GravitonClient
             set { animIndex = value; }
         }
 
+        //The index of the animation to come before the new animation (in the animator's animation array).
         private int transitionIndex;
         public int TransitionIndex
         {

@@ -179,6 +179,7 @@ namespace GravitonClient
                     well.IsStable = false;
                     well.Strength = 900;
                     UnstableWells.Add(well);
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Unstable, UnstableWells.Count, 0, 0));
                     StableWells.Remove(well);
                     GameInvokeSoundEvent(this, SoundEffect.Destabilize);
                 }
@@ -198,6 +199,8 @@ namespace GravitonClient
                 well.ShockWave.Pulse();
                 if (well.TicksLeft == 0)
                 {
+                    int objIndex = UnstableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Unstable, objIndex, 24, 0));
                     GameInvokeSoundEvent(this, SoundEffect.Collapse);
                     UnstableWells.Remove(well);
                     GameObjects.Remove(well);

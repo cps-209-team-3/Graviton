@@ -1,14 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------
+//File:   Animation.cs
+//Desc:   Contains model class for animations.
+//----------------------------------------------------------- 
+
 using System.Windows.Media.Imaging;
 
 namespace GravitonClient
 {
+    //-----------------------------------------------------------
+    //        This class contains the logic and assets for an 
+    //        animation sequence.
+    //----------------------------------------------------------- 
     class Animation
     {
+        //List of image assets for the animation sequence (in order to be displayed).
         private BitmapImage[] imageList;
         public BitmapImage[] ImageList
         {
@@ -16,6 +21,7 @@ namespace GravitonClient
             set { imageList = value; }
         }
 
+        //List of number of ticks for each image to be displayed.
         private int[] tickDiffs;
         public int[] TickDiffs
         {
@@ -23,12 +29,14 @@ namespace GravitonClient
             set { tickDiffs = value; }
         }
 
+        //Reference to the currently displayed image.
         private BitmapImage currentImage;
         public BitmapImage CurrentImage
         {
             get { return currentImage; }
         }
 
+        //The maximum number of ticks for the animation sequence.
         private int maxTicks;
         public int MaxTicks
         {
@@ -36,6 +44,8 @@ namespace GravitonClient
             set { maxTicks = value; }
         }
 
+        //The number of elapsed ticks since the beginning of the animation sequence.
+        //Automatically updates the currentimage field.
         private int passedTicks;
         public int PassedTicks
         {
@@ -56,6 +66,7 @@ namespace GravitonClient
             }
         }
 
+        //Constructor - regular
         public Animation(BitmapImage[] images, int[] ticks)
         {
             imageList = images;
@@ -69,6 +80,7 @@ namespace GravitonClient
             passedTicks = 0;
         }
 
+        //Constructor - allows for starting in the middle of an animation sequence
         public Animation(BitmapImage[] images, int[] ticks, int startImage)
         {
             imageList = images;
@@ -82,6 +94,9 @@ namespace GravitonClient
             passedTicks = 0;
         }
 
+        //Resets the animation sequence to its initial state.
+        //Accepts nothing.
+        //Returns nothing.
         public void Reset()
         {
             currentImage = imageList[0];

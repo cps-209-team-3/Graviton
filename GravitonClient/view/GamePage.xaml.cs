@@ -1,33 +1,37 @@
-﻿using System;
+﻿//-----------------------------------------------------------
+//File:   GamePage.xaml.cs
+//Desc:   Counterpart for GamePage.xaml, contains logic for view.
+//----------------------------------------------------------- 
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
 
 namespace GravitonClient.view
 {
-    /// <summary>
-    /// Interaction logic for GameWindow.xaml
-    /// </summary>
+    //-----------------------------------------------------------
+    //        This class controls the view logic for the 
+    //        actual game. This is where most asset 
+    //        initialization happens.
+    //----------------------------------------------------------- 
     public partial class GamePage : Page
     {
+        //Lists of animator objects for wells, black holes, orbs, and AI respectively
         List<Animator> wellList;
         List<Animator> destableList;
         List<Animator> orbList;
         List<Animator> AIList;
+        //Player Animator object
         Animator playerShip;
-
+        //List of shockwave ellipses (for display)
         List<Ellipse> waveDict;
 
         //to be deleted with rise of animations
@@ -35,74 +39,93 @@ namespace GravitonClient.view
         List<Image> orbDict;
         List<Image> AiImages;
 
+        //Image components for the various background layers. Moving parts have arrays of 4 Images to allow for wrapping.
         Image background;
         Image[] planets;
         Image[] rings;
         Image[] twins;
         Image[] stars;
 
-        public bool NextRound;
-
+        //TODO
         private DateTime startTime;
         private TimeSpan gameDuration;
         private DateTime pauseStartTime;
         private TimeSpan pauseDuration;
 
+        //Determines if the game is paused
         private bool isPaused;
 
+        //The page that created the current instance of GamePage.
         public Page ParentPage { get; set; }
+        //The window that this page is displayed in.
         public Window Window { get; set; }
 
+        //The semi-transparent overlay when pause or game over occurs.
         private Rectangle pauseRectangle;
+        //Buttons to resume game, load from save, exit to menu, or go to help page respectively
         private Button btnResume;
         private Button btnLoad;
         private Button btnExit;
         private Button btnHelp;
+        //Textblock to display announcments such as "Game Over"
         private TextBlock announcement;
 
+        //Filepath for game save.
         public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
         
-        Animation redOrb;
-        Animation orangeOrb;
-        Animation yellowOrb;
-        Animation greenOrb;
-        Animation blueOrb;
-        Animation purpleOrb;
+        //Animation objects for orbs, black holes, the player, and AI respectively.
+        Animation redOrb, orangeOrb, yellowOrb, greenOrb, blueOrb, purpleOrb;
         Animation destabilized;
         Animation player;
         Animation ai;
         
+        //Bitmap image variables for wells, black holes, orbs, the player, and AI respectively.
         List<BitmapImage> wellImages;
-        BitmapImage destabilizedImage;
+        List<BitmapImage> destabilizedImages;
         List<BitmapImage> orbImages;
         BitmapImage shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6;
         BitmapImage AiImage;
 
+        //Bitmap image variables for the powerup indicators (neutralize, destabilize, and ghost respectively) in the HUD.
         BitmapImage NeutralizeImage;
         BitmapImage DestabilizeImage;
         BitmapImage GhostImage;
 
+        //Bitmap image variables for the background layers.
         BitmapImage BackgroundImage;
         BitmapImage PlanetImage;
         BitmapImage RingImage;
         BitmapImage TwinImage;
         BitmapImage StarImage;
 
+        //Image components for displaying powerups and currently held orbs to the HUD.
         Image[] HudOrbs = new Image[6];
         Image[] HudPowerups = new Image[3];
 
+        //List of currently held energy orbs.
         private List<int> currentOrbs = new List<int>();
+        //List of currently held powerups.
         private List<Powerup.powerups> DisplayedPowerups = new List<Powerup.powerups>();
 
+        //Media player objects for sound effects:
+        //stable well converts to black hole
         MediaPlayer unstable;
+        //player picks up orb
         MediaPlayer orbGrab;
+        //player neutralizes a regular well without getting a powerup
         MediaPlayer neutralize;
+        //player deposits an orb in a well
         MediaPlayer deposit;
+        //player gets a powerup from neutralizing a well
         MediaPlayer powerup;
+        //black hole collapses (disappears from screen)
         MediaPlayer collapse;
+        //player uses ghost powerup on a well
         MediaPlayer ghost;
+        //player uses boost ability
         MediaPlayer boost;
 
+        //Instance of the game model, field and property
         private Game game;
         public Game Game
         {
@@ -110,7 +133,9 @@ namespace GravitonClient.view
             set { game = value; }
         }
 
-        //Sets up game page
+        //Sets up game page HUD and general GUI.
+        //Accepts nothing.
+        //Returns nothing.
         private void SetupGameWindow()
         {
             startTime = DateTime.Now;
@@ -208,7 +233,9 @@ namespace GravitonClient.view
             btnHelp.Width = 500;
         }
 
-        //sets up game assets (background, images, etc.)
+        //Sets up game assets (background, images, animations, sound effects, etc.)
+        //Accepts nothing.
+        //Returns nothing.
         private void SetupAssets()
         {
             waveDict = new List<Ellipse>();
@@ -236,10 +263,22 @@ namespace GravitonClient.view
                 wellImages.Add(img);
             }
 
-            destabilizedImage = new BitmapImage();
-            destabilizedImage.BeginInit();
-            destabilizedImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/destabilized1.png");
-            destabilizedImage.EndInit();
+            destabilizedImages = new List<BitmapImage>();
+            imagePaths = new string[24] {"Assets/Images/destabilized1.png", "Assets/Images/destabilized2.png", "Assets/Images/destabilized3.png",
+                "Assets/Images/destabilized4.png", "Assets/Images/destabilized5.png", "Assets/Images/destabilized6.png", "Assets/Images/destabilized7.png",
+                "Assets/Images/destabilized8.png", "Assets/Images/destabilized9.png", "Assets/Images/destabilized10.png", "Assets/Images/destabilized11.png",
+                "Assets/Images/destabilized12.png", "Assets/Images/destabilized13.png", "Assets/Images/destabilized14.png", "Assets/Images/destabilized15.png",
+                "Assets/Images/destabilized16.png", "Assets/Images/destabilized17.png", "Assets/Images/destabilized18.png", "Assets/Images/destabilized19.png",
+                "Assets/Images/destabilized20.png", "Assets/Images/destabilized21.png", "Assets/Images/destabilized22.png", "Assets/Images/destabilized23.png",
+                "Assets/Images/destabilized24.png" };
+            for (int i = 0; i < 24; ++i)
+            {
+                BitmapImage img = new BitmapImage();
+                img.BeginInit();
+                img.UriSource = new Uri(@"pack://application:,,,/" + imagePaths[i]);
+                img.EndInit();
+                destabilizedImages.Add(img);
+            }
 
             orbImages = new List<BitmapImage>();
             imagePaths = new string[6] { "Assets/Images/OrbRed.png", "Assets/Images/OrbOrange.png", "Assets/Images/OrbYellow.png", "Assets/Images/OrbGreen.png", "Assets/Images/OrbBlue.png", "Assets/Images/OrbPurple.png" };
@@ -302,15 +341,20 @@ namespace GravitonClient.view
             playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
 
             wellList = new List<Animator>();
+            destableList = new List<Animator>();
         }
 
-        //Button appears while paused.  Goes to help page.
+        //Logic for when Help Button is clicked (while game is paused). Navigates to help page.
+        //Accepts regular eventhandler args.
+        //Returns nothing.
         private void btnHelp_Click(object sender, RoutedEventArgs e)
         {
             this.NavigationService.Navigate(new HelpPage(this));
         }
 
-        //appears while paused.  Loads current save file
+        //Logic for when Load from Save button is clicked (while game is paused). Loads current save file.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void btnLoad_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -326,7 +370,9 @@ namespace GravitonClient.view
             }
         }
 
-        //appears while paused.  Saves the game and returns to the play page
+        //Logic for when Save and Exit button is clicked (while game is paused). Saves the game and returns to the play page.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
             Directory.CreateDirectory(Path.GetDirectoryName(Path.Combine(Directory.GetCurrentDirectory(), SaveFileName)));
@@ -334,13 +380,15 @@ namespace GravitonClient.view
             this.NavigationService.Navigate(ParentPage);
         }
 
-        //appears while paused.  Resumes the game
+        //Logic for when Resume button is clicked (while game is paused). Resumes the game.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void btnResume_Click(object sender, RoutedEventArgs e)
         {
             UnPause();
         }
 
-        //constructor
+        //Constructor overload 1
         public GamePage(bool cheat, Page parentPage, Window w)
         {
             InitializeComponent();
@@ -356,11 +404,16 @@ namespace GravitonClient.view
             game.UpdateAnimationEvent += UpdateAnimation;
             Game.Initialize();
             Game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
+            game.Player.GamePowerup.UpdateAnimationEvent += UpdateAnimation;
             Game.Player.GameInvokeSoundEvent += PlaySound;
+            for (int i = 0; i < game.AIShips.Count; ++i)
+            {
+                game.AIShips[i].GamePowerup.UpdateAnimationEvent += UpdateAnimation;
+            }
             SetupGameWindow();
         }
 
-        //alternate constructor
+        //Constructor overload 2
         public GamePage(bool cheat, Game game, Page parentPage, Window w)
         {
             InitializeComponent();
@@ -377,12 +430,20 @@ namespace GravitonClient.view
             Game.InitializeWithShipCreated();
             Game.Player.GameInvokeSoundEvent += PlaySound;
             game.Player.GamePowerup.GameInvokeSoundEvent += PlaySound;
+            game.Player.GamePowerup.UpdateAnimationEvent += UpdateAnimation;
+            for (int i = 0; i < game.AIShips.Count; ++i)
+            {
+                game.AIShips[i].GamePowerup.UpdateAnimationEvent += UpdateAnimation;
+            }
             SetupGameWindow();
         }
 
-        //called every tick.  Displays state of game
+        //Event handler. Called every tick. Displays game visually on GamePage's Canvas.
+        //Accepts a sender object and a CameraFrame object.
+        //Returns nothing.
         public void Render(object sender, CameraFrame frame)
         {
+            //set background positions.
             for (int i = 0; i < 4; ++i)
             {
                 Canvas.SetLeft(planets[i], frame.Backgrounds[3][i].Item1);
@@ -395,14 +456,28 @@ namespace GravitonClient.view
                 Canvas.SetTop(stars[i], frame.Backgrounds[0][i].Item2);
             }
             
+            //update well animation image sources
             for (int i = 0; i < wellList.Count; ++i)
             {
                 wellList[i].Update();
             }
 
+            //display well animations (in the camera frame) to screen
             for (int i = 0; i < frame.ScreenStables.Count; ++i)
             {
                 wellList[frame.ScreenStables[i]].Animate(frame.StableWells[i].Item1, frame.StableWells[i].Item2);
+            }
+
+            //update black hole animation image sources
+            for (int i = 0; i < destableList.Count; ++i)
+            {
+                destableList[i].Update();
+            }
+
+            //display black hole animations (in the camera frame) to screen
+            for (int i = 0; i < frame.ScreenUnstables.Count; ++i)
+            {
+                destableList[frame.ScreenUnstables[i]].Animate(frame.UnstableWells[i].Item1, frame.UnstableWells[i].Item2);
             }
 
             //Time Limit
@@ -430,23 +505,7 @@ namespace GravitonClient.view
             int sLeft = 300 - (int)gameDuration.TotalSeconds;
             txtTimeLeft.Text = (sLeft / 60) + ":" + (sLeft % 60).ToString("D2");
 
-
-            int destableDiff = destableDict.Count - frame.UnstableWells.Count;
-            if (destableDiff > 0)
-                RemoveGameObjects(destableDict, destableDiff);
-            if (destableDiff < 0)
-            {
-                AddGameObjects(destableDict, -destableDiff);
-            }
-
-            for (int i = 0; i < destableDict.Count; ++i)
-            {
-                destableDict[i].Source = destabilizedImage;
-                Canvas.SetLeft(destableDict[i], frame.UnstableWells[i].Item1);
-                Canvas.SetTop(destableDict[i], frame.UnstableWells[i].Item2);
-                Canvas.SetZIndex(destableDict[i], 6);
-            }
-
+            //display shockwaves
             foreach (Ellipse e in waveDict)
             {
                 DrawCanvas.Children.Remove(e);
@@ -467,6 +526,7 @@ namespace GravitonClient.view
                 waveDict.Add(c);
             }
 
+            //display energy orbs
             int orbDiff = orbDict.Count - frame.Orbs.Count;
             if (orbDiff > 0)
                 RemoveGameObjects(orbDict, orbDiff);
@@ -482,16 +542,14 @@ namespace GravitonClient.view
                 Canvas.SetZIndex(orbDict[i], 7);
             }
 
+            //display player 
             playerShip.Update();
             playerShip.Animate(frame.PlayerShip.Item1, frame.PlayerShip.Item2);
+
+            //display score
             txtScore.Text = "Score: " + game.Points;
-
-
-
-            //to be implemented with AI
-
-
-
+            
+            //display ai
             int shipDiff = AiImages.Count - frame.AIShips.Count;
 
             if (shipDiff > 0)
@@ -515,7 +573,6 @@ namespace GravitonClient.view
             //HUD
             //==========================
 
-
             if (!Enumerable.SequenceEqual(currentOrbs, game.Player.Orbs))
             {
                 UpdateHudOrbs();
@@ -531,6 +588,7 @@ namespace GravitonClient.view
 
             if (Game.IsOver)
             {
+                DisplayMessage("Game Over.");
                 Button b = new Button();
                 b.Content = "Return to Menu";
                 b.FontSize = 40;
@@ -551,8 +609,10 @@ namespace GravitonClient.view
                 pauseRectangle.Height = DrawCanvas.ActualHeight;
             }
         }
-
-        //appears if time runs out.  begins new round.
+        
+        //Logic for when Next Round button is clicked (when time has expired). Begins new round.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void NextRound_Click(object sender, RoutedEventArgs e)
         {
             int newWellSpawnFreq = Game.WellSpawnFreq - 50;
@@ -560,8 +620,6 @@ namespace GravitonClient.view
             int points = Game.Points;
             bool isCheat = Game.IsCheat;
             string username = Game.Username;
-
-            NextRound = true;
 
             GamePage g = new GamePage(isCheat, ParentPage, Window);
             g.Game.WellSpawnFreq = newWellSpawnFreq;
@@ -573,12 +631,12 @@ namespace GravitonClient.view
             this.NavigationService.Navigate(g);
             GameWindow_Closed();
         }
-
-        //appears when time runs out or if player dies.  Returns to play page and processes high score
+        
+        //Logic for when Save and Exit button is clicked (when time expires or game is over). Returns to menu and processes high score.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void GameOver_Click(object sender, RoutedEventArgs e)
         {
-            NextRound = false;
-
             unstable.Close();
             neutralize.Close();
             deposit.Close();
@@ -592,7 +650,9 @@ namespace GravitonClient.view
             GameWindow_Closed();
         }
 
-        //handles input when key is pressed
+        //Handles input when key is pressed.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
@@ -640,7 +700,9 @@ namespace GravitonClient.view
             }
         }
 
-        //Handles key input when key is released
+        //Handles key input when key is released.
+        //Accepts normal eventhandler args.
+        //Returns nothing.
         private void Window_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.Key)
@@ -662,7 +724,9 @@ namespace GravitonClient.view
             }
         }
 
-        //pauses the game, obscuring the game and adding several buttons to the screen
+        //Pauses the game, overlaying the game and adding several buttons to the screen.
+        //Accepts nothing.
+        //Returns nothing.
         public void Pause()
         {
             isPaused = true;
@@ -698,7 +762,9 @@ namespace GravitonClient.view
             Canvas.SetTop(btnHelp, DrawCanvas.ActualHeight / 5 * 2);
         }
 
-        //ends pause; undoes work done by pause method
+        //Ends pause; undoes work done by pause method.
+        //Accepts nothing.
+        //Returns nothing.
         public void UnPause()
         {
             isPaused = false;
@@ -719,7 +785,7 @@ namespace GravitonClient.view
             if (DrawCanvas.Children.Contains(pauseRectangle)) { DrawCanvas.Children.Remove(pauseRectangle); }
         }
 
-        //adds game objects to the canvas
+        //adds game objects to the canvas (only for images, obsolete for animations)
         public void AddGameObjects(List<Image> gameObjs, int add)
         {
             for (int i = 0; i < add; ++i)
@@ -729,7 +795,7 @@ namespace GravitonClient.view
             }
         }
 
-        //removes game objects from the canvas
+        //removes game objects from the canvas (only for images, obsolete for animations)
         public void RemoveGameObjects(List<Image> gameObjs, int remove)
         {
             for (int i = 0; i < remove; ++i)
@@ -739,7 +805,9 @@ namespace GravitonClient.view
             }
         }
 
-        //called when navigating away from this page
+        //Called when navigating away from this page
+        //Accepts nothing.
+        //Returns nothing.
         private void GameWindow_Closed()
         {
             unstable.Close();
@@ -752,7 +820,9 @@ namespace GravitonClient.view
             boost.Close();
         }
 
-        //Handles sound effects
+        //Handles sound effects.
+        //Accepts a sender object and a SoundEffect enum.
+        //Returns nothing.
         void PlaySound(object sender, SoundEffect value)
         {
             switch (value)
@@ -802,8 +872,13 @@ namespace GravitonClient.view
             }
         }
 
+        //Handles animation changes.
+        //Accepts a sender object and an AnimationEventArgs object.
+        //Returns nothing.
         public void UpdateAnimation(object sender, AnimationEventArgs e)
         {
+            //if objIndex is one greater than the last animation index in the desired array, create new animator and add to canvas
+            //if animIndex is one greater than the last animation index in the desired array, remove from canvas
             switch (e.Type)
             {
                 case AnimationType.Stable:
@@ -836,14 +911,33 @@ namespace GravitonClient.view
                         wellList[e.ObjIndex].Transition(e.TransitionIndex, e.AnimIndex);
                     }
                     break;
+                case AnimationType.Unstable:
+                    if (e.ObjIndex == game.UnstableWells.Count)
+                    {
+                        Animation blackhole = new Animation(new BitmapImage[24] { destabilizedImages[0], destabilizedImages[1], destabilizedImages[2],
+                            destabilizedImages[3], destabilizedImages[4], destabilizedImages[5], destabilizedImages[6], destabilizedImages[7], destabilizedImages[8],
+                            destabilizedImages[9], destabilizedImages[10], destabilizedImages[11], destabilizedImages[12], destabilizedImages[13], destabilizedImages[14],
+                            destabilizedImages[15], destabilizedImages[16], destabilizedImages[17], destabilizedImages[18], destabilizedImages[19], destabilizedImages[20],
+                            destabilizedImages[21], destabilizedImages[22], destabilizedImages[23]}, new int[24] { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 });
+                        Animator anim = new Animator(DrawCanvas, new Animation[1] { blackhole }, 0, 6);
+                        destableList.Add(anim);
+                    }
+
+                    else if (e.AnimIndex == 24)
+                    {
+                        destableList[e.ObjIndex].RemoveFromScreen();
+                        destableList.RemoveAt(e.ObjIndex);
+                    }
+
+                    break;
                 default:
                     break;
             }
-            //if objIndex is one greater than the last animation index in the desired array, create new animator and add to canvas
-            //if animIndex is one greater than the last animation index in the desired array, remove from canvas
         }
 
-        //updates orb display in hub
+        //Updates orb display in HUD.
+        //Accepts nothing.
+        //Returns nothing.
         private void UpdateHudOrbs()
         {
 
@@ -863,7 +957,9 @@ namespace GravitonClient.view
             }
         }
 
-        //updates powerup display in hub
+        //Updates powerup display in HUD.
+        //Accepts nothing.
+        //Returns nothing.
         private void UpdateHudPowerups()
         {
             double heldOpacity = 1.0;
@@ -883,9 +979,12 @@ namespace GravitonClient.view
                 HudPowerups[2].Opacity = notHeldOpacity;
         }
 
-        //activates when the game page is initialized
+        //Activates when the game page is initialized. Finishes initializing the audio/visual elements of the page.
+        //Accepts regular eventhandler args.
+        //Returns nothing.
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            //setup background images
             background = new Image();
             BackgroundImage = new BitmapImage();
             BackgroundImage.BeginInit();
@@ -969,6 +1068,7 @@ namespace GravitonClient.view
                 }
             }
 
+            //setup sound players
             unstable = new MediaPlayer();
             unstable.Open(new Uri(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Assets/Sound/SFX/destabilize.mp3")));
             orbGrab = new MediaPlayer();
@@ -1004,6 +1104,10 @@ namespace GravitonClient.view
             ghost.Play();
             boost.Play();
         }
+
+        //Displays a message to the game screen.
+        //Accepts a string to display.
+        //Returns nothing.
         private void DisplayMessage(string s)
         {
             announcement.Text = s;
