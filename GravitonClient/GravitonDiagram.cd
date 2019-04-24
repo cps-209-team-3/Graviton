@@ -15,24 +15,52 @@
     </TypeIdentifier>
   </Class>
   <Class Name="GravitonClient.Well">
-    <Position X="6.5" Y="6.5" Width="1.5" />
+    <Position X="2.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAQAAAAAAAAAAAAAAAAADBAQAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAICwAAAAAAAAAAAAABAAAjBAQAAAAAAAAAAAAAA=</HashCode>
       <FileName>model\Well.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GravitonClient.Ship">
-    <Position X="2.5" Y="6.5" Width="1.5" />
+    <Position X="8.5" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAAAAAAQAIAAAAAAEAAEAAABACBAAJBAAAAAAAAAAAg=</HashCode>
+      <HashCode>CAAAAIAQAIAAgAAAMAQAAAABACFAAIBAIAAACAAQAAg=</HashCode>
       <FileName>model\Ship.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="GravitonClient.Game">
     <Position X="0.5" Y="3.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gEAAAAAwAgAAgQBAAQQAAAAAgSACCAAAAAAACRFEACQ=</HashCode>
+      <HashCode>gEEAhAB0BgAAgQRAASAAAAAAgQAADAAIAAAACRFEACU=</HashCode>
       <FileName>model\Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.Shockwave">
+    <Position X="6.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAADAAAIIABABAAAAAAAA=</HashCode>
+      <FileName>model\Shockwave.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.Powerup">
+    <Position X="12.5" Y="6.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="GravitonClient.Powerup.powerups" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>model\Powerup.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAIhAAEAAQAAAAAAAAAAAAAAAAIQBAAAEiACAAAA=</HashCode>
+      <FileName>model\Powerup.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GravitonClient.AIShip">
+    <Position X="10.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgQAAAECAAAEAEAAABwQAEICBgAAAAAgAAABAQ=</HashCode>
+      <FileName>model\AIShip.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

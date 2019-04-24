@@ -587,7 +587,7 @@ namespace GravitonClient
                 c.Height = t.Item3;
                 Canvas.SetLeft(c, t.Item1);
                 Canvas.SetTop(c, t.Item2);
-                Canvas.SetZIndex(c, 1000);
+                Canvas.SetZIndex(c, 9);
                 c.Stroke = Brushes.DarkRed;
                 c.StrokeThickness = 5;
 

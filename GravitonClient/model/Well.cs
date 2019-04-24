@@ -10,14 +10,23 @@ namespace GravitonClient
     //This class describes a gravity well in the game.
     public class Well : GameObject
     {
+        //This is a bool whether the well is stable or not
         public bool IsStable { get; set; }
+        //This is a bool whether the well is a trap
         public bool IsTrap { get; set; }
+        //This is a bool whether the well is ghosted
         public bool IsGhost { get; set; }
+        //A reference to the owner ship
         public Ship Owner { get; set; }
+        //How many ticks left until destabilization or an unstable well disappearing
         public int TicksLeft { get; set; }
+        //How strong a well's gravity is
         public double Strength { get; set; }
+        //How many orbs the well currently has
         public int Orbs { get; set; }
+        //A reference to a shockwave emitted by the well
         public Shockwave ShockWave { get; set; }
+        //A Random object
         private Random rand;
 
         public Well(double xcoor, double ycoor) : base(xcoor, ycoor)
