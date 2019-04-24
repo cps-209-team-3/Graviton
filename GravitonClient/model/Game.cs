@@ -1,4 +1,6 @@
-﻿using System;
+﻿//This file implements the Game class which contains all of the information for the game and controls all of the model classes.
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +13,8 @@ namespace GravitonClient
 
     public enum AnimationType { Stable, Unstable, Orb, Player, AI };
 
+    //This class contains all of the information for the game.
+    //It has a timer and on each timer tick, all of the elements in the game are updated by one frame.
     public class Game
     {
         public event EventHandler<CameraFrame> GameUpdatedEvent;

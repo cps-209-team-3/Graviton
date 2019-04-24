@@ -67,7 +67,7 @@ namespace GravitonClient
         private Button btnLoad;
         private Button btnExit;
         private Button btnHelp;
-        //Textblock to display announcments such as "Game Over"
+        //Textblock to display announcements such as "Game Over"
         private TextBlock announcement;
 
         //Filepath for game save.
@@ -140,7 +140,16 @@ namespace GravitonClient
         {
             startTime = DateTime.Now;
             pauseDuration = new TimeSpan(0);
-            
+
+            //set the announcement textbox properties
+            Canvas.SetZIndex(announcement, 1000);
+            announcement.FontSize = 20;
+            //announcement.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Assets/Fonts/Azonix.otf");
+            Canvas.SetLeft(announcement, (DrawCanvas.ActualWidth - announcement.ActualWidth) / 2);
+            Canvas.SetTop(announcement, 400);
+            DrawCanvas.Children.Add(announcement);
+            announcement.Visibility = Visibility.Hidden;
+
             for (int i = 0; i < HudOrbs.Length; i++)
             {
                 HudOrbs[i] = new Image();
@@ -238,6 +247,66 @@ namespace GravitonClient
         //Returns nothing.
         private void SetupAssets()
         {
+            //setup background images
+            background = new Image();
+            BackgroundImage = new BitmapImage();
+            BackgroundImage.BeginInit();
+            BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
+            BackgroundImage.EndInit();
+            background.Source = BackgroundImage;
+            RenderOptions.SetBitmapScalingMode(background, BitmapScalingMode.NearestNeighbor);
+            Canvas.SetLeft(background, 0);
+            Canvas.SetTop(background, 0);
+            Canvas.SetZIndex(background, 0);
+            DrawCanvas.Children.Add(background);
+
+            planets = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            PlanetImage = new BitmapImage();
+            PlanetImage.BeginInit();
+            PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
+            PlanetImage.EndInit();
+
+            rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            RingImage = new BitmapImage();
+            RingImage.BeginInit();
+            RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
+            RingImage.EndInit();
+
+            twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            TwinImage = new BitmapImage();
+            TwinImage.BeginInit();
+            TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
+            TwinImage.EndInit();
+
+            stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
+            StarImage = new BitmapImage();
+            StarImage.BeginInit();
+            StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
+            StarImage.EndInit();
+
+            for (int i = 0; i < 4; ++i)
+            {
+                planets[i].Source = PlanetImage;
+                rings[i].Source = RingImage;
+                twins[i].Source = TwinImage;
+                stars[i].Source = StarImage;
+
+                RenderOptions.SetBitmapScalingMode(planets[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(rings[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(twins[i], BitmapScalingMode.NearestNeighbor);
+                RenderOptions.SetBitmapScalingMode(stars[i], BitmapScalingMode.NearestNeighbor);
+
+                Canvas.SetZIndex(planets[i], 4);
+                Canvas.SetZIndex(rings[i], 3);
+                Canvas.SetZIndex(twins[i], 2);
+                Canvas.SetZIndex(stars[i], 1);
+
+                DrawCanvas.Children.Add(planets[i]);
+                DrawCanvas.Children.Add(rings[i]);
+                DrawCanvas.Children.Add(twins[i]);
+                DrawCanvas.Children.Add(stars[i]);
+            }
+
             waveDict = new List<Ellipse>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
@@ -327,7 +396,7 @@ namespace GravitonClient
             AiImage.EndInit();
 
             announcement = new TextBlock();
-            
+
             player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
             redOrb = new Animation(new BitmapImage[1] { orbImages[0] }, new int[1] { 20 });
             orangeOrb = new Animation(new BitmapImage[1] { orbImages[1] }, new int[1] { 20 });
@@ -984,66 +1053,6 @@ namespace GravitonClient
         //Returns nothing.
         private void GameWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //setup background images
-            background = new Image();
-            BackgroundImage = new BitmapImage();
-            BackgroundImage.BeginInit();
-            BackgroundImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-backgound.png");
-            BackgroundImage.EndInit();
-            background.Source = BackgroundImage;
-            RenderOptions.SetBitmapScalingMode(background, BitmapScalingMode.NearestNeighbor);
-            Canvas.SetLeft(background, 0);
-            Canvas.SetTop(background, 0);
-            Canvas.SetZIndex(background, 0);
-            DrawCanvas.Children.Add(background);
-
-            planets = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            PlanetImage = new BitmapImage();
-            PlanetImage.BeginInit();
-            PlanetImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-big-planet.png");
-            PlanetImage.EndInit();
-
-            rings = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            RingImage = new BitmapImage();
-            RingImage.BeginInit();
-            RingImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-ring-planet.png");
-            RingImage.EndInit();
-
-            twins = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            TwinImage = new BitmapImage();
-            TwinImage.BeginInit();
-            TwinImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-far-planets.png");
-            TwinImage.EndInit();
-
-            stars = new Image[4] { new Image(), new Image(), new Image(), new Image() };
-            StarImage = new BitmapImage();
-            StarImage.BeginInit();
-            StarImage.UriSource = new Uri(@"pack://application:,,,/Assets/Images/parallax-space-stars.png");
-            StarImage.EndInit();
-
-            for (int i = 0; i < 4; ++i)
-            {
-                planets[i].Source = PlanetImage;
-                rings[i].Source = RingImage;
-                twins[i].Source = TwinImage;
-                stars[i].Source = StarImage;
-
-                RenderOptions.SetBitmapScalingMode(planets[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(rings[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(twins[i], BitmapScalingMode.NearestNeighbor);
-                RenderOptions.SetBitmapScalingMode(stars[i], BitmapScalingMode.NearestNeighbor);
-
-                Canvas.SetZIndex(planets[i], 4);
-                Canvas.SetZIndex(rings[i], 3);
-                Canvas.SetZIndex(twins[i], 2);
-                Canvas.SetZIndex(stars[i], 1);
-
-                DrawCanvas.Children.Add(planets[i]);
-                DrawCanvas.Children.Add(rings[i]);
-                DrawCanvas.Children.Add(twins[i]);
-                DrawCanvas.Children.Add(stars[i]);
-            }
-
             if ((DrawCanvas.ActualWidth / 272) * 160 < DrawCanvas.ActualHeight)
             {
                 background.Height = DrawCanvas.ActualHeight;
@@ -1111,12 +1120,7 @@ namespace GravitonClient
         private void DisplayMessage(string s)
         {
             announcement.Text = s;
-            Canvas.SetZIndex(announcement, 1000);
-            announcement.FontSize = 20;
-            //announcement.FontFamily = new FontFamily(new Uri("pack://application:,,,/"), "./Assets/Fonts/Azonix.otf");
-            Canvas.SetLeft(announcement, (DrawCanvas.ActualWidth - announcement.ActualWidth) / 2);
-            Canvas.SetTop(announcement, 400);
-            DrawCanvas.Children.Add(announcement);
+            announcement.Visibility = Visibility.Visible;
         }
     }
 }
