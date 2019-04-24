@@ -173,6 +173,8 @@ namespace GravitonClient
                 well.TicksLeft--;
                 if (well.TicksLeft == 0)
                 {
+                    int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, objIndex, 12, 0));
                     well.TicksLeft = 3000;
                     well.IsStable = false;
                     well.Strength = 900;
@@ -223,13 +225,19 @@ namespace GravitonClient
                 }
                 else if (Player.DepositOrbs(well))
                 {
+                    int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, objIndex, 12, 0));
                     StableWells.Remove(well);
                     GameObjects.Remove(well);
                     Player.GamePowerup.AddNew();
                     Points += 100;
                 }
                 else if (well.Orbs != originalColor)
+                {
                     GameInvokeSoundEvent(this, SoundEffect.OrbDrop);
+                    int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                    UpdateAnimationEvent(this, new AnimationEventArgs(true, AnimationType.Stable, objIndex, well.Orbs, 6 + well.Orbs));
+                }
             }
             Orb orb = Player.OrbOver();
             if (orb != null)
@@ -274,6 +282,7 @@ namespace GravitonClient
                 Well well = aI.WellOver();
                 if (well != null)
                 {
+                    int originalColor = well.Orbs;
                     if (!well.IsStable)
                     {
                         if (well.IsTrap && well.Owner == Player)
@@ -283,10 +292,17 @@ namespace GravitonClient
                     }
                     else if (aI.DepositOrbs(well))
                     {
+                        int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                        UpdateAnimationEvent(this, new AnimationEventArgs(false, AnimationType.Stable, objIndex, 12, 0));
                         StableWells.Remove(well);
                         GameObjects.Remove(well);
                         aI.GamePowerup.AddNew();
                         aI.SetTargetPos();
+                    }
+                    else if (well.Orbs != originalColor)
+                    {
+                        int objIndex = StableWells.FindIndex(item => item.Equals(well));
+                        UpdateAnimationEvent(this, new AnimationEventArgs(true, AnimationType.Stable, objIndex, well.Orbs, 6 + well.Orbs));
                     }
                 }
                 Orb orb = aI.OrbOver();

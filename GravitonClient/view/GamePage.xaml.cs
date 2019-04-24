@@ -31,7 +31,6 @@ namespace GravitonClient.view
         List<Ellipse> waveDict;
 
         //to be deleted with rise of animations
-        List<Image> wellDict;
         List<Image> destableDict;
         List<Image> orbDict;
         List<Image> AiImages;
@@ -62,19 +61,7 @@ namespace GravitonClient.view
         private TextBlock announcement;
 
         public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
-
-        Animator destabilizedTemplate;
-        Animator wellTemplate;
-        Animator playerTemplate;
-        Animator orbTemplate;
-        Animator aiTemplate;
-
-        Animation redWellReg;
-        Animation orangeWellReg;
-        Animation yellowWellReg;
-        Animation greenWellReg;
-        Animation blueWellReg;
-        Animation purpleWellReg;
+        
         Animation redOrb;
         Animation orangeOrb;
         Animation yellowOrb;
@@ -225,7 +212,6 @@ namespace GravitonClient.view
         private void SetupAssets()
         {
             waveDict = new List<Ellipse>();
-            wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
             AiImages = new List<Image>();
@@ -304,12 +290,6 @@ namespace GravitonClient.view
             announcement = new TextBlock();
             
             player = new Animation(new BitmapImage[10] { shipImage1, shipImage2, shipImage3, shipImage4, shipImage5, shipImage6, shipImage5, shipImage4, shipImage3, shipImage2 }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            redWellReg = new Animation(new BitmapImage[10] { wellImages[0], wellImages[1], wellImages[2], wellImages[3], wellImages[4], wellImages[5], wellImages[4], wellImages[3], wellImages[2], wellImages[1] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            orangeWellReg = new Animation(new BitmapImage[10] { wellImages[6], wellImages[7], wellImages[8], wellImages[9], wellImages[10], wellImages[11], wellImages[10], wellImages[9], wellImages[8], wellImages[7] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            yellowWellReg = new Animation(new BitmapImage[10] { wellImages[12], wellImages[13], wellImages[14], wellImages[15], wellImages[16], wellImages[17], wellImages[16], wellImages[15], wellImages[14], wellImages[13] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            greenWellReg = new Animation(new BitmapImage[10] { wellImages[18], wellImages[19], wellImages[20], wellImages[21], wellImages[22], wellImages[23], wellImages[22], wellImages[21], wellImages[20], wellImages[19] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            blueWellReg = new Animation(new BitmapImage[10] { wellImages[24], wellImages[25], wellImages[26], wellImages[27], wellImages[28], wellImages[29], wellImages[28], wellImages[27], wellImages[26], wellImages[25] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            purpleWellReg = new Animation(new BitmapImage[10] { wellImages[30], wellImages[31], wellImages[32], wellImages[33], wellImages[34], wellImages[35], wellImages[34], wellImages[33], wellImages[32], wellImages[31] }, new int[10] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
             redOrb = new Animation(new BitmapImage[1] { orbImages[0] }, new int[1] { 20 });
             orangeOrb = new Animation(new BitmapImage[1] { orbImages[1] }, new int[1] { 20 });
             yellowOrb = new Animation(new BitmapImage[1] { orbImages[2] }, new int[1] { 20 });
@@ -318,10 +298,8 @@ namespace GravitonClient.view
             purpleOrb = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
             destabilized = new Animation(new BitmapImage[1] { orbImages[5] }, new int[1] { 20 });
             ai = new Animation(new BitmapImage[1] { AiImage }, new int[1] { 20 });
-
-            playerTemplate = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
-            wellTemplate = new Animator(DrawCanvas, new Animation[6] { redWellReg, orangeWellReg, yellowWellReg, greenWellReg, blueWellReg, purpleWellReg }, 0, 5);
-            playerShip = playerTemplate;
+            
+            playerShip = new Animator(DrawCanvas, new Animation[1] { player }, 0, 10, 50);
 
             wellList = new List<Animator>();
         }
@@ -530,13 +508,9 @@ namespace GravitonClient.view
                 Canvas.SetZIndex(AiImages[i], 9);
             }
 
-
-
             Game.ViewCamera.Width = DrawCanvas.ActualWidth;
             Game.ViewCamera.Height = DrawCanvas.ActualHeight;
-
-
-
+            
             //==========================
             //HUD
             //==========================
@@ -835,14 +809,31 @@ namespace GravitonClient.view
                 case AnimationType.Stable:
                     if (e.ObjIndex == game.StableWells.Count)
                     {
-                        Animator anim = new Animator(DrawCanvas, new Animation[6] { redWellReg, orangeWellReg, yellowWellReg, greenWellReg, blueWellReg, purpleWellReg }, 0, 5);
+                        Animation redWell = new Animation(new BitmapImage[10] { wellImages[0], wellImages[1], wellImages[2], wellImages[3], wellImages[4], wellImages[5], wellImages[4], wellImages[3], wellImages[2], wellImages[1] }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+                        Animation orangeWell = new Animation(new BitmapImage[10] { wellImages[6], wellImages[7], wellImages[8], wellImages[9], wellImages[10], wellImages[11], wellImages[10], wellImages[9], wellImages[8], wellImages[7] }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+                        Animation yellowWell = new Animation(new BitmapImage[10] { wellImages[12], wellImages[13], wellImages[14], wellImages[15], wellImages[16], wellImages[17], wellImages[16], wellImages[15], wellImages[14], wellImages[13] }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+                        Animation greenWell = new Animation(new BitmapImage[10] { wellImages[18], wellImages[19], wellImages[20], wellImages[21], wellImages[22], wellImages[23], wellImages[22], wellImages[21], wellImages[20], wellImages[19] }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+                        Animation blueWell = new Animation(new BitmapImage[10] { wellImages[24], wellImages[25], wellImages[26], wellImages[27], wellImages[28], wellImages[29], wellImages[28], wellImages[27], wellImages[26], wellImages[25] }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+                        Animation purpleWell = new Animation(new BitmapImage[10] { wellImages[30], wellImages[31], wellImages[32], wellImages[33], wellImages[34], wellImages[35], wellImages[34], wellImages[33], wellImages[32], wellImages[31] }, new int[10] { 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 });
+                        Animation transRedWell = new Animation(new BitmapImage[5] { wellImages[5], wellImages[4], wellImages[3], wellImages[2], wellImages[1] }, new int[5] { 3, 3, 3, 3, 3 });
+                        Animation transOrangeWell = new Animation(new BitmapImage[5] { wellImages[11], wellImages[10], wellImages[9], wellImages[8], wellImages[7] }, new int[5] { 3, 3, 3, 3, 3 });
+                        Animation transYellowWell = new Animation(new BitmapImage[5] { wellImages[17], wellImages[16], wellImages[15], wellImages[14], wellImages[13] }, new int[5] { 3, 3, 3, 3, 3 });
+                        Animation transGreenWell = new Animation(new BitmapImage[5] { wellImages[23], wellImages[22], wellImages[21], wellImages[20], wellImages[19] }, new int[5] { 3, 3, 3, 3, 3 });
+                        Animation transBlueWell = new Animation(new BitmapImage[5] { wellImages[29], wellImages[28], wellImages[27], wellImages[26], wellImages[25] }, new int[5] { 3, 3, 3, 3, 3 });
+                        Animation transPurpleWell = new Animation(new BitmapImage[5] { wellImages[35], wellImages[34], wellImages[33], wellImages[32], wellImages[31] }, new int[5] { 3, 3, 3, 3, 3 });
+                        Animator anim = new Animator(DrawCanvas, new Animation[12] { redWell, orangeWell, yellowWell, greenWell, blueWell, purpleWell, transRedWell, transOrangeWell, transYellowWell, transGreenWell, transBlueWell, transPurpleWell }, 0, 5);
                         wellList.Add(anim);
                     }
 
-                    else if (e.AnimIndex == game.StableWells.Count)
+                    else if (e.AnimIndex == 12)
                     {
                         wellList[e.ObjIndex].RemoveFromScreen();
                         wellList.RemoveAt(e.ObjIndex);
+                    }
+
+                    else if (e.IsTransition)
+                    {
+                        wellList[e.ObjIndex].Transition(e.TransitionIndex, e.AnimIndex);
                     }
                     break;
                 default:

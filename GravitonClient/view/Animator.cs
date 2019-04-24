@@ -44,13 +44,6 @@ namespace GravitonClient
             set { zIndex = value; }
         }
 
-        private int width;
-        public int Width
-        {
-            get { return width; }
-            set { width = value; }
-        }
-
         private bool queued;
         private int queueTicks;
         private int queuedAnim;
@@ -72,19 +65,14 @@ namespace GravitonClient
             currentAnimation = animations[startAnim];
             this.zIndex = zIndex;
             displayImage = new Image();
-            this.width = width;
             displayImage.Width = width;
             AddToScreen();
         }
 
         public void Animate(double x, double y)
         {
-            //update the image source on the image component.
-            if (width == 0)
-                displayImage.Width = currentAnimation.CurrentImage.Width;
-            else
-                displayImage.Width = width;
-
+            if (displayImage.Visibility != System.Windows.Visibility.Visible)
+                displayImage.Visibility = System.Windows.Visibility.Visible;
             Canvas.SetLeft(displayImage, x);
             Canvas.SetTop(displayImage, y);
         }
@@ -103,8 +91,8 @@ namespace GravitonClient
 
             currentAnimation.PassedTicks++;
             //update the image source on the image component.
+            displayImage.Visibility = System.Windows.Visibility.Hidden;
             displayImage.Source = currentAnimation.CurrentImage;
-            displayImage.Width = 0;
         }
 
         public void AddToScreen()

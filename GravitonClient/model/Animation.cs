@@ -26,20 +26,7 @@ namespace GravitonClient
         private BitmapImage currentImage;
         public BitmapImage CurrentImage
         {
-            get
-            {
-                int sumHolder = passedTicks;
-                for (int i = 0; i < imageList.Length; ++i)
-                {
-                    sumHolder -= tickDiffs[i];
-                    if (sumHolder < 0)
-                    {
-                        currentImage = imageList[i];
-                        break;
-                    }
-                }
-                return currentImage;
-            }
+            get { return currentImage; }
         }
 
         private int maxTicks;
@@ -55,7 +42,17 @@ namespace GravitonClient
             get { return passedTicks; }
             set
             {
-                passedTicks = value > maxTicks ? 0 : value;
+                passedTicks = value > maxTicks ? 1 : value;
+                int sumHolder = 0;
+                for (int i = 0; i < imageList.Length; ++i)
+                {
+                    sumHolder += tickDiffs[i];
+                    if (passedTicks <= sumHolder)
+                    {
+                        currentImage = imageList[i];
+                        break;
+                    }
+                }
             }
         }
 
