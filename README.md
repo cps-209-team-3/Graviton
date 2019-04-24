@@ -2,7 +2,7 @@
 
 Welcome to the Graviton repository! You can browse the source code, or visit our [wiki](https://github.com/cps-209-team-3/Graviton/wiki).
 ### Instructions
-Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comply, don't fret, that's just gravity. Fly over the small colored orbs to pick them up and then fly over the larger circles (gravity wells) to deposit the orbs inside. The orb's color must correspond to that of the gravity well, or else nothing will happen. Avoid the destabilized wells, or black holes. Those kill you. Once you successfully complete the color spectrum of a well you'll get a powerup you can use to claim a well (E), destabilize a well(F), or neutralize a black hole(Q). You have an emergency boost function (SPACE) that uses three orbs and can help you get out of sticky situations or get points just a bit faster.
+Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comply, don't fret, that's just gravity. Fly over the small colored orbs to pick them up and then fly over the tears in the fabric of space time, also known as gravity wells, to deposit the orbs inside. The orb's color must correspond to that of the gravity well, or else nothing will happen. Avoid the destabilized wells, or black holes. Those kill you. Once you successfully complete the color spectrum of a well you'll get a powerup you can use to claim a well (E), destabilize a well(F), or neutralize a black hole(Q). You have an emergency boost function (SPACE) that uses three orbs and can help you get out of sticky situations or get points just a bit faster.
 ### Work Completed
 * Title screen
 * Basic game screen
