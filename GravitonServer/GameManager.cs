@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*
+File: GameManager.cs
+Desc: Manages starting games and alerting clients to the new game.
+*/
+using System;
 using System.Collections.Generic;
 using System.Timers;
 using System.Text;

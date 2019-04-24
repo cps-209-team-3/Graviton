@@ -1,4 +1,8 @@
-﻿using System;
+﻿/*********************
+ * File: Client.cs
+ * Desc: Manages client information, including which states the client is in.
+**********************/
+using System;
 using System.Net;
 
 namespace GravitonServer
@@ -7,27 +11,32 @@ namespace GravitonServer
     {
         internal Ship MyPlayer;
 
+        // The IP and port of the client. Used when sending messages.
         public IPEndPoint ClientIP
         {
             get; private set;
         }
+
         public Client(IPEndPoint ipEndPoint)
         {
             ClientIP = ipEndPoint;
             CurrentState = new NotAssignedGameState(this);
         }
-
+        //The current state of the client
         internal ClientState CurrentState{ get; set;}
+        //Event raised when the server needs to reply to the client.
         internal event EventHandler<string> ReplyEvent;
+        //Handles messages sent to the server.
         internal void HandleMessage(string message)
         {
             CurrentState.HandleIncomingMessage(message);
         }
+        // Sends a message back to the client
         internal void RaiseReply(string message)
         {
             ReplyEvent(this, message);
         }
-
+        //Used when something happens on the server that needs to be reflected to the client.
         internal void HandleFromServer(object o)
         {
             CurrentState.UpdateFromServer(o);
@@ -38,11 +47,11 @@ namespace GravitonServer
     {
         public ClientState(Client client)
         {
-            
             CurrentClient = client;
         }
         internal Client CurrentClient;
         
+        // Handles the incoming message in the curretn context.
         internal abstract void HandleIncomingMessage(string message);
         internal abstract void UpdateFromServer(object o);
     }
@@ -66,7 +75,7 @@ namespace GravitonServer
 
             GameManager.JoinGame(CurrentClient);
         }
-
+        
         internal override void UpdateFromServer(object o) {
             if (o is Ship)
             {

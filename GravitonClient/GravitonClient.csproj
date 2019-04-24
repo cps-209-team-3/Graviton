@@ -110,9 +110,6 @@
     <Compile Include="view\NetworkedGamePage.xaml.cs">
       <DependentUpon>NetworkedGamePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="view\NetworkedGameWindow.xaml.cs">
-      <DependentUpon>NetworkedGameWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="view\NetworkPlayPage.xaml.cs">
       <DependentUpon>NetworkPlayPage.xaml</DependentUpon>
     </Compile>
@@ -157,10 +154,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="view\NetworkedGamePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="view\NetworkedGameWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
