@@ -11,12 +11,12 @@ using System.Windows.Shapes;
 
 namespace GravitonClient
 {
-    
+
 
     /// <summary>
     /// Interaction logic for NetworkedGameWindow.xaml
     /// </summary>
-    public partial class NetworkedGameWindow : Window, GameReporter
+    public partial class NetworkedGamePage : Page, GameReporter
     {
         List<Image> wellDict;
         List<Image> destableDict;
@@ -67,7 +67,7 @@ namespace GravitonClient
 
         private void SetupGameWindow()
         {
-            
+
             wellDict = new List<Image>();
             destableDict = new List<Image>();
             orbDict = new List<Image>();
@@ -222,6 +222,9 @@ namespace GravitonClient
 
             this.KeyDown += Window_KeyDown;
             this.KeyUp += Window_KeyUp;
+
+            Window.GetWindow(this).KeyDown += Window_KeyDown;
+            Window.GetWindow(this).KeyUp += Window_KeyUp;
             if (272 / 160 > DrawCanvas.ActualWidth / DrawCanvas.ActualHeight)
             {
                 background.Height = DrawCanvas.ActualHeight;
@@ -282,18 +285,20 @@ namespace GravitonClient
             ghost.Play();
             boost.Play();
         }
-        
 
-        public NetworkedGameWindow(NetworkedGame game)
+
+        public NetworkedGamePage(NetworkedGame game)
         {
             UDPGameClient.SetCurrentGameReporter(this);
             this.game = game;
             UDPGameClient.StartListening();
+            
             game.GameUpdatedEvent += Render;
             InitializeComponent();
             gameStarted = false;
-            
 
+            KeyUp += Window_KeyUp;
+            this.KeyDown += Window_KeyDown;
 
         }
 
@@ -301,104 +306,104 @@ namespace GravitonClient
         {
             Dispatcher.Invoke(() =>
             {
-               if (!gameStarted)
-               {
+                if (!gameStarted)
+                {
                     gameStarted = true;
                     DrawCanvas.Children.Remove(grid_secondsLeft);
                     SetupGameWindow();
                     Render(null, currentFrame);
-               }
-               else
-               {
+                }
+                else
+                {
+                    for (int i = 0; i < 4; ++i)
+                    {
+                        Canvas.SetLeft(planets[i], currentFrame.Backgrounds[3][i].Item1);
+                        Canvas.SetTop(planets[i], currentFrame.Backgrounds[3][i].Item2);
+                        Canvas.SetLeft(rings[i], currentFrame.Backgrounds[2][i].Item1);
+                        Canvas.SetTop(rings[i], currentFrame.Backgrounds[2][i].Item2);
+                        Canvas.SetLeft(twins[i], currentFrame.Backgrounds[1][i].Item1);
+                        Canvas.SetTop(twins[i], currentFrame.Backgrounds[1][i].Item2);
+                        Canvas.SetLeft(stars[i], currentFrame.Backgrounds[0][i].Item1);
+                        Canvas.SetTop(stars[i], currentFrame.Backgrounds[0][i].Item2);
+                    }
+                    int sLeft = 300 - (int)currentFrame.Seconds;
+                    txtTimeLeft.Text = (sLeft / 60) + ":" + (sLeft % 60).ToString("D2");
+                    
 
-                   for (int i = 0; i < 4; ++i)
-                   {
-                       Canvas.SetLeft(planets[i], currentFrame.Backgrounds[3][i].Item1);
-                       Canvas.SetTop(planets[i], currentFrame.Backgrounds[3][i].Item2);
-                       Canvas.SetLeft(rings[i], currentFrame.Backgrounds[2][i].Item1);
-                       Canvas.SetTop(rings[i], currentFrame.Backgrounds[2][i].Item2);
-                       Canvas.SetLeft(twins[i], currentFrame.Backgrounds[1][i].Item1);
-                       Canvas.SetTop(twins[i], currentFrame.Backgrounds[1][i].Item2);
-                       Canvas.SetLeft(stars[i], currentFrame.Backgrounds[0][i].Item1);
-                       Canvas.SetTop(stars[i], currentFrame.Backgrounds[0][i].Item2);
-                   }
+                    int playerdiff = OtherHumanImages.Count - currentFrame.OtherHumanShips.Count;
+                    if (playerdiff > 0)
+                    {
+                        RemoveGameObjects(OtherHumanImages, playerdiff);
+                        RemoveGameObjects(OtherHumanNames, playerdiff);
+                    }
+                    if (playerdiff < 0)
+                    {
+                        AddGameObjects(OtherHumanImages, -playerdiff);
+                        AddGameObjects(OtherHumanNames, -playerdiff);
+                    }
+                    for (int i = 0; i < OtherHumanImages.Count; ++i)
+                    {
 
-                   txtTimeLeft.Text = (int)(5 - Math.Ceiling((double) currentFrame.Seconds)/60) + ":" + ((60 - (int)currentFrame.Seconds % 60) % 60).ToString("D2");
-                   
-                   int playerdiff = OtherHumanImages.Count - currentFrame.OtherHumanShips.Count;
-                   if (playerdiff > 0)
-                   {
-                       RemoveGameObjects(OtherHumanImages, playerdiff);
-                       RemoveGameObjects(OtherHumanNames, playerdiff);
-                   }
-                   if (playerdiff < 0)
-                   {
-                       AddGameObjects(OtherHumanImages, -playerdiff);
-                       AddGameObjects(OtherHumanNames, -playerdiff);
-                   }
-                   for (int i = 0; i < OtherHumanImages.Count; ++i)
-                   {
+                        OtherHumanImages[i].Source = shipImage;
+                        OtherHumanImages[i].Width = 50;
+                        Canvas.SetLeft(OtherHumanImages[i], currentFrame.OtherHumanShips[i].Item1);
+                        Canvas.SetTop(OtherHumanImages[i], currentFrame.OtherHumanShips[i].Item2);
+                        Canvas.SetLeft(OtherHumanNames[i], currentFrame.OtherHumanShips[i].Item1);
+                        Canvas.SetTop(OtherHumanNames[i], currentFrame.OtherHumanShips[i].Item2 - 30);
+                        OtherHumanNames[i].Content = currentFrame.OtherHumanShips[i].Item3;
+                        Canvas.SetZIndex(OtherHumanNames[i], 7);
+                        Canvas.SetZIndex(OtherHumanImages[i], 7);
+                    }
+                    int wellDiff = wellDict.Count - currentFrame.StableWells.Count;
+                    if (wellDiff > 0)
+                        RemoveGameObjects(wellDict, wellDiff);
+                    if (wellDiff < 0)
+                        AddGameObjects(wellDict, -wellDiff);
 
-                       OtherHumanImages[i].Source = shipImage;
-                       OtherHumanImages[i].Width = 50;
-                       Canvas.SetLeft(OtherHumanImages[i], currentFrame.OtherHumanShips[i].Item1);
-                       Canvas.SetTop(OtherHumanImages[i], currentFrame.OtherHumanShips[i].Item2);
-                       Canvas.SetLeft(OtherHumanNames[i], currentFrame.OtherHumanShips[i].Item1);
-                       Canvas.SetTop(OtherHumanNames[i], currentFrame.OtherHumanShips[i].Item2 -30);
-                       OtherHumanNames[i].Content = currentFrame.OtherHumanShips[i].Item3;
-                       Canvas.SetZIndex(OtherHumanNames[i], 7);
-                       Canvas.SetZIndex(OtherHumanImages[i], 7);
-                   }
-                   int wellDiff = wellDict.Count - currentFrame.StableWells.Count;
-                   if (wellDiff > 0)
-                       RemoveGameObjects(wellDict, wellDiff);
-                   if (wellDiff < 0)
-                       AddGameObjects(wellDict, -wellDiff);
+                    for (int i = 0; i < wellDict.Count; ++i)
+                    {
+                        int color = currentFrame.StableWells[i].Item3;
+                        wellDict[i].Source = wellImages[color];
+                        Canvas.SetLeft(wellDict[i], currentFrame.StableWells[i].Item1);
+                        Canvas.SetTop(wellDict[i], currentFrame.StableWells[i].Item2);
+                        Canvas.SetZIndex(wellDict[i], 5);
+                    }
 
-                   for (int i = 0; i < wellDict.Count; ++i)
-                   {
-                       int color = currentFrame.StableWells[i].Item3;
-                       wellDict[i].Source = wellImages[color];
-                       Canvas.SetLeft(wellDict[i], currentFrame.StableWells[i].Item1);
-                       Canvas.SetTop(wellDict[i], currentFrame.StableWells[i].Item2);
-                       Canvas.SetZIndex(wellDict[i], 5);
-                   }
+                    int destableDiff = destableDict.Count - currentFrame.UnstableWells.Count;
+                    if (destableDiff > 0)
+                        RemoveGameObjects(destableDict, destableDiff);
+                    if (destableDiff < 0)
+                    {
+                        AddGameObjects(destableDict, -destableDiff);
+                    }
 
-                   int destableDiff = destableDict.Count - currentFrame.UnstableWells.Count;
-                   if (destableDiff > 0)
-                       RemoveGameObjects(destableDict, destableDiff);
-                   if (destableDiff < 0)
-                   {
-                       AddGameObjects(destableDict, -destableDiff);
-                   }
+                    for (int i = 0; i < destableDict.Count; ++i)
+                    {
+                        destableDict[i].Source = destabilizedImage;
+                        Canvas.SetLeft(destableDict[i], currentFrame.UnstableWells[i].Item1);
+                        Canvas.SetTop(destableDict[i], currentFrame.UnstableWells[i].Item2);
+                        Canvas.SetZIndex(destableDict[i], 6);
+                    }
 
-                   for (int i = 0; i < destableDict.Count; ++i)
-                   {
-                       destableDict[i].Source = destabilizedImage;
-                       Canvas.SetLeft(destableDict[i], currentFrame.UnstableWells[i].Item1);
-                       Canvas.SetTop(destableDict[i], currentFrame.UnstableWells[i].Item2);
-                       Canvas.SetZIndex(destableDict[i], 6);
-                   }
+                    int orbDiff = orbDict.Count - currentFrame.Orbs.Count;
+                    if (orbDiff > 0)
+                        RemoveGameObjects(orbDict, orbDiff);
+                    if (orbDiff < 0)
+                        AddGameObjects(orbDict, -orbDiff);
 
-                   int orbDiff = orbDict.Count - currentFrame.Orbs.Count;
-                   if (orbDiff > 0)
-                       RemoveGameObjects(orbDict, orbDiff);
-                   if (orbDiff < 0)
-                       AddGameObjects(orbDict, -orbDiff);
+                    for (int i = 0; i < orbDict.Count; ++i)
+                    {
+                        int color = currentFrame.Orbs[i].Item3;
+                        orbDict[i].Source = orbImages[color];
+                        Canvas.SetLeft(orbDict[i], currentFrame.Orbs[i].Item1);
+                        Canvas.SetTop(orbDict[i], currentFrame.Orbs[i].Item2);
+                        Canvas.SetZIndex(orbDict[i], 7);
+                    }
 
-                   for (int i = 0; i < orbDict.Count; ++i)
-                   {
-                       int color = currentFrame.Orbs[i].Item3;
-                       orbDict[i].Source = orbImages[color];
-                       Canvas.SetLeft(orbDict[i], currentFrame.Orbs[i].Item1);
-                       Canvas.SetTop(orbDict[i], currentFrame.Orbs[i].Item2);
-                       Canvas.SetZIndex(orbDict[i], 7);
-                   }
-
-                   Canvas.SetLeft(ship, currentFrame.PlayerShip.Item1);
-                   Canvas.SetTop(ship, currentFrame.PlayerShip.Item2);
-                   Canvas.SetZIndex(ship, 10);
-                   txtScore.Text = "Score: " + currentFrame.Points;
+                    Canvas.SetLeft(ship, currentFrame.PlayerShip.Item1);
+                    Canvas.SetTop(ship, currentFrame.PlayerShip.Item2);
+                    Canvas.SetZIndex(ship, 10);
+                    txtScore.Text = "Score: " + currentFrame.Points;
 
 
 
@@ -408,19 +413,19 @@ namespace GravitonClient
 
                     int shipDiff = AiImages.Count - currentFrame.AIShips.Count;
 
-                   if (shipDiff > 0)
-                       RemoveGameObjects(AiImages, shipDiff);
-                   if (shipDiff < 0)
-                       AddGameObjects(AiImages, -shipDiff);
+                    if (shipDiff > 0)
+                        RemoveGameObjects(AiImages, shipDiff);
+                    if (shipDiff < 0)
+                        AddGameObjects(AiImages, -shipDiff);
 
-                   for (int i = 0; i < AiImages.Count; ++i)
-                   {
-                       AiImages[i].Source = AiImage;
-                       AiImages[i].Width = 50;
-                       Canvas.SetLeft(AiImages[i], currentFrame.AIShips[i].Item1);
-                       Canvas.SetTop(AiImages[i], currentFrame.AIShips[i].Item2);
-                       Canvas.SetZIndex(AiImages[i], 9);
-                   }
+                    for (int i = 0; i < AiImages.Count; ++i)
+                    {
+                        AiImages[i].Source = AiImage;
+                        AiImages[i].Width = 50;
+                        Canvas.SetLeft(AiImages[i], currentFrame.AIShips[i].Item1);
+                        Canvas.SetTop(AiImages[i], currentFrame.AIShips[i].Item2);
+                        Canvas.SetZIndex(AiImages[i], 9);
+                    }
 
 
                     //==========================
@@ -429,21 +434,21 @@ namespace GravitonClient
 
 
                     if (!Enumerable.SequenceEqual(currentOrbs, currentFrame.PlayerOrbs))
-                   {
-                       UpdateHudOrbs(currentFrame.PlayerOrbs);
-                       currentOrbs = currentFrame.PlayerOrbs.ToList();
-                   }
+                    {
+                        UpdateHudOrbs(currentFrame.PlayerOrbs);
+                        currentOrbs = currentFrame.PlayerOrbs.ToList();
+                    }
 
-                   UpdateHudPowerups(currentFrame.HasNeutralizePowerup,
-                       currentFrame.HasDestabilizePowerup,
-                       currentFrame.HasGhostingPowerup);
+                    UpdateHudPowerups(currentFrame.HasNeutralizePowerup,
+                        currentFrame.HasDestabilizePowerup,
+                        currentFrame.HasGhostingPowerup);
 
-                   
-               }
-           });
+
+                }
+            });
         }
 
-        
+
 
         private void GameOver_Click(object sender, RoutedEventArgs e)
         {
@@ -455,42 +460,41 @@ namespace GravitonClient
             collapse.Close();
             ghost.Close();
             boost.Close();
-            Close();
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            
-            
-                switch (e.Key)
-                {
-                    case (Key.W):
-                        game.KeyPressed('w');
-                        break;
-                    case (Key.A):
-                        game.KeyPressed('a');
-                        break;
-                    case (Key.S):
-                        game.KeyPressed('s');
-                        break;
-                    case (Key.D):
-                        game.KeyPressed('d');
-                        break;
-                    case (Key.Space):
-                        game.KeyPressed(' ');
-                        break;
-                    case (Key.Q):
-                        game.KeyPressed('q');
-                        break;
-                    case (Key.F):
-                        game.KeyPressed('f');
-                        break;
-                    case (Key.E):
-                        game.KeyPressed('e');
-                        break;
-                    default:
-                        break;
-                
+
+
+            switch (e.Key)
+            {
+                case (Key.W):
+                    game.KeyPressed('w');
+                    break;
+                case (Key.A):
+                    game.KeyPressed('a');
+                    break;
+                case (Key.S):
+                    game.KeyPressed('s');
+                    break;
+                case (Key.D):
+                    game.KeyPressed('d');
+                    break;
+                case (Key.Space):
+                    game.KeyPressed(' ');
+                    break;
+                case (Key.Q):
+                    game.KeyPressed('q');
+                    break;
+                case (Key.F):
+                    game.KeyPressed('f');
+                    break;
+                case (Key.E):
+                    game.KeyPressed('e');
+                    break;
+                default:
+                    break;
+
             }
         }
 
@@ -662,7 +666,7 @@ namespace GravitonClient
                 HudPowerups[2].Opacity = notHeldOpacity;
         }
 
-        
+
 
         public void GameOver()
         {
@@ -682,7 +686,7 @@ namespace GravitonClient
         {
             Dispatcher.Invoke(() => {
 
-                //this.
+                this.NavigationService.Navigate(new NetworkedGameOverPage(gameStats.HighScores, game.UserName ));
             });
             UDPGameClient.StopListening();
         }
@@ -690,7 +694,7 @@ namespace GravitonClient
 
         public void DisplaySecondsTillStart(int seconds)
         {
-            Dispatcher.Invoke(()=>lbl_secondsLeft.Content = "Seconds to start: " + seconds);
+            Dispatcher.Invoke(() => lbl_secondsLeft.Content = "Seconds to start: " + seconds);
         }
 
         public void DisplayError(string s)

@@ -1,35 +1,36 @@
-﻿//-----------------------------------------------------------
-//File:   HomePage.xaml.cs
-//Desc:   Counterpart for HighScorePage.xaml, contains logic 
-//        for populating the high scores list.
-//----------------------------------------------------------- 
-
-using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace GravitonClient
 {
-    //-----------------------------------------------------------
-    //        This class contains the logic for the high scores 
-    //        page. This class reads highscores from a file and
-    //        displays them in a list.
-    //----------------------------------------------------------- 
-    public partial class HighScorePage : Page
+    /// <summary>
+    /// Interaction logic for NetworkedGameOverPage.xaml
+    /// </summary>
+    public partial class NetworkedGameOverPage : Page
     {
-        //Highscores model object.
         HighScores hs;
-
+        private string userName;
         //Reference to the page that called this page.
         public Page ParentPage { get; set; }
 
-        public HighScorePage(Page parentPage)
+        internal NetworkedGameOverPage(HighScores highScores, string name)
         {
-            ParentPage = parentPage;
+            
             InitializeComponent();
-            hs = HighScores.Load(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Saves/HighScoreSave.txt"));
+            hs = highScores;
+            userName = name;
         }
 
         //Runs when the page has loaded. Sets up the page and populates the list with highscores.
@@ -99,7 +100,17 @@ namespace GravitonClient
         //Returns nothing.
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(ParentPage);
+            this.NavigationService.Navigate(new HomePage());
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new NetworkedGamePage(
+                UDPGameClient.JoinGame(
+                        userName,
+                        Window.GetWindow(this).ActualHeight,
+                        Window.GetWindow(this).ActualWidth
+                    )));
         }
     }
 }

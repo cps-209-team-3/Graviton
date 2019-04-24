@@ -32,7 +32,7 @@ namespace GravitonClient
             gameConn.Send(nameBytes, nameBytes.Length);
             gameEndPoint = new IPEndPoint(IPAddress.Any, 0);
             currentGame = new NetworkedGame();
-            
+            currentGame.UserName = userName;
 
             return currentGame;
            

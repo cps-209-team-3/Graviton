@@ -15,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Path = System.IO.Path;
 
-namespace GravitonClient.view
+namespace GravitonClient
 {
     //-----------------------------------------------------------
     //        This class controls the view logic for the 
