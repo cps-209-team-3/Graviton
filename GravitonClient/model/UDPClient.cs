@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the UDPClient class which deals with a connection to a server
+using System;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
@@ -8,20 +9,28 @@ namespace GravitonClient
 {
 
 
-
+    //This class deals wih the logic to connect with a server.
     internal static class UDPGameClient
     {
+        //This is a localhost connection
         private static string gameServerName = "127.0.0.1";
+        // This is the port number
         private static int gameServerPort = 8020;
+        //This is the IP endpoint which represents the IP address and port number
         private static IPEndPoint gameEndPoint;
 
+        //This is a reference to a UdpClient object that deals with a connection
         private static UdpClient gameConn;
 
+        //This bool represents whether the client is listening
         private static bool IsListening;
+        //This is a reference to a GameReporter object
         private static GameReporter reporter;
 
+        //This is a reference to the current networked game
         private static NetworkedGame currentGame;
 
+        //This method joins a game and returns the corresponding networked game
         internal static NetworkedGame JoinGame(string userName, double CameraWidth, double CameraHeight)
         {            
             IsListening = false;
@@ -38,11 +47,13 @@ namespace GravitonClient
            
         }
 
+        //This method sets the GameReporter
         internal static void SetCurrentGameReporter(GameReporter gr)
         {
             reporter = gr;
         }
 
+        //This method starts the listening process
         internal static void StartListening()
         {
             IsListening = true;
@@ -62,16 +73,19 @@ namespace GravitonClient
             });
         }
 
+        //This method sends a keypress to the server
         internal static void SendKeyPress(char key)
         {
             gameConn.Send(new byte[] { 0, (byte)key}, 2);
         }
 
+        //This method sends a keyrelease to the server
         internal static void SendKeyRelease(char key)
         {
             gameConn.Send(new byte[] { 1, (byte)key}, 2);
         }
 
+        //This method implements a certain action to communicate
         internal static void DoAction(byte[] data)
         {
             switch (data[0])
@@ -97,6 +111,7 @@ namespace GravitonClient
             }
         }
 
+        //This method stops listening to the server
         internal static void StopListening()
         {
             IsListening = false;
