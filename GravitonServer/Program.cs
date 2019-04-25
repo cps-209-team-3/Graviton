@@ -1,6 +1,6 @@
 ﻿/*
 File: Program.cs 
-Desc: Main class the server code.
+Desc: Main class for server code.
 */
 
 
@@ -15,15 +15,15 @@ using System.Threading.Tasks;
 
 namespace GravitonServer
 {
-    
+    //runs a graviton server
     class Program
     {
+        //dictionary of clients (key is an IPEndPoint)
         private static Dictionary<IPEndPoint, Client> clients = new Dictionary<IPEndPoint, Client>();
+        //UdpListener to detect incoming connections
         private static UdpListener server;
         static void Main(string[] args)
         {
-
-
             //create a new server
             server = new UdpListener();
             Logger.Log("Started Server.");
@@ -49,6 +49,8 @@ namespace GravitonServer
             GameManager.Start();
             Console.ReadLine();
         }
+
+        //handles incoming client requests
         static void HandleClient(Client client, string message)
         {
             lock (client)
@@ -58,6 +60,7 @@ namespace GravitonServer
             }
         } 
 
+        //sends a message to the client
         static void PostUdpMessage(object sender, string message)
         {
             try

@@ -38,6 +38,7 @@ namespace GravitonClient
             game.Username = JsonUtils.ExtractValue(json, "username");
             game.Ticks = Convert.ToInt32(JsonUtils.ExtractValue(json, "ticks"));
             game.Player = GameObject.FromJsonFactory<Ship>(JsonUtils.ExtractValue(json, "humanplayer"));
+            game.Points = game.Player.Points;
             game.Player.ParentGame = game;
             game.Player.GamePowerup.ParentGame = game;
             
