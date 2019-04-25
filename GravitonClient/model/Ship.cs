@@ -141,13 +141,14 @@ namespace GravitonClient
                 {
                     if (well.Orbs == 5)
                         completed = true;
-                    else
-                        well.Orbs++;
+                    well.Orbs++;
                     IncrementScore();
                     Orbs.Remove(orb);
                     well.TicksLeft = ParentGame.WellDestabFreq;
                 }
             }
+            if (well.Orbs == 6)
+                well.Orbs = 5;
             return completed;
         }
 

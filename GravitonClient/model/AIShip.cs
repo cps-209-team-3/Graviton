@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the AI class which represents an AI ship in game.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
+    //This class describes an AI ship in game that inherits from the Ship class.
     public class AIShip : Ship
     {
         //Reference to AI destination well

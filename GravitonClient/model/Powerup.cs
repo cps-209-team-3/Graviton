@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the Powerup class which represents a powerup in a player or AI's inventory.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
+    //This class describes a powerup in the game.
     public class Powerup
     {
         //Enum type and list; used for saving the current powerups

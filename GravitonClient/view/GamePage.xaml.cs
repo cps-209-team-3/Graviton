@@ -69,7 +69,7 @@ namespace GravitonClient
         private TextBlock announcement;
 
         //Filepath for game save.
-        public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
+        public const string SaveFileName = "Saved Games\\game1.json";
         
         //Animation objects for orbs, black holes, the player, and AI respectively.
         Animation redOrb, orangeOrb, yellowOrb, greenOrb, blueOrb, purpleOrb;
@@ -425,8 +425,22 @@ namespace GravitonClient
         {
             try
             {
-                Game = GameLoader.Load(SaveFileName, false);
+                game = GameLoader.Load(SaveFileName, false);
                 GamePage newWindow = new GamePage(Game.IsCheat, Game, ParentPage, Window);
+                for (int i = 0; i < game.StableWells.Count; ++i)
+                {
+                    newWindow.UpdateAnimation(this, new AnimationEventArgs(false, AnimationType.Stable, game.StableWells.Count, game.StableWells[i].Orbs, 0));
+                }
+
+                for (int i = 0; i < game.UnstableWells.Count; ++i)
+                {
+                    newWindow.UpdateAnimation(this, new AnimationEventArgs(false, AnimationType.Unstable, game.StableWells.Count, 0, 0));
+                }
+
+                for (int i = 0; i < game.AIShips.Count; ++i)
+                {
+                    newWindow.UpdateAnimation(this, new AnimationEventArgs(false, AnimationType.AI, game.AIShips.Count, 0, 0));
+                }
                 this.NavigationService.Navigate(newWindow);
                 Game.Timer.Start();
             }

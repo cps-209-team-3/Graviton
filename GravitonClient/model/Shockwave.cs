@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the Shockwave emitter class which handles shockwaves emitted by a black hole.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace GravitonClient
 {
+    //This class describes the shockwave generator.
     public class Shockwave : GameObject
     {
         //Shockwave's parent game

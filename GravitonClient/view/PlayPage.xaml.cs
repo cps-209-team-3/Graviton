@@ -24,7 +24,7 @@ namespace GravitonClient
         Window window;
 
         //The path of the game save file.
-        public const string SaveFileName = "..\\..\\Saved Games\\game1.json";
+        public const string SaveFileName = "Saved Games\\game1.json";
 
         public PlayPage(Page p, Window w)
         {
@@ -97,7 +97,7 @@ namespace GravitonClient
                     GamePage newWindow = new GamePage(g.IsCheat, g, this, window);
                     for (int i = 0; i < g.StableWells.Count; ++i)
                     {
-                        newWindow.UpdateAnimation(this, new AnimationEventArgs(false, AnimationType.Stable, g.StableWells.Count, 0, 0));
+                        newWindow.UpdateAnimation(this, new AnimationEventArgs(false, AnimationType.Stable, g.StableWells.Count, g.StableWells[i].Orbs, 0));
                     }
 
                     for (int i = 0; i < g.UnstableWells.Count; ++i)
