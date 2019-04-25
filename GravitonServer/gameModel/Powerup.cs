@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains Powerup, which is used to handle powerups for ships
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,20 +9,24 @@ namespace GravitonServer
 {
     public class Powerup
     {
-
+        //Powerup enum for saving purposes
         public enum powerups { neutralize, destabilize, ghost}
         public List<powerups> CurrentPowerups;
+        //Parent Game
         public Game ParentGame;
+        //Bools used to limit powerup inventory to 1 each
         public bool CarryingNeutralize { get; set; }
         public bool CarryingDestabilize { get; set; }
         public bool CarryingGhost { get; set; }
+        //Player object
         private Ship player
         {
             get; set;
         }
+        //Random used for selection
         private Random rand = new Random();
 
-
+        //Constructor
         public Powerup(Ship player)
         {
             this.player = player;
@@ -33,7 +38,7 @@ namespace GravitonServer
         }
 
 
-
+        //Constructor
         public Powerup()
         {
             CarryingNeutralize = false;

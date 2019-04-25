@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the Game class, which handles actual gameplay
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,27 +10,38 @@ namespace GravitonServer
 {
     public class Game
     {
+        //GameUpdated event handler
         public event EventHandler<int> GameUpdatedEvent;
 
+        //False if game is not over, true if game is over
         public bool IsOver { get; set; }
+        //Random used for random selection
         public Random Random { get; set; }
+        //Current number of ticks passed
         public int Ticks { get; set; }
+        //Player directional input
         public int HorizontalInput { get; set; }
         public int VerticalInput { get; set; }
+        //Number of ticks between well spawns
         public int WellSpawnFreq { get; set; }
+        //number of ticks before wells destabilize
         public int WellDestabFreq { get; set; }
+        //Timer used to determine when things happen in game
         public Timer Timer { get; set; }
+        //Lists of Game Objects
         public List<Well> StableWells { get; set; }
         public List<Well> UnstableWells { get; set; }
         public List<Ship> Players { get; set; }
         public List<AIShip> AIShips { get; set; }
         public List<Orb> Orbs { get; set; }
         public List<GameObject> GameObjects { get; set; }
+        //Time  when game starts
         public DateTime StartTime { get; private set; }
 
+        //High scores object
         internal HighScores HighScores = new HighScores();
         
-
+        //Constructor
         public Game()
         {
             IsOver = false;
@@ -70,6 +82,7 @@ namespace GravitonServer
             
         }
 
+        //Adds a player object to the game
         public Ship AddPlayer()
         {
             Ship player = new Ship(Random.NextDouble() * 5000, Random.NextDouble() * 5000, this);
@@ -78,6 +91,7 @@ namespace GravitonServer
             return player;
         }
 
+        //Removes a player from the game
         private void RemovePlayer(object sender, EventArgs e)
         {
             try
@@ -88,6 +102,7 @@ namespace GravitonServer
             catch { }
         }
 
+        //Begins the timer to start the game
         public void StartGame()
         {
             Initialize();
@@ -121,6 +136,7 @@ namespace GravitonServer
             GameUpdatedEvent(this, 0);
         }
 
+        //Retrieves score stats to record high scores
         internal GameStats GetStats()
         {
             HighScores.CheckNewScores(this);

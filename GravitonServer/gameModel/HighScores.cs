@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains HighScores, which is used to handle high scores
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
