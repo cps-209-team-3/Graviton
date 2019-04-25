@@ -38,6 +38,7 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 ### [Alpha Recording](https://youtu.be/3i9FIn4d9u4)
 ### [Beta Recording](https://youtu.be/3B5jn_T5dZQ)
 ### [Release Candidate Recording](https://youtu.be/n9GMMBYiqnI)
+### [Final Release Recording](https://youtu.be/JVQDbF-y0eY)
 ### Expenses
 Team Member | Used Hours | Remaining Hours | Journal
 ----------- | ---------- | --------------- | ------
