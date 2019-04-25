@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the Camera class which holds all the information for where stuff should be on the screen.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,15 +7,25 @@ using System.Threading.Tasks;
 
 namespace GravitonServer
 {
+    //This class contains all the information for things on the screen.
+    //It first adjusts the screen so that the player ship is never within 250 pixels of the edge. (Brandt called this "floatie")
+    //Depending on how the screen moved, it then updates all of the parrallax backgrounds.
+    //Finally, it calculates where everything should go on the screen and stores the information in a CameraFrame
     public class Camera
     {
+        //A reference to the parent game
         public Game ParentGame { get; set; }
+        //Screen width and height
         public double Width { get; set; }
         public double Height { get; set; }
+        //Coordinates of the screen on the map
         public double ScreenX { get; set; }
         public double ScreenY { get; set; }
+        //Parallax background coordinates
         public double[,] BackgroundXY { get; set; }
+        //List of all backgrounds on the screen
         public List<Tuple<double, double>>[] Backgrounds { get; set; }
+        //player ship
         private Ship Player;
 
         public Camera(Game game, Ship s)
@@ -29,6 +40,7 @@ namespace GravitonServer
             BackgroundXY = new double[4, 2];
         }
 
+        //Calls each frame.  Returns info for screen objects in a camera frame
         public CameraFrame GetCameraFrame() {
             CameraFrame cameraFrame = new CameraFrame();
             cameraFrame.Seconds =(int) (DateTime.Now - ParentGame.StartTime).TotalSeconds;

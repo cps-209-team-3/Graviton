@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains AIShip, which inherits from Ship and determines AI activity.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +9,12 @@ namespace GravitonServer
 {
     public class AIShip : Ship
     {
+        //AI destination orb and well
         public Well TargetWell { get; set; }
         public Orb TargetOrb { get; set; }
+        //AI destination x and y coordinates
         public double TargetX { get; set; }
         public double TargetY { get; set; }
-        public double TargetDist { get; set; }
 
         //Constructor
         public AIShip(double xc, double yc, Game game) : base(xc, yc, game)
@@ -26,9 +28,10 @@ namespace GravitonServer
             SetTargetPos();
         }
 
+        //Alternate constructor
         public AIShip() { }
 
-        //Sets TargetWell to the nearest well
+        //Sets TargetWell to the nearest well that is requesting a color orb currently being carried
         public void TargetNearestWell()
         {
             Well closestWell = null;
@@ -80,14 +83,6 @@ namespace GravitonServer
             TargetOrb = closestOrb;
         }
 
-        //Sets TargetDist to dist from current target
-        public void FindTargetDist()
-        {
-            double xDist = TargetX - this.Xcoor;
-            double yDist = TargetY - this.Ycoor;
-            TargetDist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
-        }
-
         //Sets TargetX and TargetY to Xcoor and Ycoor of target well or orb
         public void SetTargetPos()
         {
@@ -107,18 +102,6 @@ namespace GravitonServer
             {
                 SpeedBoost();
             }
-            FindTargetDist();
-        }
-
-        public bool IsCloser()
-        {
-            double xDist = TargetX - this.Xcoor;
-            double yDist = TargetY - this.Ycoor;
-            double currentDist = Math.Sqrt(Math.Pow(xDist, 2) + Math.Pow(yDist, 2));
-            if (currentDist < TargetDist)
-                return true;
-            else
-                return false;
         }
 
         //Sets XMove and YMove to determine movement direction
@@ -136,6 +119,7 @@ namespace GravitonServer
             Move();
         }
 
+        //Uses destabilize powerup if conditions are right
         public void UseDestabilize()
         {
             foreach (Well well in ParentGame.UnstableWells.ToList())
@@ -147,6 +131,7 @@ namespace GravitonServer
             }
         }
 
+        //uses neutralize powerup if conditions are right
         public void UseNeutralize()
         {
             foreach (Well well in ParentGame.StableWells.ToList())
@@ -158,6 +143,7 @@ namespace GravitonServer
             }
         }
 
+        //uses ghost powerup if conditions are right
         public void UseGhost()
         {
             foreach (Well well in ParentGame.UnstableWells.ToList())
@@ -169,6 +155,7 @@ namespace GravitonServer
             }
         }
 
+        //override method to prevent ai from gaining score
         public override void IncrementScore()
         {
 

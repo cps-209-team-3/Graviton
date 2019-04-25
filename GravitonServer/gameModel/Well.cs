@@ -27,6 +27,7 @@ namespace GravitonServer
         //A Random object
         private Random rand;
 
+        //Constructor
         public Well(double xcoor, double ycoor) : base(xcoor, ycoor)
         {
             rand = new Random();

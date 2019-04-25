@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the Ship class, which is used for players
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,24 +10,36 @@ namespace GravitonServer
     public enum SoundEffect { OrbGrab, PowerupGrab, Neutralize, Destabilize, OrbDrop, Ghost, Collapse, Boost };
     public class Ship : GameObject
     {
+        //Ship username
         public string Username { get; internal set; }
+        //Parent game
         public Game ParentGame { get; set; }
+        //Powerup handler
         public Powerup GamePowerup { get; set; }
+        //Current speed in x and y directions
         public double SpeedX { get; set; }
         public double SpeedY { get; set; }
+        //boost factor for determining velocity
         public double BoostFactor { get; set; }
+        //Orbs carried
         public List<int> Orbs { get; set; }
+        //current score
         public int Points{ get; set; }
+        //immunity to destabilized wells
         public bool IsImmune { get; set; }
+        //Ticks until immunity goes away
         public int ImmuneTicksLeft { get; set; }
+        //Directional input
         public int VerticalInput { get; set; }
         public int HorizontalInput { get; set; }
+        //Camera object
         public Camera ViewCamera { get; set; }
-
+        //Random object
         private Random rand = new Random();
-
+        //PlayerDied event for handling player death
         public event EventHandler PlayerDiedEvent; 
 
+        //Constructor
         public Ship(double xcoor, double ycoor, Game game)
         {
             ParentGame = game;
@@ -41,11 +54,13 @@ namespace GravitonServer
             Orbs = new List<int>();
         }
 
+        //throws PlayerDiedEvent.  Activates upon death
         internal void Die()
         {
             PlayerDiedEvent(this, null);
         }
 
+        //Alternate constructor
         public Ship() : base() {
             SpeedX = 0.0;
             SpeedY = 0.0;
@@ -199,6 +214,7 @@ namespace GravitonServer
             return completed;
         }
 
+        //Increments score when orb deposited
         public virtual void IncrementScore()
         {
             Points += 10;
