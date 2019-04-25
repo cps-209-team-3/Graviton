@@ -45,4 +45,4 @@ Team Member | Used Hours | Remaining Hours | Journal
 Visser | 59:30 | 0:30 | [VisserJournal](https://github.com/cps-209-team-3/Graviton/wiki/VisserJournal)
 Ross | 59:30 | 0:30 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
 Lane | 42:55 | 17:05 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
-Labadorf | 52:00 | 8:00 | [LabadorfJournal](https://github.com/cps-209-team-3/Graviton/wiki/LabadorfJournal)
+Labadorf | 60:00 | 0:00 | [LabadorfJournal](https://github.com/cps-209-team-3/Graviton/wiki/LabadorfJournal)
