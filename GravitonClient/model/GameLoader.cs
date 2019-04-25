@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the GameLoader class which loads and saves games. 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +8,14 @@ using System.IO;
 
 namespace GravitonClient
 {
+    //This class loads and saves games (using serialization and deserialization). 
     public class GameLoader
 
     {
+        //this is the version of the game
         private static string Version = "0.0.1";
 
+        //This method reads a file, deserializes it into a Game, and returns the Game object.
         public static Game Load(string filename, bool isCheatMode)
         {
             string json;
@@ -66,6 +70,7 @@ namespace GravitonClient
             return game;
         }
 
+        //This method serializes a Game, then writes the information to a file
         public static void Save(Game game, string filename)
         {
             if (!File.Exists(filename))
