@@ -1,25 +1,32 @@
-﻿using System;
+﻿//This file contains the NetworkedCameraFrame class which contains the info for one frame in the game
+using System;
 using System.Collections.Generic;
 
 namespace GravitonClient
 {
+    //This class contains the info for one frame in the game and does backgrounds and such.
     public class NetworkedCameraFrame : CameraFrame
     {
 
+        //This array holds the info for background coordinates
         private static double[,] BackgroundXY = new double[4, 2];
-        
+
+        //This is the screen width
         public static int Width
         {
             get;
             set;
         }
+        //This is the screen height
         public static int Height
         {
             get; set;
         }
 
+        //This is a list of other human ships to display
         public List<Tuple<double, double, string>> OtherHumanShips = new List<Tuple<double, double, string>>(); 
         public NetworkedCameraFrame() : base() { }
+        //This method implements the logic to deserialize a camera frame string and return a NetworkedCameraFrame object.
         public static NetworkedCameraFrame Deserialize(string data)
         {
             string[] parts = data.Split(' ');
