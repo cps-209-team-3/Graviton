@@ -9,7 +9,7 @@ namespace GravitonClient
 {
     //This class contains all the information for things on the screen.
     //It first adjusts the screen so that the player ship is never within 250 pixels of the edge. (Brandt called this "floatie")
-    //Depending on how the screen moved, it then updates all of the parrallax backgrounds.
+    //Depending on how the screen moved, it then updates all of the parrallax backgrounds. 
     //Finally, it calculates where everything should go on the screen and stores the information in a CameraFrame
     public class Camera
     {
