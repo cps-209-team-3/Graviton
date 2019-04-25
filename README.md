@@ -41,7 +41,7 @@ Use the W, A, S, and D keys to move the ship. If it doesn't seem to want to comp
 ### Expenses
 Team Member | Used Hours | Remaining Hours | Journal
 ----------- | ---------- | --------------- | ------
-Visser | 55:30 | 4:30 | [VisserJournal](https://github.com/cps-209-team-3/Graviton/wiki/VisserJournal)
-Ross | 55:00 | 5:00 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
-Lane | 42:20 | 17:40 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
+Visser | 59:30 | 0:30 | [VisserJournal](https://github.com/cps-209-team-3/Graviton/wiki/VisserJournal)
+Ross | 59:30 | 0:30 | [RossJournal](https://github.com/cps-209-team-3/Graviton/wiki/RossJournal)
+Lane | 42:55 | 17:05 | [LaneJournal](https://github.com/cps-209-team-3/Graviton/wiki/LaneJournal)
 Labadorf | 52:00 | 8:00 | [LabadorfJournal](https://github.com/cps-209-team-3/Graviton/wiki/LabadorfJournal)
