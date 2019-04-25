@@ -1,4 +1,5 @@
-﻿using System;
+﻿//This file contains the JsonUtils class which helps with serialization and deserialization
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,10 @@ using System.Threading.Tasks;
 namespace GravitonClient
 {
 
-    
+    //This class helps with serialization and deserialization
     class JsonUtils
     {
-
+        //This method returns the length (in characters) of a json object
         private static int LengthOfJsonObject(string json, int startchar)
         {
             switch (json[startchar])
@@ -43,7 +44,7 @@ namespace GravitonClient
             }
         }
 
-
+        //This method extracts a value from a json string
         public static string ExtractValue(string json, string key)
         {
             int i = json.IndexOf(String.Format("\"{0}\":", key));
@@ -53,11 +54,13 @@ namespace GravitonClient
             return GetObject(json, i);
         }
 
+        //This method returns the correct string for the next object being processed
         private static string GetObject(string json, int start)
         {
             return json.Substring(start, LengthOfJsonObject(json, start));
         }
 
+        //This method loops through a string until it finds the next specified character
         private static int LoopTillNextChar(string json, int start, char front, char back)
         {
             int numOfUnclosed = 0;
@@ -92,7 +95,7 @@ namespace GravitonClient
         }
 
        
-
+        //This method returns a list of strings that represent objects
         public static List<string> GetObjectsInArray(string json)
         {
             var list = new List<string>();
@@ -112,6 +115,7 @@ namespace GravitonClient
             return list;
         }
 
+        //This method converts the input list of objects into a json string
         internal static object ToJsonList(List<Powerup.powerups> currentPowerups)
         {
             string result = "[\r\n";
@@ -124,6 +128,7 @@ namespace GravitonClient
             return result;
         }
 
+        //This method converts the input list of objects into a json string
         public static string ToJsonList(IEnumerable<GameObject> gameObjects)
         {
             string result = "[\r\n";
@@ -134,6 +139,7 @@ namespace GravitonClient
             return result;
         }
 
+        //This method converts the input list of objects into a json string
         public static string ToJsonList(IEnumerable<int> ints)
         {
             string result = "[\r\n";
@@ -144,7 +150,7 @@ namespace GravitonClient
             return result;
         }
 
-
+        //This method converts the input list of objects into a json string
         internal static string GameObjectsToJsonList(IEnumerable<GameObject> gameObjects)
         {
             string result = "[\r\n";
